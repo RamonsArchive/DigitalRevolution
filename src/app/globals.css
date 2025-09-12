@@ -98,6 +98,13 @@ html {
   --color-bg-hero: #00D4FF;           /* Hero section with primary cyan */
   --color-bg-gradient-start: #00D4FF; /* Gradient start (cyan) */
   --color-bg-gradient-end: #8B5CF6;   /* Gradient end (purple) */
+  
+  /* Navbar Gradient - Dark and sophisticated */
+  --color-navbar-gradient: linear-gradient(135deg, 
+    var(--color-primary-800) 0%, 
+    var(--color-primary-900) 20%, 
+    var(--color-secondary-800) 60%, 
+    var(--color-secondary-900) 100%);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -119,4 +126,61 @@ body {
 
 @utility flex-center {
   @apply flex items-center justify-center;
+}
+
+/* Animated gradient background for title sections */
+.title-gradient-bg {
+  background: linear-gradient(135deg, 
+    var(--color-primary-800) 0%, 
+    var(--color-primary-900) 15%, 
+    var(--color-secondary-800) 35%, 
+    var(--color-secondary-900) 55%,
+    var(--color-primary-900) 75%,
+    var(--color-primary-800) 100%);
+  background-size: 400% 400%;
+  animation: titleGradientShift 12s ease-in-out infinite;
+  position: relative;
+}
+
+.title-gradient-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.1) 0%, 
+    rgba(0, 0, 0, 0.2) 30%, 
+    rgba(0, 0, 0, 0.3) 60%, 
+    rgba(0, 0, 0, 0.2) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.title-gradient-bg > * {
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes titleGradientShift {
+  0% {
+    background-position: 0% 0%;
+  }
+  25% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+@utility nav-link {
+  @apply w-full text-center md:w-fit font-courier-prime text-white text-lg font-bold px-5 py-2 transition-all duration-300 ease-in-out hover:bg-primary-400 active:bg-primary-600;
 }

@@ -1,9 +1,23 @@
 import Image from "next/image";
+import { HOME_TEXT_SECTIONS } from "@/constants";
+import HeroSection from "@/components/HeroSection";
 
 export default function Home() {
+  const heroText = HOME_TEXT_SECTIONS.section1;
   return (
-    <div className="flex w-full items-center justify-center h-[150dvh] overflow-y-auto bg-gray-500">
-      Home
-    </div>
+    <>
+      <div className="flex flex-col w-full items-center justify-center overflow-y-auto">
+        <HeroSection
+          title={heroText.title}
+          description={heroText.description}
+        />
+        {/* Next Section - this will be scrollable after title reaches apex */}
+        <div className="flex items-center justify-center h-screen bg-neutral-900 w-full">
+          <h2 className="text-2xl text-white">
+            Next Section - Now Scrollable!
+          </h2>
+        </div>
+      </div>
+    </>
   );
 }

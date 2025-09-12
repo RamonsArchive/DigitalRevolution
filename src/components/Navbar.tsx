@@ -5,21 +5,63 @@ import React, {
   useEffect,
   useMemo,
   useCallback,
+  memo,
 } from "react";
 import ReactDOM from "react-dom";
 import { NAV_LINKS } from "@/constants";
 import Link from "next/link";
 import Image from "next/image";
-import { DivideCircle, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import { useGSAP } from "@gsap/react";
+import { animateTextTimeline } from "@/lib/utils";
+import { SplitText } from "gsap/SplitText";
+import gsap from "gsap";
+
+gsap.registerPlugin(SplitText);
 
 const Navbar = () => {
   const [isDropdown, setIsDropdown] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
+  const [shouldRender, setShouldRender] = useState(false);
   const normalMenuRef = useRef<SVGSVGElement>(null);
   const scrollMenuRef = useRef<SVGSVGElement>(null);
   const menuRefInner = useRef<HTMLDivElement>(null);
 
+  const handleScroll = useCallback(() => {
+    const currentScrollY = window.scrollY;
+    const shouldShow = currentScrollY > 42;
+    setIsDropdown((prev) => (prev !== shouldShow ? shouldShow : prev));
+  }, []);
+
   useEffect(() => {
+    if (shouldRender) {
+      // Wait for DOM to update after menu opens
+      animateTextTimeline({
+        targets: [".mobile-nav-link"],
+        type: "words",
+        duration: 1,
+        ease: "power2.inOut",
+        delay: 0,
+        opacity: 0,
+        y: 100,
+        stagger: 0.1,
+      });
+    }
+  }, [shouldRender]);
+
+  useEffect(() => {
+    let ticking = false;
+
+    const throttledScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
     const handleClickOutside = (event: MouseEvent | TouchEvent) => {
       const normalClicked = normalMenuRef.current?.contains(
         event.target as Node
@@ -29,41 +71,47 @@ const Navbar = () => {
       );
       const innerClicked = menuRefInner.current?.contains(event.target as Node);
       if (!normalClicked && !scrollClicked && !innerClicked) {
+        setShouldRender(false);
         setOpenMenu(false);
       } else if ((normalClicked || scrollClicked) && !innerClicked) {
         setOpenMenu(true);
+        setShouldRender(true);
       }
     };
+
     document.addEventListener("mousedown", handleClickOutside);
     document.addEventListener("touchstart", handleClickOutside);
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", throttledScroll, { passive: true });
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("touchstart", handleClickOutside);
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", throttledScroll);
     };
-  });
-
-  const handleScroll = useCallback(() => {
-    const currentScrollY = window.scrollY;
-
-    // Show when scrolling up or at top, hide when scrolling down
-    if (currentScrollY > 42) {
-      setIsDropdown(true);
-    } else if (currentScrollY < 42) {
-      setIsDropdown(false);
-    }
-  }, []);
+  }, [handleScroll]);
 
   // Memoized navigation links - only re-renders if NAV_LINKS changes
   const navigationLinks = useMemo(
     () => (
       <div className="flex items-center w-full flex-col md:flex-row md:justify-end h-full">
         {NAV_LINKS.map((link) => (
+          <Link key={link.id} href={link.href} className="nav-link">
+            {link.label}
+          </Link>
+        ))}
+      </div>
+    ),
+    []
+  );
+
+  const mobileNavigationLinks = useMemo(
+    () => (
+      <div className="flex items-center w-full flex-col md:flex-row md:justify-end h-full">
+        {NAV_LINKS.map((link) => (
           <Link
             key={link.id}
             href={link.href}
-            className="w-full text-center md:w-fit font-courier-prime text-white text-lg font-bold px-5 py-2 transition-all duration-300 ease-in-out hover:bg-primary-400 active:bg-primary-600"
+            className="mobile-nav-link nav-link"
           >
             {link.label}
           </Link>
@@ -94,6 +142,7 @@ const Navbar = () => {
   // Memoized close handler to prevent re-renders
   const handleCloseMenu = useCallback(() => {
     setOpenMenu(false);
+    setShouldRender(false);
   }, []);
 
   // Mobile menu component - always rendered for smooth animations
@@ -101,7 +150,7 @@ const Navbar = () => {
     return (
       <div
         ref={menuRefInner}
-        className={`fixed top-0 right-0 bottom-0 h-[100dvh] w-[50%] transition-all duration-300 ease-in-out z-50 bg-black ${
+        className={`fixed top-0 right-0 bottom-0 h-[100dvh] w-[50%] bg-bg-primary transition-all duration-300 ease-in-out z-50 ${
           openMenu ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -114,7 +163,7 @@ const Navbar = () => {
               <X className="text-white cursor-pointer transition-all duration-300 ease-in-out hover:text-slate-700 active:text-slate-700" />
             </button>
           </div>
-          {navigationLinks}
+          {mobileNavigationLinks}
         </div>
       </div>
     );
@@ -123,7 +172,7 @@ const Navbar = () => {
   const scrollNavbar = useMemo(() => {
     return (
       <div
-        className={`fixed flex px-10 py-5 w-full items-center justify-between top-0 left-0 right-0 h-[42px] transition-all duration-300 ease-in-out z-10 bg-black overflow-y-hidden ${
+        className={`fixed flex bg-bg-primary px-10 py-5 w-full items-center justify-between top-0 left-0 right-0 h-[42px] transition-all duration-300 ease-in-out z-10 overflow-y-hidden ${
           isDropdown
             ? "translate-y-0 opacity-100"
             : "-translate-y-full opacity-0"
@@ -146,7 +195,7 @@ const Navbar = () => {
   const normalNavbar = useMemo(() => {
     return (
       <div
-        className={`flex w-full items-center justify-between h-[42px] px-10 py-5 transition-all duration-300 ease-in-out z-10 overflow-y-hidden ${
+        className={`flex w-full bg-bg-primary items-center justify-between h-[42px] px-10 py-5 transition-all duration-300 ease-in-out z-10 overflow-y-hidden ${
           isDropdown
             ? "opacity-0 -translate-y-full"
             : "opacity-100 translate-y-0"
@@ -175,4 +224,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default memo(Navbar);
