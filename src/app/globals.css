@@ -1,20 +1,108 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #020617;
+  --foreground: #ededed;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  height: 100%;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-courier-prime: var(--font-courier-prime);
+
+  --breakpoint-xs: 380px;
+  --breakpoint-md: 893px;
+  
+  /* Primary Color Variations (Cyan #00D4FF) */
+  --color-primary-50: #ECFEFF;   /* Very light cyan */
+  --color-primary-100: #CFFAFE;  /* Light cyan */
+  --color-primary-200: #A5F3FC;  /* Lighter cyan */
+  --color-primary-300: #67E8F9;  /* Medium-light cyan */
+  --color-primary-400: #22D3EE;  /* Medium cyan */
+  --color-primary-500: #00D4FF;  /* Your primary cyan */
+  --color-primary-600: #00B8E6;  /* Darker cyan */
+  --color-primary-700: #009BCC;  /* Dark cyan */
+  --color-primary-800: #007EA6;  /* Darker cyan */
+  --color-primary-900: #006180;  /* Darkest cyan */
+  --color-primary-950: #003D4D;  /* Ultra dark cyan */
+
+  /* Secondary Color Variations (Purple #8B5CF6) */
+  --color-secondary-50: #FAF5FF;   /* Very light purple */
+  --color-secondary-100: #F3E8FF;  /* Light purple */
+  --color-secondary-200: #E9D5FF;  /* Lighter purple */
+  --color-secondary-300: #D8B4FE;  /* Medium-light purple */
+  --color-secondary-400: #C084FC;  /* Medium purple */
+  --color-secondary-500: #8B5CF6;  /* Your primary purple */
+  --color-secondary-600: #7C3AED;  /* Darker purple */
+  --color-secondary-700: #6D28D9;  /* Dark purple */
+  --color-secondary-800: #5B21B6;  /* Darker purple */
+  --color-secondary-900: #4C1D95;  /* Darkest purple */
+  --color-secondary-950: #2E1065;  /* Ultra dark purple */
+
+  /* Tertiary Color Variations (Lime Green #84CC16) */
+  --color-tertiary-50: #F7FEE7;    /* Very light lime */
+  --color-tertiary-100: #ECFCCB;   /* Light lime */
+  --color-tertiary-200: #D9F99D;   /* Lighter lime */
+  --color-tertiary-300: #BEF264;   /* Medium-light lime */
+  --color-tertiary-400: #A3E635;   /* Medium lime */
+  --color-tertiary-500: #84CC16;   /* Your primary lime */
+  --color-tertiary-600: #65A30D;   /* Darker lime */
+  --color-tertiary-700: #4D7C0F;   /* Dark lime */
+  --color-tertiary-800: #365314;   /* Darker lime */
+  --color-tertiary-900: #1A2E05;   /* Darkest lime */
+  --color-tertiary-950: #0F1A02;   /* Ultra dark lime */
+
+  /* Quaternary Color Variations (Coral/Orange #FF6B35 - Complements the cool palette) */
+  --color-quaternary-50: #FFF7ED;   /* Very light coral */
+  --color-quaternary-100: #FFEDD5;  /* Light coral */
+  --color-quaternary-200: #FED7AA;  /* Lighter coral */
+  --color-quaternary-300: #FDBA74;  /* Medium-light coral */
+  --color-quaternary-400: #FB923C;  /* Medium coral */
+  --color-quaternary-500: #FF6B35;  /* Primary coral/orange */
+  --color-quaternary-600: #EA580C;  /* Darker coral */
+  --color-quaternary-700: #C2410C;  /* Dark coral */
+  --color-quaternary-800: #9A3412;  /* Darker coral */
+  --color-quaternary-900: #7C2D12;  /* Darkest coral */
+  --color-quaternary-950: #431407;  /* Ultra dark coral */
+
+  /* Neutral Variations (Slate grays) */
+  --color-neutral-50: #F8FAFC;    /* Almost white */
+  --color-neutral-100: #F1F5F9;   /* Very light gray */
+  --color-neutral-200: #E2E8F0;   /* Light gray for borders */
+  --color-neutral-300: #CBD5E1;   /* Medium-light gray */
+  --color-neutral-400: #94A3B8;   /* Medium gray for secondary text */
+  --color-neutral-500: #64748B;   /* Base gray */
+  --color-neutral-600: #475569;   /* Darker gray */
+  --color-neutral-700: #334155;   /* Dark gray */
+  --color-neutral-800: #1E293B;   /* Darker gray */
+  --color-neutral-900: #0F172A;   /* Darkest gray */
+  --color-neutral-950: #020617;   /* Ultra dark gray */
+
+  /* Text Colors */
+  --color-text-primary: #0F172A;      /* Dark text for light backgrounds */
+  --color-text-secondary: #475569;    /* Secondary text */
+  --color-text-muted: #64748B;        /* Muted text */
+  --color-text-inverse: #FFFFFF;      /* White text for dark backgrounds */
+
+  /* Background Colors */
+  --color-bg-primary: #020617;        /* Main background (neutral) */
+  --color-bg-secondary: #FFFFFF;      /* Container backgrounds (white) */
+  --color-bg-muted: #F1F5F9;          /* Muted backgrounds */
+  --color-bg-dark: #1E293B;           /* Dark background */
+  --color-bg-hero: #00D4FF;           /* Hero section with primary cyan */
+  --color-bg-gradient-start: #00D4FF; /* Gradient start (cyan) */
+  --color-bg-gradient-end: #8B5CF6;   /* Gradient end (purple) */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #020617;
     --foreground: #ededed;
   }
 }
@@ -22,5 +110,13 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-courier-prime);
+}
+
+@utility flex-center {
+  @apply flex items-center justify-center;
 }
