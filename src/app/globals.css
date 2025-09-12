@@ -139,6 +139,7 @@ body {
     var(--color-primary-800) 100%);
   background-size: 400% 400%;
   animation: titleGradientShift 12s ease-in-out infinite;
+
   position: relative;
 }
 
@@ -156,6 +157,7 @@ body {
     rgba(0, 0, 0, 0.2) 100%);
   pointer-events: none;
   z-index: 1;
+  border-radius: 0.75rem; /* rounded-xl - matches parent */
 }
 
 .title-gradient-bg > * {

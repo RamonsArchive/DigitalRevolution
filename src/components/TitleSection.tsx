@@ -1,8 +1,8 @@
 import React from "react";
 
 interface TitleSectionProps {
-  title: string;
-  description: string;
+  title: React.ReactNode;
+  description: React.ReactNode;
   titleClassName?: string;
   descriptionClassName?: string;
   containerClassName?: string;
