@@ -60,26 +60,49 @@ export const HOME_TEXT_SECTIONS = {
   section2: {
     id: "section-2",
     title: <>Here are the facts!</>,
-    description: (
+    description: [
       <>
-        <ul>
-          <li>
-            Over two billion people do not have access to reliable data
-            connectivity
-          </li>
-          <li>
-            The internet penetration rate in sub-Saharan Africa stands at just
-            39% compared to nearly 93% in Europe
-          </li>
-          <li>
-            Many have linked the digital divide to poor economic and social
-            outcomes, such as fewer job opportunities, less competitive
-            economies, or lower student performance, showing how it exacerbates
-            existing inequalities along racial and other social lines.
-          </li>
-        </ul>
-      </>
-    ),
+        Over{" "}
+        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
+          two billion people
+        </span>{" "}
+        do not have access to{" "}
+        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
+          reliable data connectivity
+        </span>
+      </>,
+      <>
+        The{" "}
+        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
+          internet penetration rate
+        </span>{" "}
+        in sub-Saharan Africa stands at just{" "}
+        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
+          39%
+        </span>{" "}
+        compared to nearly{" "}
+        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
+          93% in Europe
+        </span>
+      </>,
+      <>
+        Many have linked the{" "}
+        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
+          digital divide
+        </span>{" "}
+        to poor{" "}
+        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
+          economic and social outcomes
+        </span>
+        , such as fewer job opportunities, less competitive economies, or lower
+        student performance, showing how it{" "}
+        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
+          exacerbates existing inequalities
+        </span>{" "}
+        along racial and other social lines.
+      </>,
+    ],
+
     sources: [
       "https://www.weforum.org/stories/2025/01/technological-advancements-and-human-development/",
       "https://tcf.org/content/report/disconnected-digital-divide-harms-workers-can/",

@@ -150,7 +150,7 @@ const Navbar = () => {
     return (
       <div
         ref={menuRefInner}
-        className={`fixed top-0 right-0 bottom-0 h-[100dvh] w-[50%] bg-bg-primary transition-all duration-300 ease-in-out z-50 ${
+        className={`fixed md:hidden top-0 right-0 bottom-0 h-[100dvh] w-[50%] bg-bg-primary transition-all duration-300 ease-in-out z-50 ${
           openMenu ? "translate-x-0" : "translate-x-full"
         }`}
       >

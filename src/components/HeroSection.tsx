@@ -6,38 +6,18 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
 export default function HeroSection({
-  heroText,
+  section1,
 }: {
-  heroText: {
-    section1: {
-      title: React.ReactNode;
-      description: React.ReactNode;
-      sources?: string[];
-    };
-    section2: {
-      title: React.ReactNode;
-      description: React.ReactNode;
-      sources?: string[];
-    };
+  section1: {
+    title: React.ReactNode;
+    description: React.ReactNode;
+    sources?: string[];
   };
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
-  const { title: title1, description: description1 } = heroText.section1;
-  const {
-    title: title2,
-    description: description2,
-    sources: sources2,
-  } = heroText.section2;
-
-  //   // Prevent initial scrolling
-  //   useEffect(() => {
-  //     document.body.style.overflow = "hidden";
-  //     return () => {
-  //       document.body.style.overflow = "unset";
-  //     };
-  //   }, []);
+  const { title: title1, description: description1 } = section1;
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -54,10 +34,10 @@ export default function HeroSection({
     ScrollTrigger.create({
       trigger: containerRef.current,
       start: "top top",
-      end: "+=800vh", // Pin for 100vh of scroll
+      end: "+=600vh", // Pin for 600vh of scroll for smoothness
       pin: true, // Pin the container
       pinSpacing: false, // No extra space
-      scrub: 1.8, // Smooth scroll-based animation
+      scrub: 0.3, // Much slower, smoother animation
       animation: gsap
         .timeline()
         .to(titleRef.current, {
@@ -68,7 +48,7 @@ export default function HeroSection({
           ease: "power2.out",
         })
         .to(titleRef.current, {
-          y: "-200vh", // Continue past the top
+          y: "-100vh", // Continue past the top
           opacity: 0,
           duration: 10,
           ease: "power2.in",
@@ -79,11 +59,11 @@ export default function HeroSection({
   return (
     <>
       {/* Hero Container - this gets scrolled past */}
-      <div ref={containerRef} className="relative flex h-screen w-full">
+      <div ref={containerRef} className="relative flex h-[100dvh] w-full">
         {/* Video Background - this gets PINNED */}
         <video
           ref={videoRef}
-          className="flex inset-0 w-full h-screen object-cover z-0"
+          className="flex inset-0 w-full h-[100dvh] object-cover z-0"
           autoPlay
           muted
           loop
@@ -106,31 +86,6 @@ export default function HeroSection({
                 descriptionClassName="font-courier-prime text-lg text-white text-start rounded-xl"
                 containerClassName="hero-section-title-section flex flex-col justify-start gap-5 w-full max-w-2xl px-10 py-5 rounded-xl"
               />
-            </div>
-            <div className="flex w-full items-center justify-center">
-              <div className="title-gradient-bg flex flex-col gap-5 justify-start w-full max-w-2xl px-10 py-5 rounded-xl">
-                <h1 className="font-courier-prime text-4xl font-bold text-white text-center rounded-xl">
-                  {title2}
-                </h1>
-                <div className="flex flex-col gap-3 w-full">
-                  <div className="font-courier-prime text-lg text-white text-start rounded-xl">
-                    {description2}
-                  </div>
-                  <div className="font-courier-prime text-lg text-white text-start rounded-xl">
-                    Sources:
-                  </div>
-                  <div className="flex flex-col md:flex-row gap-2 w-full">
-                    {sources2?.map((item, index) => (
-                      <div
-                        key={index}
-                        className="font-courier-prime text-lg text-white text-start rounded-xl"
-                      >
-                        {item}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
