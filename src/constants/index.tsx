@@ -104,8 +104,14 @@ export const HOME_TEXT_SECTIONS = {
     ],
 
     sources: [
-      "https://www.weforum.org/stories/2025/01/technological-advancements-and-human-development/",
-      "https://tcf.org/content/report/disconnected-digital-divide-harms-workers-can/",
+      {
+        title: "Technological Advancements and Human Development",
+        href: "https://www.weforum.org/stories/2025/01/technological-advancements-and-human-development/",
+      },
+      {
+        title: "Disconnected Digital Divide Harms Workers Can",
+        href: "https://tcf.org/content/report/disconnected-digital-divide-harms-workers-can/",
+      },
     ],
   },
 };
