@@ -36,7 +36,7 @@ export default function HeroSection({
       start: "top top",
       end: "+=600vh", // Pin for 600vh of scroll for smoothness
       pin: true, // Pin the container
-      pinSpacing: false, // No extra space
+      pinSpacing: true, // No extra space
       scrub: 0.3, // Much slower, smoother animation
       animation: gsap
         .timeline()
