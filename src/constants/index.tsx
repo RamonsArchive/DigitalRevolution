@@ -1,3 +1,5 @@
+import React from "react";
+
 export const NAV_LINKS = [
   {
     id: "home",
@@ -25,9 +27,9 @@ export const NAV_LINKS = [
     label: "Donate",
   },
   {
-    id: "contact",
-    href: "/contact",
-    label: "Contact",
+    id: "share",
+    href: "/share",
+    label: "Share",
   },
 ];
 
@@ -61,7 +63,7 @@ export const HOME_TEXT_SECTIONS = {
     id: "section-2",
     title: <>Here are the facts!</>,
     description: [
-      <>
+      <React.Fragment key="fact-1">
         Over{" "}
         <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
           two billion people
@@ -70,8 +72,8 @@ export const HOME_TEXT_SECTIONS = {
         <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
           reliable data connectivity
         </span>
-      </>,
-      <>
+      </React.Fragment>,
+      <React.Fragment key="fact-2">
         The{" "}
         <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
           internet penetration rate
@@ -84,8 +86,8 @@ export const HOME_TEXT_SECTIONS = {
         <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
           93% in Europe
         </span>
-      </>,
-      <>
+      </React.Fragment>,
+      <React.Fragment key="fact-3">
         Many have linked the{" "}
         <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
           digital divide
@@ -100,7 +102,7 @@ export const HOME_TEXT_SECTIONS = {
           exacerbates existing inequalities
         </span>{" "}
         along racial and other social lines.
-      </>,
+      </React.Fragment>,
     ],
 
     sources: [
@@ -111,6 +113,29 @@ export const HOME_TEXT_SECTIONS = {
       {
         title: "Disconnected Digital Divide Harms Workers Can",
         href: "https://tcf.org/content/report/disconnected-digital-divide-harms-workers-can/",
+      },
+    ],
+  },
+
+  section3: {
+    id: "section-3",
+    title: <>How you can support</>,
+    description: [
+      {
+        href: "/shop",
+        label: "Shop our store",
+      },
+      {
+        href: "/donate",
+        label: "Donate to our cause",
+      },
+      {
+        href: "/share",
+        label: "Share our mission",
+      },
+      {
+        href: "/partners",
+        label: "Partner with us",
       },
     ],
   },

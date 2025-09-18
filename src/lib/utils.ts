@@ -1,6 +1,10 @@
 import { gsap } from "gsap";
 import { SplitText } from "gsap/SplitText";
-import { AnimateTextType } from "./globalTypes";
+import { AnimateCardScrollType, AnimateTextScrollType, AnimateTextType } from "./globalTypes";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 export const animateText = (props: AnimateTextType) => {
   const {targets, type, duration, ease, delay, opacity, y, stagger} = props
@@ -50,3 +54,75 @@ export const animateTextTimeline = (props: AnimateTextType) => {
 
   //return tl; // Return timeline for further control
 };
+
+export const animateTextScroll = (props: AnimateTextScrollType) => {
+  const {targets, animateClass, type, duration, ease, delay, opacity, y, stagger} = props
+  const {trigger, start, end, scrub} = props.scrollTrigger;
+
+  const tl = gsap.timeline();
+
+  targets.forEach((target, index) => {
+    const textSplit = new SplitText(target, {type});
+    const elements = type === "chars" ? textSplit.chars : type === "words" ? textSplit.words : textSplit.lines;
+
+    // Set initial state
+    gsap.set(elements, {
+      opacity: opacity,
+      y: y,
+    });
+
+    // Apply gradient text class to split elements
+    elements.forEach((element) => {
+      element.classList.add(animateClass);
+    });
+
+    // Animate to final state with ScrollTrigger
+    gsap.to(elements, {
+      opacity: 1,
+      y: 0,
+      stagger: stagger || 0.1,
+      duration: duration,
+      delay: delay || 0,
+      ease: ease,
+      scrollTrigger: {
+        trigger: target,
+        start: start,
+        end: end,
+        scrub: scrub,
+        markers: true, // Remove markers for production
+      },
+    });
+  });
+
+  return tl;
+}
+
+
+export const animateCardsScroll = (props: AnimateCardScrollType) => {
+  const {targets, duration, ease, delay, opacity, y, stagger} = props
+  const {trigger, start, end, scrub} = props.scrollTrigger;
+
+  const tl = gsap.timeline();
+
+  targets.forEach((target, index) => {
+    const allElmenets = document.querySelectorAll(target);
+    tl.fromTo(allElmenets, {
+      opacity: opacity,
+      y: y,
+    }, {
+      opacity: 1,
+      y: 0,
+      stagger: stagger || 0.1,
+      duration: duration,
+      delay: delay || 0,
+      ease: ease,
+      scrollTrigger: {
+        trigger: target,
+        start: start,
+        end: end,
+        scrub: scrub,
+        markers: true,
+      },
+    })
+  })
+}

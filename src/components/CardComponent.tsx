@@ -24,8 +24,8 @@ const CardComponent = ({
       <h1 className={`${titleClassName}`}>{title}</h1>
       <p className={`${descriptionClassName}`}>{description}</p>
       <ul className={`${sourcesClassName}`}>
-        {sources?.map((source) => (
-          <li key={source}>{source}</li>
+        {sources?.map((source, index) => (
+          <li key={`${source}-${index}`}>{source}</li>
         ))}
       </ul>
     </div>

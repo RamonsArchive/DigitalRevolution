@@ -19,41 +19,65 @@ export default function HeroSection({
   const titleRef = useRef<HTMLDivElement>(null);
   const { title: title1, description: description1 } = section1;
 
+  // Professional approach: Pin the video and animate title
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Set title to start completely below viewport
-    // Set title to start completely below viewport
-    gsap.set(titleRef.current, {
-      y: "100vh",
-      opacity: 0,
-      display: "flex",
-    });
+    // Store references to created animations for cleanup
+    let scrollTrigger: ScrollTrigger | null = null;
+    let timeline: gsap.core.Timeline | null = null;
 
-    // Professional approach: Pin the video and animate title
-    ScrollTrigger.create({
-      trigger: containerRef.current,
-      start: "top top",
-      end: "+=600vh", // Pin for 600vh of scroll for smoothness
-      pin: true, // Pin the container
-      pinSpacing: true, // No extra space
-      scrub: 0.3, // Much slower, smoother animation
-      animation: gsap
-        .timeline()
+    // Only run if refs are available
+    if (titleRef.current && containerRef.current) {
+      // Set initial state
+      gsap.set(titleRef.current, {
+        y: "100vh",
+        opacity: 0,
+        display: "flex",
+      });
+
+      // Create timeline
+      timeline = gsap.timeline();
+      timeline
         .to(titleRef.current, {
-          y: 0, // Animate to center
+          y: 0,
           opacity: 1,
           duration: 10,
           display: "flex",
           ease: "power2.out",
         })
         .to(titleRef.current, {
-          y: "-100vh", // Continue past the top
+          y: "-100vh",
           opacity: 0,
           duration: 10,
           ease: "power2.in",
-        }),
-    });
+        });
+
+      // Create ScrollTrigger
+      scrollTrigger = ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: "top top",
+        end: "+=600vh",
+        pin: true,
+        pinSpacing: true,
+        scrub: 0.3,
+        animation: timeline,
+      });
+    }
+
+    // Cleanup function
+    return () => {
+      if (scrollTrigger) {
+        scrollTrigger.kill();
+      }
+      if (timeline) {
+        timeline.kill();
+      }
+      // Clear any set properties on the title element
+      if (titleRef.current) {
+        gsap.set(titleRef.current, { clearProps: "all" });
+      }
+    };
   }, []);
 
   return (
@@ -82,7 +106,7 @@ export default function HeroSection({
               <TitleSection
                 title={title1}
                 description={description1}
-                titleClassName="font-courier-prime text-4xl font-bold text-white text-center rounded-xl"
+                titleClassName="font-courier-prime text-4xl font-bold gradient-text text-center rounded-xl"
                 descriptionClassName="font-courier-prime text-lg text-white text-start rounded-xl"
                 containerClassName="hero-section-title-section flex flex-col justify-start gap-5 w-full max-w-2xl px-10 py-5 rounded-xl"
               />
