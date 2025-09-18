@@ -7,15 +7,15 @@ import React, {
   useCallback,
   memo,
 } from "react";
-import ReactDOM from "react-dom";
 import { NAV_LINKS } from "@/constants";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
-import { useGSAP } from "@gsap/react";
 import { animateTextTimeline } from "@/lib/utils";
 import { SplitText } from "gsap/SplitText";
 import gsap from "gsap";
+import { useClickOutside } from "@/hooks/useClickOutside";
+import { useScrollThrottle } from "@/hooks/useScrollThrottle";
 
 gsap.registerPlugin(SplitText);
 
@@ -33,6 +33,9 @@ const Navbar = () => {
     setIsDropdown((prev) => (prev !== shouldShow ? shouldShow : prev));
   }, []);
 
+  // Scroll throttling effect
+  useScrollThrottle({ onScroll: handleScroll });
+
   useEffect(() => {
     if (shouldRender) {
       // Wait for DOM to update after menu opens
@@ -49,46 +52,20 @@ const Navbar = () => {
     }
   }, [shouldRender]);
 
-  useEffect(() => {
-    let ticking = false;
-
-    const throttledScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
-      const normalClicked = normalMenuRef.current?.contains(
-        event.target as Node
-      );
-      const scrollClicked = scrollMenuRef.current?.contains(
-        event.target as Node
-      );
-      const innerClicked = menuRefInner.current?.contains(event.target as Node);
-      if (!normalClicked && !scrollClicked && !innerClicked) {
-        setShouldRender(false);
-        setOpenMenu(false);
-      } else if ((normalClicked || scrollClicked) && !innerClicked) {
-        setOpenMenu(true);
-        setShouldRender(true);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("touchstart", handleClickOutside);
-    window.addEventListener("scroll", throttledScroll, { passive: true });
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("touchstart", handleClickOutside);
-      window.removeEventListener("scroll", throttledScroll);
-    };
-  }, [handleScroll]);
+  // Click outside effect
+  useClickOutside({
+    insideRef: menuRefInner,
+    outsideRef: normalMenuRef || scrollMenuRef || null,
+    currentState: openMenu,
+    onInsideClick: () => {
+      setOpenMenu(true);
+      setShouldRender(true);
+    },
+    onOutsideClick: () => {
+      setShouldRender(false);
+      setOpenMenu(false);
+    },
+  });
 
   // Memoized navigation links - only re-renders if NAV_LINKS changes
   const navigationLinks = useMemo(

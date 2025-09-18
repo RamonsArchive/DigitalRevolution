@@ -363,6 +363,10 @@ body {
   @apply font-courier-prime font-bold text-5xl md:text-7xl text-center drop-shadow-lg;
 }
 
+@utility shop-nav-link {
+  @apply w-full text-center font-courier-prime text-bg-primary text-lg font-bold py-2 transition-all duration-300 ease-in-out hover:bg-secondary-400 active:bg-secondary-600;
+}
+
 /* Enhanced gradient text class for main title - matching button quality */
 .gradient-text {
   background: linear-gradient(
@@ -446,5 +450,75 @@ body {
   animation-duration: 3s;
   transform: scale(1.01);
   transition: all 0.3s ease;
+}
+
+/* Beautiful animated gradient for ShopNav */
+.animated-gradient-bg {
+  background: linear-gradient(
+    135deg,
+    #667eea 0%,
+    #764ba2 15%,
+    #f093fb 30%,
+    #f5576c 45%,
+    #4facfe 60%,
+    #00f2fe 75%,
+    #667eea 90%,
+    #764ba2 100%
+  );
+  background-size: 400% 400%;
+  animation: flowingGradient 8s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Fixed positioning for scroll navbar */
+.fixed.animated-gradient-bg {
+  position: fixed !important;
+}
+
+.animated-gradient-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.1) 0%,
+    rgba(118, 75, 162, 0.1) 15%,
+    rgba(240, 147, 251, 0.1) 30%,
+    rgba(245, 87, 108, 0.1) 45%,
+    rgba(79, 172, 254, 0.1) 60%,
+    rgba(0, 242, 254, 0.1) 75%,
+    rgba(102, 126, 234, 0.1) 90%,
+    rgba(118, 75, 162, 0.1) 100%
+  );
+  background-size: 400% 400%;
+  animation: flowingGradient 8s ease-in-out infinite reverse;
+  z-index: 1;
+}
+
+.animated-gradient-bg > * {
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes flowingGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 

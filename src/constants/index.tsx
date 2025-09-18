@@ -140,3 +140,28 @@ export const HOME_TEXT_SECTIONS = {
     ],
   },
 };
+
+export const SHOP_DATA = {
+  shopNavLinks: [
+    {
+      id: "men",
+      label: "Men",
+      href: "/shop/men",
+    },
+    {
+      id: "women",
+      label: "Women",
+      href: "/shop/women",
+    },
+    {
+      id: "kids",
+      label: "Kids",
+      href: "/shop/kids",
+    },
+    {
+      id: "unisex",
+      label: "Unisex",
+      href: "/shop/unisex",
+    },
+  ],
+};
