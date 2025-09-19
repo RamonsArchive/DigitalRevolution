@@ -6,6 +6,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
+export const parseServerActionResponse = <T>(response: T): T => {
+  return JSON.parse(JSON.stringify(response));
+}
+
 export const animateText = (props: AnimateTextType) => {
   const {targets, type, duration, ease, delay, opacity, y, stagger} = props
 

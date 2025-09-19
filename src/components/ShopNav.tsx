@@ -20,6 +20,7 @@ const ShopNav = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const [shouldMenuRender, setShouldMenuRender] = useState(false);
   const [showScrollNav, setShowScrollNav] = useState(false);
+  const [activeTab, setActiveTab] = useState<"pages" | "filters">("pages");
 
   const searchRefInner = useRef<HTMLDivElement>(null);
   const searchRefOuter = useRef<HTMLDivElement>(null);
@@ -103,30 +104,99 @@ const ShopNav = () => {
     return (
       <div
         ref={menuRefInner}
-        className={`fixed flex top-0 left-0 right-0 h-[100dvh] w-[50%] bg-secondary-300 transition-all duration-300 ease-in-out overflow-y-hidden z-10 ${
+        className={`fixed flex top-0 left-0 right-0 h-[100dvh] w-[80%] bg-gradient-to-br from-secondary-800 via-primary-900 to-secondary-800 transition-all duration-300 ease-in-out overflow-y-hidden z-10 ${
           openMenu ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-full"
         }`}
       >
-        <div className="flex flex-col gap-10 w-full h-full">
-          <div className="flex w-full items-center justify-end p-5">
+        {/* Backdrop to prevent clicks through */}
+        <div className="absolute inset-0 bg-black/20 backdrop-blur-sm"></div>
+        <div className="flex flex-col w-full gap-10">
+          <div className="relative z-10 flex flex-col w-full">
+            {/* Header with Close Button */}
+            <div className="flex w-full justify-end items-center p-6 border-b border-white/20">
+              <button
+                onClick={handleCloseMenu}
+                className="p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 ease-in-out hover:scale-110 group"
+              >
+                <X className="w-6 h-6 text-white group-hover:text-red-300 transition-colors duration-300" />
+              </button>
+            </div>
+          </div>
+
+          {/* Tabs - Mobile Only */}
+          <div className="flex w-full flex-row px-6 md:hidden z-20">
             <button
-              className="p-2 rounded-full transition-all duration-300 ease-in-out hover:bg-slate-400 active:bg-slate-600"
-              onClick={handleCloseMenu}
+              onClick={() => setActiveTab("pages")}
+              className={`flex w-full px-4 py-2 transition-all duration-300 ease-in-out ${
+                activeTab === "pages"
+                  ? "bg-white/20 rounded-lg"
+                  : "hover:bg-white/10 rounded-lg"
+              }`}
             >
-              <X className="text-bg-primary cursor-pointer transition-all duration-300 ease-in-out hover:text-slate-700 active:text-slate-700" />
+              <h2
+                className={`text-lg font-bold transition-colors duration-300 ${
+                  activeTab === "pages" ? "text-white" : "text-white/70"
+                }`}
+              >
+                Pages
+              </h2>
+            </button>
+            <button
+              onClick={() => setActiveTab("filters")}
+              className={`flex w-full px-4 py-2 transition-all duration-300 ease-in-out ${
+                activeTab === "filters"
+                  ? "bg-white/20 rounded-lg"
+                  : "hover:bg-white/10 rounded-lg"
+              }`}
+            >
+              <h2
+                className={`text-lg font-bold transition-colors duration-300 ${
+                  activeTab === "filters" ? "text-white" : "text-white/70"
+                }`}
+              >
+                Filters
+              </h2>
             </button>
           </div>
-          <div className="flex flex-col w-full items-center">
-            {shopNavLinks.map((link) => (
-              <Link key={link.id} href={link.href} className="shop-nav-link">
-                {link.label}
-              </Link>
-            ))}
+
+          <div className="flex flex-col w-full items-center z-20">
+            {/* Desktop: Always show pages */}
+            <div className="hidden md:flex flex-col w-full items-center">
+              {shopNavLinks.map((link) => (
+                <Link key={link.id} href={link.href} className="shop-nav-link">
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+
+            {/* Mobile: Show based on active tab */}
+            <div className="flex md:hidden flex-col w-full items-center z-20">
+              {activeTab === "pages" ? (
+                shopNavLinks.map((link) => (
+                  <Link
+                    key={link.id}
+                    href={link.href}
+                    className="shop-nav-link"
+                  >
+                    {link.label}
+                  </Link>
+                ))
+              ) : (
+                <div className="flex flex-col w-full items-center gap-4 p-4 z-20">
+                  <h3 className="text-lg font-semibold text-white/80 mb-2">
+                    Coming Soon
+                  </h3>
+                  <p className="text-sm text-white/60 text-center">
+                    Filter components will be added here
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
     );
-  }, [shopNavLinks, openMenu]);
+  }, [shopNavLinks, openMenu, activeTab]);
 
   const menuIcon = useMemo(() => {
     return (

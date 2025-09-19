@@ -364,7 +364,7 @@ body {
 }
 
 @utility shop-nav-link {
-  @apply w-full text-center font-courier-prime text-bg-primary text-lg font-bold py-2 transition-all duration-300 ease-in-out hover:bg-secondary-400 active:bg-secondary-600;
+  @apply w-full text-center font-courier-prime text-white/80 text-lg font-bold py-2 transition-all duration-300 ease-in-out hover:bg-secondary-400 active:bg-secondary-600;
 }
 
 /* Enhanced gradient text class for main title - matching button quality */

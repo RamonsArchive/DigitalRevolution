@@ -1,8 +1,10 @@
 import React from "react";
 import ShopNav from "@/components/ShopNav";
 import ShopContext from "@/contexts/ShopContext";
+import { getProductsAndFilters } from "@/lib/actions";
 
-const layout = ({ children }: { children: React.ReactNode }) => {
+const layout = async ({ children }: { children: React.ReactNode }) => {
+  const { products, filters } = await getProductsAndFilters();
   return (
     <>
       <ShopContext>
