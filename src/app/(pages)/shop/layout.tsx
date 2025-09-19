@@ -4,7 +4,8 @@ import ShopContext from "@/contexts/ShopContext";
 import { getProductsAndFilters } from "@/lib/actions";
 
 const layout = async ({ children }: { children: React.ReactNode }) => {
-  const { products, filters } = await getProductsAndFilters();
+  const result = await getProductsAndFilters({ limit: 100, offset: 0 });
+  console.log(result);
   return (
     <>
       <ShopContext>

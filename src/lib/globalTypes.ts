@@ -1,4 +1,10 @@
 
+export type ActionState = {
+    status: "INITIAL" | "PENDING" | "SUCCESS" | "ERROR";
+    error: string | null;
+    data: unknown | null;
+  };
+
 export type AnimateTextType = {
     targets: string[];
     type: "chars" | "words";
