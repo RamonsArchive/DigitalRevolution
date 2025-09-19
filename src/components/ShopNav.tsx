@@ -8,6 +8,7 @@ import { useScrollThrottle } from "@/hooks/useScrollThrottle";
 import { useClickOutside } from "@/hooks/useClickOutside";
 import { animateTextTimeline } from "@/lib/utils";
 import ShopSearch from "./ShopSearch";
+import Filters from "./Filters";
 
 const ShopNav = () => {
   const shopNavLinks = SHOP_DATA.shopNavLinks;
@@ -159,7 +160,7 @@ const ShopNav = () => {
             </button>
           </div>
 
-          <div className="flex flex-col w-full items-center z-20">
+          <div className="flex flex-col w-full items-center z-20 overflow-y-auto">
             {/* Desktop: Always show pages */}
             <div className="hidden md:flex flex-col w-full items-center">
               {shopNavLinks.map((link) => (
@@ -170,7 +171,7 @@ const ShopNav = () => {
             </div>
 
             {/* Mobile: Show based on active tab */}
-            <div className="flex md:hidden flex-col w-full items-center z-20">
+            <div className="flex md:hidden flex-col w-full items-center z-20 pb-15">
               {activeTab === "pages" ? (
                 shopNavLinks.map((link) => (
                   <Link
@@ -182,14 +183,7 @@ const ShopNav = () => {
                   </Link>
                 ))
               ) : (
-                <div className="flex flex-col w-full items-center gap-4 p-4 z-20">
-                  <h3 className="text-lg font-semibold text-white/80 mb-2">
-                    Coming Soon
-                  </h3>
-                  <p className="text-sm text-white/60 text-center">
-                    Filter components will be added here
-                  </p>
-                </div>
+                <Filters />
               )}
             </div>
           </div>

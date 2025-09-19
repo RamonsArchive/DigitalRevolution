@@ -5,6 +5,28 @@ export type ActionState = {
     data: unknown | null;
   };
 
+
+  export interface PrintfulSyncProduct {
+    id: number;
+    external_id: string | null; // sometimes null
+    name: string;
+    variants: number;
+    synced: number;
+    thumbnail_url: string;
+    is_ignored: boolean;
+  }
+  
+  export interface PrintfulSyncProductsResponse {
+    code: number;
+    result: PrintfulSyncProduct[];
+    extra: any[]; // usually empty
+    paging?: {
+      total: number;
+      offset: number;
+      limit: number;
+    };
+  }
+
 export type AnimateTextType = {
     targets: string[];
     type: "chars" | "words";
@@ -56,230 +78,130 @@ export type AnimateCardScrollType = {
 // globalTypes.ts - Printful API Types
 
 // Base interfaces for Printful API responses
-export interface PrintfulVariant {
+  
+  // ****************************************************** Printful API Types ******************************************************
+  
+  // Printful API Response Types
+export interface PrintfulFile {
     id: number;
+    type: string;
+    hash: string;
+    filename: string;
+    mime_type: string;
+    size: number;
+    width: number;
+    height: number;
+    dpi: number;
+    status: string;
+    created: number;
+    thumbnail_url: string;
+    preview_url: string;
+    url: string | null;
+    visible: boolean;
+    is_temporary: boolean;
+    message: string;
+    stitch_count_tier: string | null;
+  }
+  
+  export interface PrintfulVariantProduct {
+    variant_id: number;
     product_id: number;
+    image: string;
     name: string;
+  }
+  
+  export interface PrintfulVariantOption {
+    id: string;
+    value: string[] | string;
+  }
+  
+  export interface PrintfulSyncVariant {
+    id: number;
+    external_id: string;
+    sync_product_id: number;
+    name: string;
+    synced: boolean;
+    variant_id: number;
+    main_category_id: number;
+    warehouse_product_variant_id: number | null;
+    retail_price: string;
+    sku: string;
+    currency: string;
+    product: PrintfulVariantProduct;
+    files: PrintfulFile[];
+    options: PrintfulVariantOption[];
+    is_ignored: boolean;
     size: string;
     color: string;
-    color_code: string;
-    color_code2?: string;
-    image: string;
-    price: string; // Printful returns price as string
-    in_stock: boolean;
-    availability_regions: Record<string, any>; // Can be more specific based on your needs
-    availability_status: string[];
-    material: string[];
+    availability_status: string;
+    warehouse_product_id: number | null;
+  }
+  
+  export interface PrintfulSyncProduct {
+    id: number;
+    external_id: string | null;
+    name: string;
+    variants: number;
+    synced: number;
+    thumbnail_url: string;
+    is_ignored: boolean;
   }
   
   export interface PrintfulProduct {
-    id: number;
-    main_category_id: number;
-    type: string;
-    type_name: string;
-    title: string;
-    brand: string;
-    model: string;
-    image: string;
-    variant_count: number;
-    currency: string;
-    files: PrintfulFile[];
-    options: PrintfulOption[];
-    is_discontinued: boolean;
-    avg_fulfillment_time: number;
-    description: string;
-    techniques: PrintfulTechnique[];
-    origin_country: string;
+    sync_product: PrintfulSyncProduct;
+    sync_variants: PrintfulSyncVariant[];
   }
   
-  // Additional supporting interfaces
-  export interface PrintfulFile {
-    id?: number;
-    type?: string;
-    url?: string;
-    filename?: string;
-    mime_type?: string;
-    size?: number;
-    width?: number;
-    height?: number;
-    dpi?: number;
-  }
-  
-  export interface PrintfulOption {
-    id: string;
-    title: string;
-    type: string;
-    values: Record<string, any>;
-    additional_price?: string;
-  }
-  
-  export interface PrintfulTechnique {
-    key: string;
-    display_name: string;
-    is_default: boolean;
-  }
-  
-  // API Response wrapper
-  export interface PrintfulApiResponse<T> {
-    code: number;
-    result: T;
-    extra?: Record<string, any>;
-    paging?: {
-      total: number;
-      offset: number;
-      limit: number;
-    };
-  }
-  
-  // Specific response types
-  export interface PrintfulVariantResponse extends PrintfulApiResponse<{
-    variant: PrintfulVariant;
-    product: PrintfulProduct;
-  }> {}
-  
-  export interface PrintfulProductsResponse extends PrintfulApiResponse<PrintfulProduct[]> {}
-  
-  export interface PrintfulVariantsResponse extends PrintfulApiResponse<{
-    product: PrintfulProduct;
-    variants: PrintfulVariant[];
-  }> {}
-  
-  // Transformed types for your application (normalized)
-  export interface Product {
-    id: string; // Converted from number for consistency
-    printfulId: number; // Keep original ID for API calls
-    name: string;
-    title: string;
-    brand: string;
-    model: string;
-    type: string;
-    typeName: string;
-    description: string;
-    image: string;
-    currency: string;
-    category: ProductCategory;
-    isDiscontinued: boolean;
-    avgFulfillmentTime: number;
-    originCountry: string;
-    variants: ProductVariant[];
-    createdAt?: Date;
-    updatedAt?: Date;
-  }
-  
-  export interface ProductVariant {
-    id: string; // Converted from number
-    printfulId: number; // Keep original ID for API calls
-    productId: string;
-    printfulProductId: number;
-    name: string;
-    size: string;
-    color: string;
-    colorCode: string;
-    colorCode2?: string;
-    image: string;
-    price: number; // Converted from string to number
-    originalPrice: string; // Keep original string format
-    inStock: boolean;
-    availabilityRegions: Record<string, any>;
-    availabilityStatus: string[];
-    material: string[];
-  }
-  
-  // Category mapping (you'll need to define based on Printful categories)
-  export type ProductCategory = 
-    | 'men' 
-    | 'women' 
-    | 'kids' 
-    | 'unisex' 
-    | 'accessories' 
-    | 'home-living';
-  
-  // Shop-specific types (for your context)
+  // Shop Filter Types
   export interface ShopFilters {
-    category: ProductCategory | 'all';
-    priceRange: { min: number; max: number };
     colors: string[];
     sizes: string[];
-    brands: string[];
-    sortBy: 'price-asc' | 'price-desc' | 'name' | 'newest' | 'popular';
+    brands: string[]; // Extracted from product names
+    priceRange: [number, number];
+    productTypes: string[]; // Different clothing types (t-shirt, polo, hoodie, etc.)
+  }
+  
+  export interface FilterState {
+    selectedColor: string;
+    selectedSize: string;
+    selectedBrand: string;
+    selectedType: string;
+    sortBy: "price-asc" | "price-desc" | "name" | "newest";
     searchQuery: string;
     inStockOnly: boolean;
+    priceRange: [number, number];
+  }
+
+  // Filter UI state structure
+interface FilterOption {
+    value: string;
+    selected: boolean;
   }
   
-  export interface CartItem {
-    id: string; // Unique cart item ID
-    productId: string;
-    variantId: string;
-    quantity: number;
-    product: Product;
-    variant: ProductVariant;
-    addedAt: Date;
+  interface FilterCategory {
+    categoryExpanded: boolean;
+    options: FilterOption[];
   }
   
-  export interface ShopState {
-    products: Product[];
-    filteredProducts: Product[];
-    filters: ShopFilters;
-    loading: boolean;
-    error: string | null;
-    selectedProduct: Product | null;
-    cart: CartItem[];
-    favorites: string[]; // Product IDs
-    recentlyViewed: string[]; // Product IDs
+  interface FilterUIState {
+    colors: FilterCategory;
+    sizes: FilterCategory;
+    brands: FilterCategory;
+    productTypes: FilterCategory;
   }
   
-  // API Error types
-  export interface PrintfulError {
-    code: number;
-    message: string;
-    details?: Record<string, any>;
-  }
-  
-  // Utility type for API calls
-  export interface ApiCallOptions {
-    cache?: boolean;
-    revalidate?: number;
-  }
-  
-  // Transform functions type definitions
-  export type PrintfulToProductTransform = (
-    printfulProduct: PrintfulProduct,
-    variants: PrintfulVariant[]
-  ) => Product;
-  
-  export type PrintfulVariantToVariantTransform = (
-    printfulVariant: PrintfulVariant
-  ) => ProductVariant;
-  
-  // Search and pagination types
-  export interface ProductSearchParams {
-    query?: string;
-    category?: ProductCategory | 'all';
-    page?: number;
-    limit?: number;
-    sortBy?: ShopFilters['sortBy'];
-    filters?: Partial<ShopFilters>;
-  }
-  
-  export interface PaginatedResponse<T> {
-    data: T[];
-    pagination: {
-      page: number;
-      limit: number;
-      total: number;
-      totalPages: number;
-      hasNext: boolean;
-      hasPrev: boolean;
-    };
-  }
-  
-  // Server action types
-  export interface FetchProductsResult {
-    products: Product[];
-    error?: string;
-  }
-  
-  export interface FetchProductResult {
-    product: Product | null;
-    error?: string;
+  interface ShopContextType {
+    availableFilters: ShopFilters;
+    filterUIState: FilterUIState;
+    allProducts: PrintfulProduct[];
+    
+    // Multi-select filter state
+    selectedColors: string[];
+    selectedSizes: string[];
+    selectedBrands: string[];
+    selectedTypes: string[];
+    sortBy: FilterState["sortBy"];
+    searchQuery: string;
+    inStockOnly: boolean;
+    priceRange: [number, number];
   }
