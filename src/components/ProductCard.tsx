@@ -2,25 +2,59 @@ import { PrintfulProduct } from "@/lib/globalTypes";
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+
 const ProductCard = ({ product }: { product: PrintfulProduct }) => {
   return (
     <Link href={`/shop/${product.sync_product.id}`}>
-      <div className="flex flex-col rounded-xl overflow-hidden">
-        <div className="relative w-full h-[60%]">
+      <div className="group relative flex flex-col rounded-2xl overflow-hidden bg-white shadow-lg hover:shadow-2xl transition-all duration-500 ease-out hover:scale-105 hover:-translate-y-2">
+        {/* Animated gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-200 via-secondary-200 to-primary-300 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"></div>
+
+        {/* Product Image Container */}
+        <div className="relative w-full aspect-square overflow-hidden">
           <Image
             src={product.sync_product.thumbnail_url}
             alt={product.sync_product.name}
-            width={100}
-            height={100}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
           />
+          {/* Gradient overlay on hover */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         </div>
-        <div className="flex flex-col p-5">
-          <h1 className="font-courier-prime text-2xl font-bold">
+
+        {/* Product Info */}
+        <div className="relative z-10 flex flex-col p-6 bg-white/95 backdrop-blur-sm">
+          <h1 className="font-courier-prime text-xl font-bold text-gray-800 group-hover:text-primary-600 transition-colors duration-300 line-clamp-2">
             {product.sync_product.name}
           </h1>
-          <p className="font-courier-prime text-sm text-gray-500">
-            {product.sync_product.name}
-          </p>
+
+          {/* Price - if available */}
+          {product.sync_variants?.[0]?.retail_price && (
+            <div className="mt-2">
+              <span className="text-2xl font-bold text-primary-600">
+                ${product.sync_variants[0].retail_price}
+              </span>
+            </div>
+          )}
+
+          {/* Hover indicator */}
+          <div className="mt-3 flex items-center text-primary-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span className="text-sm font-medium">View Details</span>
+            <svg
+              className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-300"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </div>
         </div>
       </div>
     </Link>
