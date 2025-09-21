@@ -1,5 +1,5 @@
 import React from "react";
-import { shopContext } from "@/contexts/ShopContext";
+import { useShopFilters } from "@/contexts/ShopContext";
 import { ChevronDown, ChevronRight, Square, Check } from "lucide-react";
 
 // Helper to format category names for display
@@ -19,7 +19,7 @@ const Filters = () => {
     toggleCategoryExpanded,
     toggleOptionSelected,
     clearFilters,
-  } = shopContext();
+  } = useShopFilters();
 
   return (
     <div className="flex flex-col gap-4 w-full overflow-y-auto min-h-0">

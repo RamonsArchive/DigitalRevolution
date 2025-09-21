@@ -3,12 +3,12 @@ import React, { useCallback, useEffect, useRef } from "react";
 import { useMemo, useState } from "react";
 import { SHOP_DATA } from "@/constants";
 import { Menu, X, ShoppingCart } from "lucide-react";
-import Link from "next/link";
 import { useScrollThrottle } from "@/hooks/useScrollThrottle";
 import { useClickOutside } from "@/hooks/useClickOutside";
 import { animateTextTimeline } from "@/lib/utils";
 import ShopSearch from "./ShopSearch";
 import Filters from "./Filters";
+import { useShopFilters } from "@/contexts/ShopContext";
 
 const ShopNav = () => {
   const shopNavLinks = SHOP_DATA.shopNavLinks;
@@ -26,6 +26,13 @@ const ShopNav = () => {
   const searchRefInner = useRef<HTMLDivElement>(null);
   const searchRefOuter = useRef<HTMLDivElement>(null);
   const [openSearch, setOpenSearch] = useState(false);
+
+  const { selectedCategory, toggleOptionSelected } = useShopFilters();
+
+  const handleCategoryClick = (categoryValue: string) => {
+    // Use the same toggleOptionSelected function that handles URL updates
+    toggleOptionSelected("category", categoryValue);
+  };
 
   // Click outside effect for search
   useClickOutside({
@@ -162,26 +169,40 @@ const ShopNav = () => {
 
           <div className="flex flex-col w-full items-center z-20 overflow-y-auto">
             {/* Desktop: Always show pages */}
-            <div className="hidden md:flex flex-col w-full items-center">
-              {shopNavLinks.map((link) => (
-                <Link key={link.id} href={link.href} className="shop-nav-link">
+            <div className="hidden md:flex flex-col gap-2 overflow-x-auto w-full px-4">
+              {SHOP_DATA.shopNavLinks.map((link) => (
+                <button
+                  key={link.id}
+                  onClick={() => handleCategoryClick(link.value)}
+                  className={`shop-nav-link whitespace-nowrap px-4 py-2 rounded-full transition-colors ${
+                    selectedCategory === link.value
+                      ? "bg-blue-500 text-white"
+                      : "bg-white/10 text-white/80 hover:bg-white/20"
+                  }`}
+                >
                   {link.label}
-                </Link>
+                </button>
               ))}
             </div>
 
             {/* Mobile: Show based on active tab */}
             <div className="flex md:hidden flex-col w-full items-center z-20 pb-15">
               {activeTab === "pages" ? (
-                shopNavLinks.map((link) => (
-                  <Link
-                    key={link.id}
-                    href={link.href}
-                    className="shop-nav-link"
-                  >
-                    {link.label}
-                  </Link>
-                ))
+                <div className="md:hidden flex flex-col gap-2 overflow-x-auto w-full px-4">
+                  {SHOP_DATA.shopNavLinks.map((link) => (
+                    <button
+                      key={link.id}
+                      onClick={() => handleCategoryClick(link.value)}
+                      className={`shop-nav-link whitespace-nowrap px-4 py-2 rounded-full transition-colors ${
+                        selectedCategory === link.value
+                          ? "bg-blue-500 text-white"
+                          : "bg-white/10 text-white/80 hover:bg-white/20"
+                      }`}
+                    >
+                      {link.label}
+                    </button>
+                  ))}
+                </div>
               ) : (
                 <Filters />
               )}
@@ -190,7 +211,13 @@ const ShopNav = () => {
         </div>
       </div>
     );
-  }, [shopNavLinks, openMenu, activeTab]);
+  }, [
+    shopNavLinks,
+    openMenu,
+    activeTab,
+    selectedCategory,
+    handleCategoryClick,
+  ]);
 
   const menuIcon = useMemo(() => {
     return (
@@ -255,7 +282,7 @@ const ShopNav = () => {
   const normalShopNav = useMemo(() => {
     return (
       <div
-        className={`flex items-center justify-between w-full h-[38px] px-10 py-3 transition-all z-1 duration-300 ease-in-out animated-gradient-bg ${
+        className={`flex items-center justify-between w-full h-[40px] px-10 py-3 transition-all z-1 duration-300 ease-in-out animated-gradient-bg ${
           isDropdown
             ? "opacity-0 -translate-y-full"
             : "opacity-100 translate-y-0"
@@ -271,7 +298,7 @@ const ShopNav = () => {
   const scrollShopNav = useMemo(() => {
     return (
       <div
-        className={`fixed z-10 flex items-center justify-between w-full h-[38px] px-10 py-3 top-[42px] left-0 right-0 transition-all duration-500 ease-out animated-gradient-bg ${
+        className={`fixed z-10 flex items-center justify-between w-full h-[40px] px-10 py-3 top-[42px] left-0 right-0 transition-all duration-500 ease-out animated-gradient-bg ${
           showScrollNav
             ? "opacity-100 translate-y-0"
             : "opacity-0 -translate-y-full pointer-events-none"

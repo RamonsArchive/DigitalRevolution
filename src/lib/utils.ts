@@ -1,6 +1,6 @@
 import { gsap } from "gsap";
 import { SplitText } from "gsap/SplitText";
-import { AnimateCardScrollType, AnimateTextScrollType, AnimateTextType } from "./globalTypes";
+import { AnimateCardScrollType, AnimateTextScrollType, AnimateTextType, PrintfulProduct } from "./globalTypes";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 
@@ -130,3 +130,28 @@ export const animateCardsScroll = (props: AnimateCardScrollType) => {
     })
   })
 }
+
+
+export const extractGenderFromProduct = (product: PrintfulProduct): string => {
+  // Get the base product name from any variant
+  const baseProductName = product.sync_product.name || "";
+  const gender = baseProductName.split("-").pop()?.trim().toLowerCase() || "";
+  console.log("gender", gender);
+  console.log([...gender].map(c => c.charCodeAt(0)));
+  
+  // Map Printful's gender terms to your navigation categories
+  const genderMap: Record<string, string> = {
+    'unisex': 'unisex',
+    'men': 'men',
+    'mens': 'men',
+    "men's": 'men',
+    'women': 'women',
+    'womens': 'women',
+    "women's": 'women',
+    'kids': 'kids',
+    'youth': 'kids',
+    'child': 'kids'
+  };
+  
+  return genderMap[gender] || 'unisex';
+};

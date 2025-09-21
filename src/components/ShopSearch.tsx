@@ -1,8 +1,8 @@
 "use client";
-import React, { useState, useRef } from "react";
-import { Search, X, Filter } from "lucide-react";
-import { useClickOutside } from "@/hooks/useClickOutside";
-
+import React, { useState } from "react";
+import { Search, X } from "lucide-react";
+import { quickSearches } from "@/constants";
+import { useShopFilters } from "@/contexts/ShopContext";
 const ShopSearch = ({
   className,
   searchRefInner,
@@ -17,11 +17,12 @@ const ShopSearch = ({
   setOpenSearch: (open: boolean) => void;
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
-
+  const { toggleOptionSelected } = useShopFilters();
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle search logic here
-    console.log("Searching for:", searchQuery);
+    toggleOptionSelected("searchQuery", searchQuery);
+    setOpenSearch(false);
   };
 
   const handleClearSearch = () => {
@@ -101,18 +102,15 @@ const ShopSearch = ({
                 Quick Searches
               </h3>
               <div className="flex flex-wrap gap-3 justify-center">
-                {[
-                  "T-Shirts",
-                  "Hoodies",
-                  "Accessories",
-                  "New Arrivals",
-                  "Sale",
-                ].map((filter) => (
+                {quickSearches.map((filter) => (
                   <button
-                    key={filter}
+                    key={filter.value}
+                    onClick={() =>
+                      toggleOptionSelected("searchQuery", filter.value)
+                    }
                     className="px-4 py-2 bg-white/20 backdrop-blur-sm text-white rounded-full hover:bg-white/30 transition-all duration-300 ease-in-out hover:scale-105"
                   >
-                    {filter}
+                    {filter.label}
                   </button>
                 ))}
               </div>

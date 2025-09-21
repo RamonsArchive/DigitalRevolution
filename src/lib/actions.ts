@@ -8,8 +8,6 @@ const PRINTFUL_BASE = "https://api.printful.com";
 export const getProductsAndFilters = async ({limit = 100,
     offset = 0}: { limit?: number; offset?: number }) => {
     try {
-        console.log("getProductsAndFilters");
-
         const isRateLimited = await checkRateLimit("getProductsAndFilters");
         if (isRateLimited.status === "ERROR") {
             return isRateLimited;

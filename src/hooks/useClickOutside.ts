@@ -23,7 +23,6 @@ export const useClickOutside = ({
     const target = event.target as Node;
     const clickedInside = insideRef.current?.contains(target);
     const clickedOutside = outsideRef.current?.contains(target);
-    console.log(clickedInside, clickedOutside);
 
     if(clickedOutside && !currentState) {
       onInsideClick();

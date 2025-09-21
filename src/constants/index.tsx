@@ -144,24 +144,56 @@ export const HOME_TEXT_SECTIONS = {
 export const SHOP_DATA = {
   shopNavLinks: [
     {
+      id: "all",
+      label: "All",
+      value: "", // Empty string means no category filter
+    },
+    {
       id: "men",
       label: "Men",
-      href: "/shop/men",
+      value: "men", // Use this for filtering
     },
     {
       id: "women",
       label: "Women",
-      href: "/shop/women",
-    },
-    {
-      id: "kids",
-      label: "Kids",
-      href: "/shop/kids",
+      value: "women",
     },
     {
       id: "unisex",
       label: "Unisex",
-      href: "/shop/unisex",
+      value: "unisex",
+    },
+    {
+      id: "kids",
+      label: "Kids",
+      value: "kids",
     },
   ],
 };
+
+export const quickSearches = [
+  {
+    label: "T-Shirts",
+    value: "t-shirts",
+  },
+  {
+    label: "Hoodie",
+    value: "hoodie",
+  },
+  {
+    label: "Pullover",
+    value: "pullover",
+  },
+  {
+    label: "sweatpants",
+    value: "sweatpants",
+  },
+  {
+    label: "dark",
+    value: "dark",
+  },
+  {
+    label: "light",
+    value: "light",
+  },
+];
