@@ -5,7 +5,7 @@ import Image from "next/image";
 
 const ProductCard = ({ product }: { product: PrintfulProduct }) => {
   return (
-    <Link href={`/shop/${product.sync_product.id}`}>
+    <Link href={`/shop/product/${product.sync_product.external_id}`}>
       <div className="group relative flex flex-col rounded-2xl overflow-hidden bg-white shadow-lg hover:shadow-2xl transition-all duration-500 ease-out hover:scale-105 hover:-translate-y-2">
         {/* Animated gradient background */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary-200 via-secondary-200 to-primary-300 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"></div>

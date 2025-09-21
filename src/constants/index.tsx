@@ -173,8 +173,12 @@ export const SHOP_DATA = {
 
 export const quickSearches = [
   {
-    label: "T-Shirts",
-    value: "t-shirts",
+    label: "Founder's",
+    value: "founder's",
+  },
+  {
+    label: "Xen",
+    value: "xen",
   },
   {
     label: "Hoodie",
@@ -185,15 +189,15 @@ export const quickSearches = [
     value: "pullover",
   },
   {
-    label: "sweatpants",
+    label: "Sweatpants",
     value: "sweatpants",
   },
   {
-    label: "dark",
+    label: "Dark",
     value: "dark",
   },
   {
-    label: "light",
+    label: "Light",
     value: "light",
   },
 ];

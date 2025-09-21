@@ -7,7 +7,7 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
   try {
     const result = await getProductsAndFilters({ limit: 100, offset: 0 });
 
-    console.log(result.data.allProducts[10]);
+    console.log(result.data.allProducts[3]);
     console.log(result.data.filters);
     if (result.status === "ERROR") {
       console.error("Failed to fetch products:", result.error);

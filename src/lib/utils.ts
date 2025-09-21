@@ -155,3 +155,13 @@ export const extractGenderFromProduct = (product: PrintfulProduct): string => {
   
   return genderMap[gender] || 'unisex';
 };
+
+export const getProductBySlug = (slug: string, allProducts: PrintfulProduct[]) => {
+  try {
+
+    return allProducts.find((product) => product.sync_product.external_id === slug);
+  } catch (error) {
+    console.error(`Error getting product by slug ${slug}:`, error);
+    throw new Error(`Error getting product by slug ${slug}: ${error}`);
+  }
+};
