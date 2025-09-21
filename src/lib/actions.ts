@@ -146,3 +146,100 @@ const getAllProductsBatch = async (productJson: PrintfulSyncProductsResponse) =>
         })
     }
 }
+
+// New function to fetch detailed product information from Printful Catalog API
+export const getProductCatalogDetails = async (variantId: number) => {
+  try {
+    const isRateLimited = await checkRateLimit("getProductCatalogDetails");
+    if (isRateLimited.status === "ERROR") {
+      return isRateLimited;
+    }
+
+    const headers: Record<string, string> = {
+      "Authorization": `Bearer ${process.env.PRINTFUL_API_KEY}`,
+      "Content-Type": "application/json",
+    };
+
+    const response = await fetch(`${PRINTFUL_BASE}/products/variant/${variantId}`, {
+      method: "GET",
+      headers,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Printful API error: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    
+    return parseServerActionResponse({
+      status: "SUCCESS",
+      error: "",
+      data: {
+        variantId,
+        materials: data.result?.materials || [],
+        description: data.result?.description || "",
+        dimensions: data.result?.dimensions || {},
+        weight: data.result?.weight || 0,
+        care_instructions: data.result?.care_instructions || "",
+        features: data.result?.features || [],
+        specifications: data.result?.specifications || {},
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching product catalog details:", error);
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: error,
+      data: null,
+    });
+  }
+};
+
+// Background function to fetch all product details (non-blocking)
+export const fetchAllProductDetails = async (products: PrintfulProduct[]) => {
+  try {
+    // Get all unique variant IDs
+    const variantIds = new Set<number>();
+    products.forEach(product => {
+      product.sync_variants.forEach(variant => {
+        variantIds.add(variant.variant_id);
+      });
+    });
+
+    console.log(`Fetching details for ${variantIds.size} variants in background...`);
+
+    // Fetch details for all variants in background
+    const detailPromises = Array.from(variantIds).map(variantId => 
+      getProductCatalogDetails(variantId)
+    );
+
+    // Use Promise.allSettled to not fail if some requests fail
+    const results = await Promise.allSettled(detailPromises);
+    
+    // Create mapping of variant ID to details
+    const productDetailsMap = new Map();
+    let successCount = 0;
+    results.forEach((result, index) => {
+      if (result.status === 'fulfilled' && result.value.status === 'SUCCESS') {
+        const variantId = Array.from(variantIds)[index];
+        productDetailsMap.set(variantId, result.value.data);
+        successCount++;
+      }
+    });
+
+    console.log(`Successfully fetched details for ${successCount}/${variantIds.size} variants`);
+
+    return parseServerActionResponse({
+      status: "SUCCESS",
+      error: "",
+      data: productDetailsMap,
+    });
+  } catch (error) {
+    console.error("Error fetching all product details:", error);
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: error,
+      data: new Map(),
+    });
+  }
+};

@@ -158,10 +158,39 @@ export const extractGenderFromProduct = (product: PrintfulProduct): string => {
 
 export const getProductBySlug = (slug: string, allProducts: PrintfulProduct[]) => {
   try {
-
     return allProducts.find((product) => product.sync_product.external_id === slug);
   } catch (error) {
     console.error(`Error getting product by slug ${slug}:`, error);
     throw new Error(`Error getting product by slug ${slug}: ${error}`);
   }
+};
+
+// Utility function to aggregate product images from variants
+export const aggregateProductImages = (product: any) => {
+  const images: Array<{
+    url: string;
+    variantId: number;
+    color: string;
+    size: string;
+  }> = [];
+  
+  product.sync_variants.forEach((variant: any) => {
+    // Get the preview image from files array (index 1 as mentioned)
+    const previewFile = variant.files?.[1];
+    if (previewFile?.preview_url) {
+      images.push({
+        url: previewFile.preview_url,
+        variantId: variant.id,
+        color: variant.color,
+        size: variant.size,
+      });
+    }
+  });
+
+  // Remove duplicates based on URL
+  const uniqueImages = images.filter((image, index, self) => 
+    index === self.findIndex(img => img.url === image.url)
+  );
+
+  return uniqueImages;
 };

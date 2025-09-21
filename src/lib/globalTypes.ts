@@ -146,6 +146,22 @@ export interface PrintfulFile {
     thumbnail_url: string;
     is_ignored: boolean;
   }
+
+  // Detailed product information from Printful Catalog API
+  export interface ProductDetails {
+    variantId: number;
+    materials: string[];
+    description: string;
+    dimensions: {
+      width?: number;
+      height?: number;
+      depth?: number;
+    };
+    weight: number;
+    care_instructions: string;
+    features: string[];
+    specifications: Record<string, any>;
+  }
   
   export interface PrintfulProduct {
     sync_product: PrintfulSyncProduct;

@@ -7,7 +7,11 @@ import React, {
   useCallback,
 } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { ShopFilters, PrintfulProduct } from "@/lib/globalTypes";
+import {
+  ShopFilters,
+  PrintfulProduct,
+  ProductDetails,
+} from "@/lib/globalTypes";
 import { extractGenderFromProduct } from "@/lib/utils";
 
 // URL parameter keys - keep these short to avoid long URLs
@@ -61,6 +65,7 @@ interface ShopContextType {
   filterUIState: FilterUIState;
   allProducts: PrintfulProduct[];
   filteredProducts: PrintfulProduct[];
+  productDetailsMap: Map<number, ProductDetails>;
 
   // Actions
   setSelectedCategory: (category: string) => void;
@@ -83,12 +88,14 @@ interface ShopProviderProps {
   children: React.ReactNode;
   allProducts: PrintfulProduct[];
   availableFilters: ShopFilters;
+  productDetailsMap: Map<number, ProductDetails>;
 }
 
 const ShopProvider = ({
   children,
   allProducts,
   availableFilters,
+  productDetailsMap,
 }: ShopProviderProps) => {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -550,6 +557,7 @@ const ShopProvider = ({
         filterUIState,
         allProducts,
         filteredProducts,
+        productDetailsMap,
 
         // Actions
         setSelectedCategory,
