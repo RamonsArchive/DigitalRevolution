@@ -1,36 +1,42 @@
 "use client";
-import React, { useCallback, useEffect, useRef } from "react";
-import { useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useRef,
+  useMemo,
+  useState,
+} from "react";
 import { SHOP_DATA } from "@/constants";
 import { Menu, X, ShoppingCart } from "lucide-react";
 import { useScrollThrottle } from "@/hooks/useScrollThrottle";
-import { useClickOutside } from "@/hooks/useClickOutside";
 import { animateTextTimeline } from "@/lib/utils";
 import ShopSearch from "./ShopSearch";
 import Filters from "./Filters";
 import { useShopFilters } from "@/contexts/ShopContext";
+import { useClickOutside } from "@/hooks/useClickOutside";
 
 const ShopNav = () => {
   const shopNavLinks = SHOP_DATA.shopNavLinks;
 
+  // Refs
+  const menuRefInner = useRef<HTMLDivElement>(null);
   const normalMenuRef = useRef<HTMLButtonElement>(null);
   const scrollMenuRef = useRef<HTMLButtonElement>(null);
-  const menuRefInner = useRef<HTMLDivElement>(null);
+  const searchRefInner = useRef<HTMLDivElement>(null);
+  const searchRefOuter = useRef<HTMLDivElement>(null);
 
+  // State
   const [isDropdown, setIsDropdown] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [shouldMenuRender, setShouldMenuRender] = useState(false);
   const [showScrollNav, setShowScrollNav] = useState(false);
   const [activeTab, setActiveTab] = useState<"pages" | "filters">("pages");
-
-  const searchRefInner = useRef<HTMLDivElement>(null);
-  const searchRefOuter = useRef<HTMLDivElement>(null);
   const [openSearch, setOpenSearch] = useState(false);
 
   const { selectedCategory, toggleOptionSelected } = useShopFilters();
 
+  // Handle category click
   const handleCategoryClick = (categoryValue: string) => {
-    // Use the same toggleOptionSelected function that handles URL updates
     toggleOptionSelected("category", categoryValue);
   };
 
@@ -47,6 +53,7 @@ const ShopNav = () => {
     },
   });
 
+  // Scroll handling
   const handleScroll = useCallback(() => {
     const currentScrollY = window.scrollY;
     const shouldShow = currentScrollY > 42;
@@ -58,18 +65,19 @@ const ShopNav = () => {
     if (isDropdown) {
       const timer = setTimeout(() => {
         setShowScrollNav(true);
-      }, 200); // 200ms delay
+      }, 200);
       return () => clearTimeout(timer);
     } else {
       setShowScrollNav(false);
     }
   }, [isDropdown]);
+
   // Scroll throttling effect
   useScrollThrottle({ onScroll: handleScroll });
 
+  // Animation effect for menu
   useEffect(() => {
     if (shouldMenuRender) {
-      // Wait for DOM to update after menu opens
       animateTextTimeline({
         targets: [".shop-nav-link"],
         type: "words",
@@ -83,31 +91,42 @@ const ShopNav = () => {
     }
   }, [shouldMenuRender]);
 
-  // menu click outside effect
-  useClickOutside({
-    insideRef: menuRefInner,
-    outsideRef: isDropdown ? scrollMenuRef : normalMenuRef,
-    currentState: openMenu,
-    onInsideClick: () => {
-      setOpenMenu(true);
-      setShouldMenuRender(true);
-    },
-    onOutsideClick: () => {
-      setOpenMenu(false);
-      setShouldMenuRender(false);
-    },
-  });
-
+  // Menu click handlers
   const handleMenuClick = useCallback(() => {
+    console.log("Menu clicked - opening menu");
     setOpenMenu(true);
     setShouldMenuRender(true);
   }, []);
 
   const handleCloseMenu = useCallback(() => {
+    console.log("Closing menu");
     setOpenMenu(false);
     setShouldMenuRender(false);
   }, []);
 
+  // Click outside effect for menu - only for closing
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        openMenu &&
+        menuRefInner.current &&
+        !menuRefInner.current.contains(event.target as Node)
+      ) {
+        setOpenMenu(false);
+        setShouldMenuRender(false);
+      }
+    };
+
+    if (openMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openMenu]);
+
+  // Menu data component
   const menuData = useMemo(() => {
     return (
       <div
@@ -116,7 +135,7 @@ const ShopNav = () => {
           openMenu ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-full"
         }`}
       >
-        {/* Backdrop to prevent clicks through */}
+        {/* Backdrop */}
         <div className="absolute inset-0 bg-black/20 backdrop-blur-sm"></div>
         <div className="flex flex-col w-full gap-10">
           <div className="relative z-10 flex flex-col w-full">
@@ -212,37 +231,41 @@ const ShopNav = () => {
       </div>
     );
   }, [
-    shopNavLinks,
     openMenu,
     activeTab,
     selectedCategory,
     handleCategoryClick,
+    handleCloseMenu,
   ]);
 
-  const menuIcon = useMemo(() => {
-    return (
-      <div className="flex items-center cursor-pointer">
-        {isDropdown ? (
-          <button
-            ref={scrollMenuRef}
-            onClick={handleMenuClick}
-            className="p-2 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl"
-          >
-            <Menu className="w-5 h-5" />
-          </button>
-        ) : (
-          <button
-            ref={normalMenuRef}
-            onClick={handleMenuClick}
-            className="p-2 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl"
-          >
-            <Menu className="w-5 h-5" />
-          </button>
-        )}
-      </div>
-    );
-  }, [isDropdown, handleMenuClick]);
+  // Menu icon component - separate for normal and scroll
+  const NormalMenuIcon = useMemo(
+    () => (
+      <button
+        ref={normalMenuRef}
+        onClick={handleMenuClick}
+        className="p-2 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl"
+      >
+        <Menu className="w-5 h-5" />
+      </button>
+    ),
+    [handleMenuClick]
+  );
 
+  const ScrollMenuIcon = useMemo(
+    () => (
+      <button
+        ref={scrollMenuRef}
+        onClick={handleMenuClick}
+        className="p-2 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl"
+      >
+        <Menu className="w-5 h-5" />
+      </button>
+    ),
+    [handleMenuClick]
+  );
+
+  // Search button
   const searchButton = useMemo(() => {
     return (
       <div className="flex items-center" ref={searchRefOuter}>
@@ -268,6 +291,8 @@ const ShopNav = () => {
       </div>
     );
   }, [openSearch]);
+
+  // Shopping cart
   const shopCart = useMemo(() => {
     return (
       <button className="relative p-2 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl">
@@ -279,22 +304,24 @@ const ShopNav = () => {
     );
   }, []);
 
+  // Normal shop nav
   const normalShopNav = useMemo(() => {
     return (
       <div
         className={`flex items-center justify-between w-full h-[40px] px-10 py-3 transition-all z-1 duration-300 ease-in-out animated-gradient-bg ${
           isDropdown
-            ? "opacity-0 -translate-y-full"
+            ? "opacity-0 -translate-y-full pointer-events-none"
             : "opacity-100 translate-y-0"
         }`}
       >
-        {menuIcon}
+        <div className="flex items-center cursor-pointer">{NormalMenuIcon}</div>
         {searchButton}
         {shopCart}
       </div>
     );
-  }, [isDropdown, menuIcon, searchButton, shopCart]);
+  }, [isDropdown, NormalMenuIcon, searchButton, shopCart]);
 
+  // Scroll shop nav
   const scrollShopNav = useMemo(() => {
     return (
       <div
@@ -304,19 +331,20 @@ const ShopNav = () => {
             : "opacity-0 -translate-y-full pointer-events-none"
         }`}
       >
-        {menuIcon}
+        <div className="flex items-center cursor-pointer">{ScrollMenuIcon}</div>
         {searchButton}
         {shopCart}
       </div>
     );
-  }, [showScrollNav, menuIcon, searchButton, shopCart]);
+  }, [showScrollNav, ScrollMenuIcon, searchButton, shopCart]);
+
   return (
     <>
       {normalShopNav}
       {scrollShopNav}
       {menuData}
-      {/* Render search overlay at root level to avoid z-index issues */}
 
+      {/* Search overlay */}
       <ShopSearch
         className="fixed top-0 left-0 right-0 overflow-y-hidden h-[80dvh] w-full z-[9999] transition-all duration-300 ease-out"
         searchRefInner={searchRefInner}

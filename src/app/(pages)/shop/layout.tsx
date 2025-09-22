@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import ShopNav from "@/components/ShopNav";
 import { getProductsAndFilters, fetchAllProductDetails } from "@/lib/actions";
 import ShopProvider from "@/contexts/ShopContext";
@@ -12,18 +12,25 @@ const BackgroundDataFetcher = async ({
   try {
     // This runs in the background without blocking the page load
     const detailsResult = await fetchAllProductDetails(allProducts);
+    console.log(detailsResult);
     const productDetailsMap =
       detailsResult.status === "SUCCESS" ? detailsResult.data : new Map();
+
+    // Convert back to Map if it's a plain object
+    const finalMap =
+      productDetailsMap instanceof Map
+        ? productDetailsMap
+        : new Map(Object.entries(productDetailsMap));
 
     // In a real implementation, you might want to store this in a global cache
     // or update the context dynamically. For now, we'll just log success.
     console.log(
       "Background product details loaded:",
-      productDetailsMap.size,
+      finalMap.size,
       "variants"
     );
 
-    return productDetailsMap;
+    return finalMap;
   } catch (error) {
     console.error("Background data fetching failed:", error);
     return new Map();
@@ -60,23 +67,25 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
       );
     }
 
-    // Start background fetching immediately but don't wait for it
-    const productDetailsPromise = BackgroundDataFetcher({
+    // Fetch product details in the background
+    const productDetailsResult = await BackgroundDataFetcher({
       allProducts: result.data.allProducts,
     });
+
+    // Convert back to Map if it's a plain object
+    const productDetailsMap =
+      productDetailsResult instanceof Map
+        ? productDetailsResult
+        : new Map(Object.entries(productDetailsResult));
 
     return (
       <ShopProvider
         availableFilters={result.data.filters}
         allProducts={result.data.allProducts}
-        productDetailsMap={new Map()} // Start with empty map, will be populated in background
+        productDetailsMap={productDetailsMap}
       >
         <ShopNav />
         {children}
-        {/* Background data fetcher - runs without blocking */}
-        <Suspense fallback={null}>
-          <BackgroundDataFetcher allProducts={result.data.allProducts} />
-        </Suspense>
       </ShopProvider>
     );
   } catch (error) {

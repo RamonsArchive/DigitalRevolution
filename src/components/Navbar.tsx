@@ -23,8 +23,8 @@ const Navbar = () => {
   const [isDropdown, setIsDropdown] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
-  const normalMenuRef = useRef<SVGSVGElement>(null);
-  const scrollMenuRef = useRef<SVGSVGElement>(null);
+  const normalMenuRef = useRef<HTMLButtonElement>(null);
+  const scrollMenuRef = useRef<HTMLButtonElement>(null);
   const menuRefInner = useRef<HTMLDivElement>(null);
 
   const handleScroll = useCallback(() => {
@@ -52,20 +52,34 @@ const Navbar = () => {
     }
   }, [shouldRender]);
 
-  // Click outside effect
-  useClickOutside({
-    insideRef: menuRefInner,
-    outsideRef: normalMenuRef || scrollMenuRef || null,
-    currentState: openMenu,
-    onInsideClick: () => {
-      setOpenMenu(true);
-      setShouldRender(true);
-    },
-    onOutsideClick: () => {
-      setShouldRender(false);
-      setOpenMenu(false);
-    },
-  });
+  // Menu click handler
+  const handleMenuClick = useCallback(() => {
+    console.log("Navbar menu clicked - opening menu");
+    setOpenMenu(true);
+    setShouldRender(true);
+  }, []);
+
+  // Click outside effect - only for closing
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        openMenu &&
+        menuRefInner.current &&
+        !menuRefInner.current.contains(event.target as Node)
+      ) {
+        setOpenMenu(false);
+        setShouldRender(false);
+      }
+    };
+
+    if (openMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openMenu]);
 
   // Memoized navigation links - only re-renders if NAV_LINKS changes
   const navigationLinks = useMemo(
@@ -122,6 +136,33 @@ const Navbar = () => {
     setShouldRender(false);
   }, []);
 
+  // Menu icon components - separate for normal and scroll
+  const NormalMenuIcon = useMemo(
+    () => (
+      <button
+        ref={normalMenuRef}
+        onClick={handleMenuClick}
+        className="p-2 rounded-full transition-all duration-300 ease-in-out hover:bg-slate-400 active:bg-slate-600"
+      >
+        <Menu className="text-white cursor-pointer transition-all duration-300 ease-in-out hover:scale-110 active:scale-95" />
+      </button>
+    ),
+    [handleMenuClick]
+  );
+
+  const ScrollMenuIcon = useMemo(
+    () => (
+      <button
+        ref={scrollMenuRef}
+        onClick={handleMenuClick}
+        className="p-2 rounded-full transition-all duration-300 ease-in-out hover:bg-slate-400 active:bg-slate-600"
+      >
+        <Menu className="text-white cursor-pointer transition-all duration-300 ease-in-out hover:scale-110 active:scale-95" />
+      </button>
+    ),
+    [handleMenuClick]
+  );
+
   // Mobile menu component - always rendered for smooth animations
   const mobileMenu = useMemo(() => {
     return (
@@ -159,15 +200,10 @@ const Navbar = () => {
         <div className="hidden md:flex items-center h-full">
           {navigationLinks}
         </div>
-        <div className="flex md:hidden items-center">
-          <Menu
-            ref={scrollMenuRef}
-            className="text-white cursor-pointer transition-all duration-300 ease-in-out hover:scale-110 active:scale-95"
-          />
-        </div>
+        <div className="flex md:hidden items-center">{ScrollMenuIcon}</div>
       </div>
     );
-  }, [isDropdown, logo, navigationLinks]);
+  }, [isDropdown, logo, navigationLinks, ScrollMenuIcon]);
 
   const normalNavbar = useMemo(() => {
     return (
@@ -182,15 +218,10 @@ const Navbar = () => {
         <div className="hidden md:flex items-center h-full">
           {navigationLinks}
         </div>
-        <div className="flex md:hidden items-center">
-          <Menu
-            ref={normalMenuRef}
-            className="text-white cursor-pointer transition-all duration-300 ease-in-out hover:scale-110 active:scale-95"
-          />
-        </div>
+        <div className="flex md:hidden items-center">{NormalMenuIcon}</div>
       </div>
     );
-  }, [isDropdown, logo, navigationLinks]);
+  }, [isDropdown, logo, navigationLinks, NormalMenuIcon]);
 
   return (
     <>

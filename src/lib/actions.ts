@@ -149,40 +149,41 @@ const getAllProductsBatch = async (productJson: PrintfulSyncProductsResponse) =>
 
 // New function to fetch detailed product information from Printful Catalog API
 export const getProductCatalogDetails = async (variantId: number) => {
+  console.log("I'm in the getProductCatalogDetails function");
   try {
     const isRateLimited = await checkRateLimit("getProductCatalogDetails");
     if (isRateLimited.status === "ERROR") {
       return isRateLimited;
     }
 
-    const headers: Record<string, string> = {
-      "Authorization": `Bearer ${process.env.PRINTFUL_API_KEY}`,
-      "Content-Type": "application/json",
-    };
-
-    const response = await fetch(`${PRINTFUL_BASE}/products/variant/${variantId}`, {
+    // Use the Catalog API endpoint (public API, no auth required)
+    const response = await fetch(`https://api.printful.com/products/variant/${variantId}`, {
       method: "GET",
-      headers,
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
+    console.log(response);
 
     if (!response.ok) {
-      throw new Error(`Printful API error: ${response.status} ${response.statusText}`);
+      throw new Error(`Printful Catalog API error: ${response.status} ${response.statusText}`);
     }
 
     const data = await response.json();
+    console.log(data);
     
     return parseServerActionResponse({
       status: "SUCCESS",
       error: "",
       data: {
         variantId,
-        materials: data.result?.materials || [],
-        description: data.result?.description || "",
-        dimensions: data.result?.dimensions || {},
-        weight: data.result?.weight || 0,
-        care_instructions: data.result?.care_instructions || "",
-        features: data.result?.features || [],
-        specifications: data.result?.specifications || {},
+        materials: data.result?.variant?.material || [],
+        description: data.result?.product?.description || "",
+        dimensions: data.result?.product?.dimensions || {},
+        weight: data.result?.product?.weight || 0,
+        care_instructions: data.result?.product?.care_instructions || "",
+        features: data.result?.product?.features || [],
+        specifications: data.result?.product?.specifications || {},
       },
     });
   } catch (error) {
@@ -195,51 +196,127 @@ export const getProductCatalogDetails = async (variantId: number) => {
   }
 };
 
-// Background function to fetch all product details (non-blocking)
-export const fetchAllProductDetails = async (products: PrintfulProduct[]) => {
+// Alternative: Fetch product-level details (more efficient, fewer API calls)
+export const getProductDetailsFromCatalog = async (productId: number) => {
   try {
-    // Get all unique variant IDs
-    const variantIds = new Set<number>();
-    products.forEach(product => {
-      product.sync_variants.forEach(variant => {
-        variantIds.add(variant.variant_id);
-      });
+    const isRateLimited = await checkRateLimit("getProductDetails");
+    if (isRateLimited.status === "ERROR") {
+      return isRateLimited;
+    }
+
+    const response = await fetch(`https://api.printful.com/products/${productId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
 
-    console.log(`Fetching details for ${variantIds.size} variants in background...`);
+    if (!response.ok) {
+      throw new Error(`Printful Product API error: ${response.status} ${response.statusText}`);
+    }
 
-    // Fetch details for all variants in background
-    const detailPromises = Array.from(variantIds).map(variantId => 
-      getProductCatalogDetails(variantId)
-    );
-
-    // Use Promise.allSettled to not fail if some requests fail
-    const results = await Promise.allSettled(detailPromises);
+    const data = await response.json();
     
-    // Create mapping of variant ID to details
+    return parseServerActionResponse({
+      status: "SUCCESS",
+      error: "",
+      data: {
+        productId,
+        description: data.result?.description || "",
+        dimensions: data.result?.dimensions || {},
+        weight: data.result?.weight || 0,
+        care_instructions: data.result?.care_instructions || "",
+        features: data.result?.features || [],
+        specifications: data.result?.specifications || {},
+        // Get materials from the first variant as a fallback
+        materials: data.result?.variants?.[0]?.material || [],
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching product details:", error);
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: error,
+      data: null,
+    });
+  }
+};
+
+// Highly optimized function that fetches product-level details instead of variant-level
+export const fetchAllProductDetails = async (products: PrintfulProduct[]) => {
+  try {
+    console.log(`Starting optimized product details fetch for ${products.length} products...`);
+
+    // Create a map to store product details
     const productDetailsMap = new Map();
-    let successCount = 0;
-    results.forEach((result, index) => {
-      if (result.status === 'fulfilled' && result.value.status === 'SUCCESS') {
-        const variantId = Array.from(variantIds)[index];
-        productDetailsMap.set(variantId, result.value.data);
-        successCount++;
+    let processedProducts = 0;
+
+    // Get unique product IDs (much fewer than variants)
+    const productIds = new Set<number>();
+    products.forEach(product => {
+      if (product.sync_product.id) {
+        productIds.add(product.sync_product.id);
       }
     });
 
-    console.log(`Successfully fetched details for ${successCount}/${variantIds.size} variants`);
+    console.log(`Fetching details for ${productIds.size} unique products (instead of ${products.reduce((sum, p) => sum + p.sync_variants.length, 0)} variants)`);
+
+    // Process products in small batches to avoid rate limiting
+    const BATCH_SIZE = 3; // Very small batch size
+    const DELAY_BETWEEN_BATCHES = 2000; // 2 second delay between batches
+    const DELAY_BETWEEN_REQUESTS = 500; // 500ms delay between individual requests
+
+    const productIdArray = Array.from(productIds);
+
+    for (let i = 0; i < productIdArray.length; i += BATCH_SIZE) {
+      const batch = productIdArray.slice(i, i + BATCH_SIZE);
+      
+      console.log(`Processing product batch ${Math.floor(i / BATCH_SIZE) + 1}/${Math.ceil(productIdArray.length / BATCH_SIZE)}`);
+
+      // Process each product in the batch with delays
+      for (const productId of batch) {
+        try {
+          // Add delay between individual requests
+          await new Promise(resolve => setTimeout(resolve, DELAY_BETWEEN_REQUESTS));
+          
+          const result = await getProductDetailsFromCatalog(productId);
+          if (result.status === 'SUCCESS') {
+            // Store product details for all variants of this product
+            const product = products.find(p => p.sync_product.id === productId);
+            if (product && result.data) {
+              product.sync_variants.forEach(variant => {
+                productDetailsMap.set(variant.variant_id, {
+                  ...result.data,
+                  variantId: variant.variant_id,
+                  // Use product-level materials as fallback
+                  materials: result.data.materials,
+                });
+              });
+            }
+            processedProducts++;
+          }
+        } catch (error) {
+          console.warn(`Failed to fetch details for product ${productId}:`, error);
+        }
+      }
+    }
+
+    console.log(`Successfully processed ${processedProducts}/${productIdArray.length} products`);
+
+    // Convert Map to plain object for serialization
+    const serializableMap = Object.fromEntries(productDetailsMap);
 
     return parseServerActionResponse({
       status: "SUCCESS",
       error: "",
-      data: productDetailsMap,
+      data: serializableMap,
     });
   } catch (error) {
     console.error("Error fetching all product details:", error);
     return parseServerActionResponse({
       status: "ERROR",
       error: error,
-      data: new Map(),
+      data: {},
     });
   }
 };
