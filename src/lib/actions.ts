@@ -196,15 +196,15 @@ export const getProductCatalogDetails = async (variantId: number) => {
   }
 };
 
-// Alternative: Fetch product-level details (more efficient, fewer API calls)
-export const getProductDetailsFromCatalog = async (productId: number) => {
+// Fetch product details by variant ID (this works with the sync API data)
+export const getProductDetailsByVariant = async (variantId: number) => {
   try {
-    const isRateLimited = await checkRateLimit("getProductDetails");
+    const isRateLimited = await checkRateLimit("getProductDetailsByVariant");
     if (isRateLimited.status === "ERROR") {
       return isRateLimited;
     }
 
-    const response = await fetch(`https://api.printful.com/products/${productId}`, {
+    const response = await fetch(`https://api.printful.com/products/variant/${variantId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -212,7 +212,7 @@ export const getProductDetailsFromCatalog = async (productId: number) => {
     });
 
     if (!response.ok) {
-      throw new Error(`Printful Product API error: ${response.status} ${response.statusText}`);
+      throw new Error(`Printful Variant API error: ${response.status} ${response.statusText}`);
     }
 
     const data = await response.json();
@@ -221,19 +221,18 @@ export const getProductDetailsFromCatalog = async (productId: number) => {
       status: "SUCCESS",
       error: "",
       data: {
-        productId,
-        description: data.result?.description || "",
-        dimensions: data.result?.dimensions || {},
-        weight: data.result?.weight || 0,
-        care_instructions: data.result?.care_instructions || "",
-        features: data.result?.features || [],
-        specifications: data.result?.specifications || {},
-        // Get materials from the first variant as a fallback
-        materials: data.result?.variants?.[0]?.material || [],
+        variantId,
+        description: data.result?.product?.description || "",
+        dimensions: data.result?.product?.dimensions || {},
+        weight: data.result?.product?.weight || 0,
+        care_instructions: data.result?.product?.care_instructions || "",
+        features: data.result?.product?.features || [],
+        specifications: data.result?.product?.specifications || {},
+        materials: data.result?.variant?.material || [],
       },
     });
   } catch (error) {
-    console.error("Error fetching product details:", error);
+    console.error("Error fetching product details by variant:", error);
     return parseServerActionResponse({
       status: "ERROR",
       error: error,
@@ -242,81 +241,26 @@ export const getProductDetailsFromCatalog = async (productId: number) => {
   }
 };
 
-// Highly optimized function that fetches product-level details instead of variant-level
-export const fetchAllProductDetails = async (products: PrintfulProduct[]) => {
+// Get product details by variant ID only (no refetching all products)
+export const getProductDetailsByVariantId = async (variantId: number) => {
   try {
-    console.log(`Starting optimized product details fetch for ${products.length} products...`);
-
-    // Create a map to store product details
-    const productDetailsMap = new Map();
-    let processedProducts = 0;
-
-    // Get unique product IDs (much fewer than variants)
-    const productIds = new Set<number>();
-    products.forEach(product => {
-      if (product.sync_product.id) {
-        productIds.add(product.sync_product.id);
-      }
-    });
-
-    console.log(`Fetching details for ${productIds.size} unique products (instead of ${products.reduce((sum, p) => sum + p.sync_variants.length, 0)} variants)`);
-
-    // Process products in small batches to avoid rate limiting
-    const BATCH_SIZE = 3; // Very small batch size
-    const DELAY_BETWEEN_BATCHES = 2000; // 2 second delay between batches
-    const DELAY_BETWEEN_REQUESTS = 500; // 500ms delay between individual requests
-
-    const productIdArray = Array.from(productIds);
-
-    for (let i = 0; i < productIdArray.length; i += BATCH_SIZE) {
-      const batch = productIdArray.slice(i, i + BATCH_SIZE);
-      
-      console.log(`Processing product batch ${Math.floor(i / BATCH_SIZE) + 1}/${Math.ceil(productIdArray.length / BATCH_SIZE)}`);
-
-      // Process each product in the batch with delays
-      for (const productId of batch) {
-        try {
-          // Add delay between individual requests
-          await new Promise(resolve => setTimeout(resolve, DELAY_BETWEEN_REQUESTS));
-          
-          const result = await getProductDetailsFromCatalog(productId);
-          if (result.status === 'SUCCESS') {
-            // Store product details for all variants of this product
-            const product = products.find(p => p.sync_product.id === productId);
-            if (product && result.data) {
-              product.sync_variants.forEach(variant => {
-                productDetailsMap.set(variant.variant_id, {
-                  ...result.data,
-                  variantId: variant.variant_id,
-                  // Use product-level materials as fallback
-                  materials: result.data.materials,
-                });
-              });
-            }
-            processedProducts++;
-          }
-        } catch (error) {
-          console.warn(`Failed to fetch details for product ${productId}:`, error);
-        }
-      }
+    const detailsResult = await getProductDetailsByVariant(variantId);
+    
+    if (detailsResult.status === "SUCCESS") {
+      return parseServerActionResponse({
+        status: "SUCCESS",
+        error: "",
+        data: detailsResult.data,
+      });
     }
 
-    console.log(`Successfully processed ${processedProducts}/${productIdArray.length} products`);
-
-    // Convert Map to plain object for serialization
-    const serializableMap = Object.fromEntries(productDetailsMap);
-
-    return parseServerActionResponse({
-      status: "SUCCESS",
-      error: "",
-      data: serializableMap,
-    });
+    return detailsResult;
   } catch (error) {
-    console.error("Error fetching all product details:", error);
+    console.error("Error fetching product details by variant ID:", error);
     return parseServerActionResponse({
       status: "ERROR",
       error: error,
-      data: {},
+      data: null,
     });
   }
 };

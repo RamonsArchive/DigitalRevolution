@@ -1,4 +1,4 @@
-import ProductPageClient from "@/components/ProductPageClient";
+import ProductPageClient from "./ProductPageClient";
 import ProductProvider from "@/contexts/ProductContext";
 
 const ProductPage = async ({

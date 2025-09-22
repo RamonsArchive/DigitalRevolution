@@ -4,6 +4,7 @@ import Image from "next/image";
 import { PrintfulProduct } from "@/lib/globalTypes";
 import { useGSAP } from "@gsap/react";
 import { useProduct } from "@/contexts/ProductContext";
+import { useShopFilters } from "@/contexts/ShopContext";
 import gsap from "gsap";
 
 interface ProductImage {
@@ -14,10 +15,10 @@ interface ProductImage {
 }
 
 interface ProductPageClientProps {
-  product: PrintfulProduct;
+  slug: string;
 }
 
-const ProductPageClient = ({ product }: ProductPageClientProps) => {
+const ProductPageClient = ({ slug }: ProductPageClientProps) => {
   const {
     selectedVariantIndex,
     setSelectedVariantIndex,
@@ -34,11 +35,58 @@ const ProductPageClient = ({ product }: ProductPageClientProps) => {
   const thumbnailRefs = useRef<(HTMLDivElement | null)[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Find product from context using slug
+  const { allProducts } = useShopFilters();
+  const product = allProducts.find(
+    (p: PrintfulProduct) => p.sync_product.external_id?.toLowerCase() === slug
+  );
+
+  // State for product details
+  const [productDetails, setProductDetails] = useState<any>(null);
+  const [isLoadingDetails, setIsLoadingDetails] = useState(false);
+
+  // Fetch product details on-demand
+  useEffect(() => {
+    if (product && !productDetails) {
+      setIsLoadingDetails(true);
+      const firstVariant = product.sync_variants[0];
+      if (firstVariant) {
+        // Import the function dynamically to avoid server-side issues
+        import("@/lib/actions").then(({ getProductDetailsByVariantId }) => {
+          getProductDetailsByVariantId(firstVariant.variant_id).then(
+            (result) => {
+              if (result.status === "SUCCESS") {
+                setProductDetails(result.data);
+              }
+              setIsLoadingDetails(false);
+            }
+          );
+        });
+      }
+    }
+  }, [product, productDetails]);
+
+  // Early return if no product
+  if (!product) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+            Product Not Found
+          </h1>
+          <p className="text-gray-600">
+            The product you're looking for doesn't exist.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   // Aggregate all product images from variants
   const productImages: ProductImage[] = useMemo(() => {
     const images: ProductImage[] = [];
 
-    product.sync_variants.forEach((variant) => {
+    product.sync_variants.forEach((variant: any) => {
       // Get the preview image from files array (index 1 as mentioned)
       const previewFile = variant.files?.[1];
       if (previewFile?.preview_url) {
@@ -150,12 +198,12 @@ const ProductPageClient = ({ product }: ProductPageClientProps) => {
 
   // Get unique colors and sizes for variant selection
   const availableColors = useMemo(() => {
-    const colors = [...new Set(product.sync_variants.map((v) => v.color))];
+    const colors = [...new Set(product.sync_variants.map((v: any) => v.color))];
     return colors;
   }, [product.sync_variants]);
 
   const availableSizes = useMemo(() => {
-    const sizes = [...new Set(product.sync_variants.map((v) => v.size))];
+    const sizes = [...new Set(product.sync_variants.map((v: any) => v.size))];
     return sizes;
   }, [product.sync_variants]);
 
@@ -259,9 +307,9 @@ const ProductPageClient = ({ product }: ProductPageClientProps) => {
                   Color
                 </h3>
                 <div className="flex gap-2 flex-wrap">
-                  {availableColors.map((color) => {
+                  {availableColors.map((color: any) => {
                     const variantIndex = product.sync_variants.findIndex(
-                      (v) => v.color === color
+                      (v: any) => v.color === color
                     );
                     return (
                       <button
@@ -287,9 +335,9 @@ const ProductPageClient = ({ product }: ProductPageClientProps) => {
               <div>
                 <h3 className="text-sm font-medium text-gray-700 mb-2">Size</h3>
                 <div className="flex gap-2 flex-wrap">
-                  {availableSizes.map((size) => {
+                  {availableSizes.map((size: any) => {
                     const variantIndex = product.sync_variants.findIndex(
-                      (v) => v.size === size
+                      (v: any) => v.size === size
                     );
                     return (
                       <button
@@ -383,6 +431,70 @@ const ProductPageClient = ({ product }: ProductPageClientProps) => {
                 </>
               )}
             </div>
+
+            {/* Enhanced Product Details from API */}
+            {isLoadingDetails && (
+              <div className="mt-6">
+                <p className="text-sm text-gray-500">
+                  Loading product details...
+                </p>
+              </div>
+            )}
+            {productDetails && (
+              <div className="mt-6 space-y-4">
+                <h4 className="text-md font-semibold text-gray-900">
+                  Description
+                </h4>
+                <p className="text-sm text-gray-600 whitespace-pre-line">
+                  {productDetails.description}
+                </p>
+
+                {productDetails.materials &&
+                  productDetails.materials.length > 0 && (
+                    <div>
+                      <h4 className="text-md font-semibold text-gray-900">
+                        Materials
+                      </h4>
+                      <ul className="text-sm text-gray-600 list-disc list-inside">
+                        {productDetails.materials.map(
+                          (material: any, index: number) => (
+                            <li key={index}>
+                              {material.name} ({material.percentage}%)
+                            </li>
+                          )
+                        )}
+                      </ul>
+                    </div>
+                  )}
+
+                {productDetails.features &&
+                  productDetails.features.length > 0 && (
+                    <div>
+                      <h4 className="text-md font-semibold text-gray-900">
+                        Features
+                      </h4>
+                      <ul className="text-sm text-gray-600 list-disc list-inside">
+                        {productDetails.features.map(
+                          (feature: string, index: number) => (
+                            <li key={index}>{feature}</li>
+                          )
+                        )}
+                      </ul>
+                    </div>
+                  )}
+
+                {productDetails.care_instructions && (
+                  <div>
+                    <h4 className="text-md font-semibold text-gray-900">
+                      Care Instructions
+                    </h4>
+                    <p className="text-sm text-gray-600">
+                      {productDetails.care_instructions}
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
