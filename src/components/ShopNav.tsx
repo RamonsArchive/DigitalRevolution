@@ -18,8 +18,6 @@ import { useProduct } from "@/contexts/ProductContext";
 import Link from "next/link";
 
 const ShopNav = () => {
-  const shopNavLinks = SHOP_DATA.shopNavLinks;
-
   // Refs
   const menuRefInner = useRef<HTMLDivElement>(null);
   const normalMenuRef = useRef<HTMLButtonElement>(null);
@@ -300,7 +298,7 @@ const ShopNav = () => {
   const shopCart = useMemo(() => {
     return (
       <Link
-        href="/shop/cart"
+        href="/cart"
         className="relative p-2 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl"
       >
         <ShoppingCart className="w-5 h-5" />

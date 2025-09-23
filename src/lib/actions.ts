@@ -589,3 +589,11 @@ export const getCart = async (userId: string, guestUserId?: string) => {
     });
   }
 };
+
+// export async function getProductBySlug(slug: string) {
+//   const product = await prisma.product.findFirst({
+//     where: {
+//       slug: slug,
+//     },
+//   });
+// }

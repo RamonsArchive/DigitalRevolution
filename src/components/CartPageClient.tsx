@@ -136,51 +136,77 @@ const CartPageClient = ({
             {cartItems.map((item) => (
               <div
                 key={item.id}
-                className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300"
+                className="bg-gray-800/60 backdrop-blur-sm rounded-2xl p-8 border border-gray-600/40 hover:border-gray-500/60 transition-all duration-300 shadow-xl hover:shadow-2xl"
               >
-                <div className="flex items-start space-x-4">
+                <div className="flex items-start space-x-8">
                   {/* Product Image */}
                   <div className="flex-shrink-0">
-                    <div className="w-20 h-20 bg-gray-700 rounded-lg overflow-hidden">
+                    <div className="w-28 h-28 bg-gray-700/80 rounded-2xl overflow-hidden shadow-xl border border-gray-600/30">
                       {item.imageUrl ? (
                         <Image
                           src={item.imageUrl}
                           alt={item.productName}
-                          width={80}
-                          height={80}
+                          width={112}
+                          height={112}
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        <div className="w-full h-full bg-gray-600 flex items-center justify-center">
-                          <ShoppingBag className="w-8 h-8 text-gray-400" />
+                        <div className="w-full h-full bg-gray-600/80 flex items-center justify-center">
+                          <ShoppingBag className="w-12 h-12 text-gray-300" />
                         </div>
                       )}
                     </div>
                   </div>
 
                   {/* Product Details */}
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-lg font-semibold text-slate-300 mb-1">
-                      {item.productName}
-                    </h3>
-                    <p className="text-slate-400 text-sm mb-2">
-                      {item.variantName}
-                    </p>
-                    <div className="flex items-center space-x-4 text-sm text-slate-400">
-                      <span>Size: {item.size}</span>
-                      <span>Color: {item.color}</span>
-                      {item.sku && <span>SKU: {item.sku}</span>}
+                  <div className="flex-1 min-w-0 space-y-4">
+                    <div>
+                      <h3 className="text-2xl font-bold text-slate-100 mb-3 leading-tight">
+                        {item.productName}
+                      </h3>
+                      <p className="text-slate-300 text-lg mb-4 font-medium">
+                        {item.variantName}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col gap-3 text-base">
+                      <div className="flex items-center gap-3">
+                        <span className="text-slate-400 font-semibold">
+                          Size:
+                        </span>
+                        <span className="text-slate-200 bg-gray-700/80 px-3 py-2 rounded-lg text-sm font-bold border border-gray-600/50">
+                          {item.size}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-slate-400 font-semibold">
+                          Color:
+                        </span>
+                        <span className="text-slate-200 bg-gray-700/80 px-3 py-2 rounded-lg text-sm font-bold border border-gray-600/50">
+                          {item.color}
+                        </span>
+                      </div>
+                      {item.sku && (
+                        <div className="flex items-center gap-3">
+                          <span className="text-slate-400 font-semibold">
+                            SKU:
+                          </span>
+                          <span className="text-slate-300 text-sm font-mono bg-gray-800/50 px-2 py-1 rounded-md">
+                            {item.sku}
+                          </span>
+                        </div>
+                      )}
                     </div>
                   </div>
 
                   {/* Price and Controls */}
-                  <div className="flex-shrink-0 text-right">
-                    <div className="text-xl font-bold text-slate-300 mb-4">
+                  <div className="flex-shrink-0 text-right space-y-6">
+                    <div className="text-3xl font-bold text-slate-100">
                       {formatPrice(item.unitPrice * item.quantity)}
                     </div>
 
                     {/* Quantity Controls */}
-                    <div className="flex items-center space-x-2 mb-4">
+                    <div className="flex items-center justify-center space-x-4">
                       <button
                         onClick={() =>
                           handleQuantityChange(
@@ -188,15 +214,15 @@ const CartPageClient = ({
                             Math.max(1, item.quantity - 1)
                           )
                         }
-                        className="w-8 h-8 bg-gray-700 hover:bg-gray-600 rounded-full flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-12 h-12 bg-gray-700/80 hover:bg-gray-600/80 rounded-xl flex items-center justify-center transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl border border-gray-600/50"
                         disabled={item.quantity <= 1 || isUpdating === item.id}
                       >
-                        <Minus className="w-4 h-4 text-slate-300" />
+                        <Minus className="w-6 h-6 text-slate-200" />
                       </button>
 
-                      <span className="w-12 text-center text-slate-300 font-medium">
+                      <span className="w-20 text-center text-slate-100 font-bold text-xl bg-gray-800/80 px-4 py-3 rounded-xl border border-gray-600/50 shadow-lg">
                         {isUpdating === item.id ? (
-                          <div className="w-4 h-4 border-2 border-slate-300 border-t-transparent rounded-full animate-spin mx-auto" />
+                          <div className="w-6 h-6 border-2 border-slate-200 border-t-transparent rounded-full animate-spin mx-auto" />
                         ) : (
                           item.quantity
                         )}
@@ -206,25 +232,25 @@ const CartPageClient = ({
                         onClick={() =>
                           handleQuantityChange(item.id, item.quantity + 1)
                         }
-                        className="w-8 h-8 bg-gray-700 hover:bg-gray-600 rounded-full flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-12 h-12 bg-gray-700/80 hover:bg-gray-600/80 rounded-xl flex items-center justify-center transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl border border-gray-600/50"
                         disabled={isUpdating === item.id}
                       >
-                        <Plus className="w-4 h-4 text-slate-300" />
+                        <Plus className="w-6 h-6 text-slate-200" />
                       </button>
                     </div>
 
                     {/* Remove Button */}
                     <button
                       onClick={() => handleRemoveItem(item.id)}
-                      className="text-red-400 hover:text-red-300 text-sm flex items-center space-x-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="text-red-300 hover:text-red-200 text-base flex items-center justify-center space-x-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed bg-red-900/30 hover:bg-red-900/40 px-4 py-3 rounded-xl border border-red-800/50 shadow-lg hover:shadow-xl font-semibold"
                       disabled={isUpdating === item.id}
                     >
                       {isUpdating === item.id ? (
-                        <div className="w-4 h-4 border-2 border-red-400 border-t-transparent rounded-full animate-spin" />
+                        <div className="w-5 h-5 border-2 border-red-300 border-t-transparent rounded-full animate-spin" />
                       ) : (
-                        <Trash2 className="w-4 h-4" />
+                        <Trash2 className="w-5 h-5" />
                       )}
-                      <span>Remove</span>
+                      <span className="font-bold">Remove</span>
                     </button>
                   </div>
                 </div>
@@ -234,57 +260,78 @@ const CartPageClient = ({
 
           {/* Checkout Summary */}
           <div className="lg:col-span-1">
-            <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50 sticky top-8">
-              <h2 className="text-xl font-bold text-slate-300 mb-6">
+            <div className="bg-gray-800/60 backdrop-blur-sm rounded-2xl p-8 border border-gray-600/40 sticky top-8 shadow-xl">
+              <h2 className="text-2xl font-bold text-slate-100 mb-8">
                 Order Summary
               </h2>
 
-              <div className="space-y-4 mb-6">
-                <div className="flex justify-between text-slate-400">
-                  <span>Subtotal</span>
-                  <span>{formatPrice(subtotal)}</span>
+              <div className="space-y-6 mb-8">
+                <div className="flex justify-between items-center py-3">
+                  <span className="text-slate-300 text-lg font-medium">
+                    Subtotal
+                  </span>
+                  <span className="text-slate-200 text-xl font-bold">
+                    {formatPrice(subtotal)}
+                  </span>
                 </div>
 
-                <div className="flex justify-between text-slate-400">
-                  <span>Tax</span>
-                  <span>{formatPrice(tax)}</span>
+                <div className="flex justify-between items-center py-3">
+                  <span className="text-slate-300 text-lg font-medium">
+                    Tax
+                  </span>
+                  <span className="text-slate-200 text-xl font-bold">
+                    {formatPrice(tax)}
+                  </span>
                 </div>
 
-                <div className="flex justify-between text-slate-400">
-                  <span>Shipping</span>
-                  <span>
+                <div className="flex justify-between items-center py-3">
+                  <span className="text-slate-300 text-lg font-medium">
+                    Shipping
+                  </span>
+                  <span className="text-xl font-bold">
                     {shipping === 0 ? (
-                      <span className="text-green-400">Free</span>
+                      <span className="text-green-300">Free</span>
                     ) : (
-                      formatPrice(shipping)
+                      <span className="text-slate-200">
+                        {formatPrice(shipping)}
+                      </span>
                     )}
                   </span>
                 </div>
 
                 {subtotal < 5000 && (
-                  <div className="text-sm text-slate-500">
-                    Add {formatPrice(5000 - subtotal)} more for free shipping
+                  <div className="bg-blue-900/30 border border-blue-700/50 rounded-xl p-4 text-center">
+                    <p className="text-blue-200 text-sm font-medium">
+                      Add {formatPrice(5000 - subtotal)} more for free shipping
+                    </p>
                   </div>
                 )}
 
-                <div className="border-t border-gray-700 pt-4">
-                  <div className="flex justify-between text-lg font-bold text-slate-300">
-                    <span>Total</span>
-                    <span>{formatPrice(total)}</span>
+                <div className="border-t-2 border-gray-600/60 pt-6">
+                  <div className="flex justify-between items-center py-4 bg-gray-700/40 rounded-xl px-6">
+                    <span className="text-slate-100 text-2xl font-bold">
+                      Total
+                    </span>
+                    <span className="text-slate-100 text-3xl font-bold">
+                      {formatPrice(total)}
+                    </span>
                   </div>
                 </div>
               </div>
 
               {/* Checkout Button */}
-              <button className="w-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white font-semibold py-4 px-6 rounded-lg hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+              <button className="w-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white font-bold py-6 px-8 rounded-2xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-2xl hover:shadow-3xl text-xl">
                 Proceed to Checkout
               </button>
 
               {/* Security Badge */}
-              <div className="mt-4 text-center">
-                <p className="text-xs text-slate-500">
-                  🔒 Secure checkout with SSL encryption
-                </p>
+              <div className="mt-6 text-center">
+                <div className="bg-green-900/20 border border-green-700/50 rounded-xl p-4">
+                  <p className="text-green-300 text-sm font-semibold flex items-center justify-center gap-2">
+                    <span className="text-lg">🔒</span>
+                    Secure checkout with SSL encryption
+                  </p>
+                </div>
               </div>
             </div>
           </div>
