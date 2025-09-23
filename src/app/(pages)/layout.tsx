@@ -1,11 +1,16 @@
 import React from "react";
 import Navbar from "@/components/Navbar";
+import { SessionProvider } from "next-auth/react";
+import { Toaster } from "sonner";
 
-const layout = ({ children }: { children: React.ReactNode }) => {
+const layout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <Navbar />
-      {children}
+      <SessionProvider>
+        <Navbar />
+        {children}
+        <Toaster richColors />
+      </SessionProvider>
     </>
   );
 };

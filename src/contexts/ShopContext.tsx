@@ -223,7 +223,7 @@ const ShopProvider = ({
       }
 
       // Update URL without page refresh
-      router.replace(`${pathname}?${current.toString()}`, { scroll: false });
+      router.replace(`/shop?${current.toString()}`, { scroll: false });
     },
     [searchParams, router, pathname, availableFilters]
   );

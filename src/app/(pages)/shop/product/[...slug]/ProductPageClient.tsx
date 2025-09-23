@@ -74,7 +74,7 @@ const ProductPageClient = ({ slug }: ProductPageClientProps) => {
           <h1 className="text-2xl font-bold text-gray-900 mb-4">
             Product Not Found
           </h1>
-          <p className="text-gray-600">
+          <p className="text-slate-300">
             The product you're looking for doesn't exist.
           </p>
         </div>
@@ -223,7 +223,7 @@ const ProductPageClient = ({ slug }: ProductPageClientProps) => {
                 className={`relative w-full aspect-square rounded-lg overflow-hidden cursor-pointer border-2 transition-all duration-300 ${
                   selectedImageIndex === index
                     ? "border-primary-500 shadow-lg"
-                    : "border-gray-200 hover:border-gray-300"
+                    : "border-gray-200 hover:border-gray-300 cursor-pointer hover:bg-gray-400"
                 }`}
                 onClick={() => handleImageSelect(index)}
               >
@@ -288,7 +288,7 @@ const ProductPageClient = ({ slug }: ProductPageClientProps) => {
         <div className="flex flex-col gap-6 w-full lg:w-[40%]">
           {/* Title and Price */}
           <div className="space-y-2">
-            <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 font-courier-prime">
+            <h1 className="text-3xl lg:text-4xl font-bold text-slate-300 font-courier-prime">
               {product.sync_product.name}
             </h1>
             {currentVariant?.retail_price && (
@@ -303,7 +303,7 @@ const ProductPageClient = ({ slug }: ProductPageClientProps) => {
             {/* Color Selection */}
             {availableColors.length > 1 && (
               <div>
-                <h3 className="text-sm font-medium text-gray-700 mb-2">
+                <h3 className="text-sm font-medium text-slate-300 mb-2">
                   Color
                 </h3>
                 <div className="flex gap-2 flex-wrap">
@@ -315,11 +315,11 @@ const ProductPageClient = ({ slug }: ProductPageClientProps) => {
                       <button
                         key={color}
                         onClick={() => handleVariantSelect(variantIndex)}
-                        className={`px-4 py-2 rounded-lg border-2 transition-all duration-300 ${
+                        className={`px-4 py-2 rounded-lg border-2 transition-all duration-300 cursor-pointer hover:bg-gray-400 ${
                           product.sync_variants[selectedVariantIndex].color ===
                           color
                             ? "border-primary-500 bg-primary-50 text-primary-700"
-                            : "border-gray-200 hover:border-gray-300 text-gray-700"
+                            : "border-gray-200 hover:border-gray-300 text-slate-300"
                         }`}
                       >
                         {color}
@@ -333,7 +333,9 @@ const ProductPageClient = ({ slug }: ProductPageClientProps) => {
             {/* Size Selection */}
             {availableSizes.length > 1 && (
               <div>
-                <h3 className="text-sm font-medium text-gray-700 mb-2">Size</h3>
+                <h3 className="text-sm font-medium text-slate-300 mb-2">
+                  Size
+                </h3>
                 <div className="flex gap-2 flex-wrap">
                   {availableSizes.map((size: any) => {
                     const variantIndex = product.sync_variants.findIndex(
@@ -347,7 +349,7 @@ const ProductPageClient = ({ slug }: ProductPageClientProps) => {
                           product.sync_variants[selectedVariantIndex].size ===
                           size
                             ? "border-primary-500 bg-primary-50 text-primary-700"
-                            : "border-gray-200 hover:border-gray-300 text-gray-700"
+                            : "border-gray-200 hover:border-gray-300 text-slate-300 cursor-pointer hover:bg-gray-400"
                         }`}
                       >
                         {size}
@@ -361,13 +363,13 @@ const ProductPageClient = ({ slug }: ProductPageClientProps) => {
 
           {/* Quantity Selector */}
           <div className="flex items-center gap-4">
-            <label className="text-sm font-medium text-gray-700">
+            <label className="text-sm font-medium text-slate-300">
               Quantity:
             </label>
             <div className="flex items-center border border-gray-300 rounded-lg">
               <button
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="px-3 py-2 hover:bg-gray-100 transition-colors duration-200"
+                className="px-3 py-2 hover:bg-gray-400 transition-colors duration-200 rounded-l-lg cursor-pointer"
               >
                 -
               </button>
@@ -376,7 +378,7 @@ const ProductPageClient = ({ slug }: ProductPageClientProps) => {
               </span>
               <button
                 onClick={() => setQuantity(quantity + 1)}
-                className="px-3 py-2 hover:bg-gray-100 transition-colors duration-200"
+                className="px-3 py-2 hover:bg-gray-400 transition-colors duration-200 rounded-r-lg cursor-pointer"
               >
                 +
               </button>
@@ -387,21 +389,21 @@ const ProductPageClient = ({ slug }: ProductPageClientProps) => {
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <button
               onClick={handleAddToCart}
-              className="flex-1 bg-gradient-to-r from-primary-500 to-secondary-500 text-white py-4 px-6 rounded-xl font-semibold text-lg hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl"
+              className="flex-1 bg-gradient-to-r from-primary-500 to-secondary-500 text-white py-4 px-6 rounded-xl font-semibold text-lg hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer"
             >
               Add to Cart ({cartItems.length})
             </button>
-            <button className="flex-1 bg-gradient-to-r from-tertiary-500 to-tertiary-600 text-white py-4 px-6 rounded-xl font-semibold text-lg hover:from-tertiary-600 hover:to-tertiary-700 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl">
+            <button className="flex-1 bg-gradient-to-r from-tertiary-500 to-tertiary-600 text-white py-4 px-6 rounded-xl font-semibold text-lg hover:from-tertiary-600 hover:to-tertiary-700 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
               Buy Now
             </button>
           </div>
 
           {/* Product Details */}
-          <div className="pt-4 border-t border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+          <div className="pt-4 border-t border-gray-200 ">
+            <h3 className="text-lg font-semibold text-slate-300 mb-2 underline">
               Product Details
             </h3>
-            <div className="space-y-2 text-sm text-gray-600">
+            <div className="space-y-2 text-sm text-slate-200">
               <p>
                 <span className="font-medium">Product ID:</span>{" "}
                 {product.sync_product.id}
@@ -435,27 +437,27 @@ const ProductPageClient = ({ slug }: ProductPageClientProps) => {
             {/* Enhanced Product Details from API */}
             {isLoadingDetails && (
               <div className="mt-6">
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-slate-400">
                   Loading product details...
                 </p>
               </div>
             )}
             {productDetails && (
               <div className="mt-6 space-y-4">
-                <h4 className="text-md font-semibold text-gray-900">
+                <h4 className="text-md font-semibold text-gray-200 underline">
                   Description
                 </h4>
-                <p className="text-sm text-gray-600 whitespace-pre-line">
+                <p className="text-sm text-slate-200 whitespace-pre-line">
                   {productDetails.description}
                 </p>
 
                 {productDetails.materials &&
                   productDetails.materials.length > 0 && (
-                    <div>
-                      <h4 className="text-md font-semibold text-gray-900">
+                    <div className="">
+                      <h4 className="text-md font-semibold text-slate-300 underline">
                         Materials
                       </h4>
-                      <ul className="text-sm text-gray-600 list-disc list-inside">
+                      <ul className="text-sm text-slate-200 list-disc list-inside ">
                         {productDetails.materials.map(
                           (material: any, index: number) => (
                             <li key={index}>
@@ -469,11 +471,11 @@ const ProductPageClient = ({ slug }: ProductPageClientProps) => {
 
                 {productDetails.features &&
                   productDetails.features.length > 0 && (
-                    <div>
-                      <h4 className="text-md font-semibold text-gray-900">
+                    <div className="">
+                      <h4 className="text-md font-semiboldtext-slate-300 underline">
                         Features
                       </h4>
-                      <ul className="text-sm text-gray-600 list-disc list-inside">
+                      <ul className="text-sm text-slate-200 list-disc list-inside ">
                         {productDetails.features.map(
                           (feature: string, index: number) => (
                             <li key={index}>{feature}</li>
@@ -484,11 +486,11 @@ const ProductPageClient = ({ slug }: ProductPageClientProps) => {
                   )}
 
                 {productDetails.care_instructions && (
-                  <div>
-                    <h4 className="text-md font-semibold text-gray-900">
+                  <div className="">
+                    <h4 className="text-md font-semibold text-slate-300 underline">
                       Care Instructions
                     </h4>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-slate-200">
                       {productDetails.care_instructions}
                     </p>
                   </div>
