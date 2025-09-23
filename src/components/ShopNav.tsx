@@ -15,6 +15,7 @@ import Filters from "./Filters";
 import { useShopFilters } from "@/contexts/ShopContext";
 import { useClickOutside } from "@/hooks/useClickOutside";
 import { useProduct } from "@/contexts/ProductContext";
+import Link from "next/link";
 
 const ShopNav = () => {
   const shopNavLinks = SHOP_DATA.shopNavLinks;
@@ -298,12 +299,15 @@ const ShopNav = () => {
   // Shopping cart
   const shopCart = useMemo(() => {
     return (
-      <button className="relative p-2 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl">
+      <Link
+        href="/shop/cart"
+        className="relative p-2 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl"
+      >
         <ShoppingCart className="w-5 h-5" />
         <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
           {cartItems.length}
         </span>
-      </button>
+      </Link>
     );
   }, [cartItems]);
 

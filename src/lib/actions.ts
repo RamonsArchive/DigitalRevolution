@@ -351,7 +351,7 @@ export const writeToCart = async (
           sku: selectedVariant.sku || null,
           unitPrice: Math.round(parseFloat(selectedVariant.retail_price) * 100), // Convert to cents
           quantity: quantity,
-          imageUrl: selectedVariant.files?.[0]?.preview_url || selectedVariant.product.image || null,
+          imageUrl: selectedVariant.files?.[1]?.preview_url || selectedVariant.product.image || null,
         }
       });
     }
@@ -377,6 +377,151 @@ export const writeToCart = async (
 
   } catch (error) {
     console.error("Error writing to cart:", error);
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: error instanceof Error ? error.message : "Unknown error occurred",
+      data: null,
+    });
+  }
+};
+
+// Update cart item quantity
+export const updateCartItemQuantity = async (
+  userId: string,
+  guestUserId: string,
+  itemId: number,
+  newQuantity: number
+) => {
+  try {
+    const isRateLimited = await checkRateLimit("updateCartItemQuantity");
+    if (isRateLimited.status === "ERROR") {
+      return isRateLimited;
+    }
+
+    if (newQuantity <= 0) {
+      return parseServerActionResponse({
+        status: "ERROR",
+        error: "Quantity must be greater than 0",
+        data: null,
+      });
+    }
+
+    // Build the where condition to find the cart
+    const cartWhereCondition = userId 
+      ? { userId } 
+      : { tempCartId: guestUserId };
+
+    // Find the cart
+    const cart = await prisma.cart.findFirst({
+      where: cartWhereCondition,
+    });
+
+    if (!cart) {
+      return parseServerActionResponse({
+        status: "ERROR",
+        error: "Cart not found",
+        data: null,
+      });
+    }
+
+    // Update the cart item quantity
+    const updatedItem = await prisma.cartItem.update({
+      where: { 
+        id: itemId,
+        cartId: cart.id // Ensure the item belongs to the user's cart
+      },
+      data: { 
+        quantity: newQuantity,
+        updatedAt: new Date()
+      }
+    });
+
+    // Update cart's updatedAt timestamp
+    await prisma.cart.update({
+      where: { id: cart.id },
+      data: { updatedAt: new Date() }
+    });
+
+    const cacheKey = userId || guestUserId || 'anonymous';
+    revalidateTag(`cart-${cacheKey}`);
+
+    return parseServerActionResponse({
+      status: "SUCCESS",
+      error: "",
+      data: {
+        cartItem: updatedItem,
+        action: "updated"
+      },
+    });
+
+  } catch (error) {
+    console.error("Error updating cart item quantity:", error);
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: error instanceof Error ? error.message : "Unknown error occurred",
+      data: null,
+    });
+  }
+};
+
+// Remove item from cart
+export const removeCartItem = async (
+  userId: string,
+  guestUserId: string,
+  itemId: number
+) => {
+  try {
+    const isRateLimited = await checkRateLimit("removeCartItem");
+    if (isRateLimited.status === "ERROR") {
+      return isRateLimited;
+    }
+
+    // Build the where condition to find the cart
+    const cartWhereCondition = userId 
+      ? { userId } 
+      : { tempCartId: guestUserId };
+
+    // Find the cart
+    const cart = await prisma.cart.findFirst({
+      where: cartWhereCondition,
+    });
+
+    if (!cart) {
+      return parseServerActionResponse({
+        status: "ERROR",
+        error: "Cart not found",
+        data: null,
+      });
+    }
+
+    // Delete the cart item
+    await prisma.cartItem.delete({
+      where: { 
+        id: itemId,
+        cartId: cart.id // Ensure the item belongs to the user's cart
+      }
+    });
+
+    // Update cart's updatedAt timestamp
+    await prisma.cart.update({
+      where: { id: cart.id },
+      data: { updatedAt: new Date() }
+    });
+
+    const cacheKey = userId || guestUserId || 'anonymous';
+    revalidateTag(`cart-${cacheKey}`);
+
+    return parseServerActionResponse({
+      status: "SUCCESS",
+      error: "",
+      data: {
+        action: "removed",
+        itemId: itemId
+      },
+    });
+
+  } catch (error) {
+    console.error("Error removing cart item:", error);
     return parseServerActionResponse({
       status: "ERROR",
       error: error instanceof Error ? error.message : "Unknown error occurred",
