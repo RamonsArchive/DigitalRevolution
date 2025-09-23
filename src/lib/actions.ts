@@ -264,3 +264,20 @@ export const getProductDetailsByVariantId = async (variantId: number) => {
     });
   }
 };
+
+
+export const writeToCart = async (product: PrintfulProduct, variantIndex: number, quantity: number) => {
+  try {
+    const isRateLimited = await checkRateLimit("writeToCart");
+    if (isRateLimited.status === "ERROR") {
+      return isRateLimited;
+    }
+  } catch (error) {
+    console.error("Error writing to cart:", error);
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: error,
+      data: null,
+    });
+  }
+}
