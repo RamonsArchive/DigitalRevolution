@@ -2,6 +2,7 @@ import React from "react";
 import ShopNav from "@/components/ShopNav";
 import { getProductsAndFilters } from "@/lib/actions";
 import ShopProvider from "@/contexts/ShopContext";
+import ProductProvider from "@/contexts/ProductContext";
 
 const layout = async ({ children }: { children: React.ReactNode }) => {
   try {
@@ -27,8 +28,10 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
           allProducts={[]}
           productDetailsMap={new Map()}
         >
-          <ShopNav />
-          {children}
+          <ProductProvider>
+            <ShopNav />
+            {children}
+          </ProductProvider>
         </ShopProvider>
       );
     }
@@ -39,8 +42,10 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
         allProducts={result.data.allProducts}
         productDetailsMap={new Map()}
       >
-        <ShopNav />
-        {children}
+        <ProductProvider>
+          <ShopNav />
+          {children}
+        </ProductProvider>
       </ShopProvider>
     );
   } catch (error) {
@@ -60,8 +65,10 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
         allProducts={[]}
         productDetailsMap={new Map()}
       >
-        <ShopNav />
-        {children}
+        <ProductProvider>
+          <ShopNav />
+          {children}
+        </ProductProvider>
       </ShopProvider>
     );
   }

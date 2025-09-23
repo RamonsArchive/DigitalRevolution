@@ -1,11 +1,21 @@
 "use client";
-import React, { useState, useMemo, useRef, useEffect } from "react";
+import React, {
+  useState,
+  useMemo,
+  useRef,
+  useEffect,
+  useCallback,
+} from "react";
 import Image from "next/image";
 import { PrintfulProduct } from "@/lib/globalTypes";
+import { CartItem } from "../../../../../../prisma/generated/prisma";
 import { useGSAP } from "@gsap/react";
 import { useProduct } from "@/contexts/ProductContext";
 import { useShopFilters } from "@/contexts/ShopContext";
 import gsap from "gsap";
+import { toast } from "sonner";
+import { writeToCart } from "@/lib/actions";
+import { useRouter } from "next/navigation";
 
 interface ProductImage {
   url: string;
@@ -15,21 +25,32 @@ interface ProductImage {
 }
 
 interface ProductPageClientProps {
+  userId: string;
+  guestUserId: string;
   slug: string;
+  cartItems: CartItem[];
 }
 
-const ProductPageClient = ({ slug }: ProductPageClientProps) => {
+const ProductPageClient = ({
+  userId,
+  guestUserId,
+  cartItems,
+  slug,
+}: ProductPageClientProps) => {
+  const router = useRouter();
   const {
     selectedVariantIndex,
     setSelectedVariantIndex,
     selectedImageIndex,
     setSelectedImageIndex,
-    addToCart,
-    cartItems,
+    setCartItems,
   } = useProduct();
 
   const [isImageTransitioning, setIsImageTransitioning] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  useEffect(() => {
+    setCartItems(cartItems);
+  }, [cartItems]);
 
   const mainImageRef = useRef<HTMLDivElement>(null);
   const thumbnailRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -53,6 +74,7 @@ const ProductPageClient = ({ slug }: ProductPageClientProps) => {
       if (firstVariant) {
         // Import the function dynamically to avoid server-side issues
         import("@/lib/actions").then(({ getProductDetailsByVariantId }) => {
+          console.log("getProductDetailsByVariantId", firstVariant.variant_id);
           getProductDetailsByVariantId(firstVariant.variant_id).then(
             (result) => {
               if (result.status === "SUCCESS") {
@@ -151,7 +173,7 @@ const ProductPageClient = ({ slug }: ProductPageClientProps) => {
 
   // Handle add to cart
   const handleAddToCart = () => {
-    addToCart(product, selectedVariantIndex, quantity);
+    addToCart(userId, guestUserId, product, selectedVariantIndex, quantity);
     // Show success feedback (you can add a toast notification here)
     console.log(`Added ${quantity} ${product.sync_product.name} to cart`);
   };
@@ -206,6 +228,42 @@ const ProductPageClient = ({ slug }: ProductPageClientProps) => {
     const sizes = [...new Set(product.sync_variants.map((v: any) => v.size))];
     return sizes;
   }, [product.sync_variants]);
+
+  const addToCart = useCallback(
+    async (
+      userId: string,
+      guestUserId: string,
+      product: PrintfulProduct,
+      variantIndex: number,
+      quantity: number
+    ) => {
+      try {
+        const result = await writeToCart(
+          userId,
+          guestUserId,
+          product,
+          variantIndex,
+          quantity
+        );
+
+        if (result.status === "ERROR") {
+          toast.error("ERROR", {
+            description: result.error as unknown as string,
+          });
+          return;
+        }
+        toast.success("SUCCESS", { description: "Added to cart" });
+        // set cart items in context
+        router.refresh();
+
+        // revlaidate cart items
+      } catch (error) {
+        console.error("Error adding to cart:", error);
+        toast.error("ERROR", { description: error as string });
+      }
+    },
+    []
+  );
 
   return (
     <section className="flex flex-col p-5 md:p-10 gap-10 min-h-screen">

@@ -1,7 +1,7 @@
 "use client";
 import { PrintfulProduct } from "@/lib/globalTypes";
-import React, { createContext, useContext, useState, useCallback } from "react";
-import { toast } from "sonner";
+import React, { createContext, useContext, useState } from "react";
+import { CartItem } from "../../../../../../prisma/generated/prisma";
 
 interface ProductContextType {
   selectedProduct: PrintfulProduct | null;
@@ -10,16 +10,8 @@ interface ProductContextType {
   setSelectedProduct: (product: PrintfulProduct | null) => void;
   setSelectedVariantIndex: (index: number) => void;
   setSelectedImageIndex: (index: number) => void;
-  addToCart: (
-    product: PrintfulProduct,
-    variantIndex: number,
-    quantity: number
-  ) => void;
-  cartItems: Array<{
-    product: PrintfulProduct;
-    variantIndex: number;
-    quantity: number;
-  }>;
+  cartItems: CartItem[];
+  setCartItems: (items: CartItem[]) => void;
 }
 
 export const ProductContext = createContext<ProductContextType | null>(null);
@@ -37,35 +29,6 @@ const ProductProvider = ({ children }: { children: React.ReactNode }) => {
     }>
   >([]);
 
-  const addToCart = useCallback(
-    async (
-      product: PrintfulProduct,
-      variantIndex: number,
-      quantity: number
-    ) => {
-      try {
-        // const result = await addToCartAction(product, variantIndex, quantity);
-        const result = {
-          status: "SUCCESS",
-          error: null,
-          data: null,
-        };
-        if (result.status === "ERROR") {
-          toast.error("ERROR", {
-            description: result.error as unknown as string,
-          });
-          return;
-        }
-        toast.success("SUCCESS", { description: "Added to cart" });
-        // revlaidate cart items
-      } catch (error) {
-        console.error("Error adding to cart:", error);
-        toast.error("ERROR", { description: error as string });
-      }
-    },
-    []
-  );
-
   return (
     <ProductContext.Provider
       value={{
@@ -75,8 +38,8 @@ const ProductProvider = ({ children }: { children: React.ReactNode }) => {
         setSelectedProduct,
         setSelectedVariantIndex,
         setSelectedImageIndex,
-        addToCart,
         cartItems,
+        setCartItems,
       }}
     >
       {children}

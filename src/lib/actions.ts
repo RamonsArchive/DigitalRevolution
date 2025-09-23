@@ -3,6 +3,9 @@ import { PrintfulProduct, PrintfulSyncProductsResponse } from "./globalTypes";
 import { checkRateLimit } from "./rateLimiter";
 import { parseServerActionResponse } from "./utils";
 import { extractFiltersFromProducts } from "./filters";
+import { prisma } from "./prisma";
+import { revalidateTag, unstable_cache } from 'next/cache';
+
 
 const PRINTFUL_BASE = "https://api.printful.com";
 export const getProductsAndFilters = async ({limit = 100,
@@ -265,19 +268,179 @@ export const getProductDetailsByVariantId = async (variantId: number) => {
   }
 };
 
-
-export const writeToCart = async (product: PrintfulProduct, variantIndex: number, quantity: number) => {
+export const writeToCart = async (
+  userId: string, 
+  guestUserId: string,
+  product: PrintfulProduct, 
+  variantIndex: number, 
+  quantity: number,
+) => {
   try {
     const isRateLimited = await checkRateLimit("writeToCart");
     if (isRateLimited.status === "ERROR") {
       return isRateLimited;
     }
+
+    // Get the specific variant from the product
+    const selectedVariant = product.sync_variants[variantIndex];
+    if (!selectedVariant) {
+      return parseServerActionResponse({
+        status: "ERROR",
+        error: "Invalid variant index",
+        data: null,
+      });
+    }
+
+    // Build the where condition to find the cart
+    const cartWhereCondition = userId 
+      ? { userId } 
+      : { tempCartId: guestUserId };
+
+    // Find or create the cart
+    let cart = await prisma.cart.findFirst({
+      where: cartWhereCondition,
+      include: {
+        items: true
+      }
+    });
+
+    // Create cart if it doesn't exist
+    if (!cart) {
+      cart = await prisma.cart.create({
+        data: {
+          ...(userId ? { userId } : { tempCartId: guestUserId }),
+          expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
+        },
+        include: {
+          items: true
+        }
+      });
+    }
+
+    // Check if item already exists in cart
+    const existingCartItem = cart.items.find(
+      item => item.printfulVariantId === selectedVariant.variant_id
+    );
+
+    let updatedCartItem;
+
+    if (existingCartItem) {
+      // Update existing cart item - add to existing quantity
+    
+      //const newQuantity = existingCartItem.quantity + quantity;
+      const newQuantity = existingCartItem.quantity + quantity;
+    
+      updatedCartItem = await prisma.cartItem.update({
+        where: { id: existingCartItem.id },
+        data: { 
+          quantity: newQuantity,
+          updatedAt: new Date()
+        }
+      });
+    } else {
+      // Create new cart item with Printful data
+      updatedCartItem = await prisma.cartItem.create({
+        data: {
+          cartId: cart.id,
+          printfulVariantId: selectedVariant.variant_id,
+          printfulProductId: selectedVariant.product.product_id,
+          variantName: selectedVariant.name,
+          productName: selectedVariant.product.name,
+          size: selectedVariant.size || "",
+          color: selectedVariant.color || "",
+          sku: selectedVariant.sku || null,
+          unitPrice: Math.round(parseFloat(selectedVariant.retail_price) * 100), // Convert to cents
+          quantity: quantity,
+          imageUrl: selectedVariant.files?.[0]?.preview_url || selectedVariant.product.image || null,
+        }
+      });
+    }
+
+    // Update cart's updatedAt timestamp
+    await prisma.cart.update({
+      where: { id: cart.id },
+      data: { updatedAt: new Date() }
+    });
+
+    const cacheKey = userId || guestUserId || 'anonymous';
+    revalidateTag(`cart-${cacheKey}`);
+
+    return parseServerActionResponse({
+      status: "SUCCESS",
+      error: "",
+      data: {
+        cartItem: updatedCartItem,
+        action: existingCartItem ? "updated" : "created",
+        totalQuantity: updatedCartItem.quantity
+      },
+    });
+
   } catch (error) {
     console.error("Error writing to cart:", error);
     return parseServerActionResponse({
       status: "ERROR",
-      error: error,
+      error: error instanceof Error ? error.message : "Unknown error occurred",
       data: null,
     });
   }
-}
+};
+
+// Fixed getCart with proper cache keys
+export const getCart = async (userId: string, guestUserId?: string) => {
+  const cacheKey = userId || guestUserId || 'anonymous';
+  
+  const getCachedCart = unstable_cache(
+    async () => {
+      try {
+        // Build the where condition for finding the cart
+        const whereCondition = userId 
+          ? { userId } 
+          : { tempCartId: guestUserId };
+
+        // Find the cart and its items
+        const cart = await prisma.cart.findFirst({
+          where: whereCondition,
+          include: {
+            items: {
+              orderBy: {
+                addedAt: 'desc'
+              }
+            }
+          }
+        });
+
+        const cartItems = cart?.items || [];
+
+        return {
+          cartItems,
+          cartId: cart?.id || null,
+          totalItems: cartItems.reduce((sum, item) => sum + item.quantity, 0),
+          estimatedTotal: cartItems.reduce((sum, item) => sum + (item.unitPrice * item.quantity), 0)
+        };
+      } catch (error) {
+        console.error("Error getting cart items:", error);
+        throw error;
+      }
+    },
+    [`cart-${cacheKey}`],
+    {
+      tags: [`cart-${cacheKey}`],
+      revalidate: 300 // 5 minutes
+    }
+  );
+
+  try {
+    const data = await getCachedCart();
+    return parseServerActionResponse({
+      status: "SUCCESS",
+      error: "",
+      data,
+    });
+  } catch (error) {
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: error instanceof Error ? error.message : "Unknown error",
+      data: null,
+    });
+  }
+};
