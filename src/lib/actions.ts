@@ -5,7 +5,7 @@ import { parseServerActionResponse } from "./utils";
 import { extractFiltersFromProducts } from "./filters";
 import { prisma } from "./prisma";
 import { revalidateTag, unstable_cache } from 'next/cache';
-import { CartItem, Cart } from "../../prisma/generated/prisma";
+import { CartItem, Cart, Address } from "../../prisma/generated/prisma";
 import { stripe } from "./stripe";
 
 
@@ -606,7 +606,7 @@ export const validateCartForCheckout = async (userId: string, guestUserId: strin
 
     if (!cart || cart.items.length === 0) {
       return parseServerActionResponse({
-        status: 'ERROR',
+        status: "ERROR",
         data: null,
         error: 'Cart is empty or not found'
       });
@@ -618,7 +618,7 @@ export const validateCartForCheckout = async (userId: string, guestUserId: strin
         try {
           const response = await fetch(`https://api.printful.com/products/variant/${item.printfulVariantId}`, {
             headers: {
-              'Authorization': `Bearer ${process.env.PRINTFUL_API_KEY}`
+              'Authorization': `Bearer ${process.env.DIGITAL_REVOLUTION_API_KEY}`
             }
           });
           
@@ -629,13 +629,13 @@ export const validateCartForCheckout = async (userId: string, guestUserId: strin
             error: "",
             data: {
               item,
-              isInStock: data.result?.in_stock || false
+              isInStock: data.result?.variant?.in_stock || false
             }
           });
         } catch (error) {
           console.error(`Stock check failed for item ${item.id}:`, error);
           return parseServerActionResponse({
-            status: 'ERROR',
+            status: "ERROR",
             error: "",
             data: {
               item,
@@ -649,7 +649,7 @@ export const validateCartForCheckout = async (userId: string, guestUserId: strin
     const outOfStockItems = stockChecks.filter(check => !check.data?.isInStock);
     if (outOfStockItems.length > 0) {
       return parseServerActionResponse({
-        status: 'ERROR',
+        status: "ERROR",
         error: "Some items are out of stock",
         data: {
           outOfStockItems: outOfStockItems.map(check => check.data?.item)
@@ -658,7 +658,7 @@ export const validateCartForCheckout = async (userId: string, guestUserId: strin
     }
 
     return parseServerActionResponse({
-      status: 'SUCCESS',
+      status: "SUCCESS",
       error: "",
       data: {
         cart,
@@ -739,11 +739,16 @@ export const createCheckoutSession = async (userId: string, guestUserId: string)
       metadata: {
         cartId: cart.id.toString(),
         userId: userId || "",
+        guestUserId: guestUserId || "", // Add this
         checkoutSessionId: checkoutSession.id.toString(),
       },
       success_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout/cancel`,
       billing_address_collection: 'required',
+      shipping_address_collection: {
+        allowed_countries: ['US', 'CA'], // This is required!
+      },
+      customer_creation: 'always',
     });
 
     await prisma.checkoutSession.update({
@@ -760,9 +765,6 @@ export const createCheckoutSession = async (userId: string, guestUserId: string)
       },
     });
 
-
-    
-
     
   } catch (error) {
     return parseServerActionResponse({
@@ -774,10 +776,95 @@ export const createCheckoutSession = async (userId: string, guestUserId: string)
 }
 
 
-// export async function getProductBySlug(slug: string) {
-//   const product = await prisma.product.findFirst({
-//     where: {
-//       slug: slug,
-//     },
-//   });
-// }
+export const createPrintfulOrder = async (orderId: number, cartItems: CartItem[], shippingAddress: Address, email: string | null) => {
+  try {
+    const printfulOrderData = {
+      recipient: {
+        name: `${shippingAddress.firstName} ${shippingAddress.lastName}`,
+        address1: shippingAddress.line1,
+        address2: shippingAddress.line2 || '',
+        city: shippingAddress.city,
+        state_code: shippingAddress.state,
+        country_code: shippingAddress.country,
+        zip: shippingAddress.postalCode,
+        phone: shippingAddress.phone || '',
+        email: email || ''
+      },
+      items: cartItems.map(item => ({
+        external_variant_id: item.printfulExternalId,
+        quantity: item.quantity
+      }))
+    };
+
+    const response = await fetch('https://api.printful.com/orders', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.PRINTFUL_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(printfulOrderData)
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(`Printful order creation failed: ${result.error?.message}`);
+    }
+
+    return parseServerActionResponse({
+      status: 'SUCCESS',
+      error: "",
+      data: {
+        printfulOrderId: result.result.id,
+        printfulStatus: result.result.status,
+        printfulData: result.result
+      }
+    });
+  } catch (error) {
+    console.error('Printful order creation failed:', error);
+    return parseServerActionResponse({
+      status: 'ERROR',
+      error: error instanceof Error ? error.message : 'Unknown error',
+      data: null,
+    });
+  }
+};
+
+
+
+
+/////////////////////////////////////////////////////
+// Get order by stripe session id
+/////////////////////////////////////////////////////
+export const getOrderByStripeSessionId = async (sessionId: string) => {
+  try {
+    const order = await prisma.order.findFirst({
+      where: {
+        stripeSessionId: sessionId
+      },
+      include: {
+        items: true
+      }
+    });
+    if (!order) {
+      return parseServerActionResponse({
+        status: "ERROR",
+        error: "Order not found",
+        data: null,
+      });
+    }
+
+    return parseServerActionResponse({
+      status: "SUCCESS",
+      error: "",
+      data: order,
+    });
+  } catch (error) {
+    console.error('Error fetching order:', error);
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: error,
+      data: null,
+    });
+  }
+};

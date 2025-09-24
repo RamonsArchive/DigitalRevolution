@@ -41,7 +41,7 @@ const CartPageClient = ({
     0
   );
   const tax = Math.round(subtotal * 0.08); // 8% tax
-  const shipping = subtotal > 5000 ? 0 : 999; // Free shipping over $50
+  const shipping = 0; // Free shipping for all orders
   const total = subtotal + tax + shipping;
 
   const formatPrice = (cents: number) => {
@@ -96,17 +96,18 @@ const CartPageClient = ({
     setIsLoading(true);
     try {
       const result = await createCheckoutSession(userId, guestUserId);
+      console.log("result of checkout session", result);
       if (result.status === "ERROR") {
         toast.error("ERROR", { description: result.error });
+        router.refresh();
         return;
       }
 
-      toast.success("SUCCESS", {
-        description: "Checkout session created successfully",
-      });
+      router.push((result.data as { sessionUrl: string })?.sessionUrl || "/");
       //router.push(`/checkout?session_id=${result.data?.clientSecret}`);
     } catch (error) {
       console.error("Error checking out:", error);
+      router.refresh();
     } finally {
       setIsLoading(false);
     }
@@ -311,23 +312,9 @@ const CartPageClient = ({
                     Shipping
                   </span>
                   <span className="text-xl font-bold">
-                    {shipping === 0 ? (
-                      <span className="text-green-300">Free</span>
-                    ) : (
-                      <span className="text-slate-200">
-                        {formatPrice(shipping)}
-                      </span>
-                    )}
+                    <span className="text-green-300">Free</span>
                   </span>
                 </div>
-
-                {subtotal < 5000 && (
-                  <div className="bg-blue-900/30 border border-blue-700/50 rounded-xl p-4 text-center">
-                    <p className="text-blue-200 text-sm font-medium">
-                      Add {formatPrice(5000 - subtotal)} more for free shipping
-                    </p>
-                  </div>
-                )}
 
                 <div className="border-t-2 border-gray-600/60 pt-6">
                   <div className="flex justify-between items-center py-4 bg-gray-700/40 rounded-xl px-6">
@@ -342,7 +329,10 @@ const CartPageClient = ({
               </div>
 
               {/* Checkout Button */}
-              <button className="w-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white font-bold py-6 px-8 rounded-2xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-2xl hover:shadow-3xl text-xl">
+              <button
+                onClick={handleCheckout}
+                className="w-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white font-bold py-6 px-8 rounded-2xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-2xl hover:shadow-3xl text-xl"
+              >
                 Proceed to Checkout
               </button>
 
