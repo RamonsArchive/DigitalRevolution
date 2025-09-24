@@ -1939,11 +1939,13 @@ export namespace Prisma {
   export type CartCountOutputType = {
     items: number
     checkoutSessions: number
+    GuestUser: number
   }
 
   export type CartCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     items?: boolean | CartCountOutputTypeCountItemsArgs
     checkoutSessions?: boolean | CartCountOutputTypeCountCheckoutSessionsArgs
+    GuestUser?: boolean | CartCountOutputTypeCountGuestUserArgs
   }
 
   // Custom InputTypes
@@ -1969,6 +1971,13 @@ export namespace Prisma {
    */
   export type CartCountOutputTypeCountCheckoutSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CheckoutSessionWhereInput
+  }
+
+  /**
+   * CartCountOutputType without action
+   */
+  export type CartCountOutputTypeCountGuestUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GuestUserWhereInput
   }
 
 
@@ -3178,8 +3187,18 @@ export namespace Prisma {
 
   export type AggregateGuestUser = {
     _count: GuestUserCountAggregateOutputType | null
+    _avg: GuestUserAvgAggregateOutputType | null
+    _sum: GuestUserSumAggregateOutputType | null
     _min: GuestUserMinAggregateOutputType | null
     _max: GuestUserMaxAggregateOutputType | null
+  }
+
+  export type GuestUserAvgAggregateOutputType = {
+    cartId: number | null
+  }
+
+  export type GuestUserSumAggregateOutputType = {
+    cartId: number | null
   }
 
   export type GuestUserMinAggregateOutputType = {
@@ -3190,6 +3209,7 @@ export namespace Prisma {
     lastName: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    cartId: number | null
   }
 
   export type GuestUserMaxAggregateOutputType = {
@@ -3200,6 +3220,7 @@ export namespace Prisma {
     lastName: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    cartId: number | null
   }
 
   export type GuestUserCountAggregateOutputType = {
@@ -3210,9 +3231,18 @@ export namespace Prisma {
     lastName: number
     createdAt: number
     updatedAt: number
+    cartId: number
     _all: number
   }
 
+
+  export type GuestUserAvgAggregateInputType = {
+    cartId?: true
+  }
+
+  export type GuestUserSumAggregateInputType = {
+    cartId?: true
+  }
 
   export type GuestUserMinAggregateInputType = {
     id?: true
@@ -3222,6 +3252,7 @@ export namespace Prisma {
     lastName?: true
     createdAt?: true
     updatedAt?: true
+    cartId?: true
   }
 
   export type GuestUserMaxAggregateInputType = {
@@ -3232,6 +3263,7 @@ export namespace Prisma {
     lastName?: true
     createdAt?: true
     updatedAt?: true
+    cartId?: true
   }
 
   export type GuestUserCountAggregateInputType = {
@@ -3242,6 +3274,7 @@ export namespace Prisma {
     lastName?: true
     createdAt?: true
     updatedAt?: true
+    cartId?: true
     _all?: true
   }
 
@@ -3283,6 +3316,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: GuestUserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: GuestUserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: GuestUserMinAggregateInputType
@@ -3313,6 +3358,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: GuestUserCountAggregateInputType | true
+    _avg?: GuestUserAvgAggregateInputType
+    _sum?: GuestUserSumAggregateInputType
     _min?: GuestUserMinAggregateInputType
     _max?: GuestUserMaxAggregateInputType
   }
@@ -3325,7 +3372,10 @@ export namespace Prisma {
     lastName: string | null
     createdAt: Date
     updatedAt: Date
+    cartId: number | null
     _count: GuestUserCountAggregateOutputType | null
+    _avg: GuestUserAvgAggregateOutputType | null
+    _sum: GuestUserSumAggregateOutputType | null
     _min: GuestUserMinAggregateOutputType | null
     _max: GuestUserMaxAggregateOutputType | null
   }
@@ -3352,6 +3402,7 @@ export namespace Prisma {
     lastName?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    cartId?: boolean
     cart?: boolean | GuestUser$cartArgs<ExtArgs>
     orders?: boolean | GuestUser$ordersArgs<ExtArgs>
     addresses?: boolean | GuestUser$addressesArgs<ExtArgs>
@@ -3368,9 +3419,10 @@ export namespace Prisma {
     lastName?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    cartId?: boolean
   }
 
-  export type GuestUserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "sessionId" | "email" | "firstName" | "lastName" | "createdAt" | "updatedAt", ExtArgs["result"]["guestUser"]>
+  export type GuestUserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "sessionId" | "email" | "firstName" | "lastName" | "createdAt" | "updatedAt" | "cartId", ExtArgs["result"]["guestUser"]>
   export type GuestUserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     cart?: boolean | GuestUser$cartArgs<ExtArgs>
     orders?: boolean | GuestUser$ordersArgs<ExtArgs>
@@ -3393,6 +3445,7 @@ export namespace Prisma {
       lastName: string | null
       createdAt: Date
       updatedAt: Date
+      cartId: number | null
     }, ExtArgs["result"]["guestUser"]>
     composites: {}
   }
@@ -3772,6 +3825,7 @@ export namespace Prisma {
     readonly lastName: FieldRef<"GuestUser", 'String'>
     readonly createdAt: FieldRef<"GuestUser", 'DateTime'>
     readonly updatedAt: FieldRef<"GuestUser", 'DateTime'>
+    readonly cartId: FieldRef<"GuestUser", 'Int'>
   }
     
 
@@ -4229,7 +4283,6 @@ export namespace Prisma {
   export type CartMinAggregateOutputType = {
     id: number | null
     userId: string | null
-    guestUserId: string | null
     tempCartId: string | null
     appliedPromoCodeId: number | null
     promoDiscountAmount: number | null
@@ -4247,7 +4300,6 @@ export namespace Prisma {
   export type CartMaxAggregateOutputType = {
     id: number | null
     userId: string | null
-    guestUserId: string | null
     tempCartId: string | null
     appliedPromoCodeId: number | null
     promoDiscountAmount: number | null
@@ -4265,7 +4317,6 @@ export namespace Prisma {
   export type CartCountAggregateOutputType = {
     id: number
     userId: number
-    guestUserId: number
     tempCartId: number
     appliedPromoCodeId: number
     promoDiscountAmount: number
@@ -4299,7 +4350,6 @@ export namespace Prisma {
   export type CartMinAggregateInputType = {
     id?: true
     userId?: true
-    guestUserId?: true
     tempCartId?: true
     appliedPromoCodeId?: true
     promoDiscountAmount?: true
@@ -4317,7 +4367,6 @@ export namespace Prisma {
   export type CartMaxAggregateInputType = {
     id?: true
     userId?: true
-    guestUserId?: true
     tempCartId?: true
     appliedPromoCodeId?: true
     promoDiscountAmount?: true
@@ -4335,7 +4384,6 @@ export namespace Prisma {
   export type CartCountAggregateInputType = {
     id?: true
     userId?: true
-    guestUserId?: true
     tempCartId?: true
     appliedPromoCodeId?: true
     promoDiscountAmount?: true
@@ -4440,7 +4488,6 @@ export namespace Prisma {
   export type CartGroupByOutputType = {
     id: number
     userId: string | null
-    guestUserId: string | null
     tempCartId: string | null
     appliedPromoCodeId: number | null
     promoDiscountAmount: number | null
@@ -4477,7 +4524,6 @@ export namespace Prisma {
   export type CartSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
-    guestUserId?: boolean
     tempCartId?: boolean
     appliedPromoCodeId?: boolean
     promoDiscountAmount?: boolean
@@ -4491,11 +4537,11 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | Cart$userArgs<ExtArgs>
-    guestUser?: boolean | Cart$guestUserArgs<ExtArgs>
     appliedPromoCode?: boolean | Cart$appliedPromoCodeArgs<ExtArgs>
     shippingAddress?: boolean | Cart$shippingAddressArgs<ExtArgs>
     items?: boolean | Cart$itemsArgs<ExtArgs>
     checkoutSessions?: boolean | Cart$checkoutSessionsArgs<ExtArgs>
+    GuestUser?: boolean | Cart$GuestUserArgs<ExtArgs>
     _count?: boolean | CartCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["cart"]>
 
@@ -4504,7 +4550,6 @@ export namespace Prisma {
   export type CartSelectScalar = {
     id?: boolean
     userId?: boolean
-    guestUserId?: boolean
     tempCartId?: boolean
     appliedPromoCodeId?: boolean
     promoDiscountAmount?: boolean
@@ -4519,14 +4564,14 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type CartOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "guestUserId" | "tempCartId" | "appliedPromoCodeId" | "promoDiscountAmount" | "promoAppliedAt" | "requiresPromoVerification" | "shippingMethod" | "shippingAddressId" | "stripeCheckoutSessionId" | "checkoutStatus" | "expiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["cart"]>
+  export type CartOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "tempCartId" | "appliedPromoCodeId" | "promoDiscountAmount" | "promoAppliedAt" | "requiresPromoVerification" | "shippingMethod" | "shippingAddressId" | "stripeCheckoutSessionId" | "checkoutStatus" | "expiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["cart"]>
   export type CartInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | Cart$userArgs<ExtArgs>
-    guestUser?: boolean | Cart$guestUserArgs<ExtArgs>
     appliedPromoCode?: boolean | Cart$appliedPromoCodeArgs<ExtArgs>
     shippingAddress?: boolean | Cart$shippingAddressArgs<ExtArgs>
     items?: boolean | Cart$itemsArgs<ExtArgs>
     checkoutSessions?: boolean | Cart$checkoutSessionsArgs<ExtArgs>
+    GuestUser?: boolean | Cart$GuestUserArgs<ExtArgs>
     _count?: boolean | CartCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -4534,16 +4579,15 @@ export namespace Prisma {
     name: "Cart"
     objects: {
       user: Prisma.$UserPayload<ExtArgs> | null
-      guestUser: Prisma.$GuestUserPayload<ExtArgs> | null
       appliedPromoCode: Prisma.$PromoCodePayload<ExtArgs> | null
       shippingAddress: Prisma.$AddressPayload<ExtArgs> | null
       items: Prisma.$CartItemPayload<ExtArgs>[]
       checkoutSessions: Prisma.$CheckoutSessionPayload<ExtArgs>[]
+      GuestUser: Prisma.$GuestUserPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       userId: string | null
-      guestUserId: string | null
       tempCartId: string | null
       appliedPromoCodeId: number | null
       promoDiscountAmount: number | null
@@ -4897,11 +4941,11 @@ export namespace Prisma {
   export interface Prisma__CartClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends Cart$userArgs<ExtArgs> = {}>(args?: Subset<T, Cart$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    guestUser<T extends Cart$guestUserArgs<ExtArgs> = {}>(args?: Subset<T, Cart$guestUserArgs<ExtArgs>>): Prisma__GuestUserClient<$Result.GetResult<Prisma.$GuestUserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     appliedPromoCode<T extends Cart$appliedPromoCodeArgs<ExtArgs> = {}>(args?: Subset<T, Cart$appliedPromoCodeArgs<ExtArgs>>): Prisma__PromoCodeClient<$Result.GetResult<Prisma.$PromoCodePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     shippingAddress<T extends Cart$shippingAddressArgs<ExtArgs> = {}>(args?: Subset<T, Cart$shippingAddressArgs<ExtArgs>>): Prisma__AddressClient<$Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     items<T extends Cart$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Cart$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CartItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     checkoutSessions<T extends Cart$checkoutSessionsArgs<ExtArgs> = {}>(args?: Subset<T, Cart$checkoutSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CheckoutSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    GuestUser<T extends Cart$GuestUserArgs<ExtArgs> = {}>(args?: Subset<T, Cart$GuestUserArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GuestUserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4933,7 +4977,6 @@ export namespace Prisma {
   interface CartFieldRefs {
     readonly id: FieldRef<"Cart", 'Int'>
     readonly userId: FieldRef<"Cart", 'String'>
-    readonly guestUserId: FieldRef<"Cart", 'String'>
     readonly tempCartId: FieldRef<"Cart", 'String'>
     readonly appliedPromoCodeId: FieldRef<"Cart", 'Int'>
     readonly promoDiscountAmount: FieldRef<"Cart", 'Int'>
@@ -5308,25 +5351,6 @@ export namespace Prisma {
   }
 
   /**
-   * Cart.guestUser
-   */
-  export type Cart$guestUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the GuestUser
-     */
-    select?: GuestUserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the GuestUser
-     */
-    omit?: GuestUserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: GuestUserInclude<ExtArgs> | null
-    where?: GuestUserWhereInput
-  }
-
-  /**
    * Cart.appliedPromoCode
    */
   export type Cart$appliedPromoCodeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5413,6 +5437,30 @@ export namespace Prisma {
   }
 
   /**
+   * Cart.GuestUser
+   */
+  export type Cart$GuestUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GuestUser
+     */
+    select?: GuestUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GuestUser
+     */
+    omit?: GuestUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GuestUserInclude<ExtArgs> | null
+    where?: GuestUserWhereInput
+    orderBy?: GuestUserOrderByWithRelationInput | GuestUserOrderByWithRelationInput[]
+    cursor?: GuestUserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GuestUserScalarFieldEnum | GuestUserScalarFieldEnum[]
+  }
+
+  /**
    * Cart without action
    */
   export type CartDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5465,6 +5513,7 @@ export namespace Prisma {
     id: number | null
     cartId: number | null
     printfulVariantId: number | null
+    printfulExternalId: string | null
     printfulProductId: number | null
     variantName: string | null
     productName: string | null
@@ -5482,6 +5531,7 @@ export namespace Prisma {
     id: number | null
     cartId: number | null
     printfulVariantId: number | null
+    printfulExternalId: string | null
     printfulProductId: number | null
     variantName: string | null
     productName: string | null
@@ -5499,6 +5549,7 @@ export namespace Prisma {
     id: number
     cartId: number
     printfulVariantId: number
+    printfulExternalId: number
     printfulProductId: number
     variantName: number
     productName: number
@@ -5536,6 +5587,7 @@ export namespace Prisma {
     id?: true
     cartId?: true
     printfulVariantId?: true
+    printfulExternalId?: true
     printfulProductId?: true
     variantName?: true
     productName?: true
@@ -5553,6 +5605,7 @@ export namespace Prisma {
     id?: true
     cartId?: true
     printfulVariantId?: true
+    printfulExternalId?: true
     printfulProductId?: true
     variantName?: true
     productName?: true
@@ -5570,6 +5623,7 @@ export namespace Prisma {
     id?: true
     cartId?: true
     printfulVariantId?: true
+    printfulExternalId?: true
     printfulProductId?: true
     variantName?: true
     productName?: true
@@ -5674,6 +5728,7 @@ export namespace Prisma {
     id: number
     cartId: number
     printfulVariantId: number
+    printfulExternalId: string
     printfulProductId: number
     variantName: string
     productName: string
@@ -5710,6 +5765,7 @@ export namespace Prisma {
     id?: boolean
     cartId?: boolean
     printfulVariantId?: boolean
+    printfulExternalId?: boolean
     printfulProductId?: boolean
     variantName?: boolean
     productName?: boolean
@@ -5730,6 +5786,7 @@ export namespace Prisma {
     id?: boolean
     cartId?: boolean
     printfulVariantId?: boolean
+    printfulExternalId?: boolean
     printfulProductId?: boolean
     variantName?: boolean
     productName?: boolean
@@ -5743,7 +5800,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type CartItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cartId" | "printfulVariantId" | "printfulProductId" | "variantName" | "productName" | "size" | "color" | "sku" | "unitPrice" | "quantity" | "imageUrl" | "addedAt" | "updatedAt", ExtArgs["result"]["cartItem"]>
+  export type CartItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cartId" | "printfulVariantId" | "printfulExternalId" | "printfulProductId" | "variantName" | "productName" | "size" | "color" | "sku" | "unitPrice" | "quantity" | "imageUrl" | "addedAt" | "updatedAt", ExtArgs["result"]["cartItem"]>
   export type CartItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     cart?: boolean | CartDefaultArgs<ExtArgs>
   }
@@ -5757,6 +5814,7 @@ export namespace Prisma {
       id: number
       cartId: number
       printfulVariantId: number
+      printfulExternalId: string
       printfulProductId: number
       variantName: string
       productName: string
@@ -6141,6 +6199,7 @@ export namespace Prisma {
     readonly id: FieldRef<"CartItem", 'Int'>
     readonly cartId: FieldRef<"CartItem", 'Int'>
     readonly printfulVariantId: FieldRef<"CartItem", 'Int'>
+    readonly printfulExternalId: FieldRef<"CartItem", 'String'>
     readonly printfulProductId: FieldRef<"CartItem", 'Int'>
     readonly variantName: FieldRef<"CartItem", 'String'>
     readonly productName: FieldRef<"CartItem", 'String'>
@@ -16848,7 +16907,8 @@ export namespace Prisma {
     firstName: 'firstName',
     lastName: 'lastName',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    cartId: 'cartId'
   };
 
   export type GuestUserScalarFieldEnum = (typeof GuestUserScalarFieldEnum)[keyof typeof GuestUserScalarFieldEnum]
@@ -16857,7 +16917,6 @@ export namespace Prisma {
   export const CartScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
-    guestUserId: 'guestUserId',
     tempCartId: 'tempCartId',
     appliedPromoCodeId: 'appliedPromoCodeId',
     promoDiscountAmount: 'promoDiscountAmount',
@@ -16879,6 +16938,7 @@ export namespace Prisma {
     id: 'id',
     cartId: 'cartId',
     printfulVariantId: 'printfulVariantId',
+    printfulExternalId: 'printfulExternalId',
     printfulProductId: 'printfulProductId',
     variantName: 'variantName',
     productName: 'productName',
@@ -17158,7 +17218,6 @@ export namespace Prisma {
 
   export const CartOrderByRelevanceFieldEnum: {
     userId: 'userId',
-    guestUserId: 'guestUserId',
     tempCartId: 'tempCartId',
     shippingMethod: 'shippingMethod',
     stripeCheckoutSessionId: 'stripeCheckoutSessionId',
@@ -17169,6 +17228,7 @@ export namespace Prisma {
 
 
   export const CartItemOrderByRelevanceFieldEnum: {
+    printfulExternalId: 'printfulExternalId',
     variantName: 'variantName',
     productName: 'productName',
     size: 'size',
@@ -17465,6 +17525,7 @@ export namespace Prisma {
     lastName?: StringNullableFilter<"GuestUser"> | string | null
     createdAt?: DateTimeFilter<"GuestUser"> | Date | string
     updatedAt?: DateTimeFilter<"GuestUser"> | Date | string
+    cartId?: IntNullableFilter<"GuestUser"> | number | null
     cart?: XOR<CartNullableScalarRelationFilter, CartWhereInput> | null
     orders?: OrderListRelationFilter
     addresses?: AddressListRelationFilter
@@ -17478,6 +17539,7 @@ export namespace Prisma {
     lastName?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    cartId?: SortOrderInput | SortOrder
     cart?: CartOrderByWithRelationInput
     orders?: OrderOrderByRelationAggregateInput
     addresses?: AddressOrderByRelationAggregateInput
@@ -17495,6 +17557,7 @@ export namespace Prisma {
     lastName?: StringNullableFilter<"GuestUser"> | string | null
     createdAt?: DateTimeFilter<"GuestUser"> | Date | string
     updatedAt?: DateTimeFilter<"GuestUser"> | Date | string
+    cartId?: IntNullableFilter<"GuestUser"> | number | null
     cart?: XOR<CartNullableScalarRelationFilter, CartWhereInput> | null
     orders?: OrderListRelationFilter
     addresses?: AddressListRelationFilter
@@ -17508,9 +17571,12 @@ export namespace Prisma {
     lastName?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    cartId?: SortOrderInput | SortOrder
     _count?: GuestUserCountOrderByAggregateInput
+    _avg?: GuestUserAvgOrderByAggregateInput
     _max?: GuestUserMaxOrderByAggregateInput
     _min?: GuestUserMinOrderByAggregateInput
+    _sum?: GuestUserSumOrderByAggregateInput
   }
 
   export type GuestUserScalarWhereWithAggregatesInput = {
@@ -17524,6 +17590,7 @@ export namespace Prisma {
     lastName?: StringNullableWithAggregatesFilter<"GuestUser"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"GuestUser"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"GuestUser"> | Date | string
+    cartId?: IntNullableWithAggregatesFilter<"GuestUser"> | number | null
   }
 
   export type CartWhereInput = {
@@ -17532,7 +17599,6 @@ export namespace Prisma {
     NOT?: CartWhereInput | CartWhereInput[]
     id?: IntFilter<"Cart"> | number
     userId?: StringNullableFilter<"Cart"> | string | null
-    guestUserId?: StringNullableFilter<"Cart"> | string | null
     tempCartId?: StringNullableFilter<"Cart"> | string | null
     appliedPromoCodeId?: IntNullableFilter<"Cart"> | number | null
     promoDiscountAmount?: IntNullableFilter<"Cart"> | number | null
@@ -17546,17 +17612,16 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Cart"> | Date | string
     updatedAt?: DateTimeFilter<"Cart"> | Date | string
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
-    guestUser?: XOR<GuestUserNullableScalarRelationFilter, GuestUserWhereInput> | null
     appliedPromoCode?: XOR<PromoCodeNullableScalarRelationFilter, PromoCodeWhereInput> | null
     shippingAddress?: XOR<AddressNullableScalarRelationFilter, AddressWhereInput> | null
     items?: CartItemListRelationFilter
     checkoutSessions?: CheckoutSessionListRelationFilter
+    GuestUser?: GuestUserListRelationFilter
   }
 
   export type CartOrderByWithRelationInput = {
     id?: SortOrder
     userId?: SortOrderInput | SortOrder
-    guestUserId?: SortOrderInput | SortOrder
     tempCartId?: SortOrderInput | SortOrder
     appliedPromoCodeId?: SortOrderInput | SortOrder
     promoDiscountAmount?: SortOrderInput | SortOrder
@@ -17570,18 +17635,17 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
-    guestUser?: GuestUserOrderByWithRelationInput
     appliedPromoCode?: PromoCodeOrderByWithRelationInput
     shippingAddress?: AddressOrderByWithRelationInput
     items?: CartItemOrderByRelationAggregateInput
     checkoutSessions?: CheckoutSessionOrderByRelationAggregateInput
+    GuestUser?: GuestUserOrderByRelationAggregateInput
     _relevance?: CartOrderByRelevanceInput
   }
 
   export type CartWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     userId?: string
-    guestUserId?: string
     tempCartId?: string
     stripeCheckoutSessionId?: string
     AND?: CartWhereInput | CartWhereInput[]
@@ -17598,17 +17662,16 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Cart"> | Date | string
     updatedAt?: DateTimeFilter<"Cart"> | Date | string
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
-    guestUser?: XOR<GuestUserNullableScalarRelationFilter, GuestUserWhereInput> | null
     appliedPromoCode?: XOR<PromoCodeNullableScalarRelationFilter, PromoCodeWhereInput> | null
     shippingAddress?: XOR<AddressNullableScalarRelationFilter, AddressWhereInput> | null
     items?: CartItemListRelationFilter
     checkoutSessions?: CheckoutSessionListRelationFilter
-  }, "id" | "userId" | "guestUserId" | "tempCartId" | "stripeCheckoutSessionId">
+    GuestUser?: GuestUserListRelationFilter
+  }, "id" | "userId" | "tempCartId" | "stripeCheckoutSessionId">
 
   export type CartOrderByWithAggregationInput = {
     id?: SortOrder
     userId?: SortOrderInput | SortOrder
-    guestUserId?: SortOrderInput | SortOrder
     tempCartId?: SortOrderInput | SortOrder
     appliedPromoCodeId?: SortOrderInput | SortOrder
     promoDiscountAmount?: SortOrderInput | SortOrder
@@ -17634,7 +17697,6 @@ export namespace Prisma {
     NOT?: CartScalarWhereWithAggregatesInput | CartScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Cart"> | number
     userId?: StringNullableWithAggregatesFilter<"Cart"> | string | null
-    guestUserId?: StringNullableWithAggregatesFilter<"Cart"> | string | null
     tempCartId?: StringNullableWithAggregatesFilter<"Cart"> | string | null
     appliedPromoCodeId?: IntNullableWithAggregatesFilter<"Cart"> | number | null
     promoDiscountAmount?: IntNullableWithAggregatesFilter<"Cart"> | number | null
@@ -17656,6 +17718,7 @@ export namespace Prisma {
     id?: IntFilter<"CartItem"> | number
     cartId?: IntFilter<"CartItem"> | number
     printfulVariantId?: IntFilter<"CartItem"> | number
+    printfulExternalId?: StringFilter<"CartItem"> | string
     printfulProductId?: IntFilter<"CartItem"> | number
     variantName?: StringFilter<"CartItem"> | string
     productName?: StringFilter<"CartItem"> | string
@@ -17674,6 +17737,7 @@ export namespace Prisma {
     id?: SortOrder
     cartId?: SortOrder
     printfulVariantId?: SortOrder
+    printfulExternalId?: SortOrder
     printfulProductId?: SortOrder
     variantName?: SortOrder
     productName?: SortOrder
@@ -17697,6 +17761,7 @@ export namespace Prisma {
     NOT?: CartItemWhereInput | CartItemWhereInput[]
     cartId?: IntFilter<"CartItem"> | number
     printfulVariantId?: IntFilter<"CartItem"> | number
+    printfulExternalId?: StringFilter<"CartItem"> | string
     printfulProductId?: IntFilter<"CartItem"> | number
     variantName?: StringFilter<"CartItem"> | string
     productName?: StringFilter<"CartItem"> | string
@@ -17715,6 +17780,7 @@ export namespace Prisma {
     id?: SortOrder
     cartId?: SortOrder
     printfulVariantId?: SortOrder
+    printfulExternalId?: SortOrder
     printfulProductId?: SortOrder
     variantName?: SortOrder
     productName?: SortOrder
@@ -17740,6 +17806,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"CartItem"> | number
     cartId?: IntWithAggregatesFilter<"CartItem"> | number
     printfulVariantId?: IntWithAggregatesFilter<"CartItem"> | number
+    printfulExternalId?: StringWithAggregatesFilter<"CartItem"> | string
     printfulProductId?: IntWithAggregatesFilter<"CartItem"> | number
     variantName?: StringWithAggregatesFilter<"CartItem"> | string
     productName?: StringWithAggregatesFilter<"CartItem"> | string
@@ -18968,7 +19035,7 @@ export namespace Prisma {
     lastName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    cart?: CartUncheckedCreateNestedOneWithoutGuestUserInput
+    cartId?: number | null
     orders?: OrderUncheckedCreateNestedManyWithoutGuestUserInput
     addresses?: AddressUncheckedCreateNestedManyWithoutGuestUserInput
   }
@@ -18994,7 +19061,7 @@ export namespace Prisma {
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    cart?: CartUncheckedUpdateOneWithoutGuestUserNestedInput
+    cartId?: NullableIntFieldUpdateOperationsInput | number | null
     orders?: OrderUncheckedUpdateManyWithoutGuestUserNestedInput
     addresses?: AddressUncheckedUpdateManyWithoutGuestUserNestedInput
   }
@@ -19007,6 +19074,7 @@ export namespace Prisma {
     lastName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    cartId?: number | null
   }
 
   export type GuestUserUpdateManyMutationInput = {
@@ -19027,6 +19095,7 @@ export namespace Prisma {
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cartId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type CartCreateInput = {
@@ -19041,17 +19110,16 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     user?: UserCreateNestedOneWithoutCartInput
-    guestUser?: GuestUserCreateNestedOneWithoutCartInput
     appliedPromoCode?: PromoCodeCreateNestedOneWithoutCartsInput
     shippingAddress?: AddressCreateNestedOneWithoutCartsInput
     items?: CartItemCreateNestedManyWithoutCartInput
     checkoutSessions?: CheckoutSessionCreateNestedManyWithoutCartInput
+    GuestUser?: GuestUserCreateNestedManyWithoutCartInput
   }
 
   export type CartUncheckedCreateInput = {
     id?: number
     userId?: string | null
-    guestUserId?: string | null
     tempCartId?: string | null
     appliedPromoCodeId?: number | null
     promoDiscountAmount?: number | null
@@ -19066,6 +19134,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     items?: CartItemUncheckedCreateNestedManyWithoutCartInput
     checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutCartInput
+    GuestUser?: GuestUserUncheckedCreateNestedManyWithoutCartInput
   }
 
   export type CartUpdateInput = {
@@ -19080,17 +19149,16 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneWithoutCartNestedInput
-    guestUser?: GuestUserUpdateOneWithoutCartNestedInput
     appliedPromoCode?: PromoCodeUpdateOneWithoutCartsNestedInput
     shippingAddress?: AddressUpdateOneWithoutCartsNestedInput
     items?: CartItemUpdateManyWithoutCartNestedInput
     checkoutSessions?: CheckoutSessionUpdateManyWithoutCartNestedInput
+    GuestUser?: GuestUserUpdateManyWithoutCartNestedInput
   }
 
   export type CartUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: NullableStringFieldUpdateOperationsInput | string | null
-    guestUserId?: NullableStringFieldUpdateOperationsInput | string | null
     tempCartId?: NullableStringFieldUpdateOperationsInput | string | null
     appliedPromoCodeId?: NullableIntFieldUpdateOperationsInput | number | null
     promoDiscountAmount?: NullableIntFieldUpdateOperationsInput | number | null
@@ -19105,12 +19173,12 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: CartItemUncheckedUpdateManyWithoutCartNestedInput
     checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutCartNestedInput
+    GuestUser?: GuestUserUncheckedUpdateManyWithoutCartNestedInput
   }
 
   export type CartCreateManyInput = {
     id?: number
     userId?: string | null
-    guestUserId?: string | null
     tempCartId?: string | null
     appliedPromoCodeId?: number | null
     promoDiscountAmount?: number | null
@@ -19141,7 +19209,6 @@ export namespace Prisma {
   export type CartUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: NullableStringFieldUpdateOperationsInput | string | null
-    guestUserId?: NullableStringFieldUpdateOperationsInput | string | null
     tempCartId?: NullableStringFieldUpdateOperationsInput | string | null
     appliedPromoCodeId?: NullableIntFieldUpdateOperationsInput | number | null
     promoDiscountAmount?: NullableIntFieldUpdateOperationsInput | number | null
@@ -19158,6 +19225,7 @@ export namespace Prisma {
 
   export type CartItemCreateInput = {
     printfulVariantId: number
+    printfulExternalId: string
     printfulProductId: number
     variantName: string
     productName: string
@@ -19176,6 +19244,7 @@ export namespace Prisma {
     id?: number
     cartId: number
     printfulVariantId: number
+    printfulExternalId: string
     printfulProductId: number
     variantName: string
     productName: string
@@ -19191,6 +19260,7 @@ export namespace Prisma {
 
   export type CartItemUpdateInput = {
     printfulVariantId?: IntFieldUpdateOperationsInput | number
+    printfulExternalId?: StringFieldUpdateOperationsInput | string
     printfulProductId?: IntFieldUpdateOperationsInput | number
     variantName?: StringFieldUpdateOperationsInput | string
     productName?: StringFieldUpdateOperationsInput | string
@@ -19209,6 +19279,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     cartId?: IntFieldUpdateOperationsInput | number
     printfulVariantId?: IntFieldUpdateOperationsInput | number
+    printfulExternalId?: StringFieldUpdateOperationsInput | string
     printfulProductId?: IntFieldUpdateOperationsInput | number
     variantName?: StringFieldUpdateOperationsInput | string
     productName?: StringFieldUpdateOperationsInput | string
@@ -19226,6 +19297,7 @@ export namespace Prisma {
     id?: number
     cartId: number
     printfulVariantId: number
+    printfulExternalId: string
     printfulProductId: number
     variantName: string
     productName: string
@@ -19241,6 +19313,7 @@ export namespace Prisma {
 
   export type CartItemUpdateManyMutationInput = {
     printfulVariantId?: IntFieldUpdateOperationsInput | number
+    printfulExternalId?: StringFieldUpdateOperationsInput | string
     printfulProductId?: IntFieldUpdateOperationsInput | number
     variantName?: StringFieldUpdateOperationsInput | string
     productName?: StringFieldUpdateOperationsInput | string
@@ -19258,6 +19331,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     cartId?: IntFieldUpdateOperationsInput | number
     printfulVariantId?: IntFieldUpdateOperationsInput | number
+    printfulExternalId?: StringFieldUpdateOperationsInput | string
     printfulProductId?: IntFieldUpdateOperationsInput | number
     variantName?: StringFieldUpdateOperationsInput | string
     productName?: StringFieldUpdateOperationsInput | string
@@ -20714,6 +20788,17 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type GuestUserOrderByRelevanceInput = {
     fields: GuestUserOrderByRelevanceFieldEnum | GuestUserOrderByRelevanceFieldEnum[]
     sort: SortOrder
@@ -20728,6 +20813,11 @@ export namespace Prisma {
     lastName?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    cartId?: SortOrder
+  }
+
+  export type GuestUserAvgOrderByAggregateInput = {
+    cartId?: SortOrder
   }
 
   export type GuestUserMaxOrderByAggregateInput = {
@@ -20738,6 +20828,7 @@ export namespace Prisma {
     lastName?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    cartId?: SortOrder
   }
 
   export type GuestUserMinOrderByAggregateInput = {
@@ -20748,6 +20839,27 @@ export namespace Prisma {
     lastName?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    cartId?: SortOrder
+  }
+
+  export type GuestUserSumOrderByAggregateInput = {
+    cartId?: SortOrder
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -20759,17 +20871,6 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
-  }
-
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type DateTimeNullableFilter<$PrismaModel = never> = {
@@ -20786,11 +20887,6 @@ export namespace Prisma {
   export type UserNullableScalarRelationFilter = {
     is?: UserWhereInput | null
     isNot?: UserWhereInput | null
-  }
-
-  export type GuestUserNullableScalarRelationFilter = {
-    is?: GuestUserWhereInput | null
-    isNot?: GuestUserWhereInput | null
   }
 
   export type PromoCodeNullableScalarRelationFilter = {
@@ -20815,11 +20911,21 @@ export namespace Prisma {
     none?: CheckoutSessionWhereInput
   }
 
+  export type GuestUserListRelationFilter = {
+    every?: GuestUserWhereInput
+    some?: GuestUserWhereInput
+    none?: GuestUserWhereInput
+  }
+
   export type CartItemOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type CheckoutSessionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type GuestUserOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -20832,7 +20938,6 @@ export namespace Prisma {
   export type CartCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    guestUserId?: SortOrder
     tempCartId?: SortOrder
     appliedPromoCodeId?: SortOrder
     promoDiscountAmount?: SortOrder
@@ -20857,7 +20962,6 @@ export namespace Prisma {
   export type CartMaxOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    guestUserId?: SortOrder
     tempCartId?: SortOrder
     appliedPromoCodeId?: SortOrder
     promoDiscountAmount?: SortOrder
@@ -20875,7 +20979,6 @@ export namespace Prisma {
   export type CartMinOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    guestUserId?: SortOrder
     tempCartId?: SortOrder
     appliedPromoCodeId?: SortOrder
     promoDiscountAmount?: SortOrder
@@ -20913,22 +21016,6 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | null
@@ -20963,6 +21050,7 @@ export namespace Prisma {
     id?: SortOrder
     cartId?: SortOrder
     printfulVariantId?: SortOrder
+    printfulExternalId?: SortOrder
     printfulProductId?: SortOrder
     variantName?: SortOrder
     productName?: SortOrder
@@ -20989,6 +21077,7 @@ export namespace Prisma {
     id?: SortOrder
     cartId?: SortOrder
     printfulVariantId?: SortOrder
+    printfulExternalId?: SortOrder
     printfulProductId?: SortOrder
     variantName?: SortOrder
     productName?: SortOrder
@@ -21006,6 +21095,7 @@ export namespace Prisma {
     id?: SortOrder
     cartId?: SortOrder
     printfulVariantId?: SortOrder
+    printfulExternalId?: SortOrder
     printfulProductId?: SortOrder
     variantName?: SortOrder
     productName?: SortOrder
@@ -21072,6 +21162,11 @@ export namespace Prisma {
     gt?: InputJsonValue
     gte?: InputJsonValue
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type GuestUserNullableScalarRelationFilter = {
+    is?: GuestUserWhereInput | null
+    isNot?: GuestUserWhereInput | null
   }
 
   export type OrderItemListRelationFilter = {
@@ -22117,12 +22212,6 @@ export namespace Prisma {
     connect?: AddressWhereUniqueInput | AddressWhereUniqueInput[]
   }
 
-  export type CartUncheckedCreateNestedOneWithoutGuestUserInput = {
-    create?: XOR<CartCreateWithoutGuestUserInput, CartUncheckedCreateWithoutGuestUserInput>
-    connectOrCreate?: CartCreateOrConnectWithoutGuestUserInput
-    connect?: CartWhereUniqueInput
-  }
-
   export type OrderUncheckedCreateNestedManyWithoutGuestUserInput = {
     create?: XOR<OrderCreateWithoutGuestUserInput, OrderUncheckedCreateWithoutGuestUserInput> | OrderCreateWithoutGuestUserInput[] | OrderUncheckedCreateWithoutGuestUserInput[]
     connectOrCreate?: OrderCreateOrConnectWithoutGuestUserInput | OrderCreateOrConnectWithoutGuestUserInput[]
@@ -22175,14 +22264,12 @@ export namespace Prisma {
     deleteMany?: AddressScalarWhereInput | AddressScalarWhereInput[]
   }
 
-  export type CartUncheckedUpdateOneWithoutGuestUserNestedInput = {
-    create?: XOR<CartCreateWithoutGuestUserInput, CartUncheckedCreateWithoutGuestUserInput>
-    connectOrCreate?: CartCreateOrConnectWithoutGuestUserInput
-    upsert?: CartUpsertWithoutGuestUserInput
-    disconnect?: CartWhereInput | boolean
-    delete?: CartWhereInput | boolean
-    connect?: CartWhereUniqueInput
-    update?: XOR<XOR<CartUpdateToOneWithWhereWithoutGuestUserInput, CartUpdateWithoutGuestUserInput>, CartUncheckedUpdateWithoutGuestUserInput>
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type OrderUncheckedUpdateManyWithoutGuestUserNestedInput = {
@@ -22219,12 +22306,6 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type GuestUserCreateNestedOneWithoutCartInput = {
-    create?: XOR<GuestUserCreateWithoutCartInput, GuestUserUncheckedCreateWithoutCartInput>
-    connectOrCreate?: GuestUserCreateOrConnectWithoutCartInput
-    connect?: GuestUserWhereUniqueInput
-  }
-
   export type PromoCodeCreateNestedOneWithoutCartsInput = {
     create?: XOR<PromoCodeCreateWithoutCartsInput, PromoCodeUncheckedCreateWithoutCartsInput>
     connectOrCreate?: PromoCodeCreateOrConnectWithoutCartsInput
@@ -22251,6 +22332,13 @@ export namespace Prisma {
     connect?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
   }
 
+  export type GuestUserCreateNestedManyWithoutCartInput = {
+    create?: XOR<GuestUserCreateWithoutCartInput, GuestUserUncheckedCreateWithoutCartInput> | GuestUserCreateWithoutCartInput[] | GuestUserUncheckedCreateWithoutCartInput[]
+    connectOrCreate?: GuestUserCreateOrConnectWithoutCartInput | GuestUserCreateOrConnectWithoutCartInput[]
+    createMany?: GuestUserCreateManyCartInputEnvelope
+    connect?: GuestUserWhereUniqueInput | GuestUserWhereUniqueInput[]
+  }
+
   export type CartItemUncheckedCreateNestedManyWithoutCartInput = {
     create?: XOR<CartItemCreateWithoutCartInput, CartItemUncheckedCreateWithoutCartInput> | CartItemCreateWithoutCartInput[] | CartItemUncheckedCreateWithoutCartInput[]
     connectOrCreate?: CartItemCreateOrConnectWithoutCartInput | CartItemCreateOrConnectWithoutCartInput[]
@@ -22265,12 +22353,11 @@ export namespace Prisma {
     connect?: CheckoutSessionWhereUniqueInput | CheckoutSessionWhereUniqueInput[]
   }
 
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type GuestUserUncheckedCreateNestedManyWithoutCartInput = {
+    create?: XOR<GuestUserCreateWithoutCartInput, GuestUserUncheckedCreateWithoutCartInput> | GuestUserCreateWithoutCartInput[] | GuestUserUncheckedCreateWithoutCartInput[]
+    connectOrCreate?: GuestUserCreateOrConnectWithoutCartInput | GuestUserCreateOrConnectWithoutCartInput[]
+    createMany?: GuestUserCreateManyCartInputEnvelope
+    connect?: GuestUserWhereUniqueInput | GuestUserWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -22285,16 +22372,6 @@ export namespace Prisma {
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCartInput, UserUpdateWithoutCartInput>, UserUncheckedUpdateWithoutCartInput>
-  }
-
-  export type GuestUserUpdateOneWithoutCartNestedInput = {
-    create?: XOR<GuestUserCreateWithoutCartInput, GuestUserUncheckedCreateWithoutCartInput>
-    connectOrCreate?: GuestUserCreateOrConnectWithoutCartInput
-    upsert?: GuestUserUpsertWithoutCartInput
-    disconnect?: GuestUserWhereInput | boolean
-    delete?: GuestUserWhereInput | boolean
-    connect?: GuestUserWhereUniqueInput
-    update?: XOR<XOR<GuestUserUpdateToOneWithWhereWithoutCartInput, GuestUserUpdateWithoutCartInput>, GuestUserUncheckedUpdateWithoutCartInput>
   }
 
   export type PromoCodeUpdateOneWithoutCartsNestedInput = {
@@ -22345,6 +22422,20 @@ export namespace Prisma {
     deleteMany?: CheckoutSessionScalarWhereInput | CheckoutSessionScalarWhereInput[]
   }
 
+  export type GuestUserUpdateManyWithoutCartNestedInput = {
+    create?: XOR<GuestUserCreateWithoutCartInput, GuestUserUncheckedCreateWithoutCartInput> | GuestUserCreateWithoutCartInput[] | GuestUserUncheckedCreateWithoutCartInput[]
+    connectOrCreate?: GuestUserCreateOrConnectWithoutCartInput | GuestUserCreateOrConnectWithoutCartInput[]
+    upsert?: GuestUserUpsertWithWhereUniqueWithoutCartInput | GuestUserUpsertWithWhereUniqueWithoutCartInput[]
+    createMany?: GuestUserCreateManyCartInputEnvelope
+    set?: GuestUserWhereUniqueInput | GuestUserWhereUniqueInput[]
+    disconnect?: GuestUserWhereUniqueInput | GuestUserWhereUniqueInput[]
+    delete?: GuestUserWhereUniqueInput | GuestUserWhereUniqueInput[]
+    connect?: GuestUserWhereUniqueInput | GuestUserWhereUniqueInput[]
+    update?: GuestUserUpdateWithWhereUniqueWithoutCartInput | GuestUserUpdateWithWhereUniqueWithoutCartInput[]
+    updateMany?: GuestUserUpdateManyWithWhereWithoutCartInput | GuestUserUpdateManyWithWhereWithoutCartInput[]
+    deleteMany?: GuestUserScalarWhereInput | GuestUserScalarWhereInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -22379,6 +22470,20 @@ export namespace Prisma {
     update?: CheckoutSessionUpdateWithWhereUniqueWithoutCartInput | CheckoutSessionUpdateWithWhereUniqueWithoutCartInput[]
     updateMany?: CheckoutSessionUpdateManyWithWhereWithoutCartInput | CheckoutSessionUpdateManyWithWhereWithoutCartInput[]
     deleteMany?: CheckoutSessionScalarWhereInput | CheckoutSessionScalarWhereInput[]
+  }
+
+  export type GuestUserUncheckedUpdateManyWithoutCartNestedInput = {
+    create?: XOR<GuestUserCreateWithoutCartInput, GuestUserUncheckedCreateWithoutCartInput> | GuestUserCreateWithoutCartInput[] | GuestUserUncheckedCreateWithoutCartInput[]
+    connectOrCreate?: GuestUserCreateOrConnectWithoutCartInput | GuestUserCreateOrConnectWithoutCartInput[]
+    upsert?: GuestUserUpsertWithWhereUniqueWithoutCartInput | GuestUserUpsertWithWhereUniqueWithoutCartInput[]
+    createMany?: GuestUserCreateManyCartInputEnvelope
+    set?: GuestUserWhereUniqueInput | GuestUserWhereUniqueInput[]
+    disconnect?: GuestUserWhereUniqueInput | GuestUserWhereUniqueInput[]
+    delete?: GuestUserWhereUniqueInput | GuestUserWhereUniqueInput[]
+    connect?: GuestUserWhereUniqueInput | GuestUserWhereUniqueInput[]
+    update?: GuestUserUpdateWithWhereUniqueWithoutCartInput | GuestUserUpdateWithWhereUniqueWithoutCartInput[]
+    updateMany?: GuestUserUpdateManyWithWhereWithoutCartInput | GuestUserUpdateManyWithWhereWithoutCartInput[]
+    deleteMany?: GuestUserScalarWhereInput | GuestUserScalarWhereInput[]
   }
 
   export type CartCreateNestedOneWithoutItemsInput = {
@@ -23041,6 +23146,33 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | null
@@ -23077,33 +23209,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -23193,16 +23298,15 @@ export namespace Prisma {
     expiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    guestUser?: GuestUserCreateNestedOneWithoutCartInput
     appliedPromoCode?: PromoCodeCreateNestedOneWithoutCartsInput
     shippingAddress?: AddressCreateNestedOneWithoutCartsInput
     items?: CartItemCreateNestedManyWithoutCartInput
     checkoutSessions?: CheckoutSessionCreateNestedManyWithoutCartInput
+    GuestUser?: GuestUserCreateNestedManyWithoutCartInput
   }
 
   export type CartUncheckedCreateWithoutUserInput = {
     id?: number
-    guestUserId?: string | null
     tempCartId?: string | null
     appliedPromoCodeId?: number | null
     promoDiscountAmount?: number | null
@@ -23217,6 +23321,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     items?: CartItemUncheckedCreateNestedManyWithoutCartInput
     checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutCartInput
+    GuestUser?: GuestUserUncheckedCreateNestedManyWithoutCartInput
   }
 
   export type CartCreateOrConnectWithoutUserInput = {
@@ -23435,16 +23540,15 @@ export namespace Prisma {
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    guestUser?: GuestUserUpdateOneWithoutCartNestedInput
     appliedPromoCode?: PromoCodeUpdateOneWithoutCartsNestedInput
     shippingAddress?: AddressUpdateOneWithoutCartsNestedInput
     items?: CartItemUpdateManyWithoutCartNestedInput
     checkoutSessions?: CheckoutSessionUpdateManyWithoutCartNestedInput
+    GuestUser?: GuestUserUpdateManyWithoutCartNestedInput
   }
 
   export type CartUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
-    guestUserId?: NullableStringFieldUpdateOperationsInput | string | null
     tempCartId?: NullableStringFieldUpdateOperationsInput | string | null
     appliedPromoCodeId?: NullableIntFieldUpdateOperationsInput | number | null
     promoDiscountAmount?: NullableIntFieldUpdateOperationsInput | number | null
@@ -23459,6 +23563,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: CartItemUncheckedUpdateManyWithoutCartNestedInput
     checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutCartNestedInput
+    GuestUser?: GuestUserUncheckedUpdateManyWithoutCartNestedInput
   }
 
   export type OrderUpsertWithWhereUniqueWithoutUserInput = {
@@ -23910,35 +24015,6 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutCartInput, UserUncheckedCreateWithoutCartInput>
   }
 
-  export type GuestUserCreateWithoutCartInput = {
-    id?: string
-    sessionId: string
-    email?: string | null
-    firstName?: string | null
-    lastName?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    orders?: OrderCreateNestedManyWithoutGuestUserInput
-    addresses?: AddressCreateNestedManyWithoutGuestUserInput
-  }
-
-  export type GuestUserUncheckedCreateWithoutCartInput = {
-    id?: string
-    sessionId: string
-    email?: string | null
-    firstName?: string | null
-    lastName?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    orders?: OrderUncheckedCreateNestedManyWithoutGuestUserInput
-    addresses?: AddressUncheckedCreateNestedManyWithoutGuestUserInput
-  }
-
-  export type GuestUserCreateOrConnectWithoutCartInput = {
-    where: GuestUserWhereUniqueInput
-    create: XOR<GuestUserCreateWithoutCartInput, GuestUserUncheckedCreateWithoutCartInput>
-  }
-
   export type PromoCodeCreateWithoutCartsInput = {
     code: string
     name?: string | null
@@ -24049,6 +24125,7 @@ export namespace Prisma {
 
   export type CartItemCreateWithoutCartInput = {
     printfulVariantId: number
+    printfulExternalId: string
     printfulProductId: number
     variantName: string
     productName: string
@@ -24065,6 +24142,7 @@ export namespace Prisma {
   export type CartItemUncheckedCreateWithoutCartInput = {
     id?: number
     printfulVariantId: number
+    printfulExternalId: string
     printfulProductId: number
     variantName: string
     productName: string
@@ -24133,6 +24211,40 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type GuestUserCreateWithoutCartInput = {
+    id?: string
+    sessionId: string
+    email?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    orders?: OrderCreateNestedManyWithoutGuestUserInput
+    addresses?: AddressCreateNestedManyWithoutGuestUserInput
+  }
+
+  export type GuestUserUncheckedCreateWithoutCartInput = {
+    id?: string
+    sessionId: string
+    email?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    orders?: OrderUncheckedCreateNestedManyWithoutGuestUserInput
+    addresses?: AddressUncheckedCreateNestedManyWithoutGuestUserInput
+  }
+
+  export type GuestUserCreateOrConnectWithoutCartInput = {
+    where: GuestUserWhereUniqueInput
+    create: XOR<GuestUserCreateWithoutCartInput, GuestUserUncheckedCreateWithoutCartInput>
+  }
+
+  export type GuestUserCreateManyCartInputEnvelope = {
+    data: GuestUserCreateManyCartInput | GuestUserCreateManyCartInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutCartInput = {
     update: XOR<UserUpdateWithoutCartInput, UserUncheckedUpdateWithoutCartInput>
     create: XOR<UserCreateWithoutCartInput, UserUncheckedCreateWithoutCartInput>
@@ -24170,41 +24282,6 @@ export namespace Prisma {
     orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
     addresses?: AddressUncheckedUpdateManyWithoutUserNestedInput
     promoUsages?: PromoCodeUsageUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type GuestUserUpsertWithoutCartInput = {
-    update: XOR<GuestUserUpdateWithoutCartInput, GuestUserUncheckedUpdateWithoutCartInput>
-    create: XOR<GuestUserCreateWithoutCartInput, GuestUserUncheckedCreateWithoutCartInput>
-    where?: GuestUserWhereInput
-  }
-
-  export type GuestUserUpdateToOneWithWhereWithoutCartInput = {
-    where?: GuestUserWhereInput
-    data: XOR<GuestUserUpdateWithoutCartInput, GuestUserUncheckedUpdateWithoutCartInput>
-  }
-
-  export type GuestUserUpdateWithoutCartInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    sessionId?: StringFieldUpdateOperationsInput | string
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    firstName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    orders?: OrderUpdateManyWithoutGuestUserNestedInput
-    addresses?: AddressUpdateManyWithoutGuestUserNestedInput
-  }
-
-  export type GuestUserUncheckedUpdateWithoutCartInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    sessionId?: StringFieldUpdateOperationsInput | string
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    firstName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    orders?: OrderUncheckedUpdateManyWithoutGuestUserNestedInput
-    addresses?: AddressUncheckedUpdateManyWithoutGuestUserNestedInput
   }
 
   export type PromoCodeUpsertWithoutCartsInput = {
@@ -24350,6 +24427,7 @@ export namespace Prisma {
     id?: IntFilter<"CartItem"> | number
     cartId?: IntFilter<"CartItem"> | number
     printfulVariantId?: IntFilter<"CartItem"> | number
+    printfulExternalId?: StringFilter<"CartItem"> | string
     printfulProductId?: IntFilter<"CartItem"> | number
     variantName?: StringFilter<"CartItem"> | string
     productName?: StringFilter<"CartItem"> | string
@@ -24401,6 +24479,36 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"CheckoutSession"> | Date | string
   }
 
+  export type GuestUserUpsertWithWhereUniqueWithoutCartInput = {
+    where: GuestUserWhereUniqueInput
+    update: XOR<GuestUserUpdateWithoutCartInput, GuestUserUncheckedUpdateWithoutCartInput>
+    create: XOR<GuestUserCreateWithoutCartInput, GuestUserUncheckedCreateWithoutCartInput>
+  }
+
+  export type GuestUserUpdateWithWhereUniqueWithoutCartInput = {
+    where: GuestUserWhereUniqueInput
+    data: XOR<GuestUserUpdateWithoutCartInput, GuestUserUncheckedUpdateWithoutCartInput>
+  }
+
+  export type GuestUserUpdateManyWithWhereWithoutCartInput = {
+    where: GuestUserScalarWhereInput
+    data: XOR<GuestUserUpdateManyMutationInput, GuestUserUncheckedUpdateManyWithoutCartInput>
+  }
+
+  export type GuestUserScalarWhereInput = {
+    AND?: GuestUserScalarWhereInput | GuestUserScalarWhereInput[]
+    OR?: GuestUserScalarWhereInput[]
+    NOT?: GuestUserScalarWhereInput | GuestUserScalarWhereInput[]
+    id?: StringFilter<"GuestUser"> | string
+    sessionId?: StringFilter<"GuestUser"> | string
+    email?: StringNullableFilter<"GuestUser"> | string | null
+    firstName?: StringNullableFilter<"GuestUser"> | string | null
+    lastName?: StringNullableFilter<"GuestUser"> | string | null
+    createdAt?: DateTimeFilter<"GuestUser"> | Date | string
+    updatedAt?: DateTimeFilter<"GuestUser"> | Date | string
+    cartId?: IntNullableFilter<"GuestUser"> | number | null
+  }
+
   export type CartCreateWithoutItemsInput = {
     tempCartId?: string | null
     promoDiscountAmount?: number | null
@@ -24413,16 +24521,15 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     user?: UserCreateNestedOneWithoutCartInput
-    guestUser?: GuestUserCreateNestedOneWithoutCartInput
     appliedPromoCode?: PromoCodeCreateNestedOneWithoutCartsInput
     shippingAddress?: AddressCreateNestedOneWithoutCartsInput
     checkoutSessions?: CheckoutSessionCreateNestedManyWithoutCartInput
+    GuestUser?: GuestUserCreateNestedManyWithoutCartInput
   }
 
   export type CartUncheckedCreateWithoutItemsInput = {
     id?: number
     userId?: string | null
-    guestUserId?: string | null
     tempCartId?: string | null
     appliedPromoCodeId?: number | null
     promoDiscountAmount?: number | null
@@ -24436,6 +24543,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutCartInput
+    GuestUser?: GuestUserUncheckedCreateNestedManyWithoutCartInput
   }
 
   export type CartCreateOrConnectWithoutItemsInput = {
@@ -24466,16 +24574,15 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneWithoutCartNestedInput
-    guestUser?: GuestUserUpdateOneWithoutCartNestedInput
     appliedPromoCode?: PromoCodeUpdateOneWithoutCartsNestedInput
     shippingAddress?: AddressUpdateOneWithoutCartsNestedInput
     checkoutSessions?: CheckoutSessionUpdateManyWithoutCartNestedInput
+    GuestUser?: GuestUserUpdateManyWithoutCartNestedInput
   }
 
   export type CartUncheckedUpdateWithoutItemsInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: NullableStringFieldUpdateOperationsInput | string | null
-    guestUserId?: NullableStringFieldUpdateOperationsInput | string | null
     tempCartId?: NullableStringFieldUpdateOperationsInput | string | null
     appliedPromoCodeId?: NullableIntFieldUpdateOperationsInput | number | null
     promoDiscountAmount?: NullableIntFieldUpdateOperationsInput | number | null
@@ -24489,6 +24596,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutCartNestedInput
+    GuestUser?: GuestUserUncheckedUpdateManyWithoutCartNestedInput
   }
 
   export type UserCreateWithoutOrdersInput = {
@@ -24544,7 +24652,7 @@ export namespace Prisma {
     lastName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    cart?: CartUncheckedCreateNestedOneWithoutGuestUserInput
+    cartId?: number | null
     addresses?: AddressUncheckedCreateNestedManyWithoutGuestUserInput
   }
 
@@ -24839,7 +24947,7 @@ export namespace Prisma {
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    cart?: CartUncheckedUpdateOneWithoutGuestUserNestedInput
+    cartId?: NullableIntFieldUpdateOperationsInput | number | null
     addresses?: AddressUncheckedUpdateManyWithoutGuestUserNestedInput
   }
 
@@ -25319,7 +25427,7 @@ export namespace Prisma {
     lastName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    cart?: CartUncheckedCreateNestedOneWithoutGuestUserInput
+    cartId?: number | null
     orders?: OrderUncheckedCreateNestedManyWithoutGuestUserInput
   }
 
@@ -25447,16 +25555,15 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     user?: UserCreateNestedOneWithoutCartInput
-    guestUser?: GuestUserCreateNestedOneWithoutCartInput
     appliedPromoCode?: PromoCodeCreateNestedOneWithoutCartsInput
     items?: CartItemCreateNestedManyWithoutCartInput
     checkoutSessions?: CheckoutSessionCreateNestedManyWithoutCartInput
+    GuestUser?: GuestUserCreateNestedManyWithoutCartInput
   }
 
   export type CartUncheckedCreateWithoutShippingAddressInput = {
     id?: number
     userId?: string | null
-    guestUserId?: string | null
     tempCartId?: string | null
     appliedPromoCodeId?: number | null
     promoDiscountAmount?: number | null
@@ -25470,6 +25577,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     items?: CartItemUncheckedCreateNestedManyWithoutCartInput
     checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutCartInput
+    GuestUser?: GuestUserUncheckedCreateNestedManyWithoutCartInput
   }
 
   export type CartCreateOrConnectWithoutShippingAddressInput = {
@@ -25552,7 +25660,7 @@ export namespace Prisma {
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    cart?: CartUncheckedUpdateOneWithoutGuestUserNestedInput
+    cartId?: NullableIntFieldUpdateOperationsInput | number | null
     orders?: OrderUncheckedUpdateManyWithoutGuestUserNestedInput
   }
 
@@ -25594,7 +25702,6 @@ export namespace Prisma {
     NOT?: CartScalarWhereInput | CartScalarWhereInput[]
     id?: IntFilter<"Cart"> | number
     userId?: StringNullableFilter<"Cart"> | string | null
-    guestUserId?: StringNullableFilter<"Cart"> | string | null
     tempCartId?: StringNullableFilter<"Cart"> | string | null
     appliedPromoCodeId?: IntNullableFilter<"Cart"> | number | null
     promoDiscountAmount?: IntNullableFilter<"Cart"> | number | null
@@ -25621,16 +25728,15 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     user?: UserCreateNestedOneWithoutCartInput
-    guestUser?: GuestUserCreateNestedOneWithoutCartInput
     appliedPromoCode?: PromoCodeCreateNestedOneWithoutCartsInput
     shippingAddress?: AddressCreateNestedOneWithoutCartsInput
     items?: CartItemCreateNestedManyWithoutCartInput
+    GuestUser?: GuestUserCreateNestedManyWithoutCartInput
   }
 
   export type CartUncheckedCreateWithoutCheckoutSessionsInput = {
     id?: number
     userId?: string | null
-    guestUserId?: string | null
     tempCartId?: string | null
     appliedPromoCodeId?: number | null
     promoDiscountAmount?: number | null
@@ -25644,6 +25750,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     items?: CartItemUncheckedCreateNestedManyWithoutCartInput
+    GuestUser?: GuestUserUncheckedCreateNestedManyWithoutCartInput
   }
 
   export type CartCreateOrConnectWithoutCheckoutSessionsInput = {
@@ -25674,16 +25781,15 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneWithoutCartNestedInput
-    guestUser?: GuestUserUpdateOneWithoutCartNestedInput
     appliedPromoCode?: PromoCodeUpdateOneWithoutCartsNestedInput
     shippingAddress?: AddressUpdateOneWithoutCartsNestedInput
     items?: CartItemUpdateManyWithoutCartNestedInput
+    GuestUser?: GuestUserUpdateManyWithoutCartNestedInput
   }
 
   export type CartUncheckedUpdateWithoutCheckoutSessionsInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: NullableStringFieldUpdateOperationsInput | string | null
-    guestUserId?: NullableStringFieldUpdateOperationsInput | string | null
     tempCartId?: NullableStringFieldUpdateOperationsInput | string | null
     appliedPromoCodeId?: NullableIntFieldUpdateOperationsInput | number | null
     promoDiscountAmount?: NullableIntFieldUpdateOperationsInput | number | null
@@ -25697,6 +25803,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: CartItemUncheckedUpdateManyWithoutCartNestedInput
+    GuestUser?: GuestUserUncheckedUpdateManyWithoutCartNestedInput
   }
 
   export type CartCreateWithoutAppliedPromoCodeInput = {
@@ -25711,16 +25818,15 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     user?: UserCreateNestedOneWithoutCartInput
-    guestUser?: GuestUserCreateNestedOneWithoutCartInput
     shippingAddress?: AddressCreateNestedOneWithoutCartsInput
     items?: CartItemCreateNestedManyWithoutCartInput
     checkoutSessions?: CheckoutSessionCreateNestedManyWithoutCartInput
+    GuestUser?: GuestUserCreateNestedManyWithoutCartInput
   }
 
   export type CartUncheckedCreateWithoutAppliedPromoCodeInput = {
     id?: number
     userId?: string | null
-    guestUserId?: string | null
     tempCartId?: string | null
     promoDiscountAmount?: number | null
     promoAppliedAt?: Date | string | null
@@ -25734,6 +25840,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     items?: CartItemUncheckedCreateNestedManyWithoutCartInput
     checkoutSessions?: CheckoutSessionUncheckedCreateNestedManyWithoutCartInput
+    GuestUser?: GuestUserUncheckedCreateNestedManyWithoutCartInput
   }
 
   export type CartCreateOrConnectWithoutAppliedPromoCodeInput = {
@@ -27136,6 +27243,7 @@ export namespace Prisma {
   export type CartItemCreateManyCartInput = {
     id?: number
     printfulVariantId: number
+    printfulExternalId: string
     printfulProductId: number
     variantName: string
     productName: string
@@ -27167,8 +27275,19 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type GuestUserCreateManyCartInput = {
+    id?: string
+    sessionId: string
+    email?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type CartItemUpdateWithoutCartInput = {
     printfulVariantId?: IntFieldUpdateOperationsInput | number
+    printfulExternalId?: StringFieldUpdateOperationsInput | string
     printfulProductId?: IntFieldUpdateOperationsInput | number
     variantName?: StringFieldUpdateOperationsInput | string
     productName?: StringFieldUpdateOperationsInput | string
@@ -27185,6 +27304,7 @@ export namespace Prisma {
   export type CartItemUncheckedUpdateWithoutCartInput = {
     id?: IntFieldUpdateOperationsInput | number
     printfulVariantId?: IntFieldUpdateOperationsInput | number
+    printfulExternalId?: StringFieldUpdateOperationsInput | string
     printfulProductId?: IntFieldUpdateOperationsInput | number
     variantName?: StringFieldUpdateOperationsInput | string
     productName?: StringFieldUpdateOperationsInput | string
@@ -27201,6 +27321,7 @@ export namespace Prisma {
   export type CartItemUncheckedUpdateManyWithoutCartInput = {
     id?: IntFieldUpdateOperationsInput | number
     printfulVariantId?: IntFieldUpdateOperationsInput | number
+    printfulExternalId?: StringFieldUpdateOperationsInput | string
     printfulProductId?: IntFieldUpdateOperationsInput | number
     variantName?: StringFieldUpdateOperationsInput | string
     productName?: StringFieldUpdateOperationsInput | string
@@ -27263,6 +27384,40 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     stripeEventId?: NullableStringFieldUpdateOperationsInput | string | null
     webhookProcessedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GuestUserUpdateWithoutCartInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sessionId?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    orders?: OrderUpdateManyWithoutGuestUserNestedInput
+    addresses?: AddressUpdateManyWithoutGuestUserNestedInput
+  }
+
+  export type GuestUserUncheckedUpdateWithoutCartInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sessionId?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    orders?: OrderUncheckedUpdateManyWithoutGuestUserNestedInput
+    addresses?: AddressUncheckedUpdateManyWithoutGuestUserNestedInput
+  }
+
+  export type GuestUserUncheckedUpdateManyWithoutCartInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sessionId?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -27426,7 +27581,6 @@ export namespace Prisma {
   export type CartCreateManyShippingAddressInput = {
     id?: number
     userId?: string | null
-    guestUserId?: string | null
     tempCartId?: string | null
     appliedPromoCodeId?: number | null
     promoDiscountAmount?: number | null
@@ -27595,16 +27749,15 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneWithoutCartNestedInput
-    guestUser?: GuestUserUpdateOneWithoutCartNestedInput
     appliedPromoCode?: PromoCodeUpdateOneWithoutCartsNestedInput
     items?: CartItemUpdateManyWithoutCartNestedInput
     checkoutSessions?: CheckoutSessionUpdateManyWithoutCartNestedInput
+    GuestUser?: GuestUserUpdateManyWithoutCartNestedInput
   }
 
   export type CartUncheckedUpdateWithoutShippingAddressInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: NullableStringFieldUpdateOperationsInput | string | null
-    guestUserId?: NullableStringFieldUpdateOperationsInput | string | null
     tempCartId?: NullableStringFieldUpdateOperationsInput | string | null
     appliedPromoCodeId?: NullableIntFieldUpdateOperationsInput | number | null
     promoDiscountAmount?: NullableIntFieldUpdateOperationsInput | number | null
@@ -27618,12 +27771,12 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: CartItemUncheckedUpdateManyWithoutCartNestedInput
     checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutCartNestedInput
+    GuestUser?: GuestUserUncheckedUpdateManyWithoutCartNestedInput
   }
 
   export type CartUncheckedUpdateManyWithoutShippingAddressInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: NullableStringFieldUpdateOperationsInput | string | null
-    guestUserId?: NullableStringFieldUpdateOperationsInput | string | null
     tempCartId?: NullableStringFieldUpdateOperationsInput | string | null
     appliedPromoCodeId?: NullableIntFieldUpdateOperationsInput | number | null
     promoDiscountAmount?: NullableIntFieldUpdateOperationsInput | number | null
@@ -27640,7 +27793,6 @@ export namespace Prisma {
   export type CartCreateManyAppliedPromoCodeInput = {
     id?: number
     userId?: string | null
-    guestUserId?: string | null
     tempCartId?: string | null
     promoDiscountAmount?: number | null
     promoAppliedAt?: Date | string | null
@@ -27723,16 +27875,15 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneWithoutCartNestedInput
-    guestUser?: GuestUserUpdateOneWithoutCartNestedInput
     shippingAddress?: AddressUpdateOneWithoutCartsNestedInput
     items?: CartItemUpdateManyWithoutCartNestedInput
     checkoutSessions?: CheckoutSessionUpdateManyWithoutCartNestedInput
+    GuestUser?: GuestUserUpdateManyWithoutCartNestedInput
   }
 
   export type CartUncheckedUpdateWithoutAppliedPromoCodeInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: NullableStringFieldUpdateOperationsInput | string | null
-    guestUserId?: NullableStringFieldUpdateOperationsInput | string | null
     tempCartId?: NullableStringFieldUpdateOperationsInput | string | null
     promoDiscountAmount?: NullableIntFieldUpdateOperationsInput | number | null
     promoAppliedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -27746,12 +27897,12 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: CartItemUncheckedUpdateManyWithoutCartNestedInput
     checkoutSessions?: CheckoutSessionUncheckedUpdateManyWithoutCartNestedInput
+    GuestUser?: GuestUserUncheckedUpdateManyWithoutCartNestedInput
   }
 
   export type CartUncheckedUpdateManyWithoutAppliedPromoCodeInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: NullableStringFieldUpdateOperationsInput | string | null
-    guestUserId?: NullableStringFieldUpdateOperationsInput | string | null
     tempCartId?: NullableStringFieldUpdateOperationsInput | string | null
     promoDiscountAmount?: NullableIntFieldUpdateOperationsInput | number | null
     promoAppliedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null

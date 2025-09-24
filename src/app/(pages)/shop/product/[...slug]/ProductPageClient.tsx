@@ -16,6 +16,7 @@ import gsap from "gsap";
 import { toast } from "sonner";
 import { writeToCart } from "@/lib/actions";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface ProductImage {
   url: string;
@@ -267,6 +268,15 @@ const ProductPageClient = ({
 
   return (
     <section className="flex flex-col p-5 md:p-10 gap-10 min-h-screen">
+      <p className="text-sm text-slate-300 cursor-pointer">
+        <Link
+          href="/shop"
+          className="flex items-center gap-2 hover:text-slate-100 transition-colors"
+        >
+          <span>←</span>
+          <span className="underline">Back to Shop</span>
+        </Link>
+      </p>
       <div className="flex flex-col lg:flex-row gap-10 w-full">
         {/* Image Gallery */}
         <div className="flex flex-col lg:flex-row gap-4 w-full lg:w-[60%]">

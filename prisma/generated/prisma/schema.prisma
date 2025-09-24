@@ -45,42 +45,40 @@ model GuestUser {
   updatedAt DateTime @updatedAt
 
   // relations
-  cart      Cart?
+  cart      Cart?     @relation(fields: [cartId], references: [id])
   orders    Order[]
   addresses Address[]
+  cartId    Int?
 
   @@index([sessionId])
 }
 
 // ──────────────────────────────────────────────────────────────────────────
-// 3) Cart & CartItem - Supports both logged in and guest users
 model Cart {
   id Int @id @default(autoincrement())
 
-  // User relations (either logged in user OR guest)
-  user        User?      @relation(fields: [userId], references: [id])
-  userId      String?    @unique
-  guestUser   GuestUser? @relation(fields: [guestUserId], references: [id])
-  guestUserId String?    @unique
+  // User relations (either logged in user OR anonymous)
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String? @unique
 
-  // Temporary cart for anonymous users
+  // For anonymous users - just use tempCartId (no need for separate GuestUser table)
   tempCartId String? @unique
 
-  // Promo code fields - applied before checkout
+  // Promo code fields
   appliedPromoCode          PromoCode? @relation(fields: [appliedPromoCodeId], references: [id])
   appliedPromoCodeId        Int?
   promoDiscountAmount       Int? // calculated discount in cents
   promoAppliedAt            DateTime?
   requiresPromoVerification Boolean    @default(false)
 
-  // Shipping preference (not cost - calculated at checkout)
-  shippingMethod    String?  @default("standard") // "standard", "express", "free"
-  shippingAddressId Int? // Reference to Address model
+  // Shipping preference
+  shippingMethod    String?  @default("standard")
+  shippingAddressId Int?
   shippingAddress   Address? @relation(fields: [shippingAddressId], references: [id])
 
   // Stripe checkout session tracking
   stripeCheckoutSessionId String? @unique
-  checkoutStatus          String? @default("pending") // "pending", "in_progress", "completed", "expired"
+  checkoutStatus          String? @default("pending")
 
   expiresAt DateTime?
   createdAt DateTime  @default(now())
@@ -88,9 +86,9 @@ model Cart {
 
   items            CartItem[]
   checkoutSessions CheckoutSession[]
+  GuestUser        GuestUser[]
 
   @@index([userId])
-  @@index([guestUserId])
   @@index([tempCartId])
   @@index([stripeCheckoutSessionId])
 }
@@ -101,20 +99,21 @@ model CartItem {
   cartId Int
 
   // Printful product reference
-  printfulVariantId Int
-  printfulProductId Int
-  variantName       String // e.g. "Unisex T-Shirt (Black / M)"
-  productName       String // e.g. "Unisex T-Shirt"
-  size              String // e.g. "M"
-  color             String // e.g. "Black"
-  sku               String? // Printful SKU
+  printfulVariantId  Int // Keep this - for stock checks
+  printfulExternalId String // ADD THIS - for order creation
+  printfulProductId  Int
+  variantName        String
+  productName        String
+  size               String
+  color              String
+  sku                String?
 
   // Pricing (snapshot at add to cart)
-  unitPrice Int // Price per unit in cents
+  unitPrice Int
   quantity  Int
 
   // Images
-  imageUrl String? // Primary product image
+  imageUrl String?
 
   addedAt   DateTime @default(now())
   updatedAt DateTime @updatedAt

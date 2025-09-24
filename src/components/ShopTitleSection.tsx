@@ -27,13 +27,11 @@ const ShopTitleSection = () => {
   }, [getCategory]);
 
   return (
-    <div className="sticky top-0 left-0 right-0 z-50 bg-bg-primary py-10">
-      <div className="flex flex-col px-5 md:px-10">
-        <h1 className="font-courier-prime text-4xl font-bold">{title}</h1>
-        <p className="text-sm text-slate-400">
-          {filteredProducts.length} out of {allProducts.length} products found
-        </p>
-      </div>
+    <div className="flex flex-col px-5 md:px-0 bg-bg-primary py-10">
+      <h1 className="font-courier-prime text-4xl font-bold">{title}</h1>
+      <p className="text-sm text-slate-400">
+        {filteredProducts.length} out of {allProducts.length} products found
+      </p>
     </div>
   );
 };

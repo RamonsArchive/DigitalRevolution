@@ -138,13 +138,13 @@ exports.Prisma.GuestUserScalarFieldEnum = {
   firstName: 'firstName',
   lastName: 'lastName',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  cartId: 'cartId'
 };
 
 exports.Prisma.CartScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  guestUserId: 'guestUserId',
   tempCartId: 'tempCartId',
   appliedPromoCodeId: 'appliedPromoCodeId',
   promoDiscountAmount: 'promoDiscountAmount',
@@ -163,6 +163,7 @@ exports.Prisma.CartItemScalarFieldEnum = {
   id: 'id',
   cartId: 'cartId',
   printfulVariantId: 'printfulVariantId',
+  printfulExternalId: 'printfulExternalId',
   printfulProductId: 'printfulProductId',
   variantName: 'variantName',
   productName: 'productName',
@@ -394,7 +395,6 @@ exports.Prisma.GuestUserOrderByRelevanceFieldEnum = {
 
 exports.Prisma.CartOrderByRelevanceFieldEnum = {
   userId: 'userId',
-  guestUserId: 'guestUserId',
   tempCartId: 'tempCartId',
   shippingMethod: 'shippingMethod',
   stripeCheckoutSessionId: 'stripeCheckoutSessionId',
@@ -402,6 +402,7 @@ exports.Prisma.CartOrderByRelevanceFieldEnum = {
 };
 
 exports.Prisma.CartItemOrderByRelevanceFieldEnum = {
+  printfulExternalId: 'printfulExternalId',
   variantName: 'variantName',
   productName: 'productName',
   size: 'size',

@@ -5,6 +5,8 @@ import { parseServerActionResponse } from "./utils";
 import { extractFiltersFromProducts } from "./filters";
 import { prisma } from "./prisma";
 import { revalidateTag, unstable_cache } from 'next/cache';
+import { CartItem, Cart } from "../../prisma/generated/prisma";
+import { stripe } from "./stripe";
 
 
 const PRINTFUL_BASE = "https://api.printful.com";
@@ -342,6 +344,7 @@ export const writeToCart = async (
       updatedCartItem = await prisma.cartItem.create({
         data: {
           cartId: cart.id,
+          printfulExternalId: selectedVariant.external_id,
           printfulVariantId: selectedVariant.variant_id,
           printfulProductId: selectedVariant.product.product_id,
           variantName: selectedVariant.name,
@@ -589,6 +592,187 @@ export const getCart = async (userId: string, guestUserId?: string) => {
     });
   }
 };
+
+// 1. Validate cart and check stock
+export const validateCartForCheckout = async (userId: string, guestUserId: string) => {
+  try {
+    const whereCondition = userId 
+      ? { userId } 
+      : { tempCartId: guestUserId };
+    const cart = await prisma.cart.findFirst({
+      where: whereCondition,
+      include: { items: true }
+    });
+
+    if (!cart || cart.items.length === 0) {
+      return parseServerActionResponse({
+        status: 'ERROR',
+        data: null,
+        error: 'Cart is empty or not found'
+      });
+    }
+
+    // Check stock for all items
+    const stockChecks = await Promise.all(
+      cart.items.map(async (item) => {
+        try {
+          const response = await fetch(`https://api.printful.com/products/variant/${item.printfulVariantId}`, {
+            headers: {
+              'Authorization': `Bearer ${process.env.PRINTFUL_API_KEY}`
+            }
+          });
+          
+          const data = await response.json();
+          console.log("Stock check data:", data);
+          return parseServerActionResponse({
+            status: 'SUCCESS',
+            error: "",
+            data: {
+              item,
+              isInStock: data.result?.in_stock || false
+            }
+          });
+        } catch (error) {
+          console.error(`Stock check failed for item ${item.id}:`, error);
+          return parseServerActionResponse({
+            status: 'ERROR',
+            error: "",
+            data: {
+              item,
+              isInStock: false // Assume out of stock if check fails
+            }
+          });
+        }
+      })
+    );
+
+    const outOfStockItems = stockChecks.filter(check => !check.data?.isInStock);
+    if (outOfStockItems.length > 0) {
+      return parseServerActionResponse({
+        status: 'ERROR',
+        error: "Some items are out of stock",
+        data: {
+          outOfStockItems: outOfStockItems.map(check => check.data?.item)
+        }
+      });
+    }
+
+    return parseServerActionResponse({
+      status: 'SUCCESS',
+      error: "",
+      data: {
+        cart,
+        items: cart.items
+      }
+    });
+
+  } catch (error) {
+    return parseServerActionResponse({
+      status: 'ERROR',
+      error: error instanceof Error ? error.message : "Unknown error",
+      data: null,
+    });
+  }
+};
+
+
+export const createCheckoutSession = async (userId: string, guestUserId: string) => {
+  try {
+    const isRateLimited = await checkRateLimit("createCheckoutSession");
+    if (isRateLimited.status === "ERROR") {
+      return isRateLimited;
+    }
+
+    const cartValidation = await validateCartForCheckout(userId, guestUserId);
+    if (cartValidation.status === "ERROR") {
+      return cartValidation;
+    }
+    const cart = (cartValidation.data as unknown as { cart: Cart }).cart;
+    const items = (cartValidation.data as unknown as { items: CartItem[] }).items;
+
+    const subtotal = items.reduce((sum, item) => sum + (item.unitPrice * item.quantity), 0);
+
+    const shippingCost = 0; // free shipping for all orders
+    const taxAmount = Math.round(subtotal * 0.08); // 8% tax
+    const total = subtotal + shippingCost + taxAmount;
+
+    const checkoutSession = await prisma.checkoutSession.create({
+      data: {
+        stripeSessionId: "",
+        cartId: cart.id,
+        subtotal,
+        estimatedTax: taxAmount,
+        estimatedShipping: shippingCost,
+        promoDiscount: 0,
+        estimatedTotal: total,
+        status: "pending",
+      }
+    })
+
+    const stripeSession = await stripe.checkout.sessions.create({
+      mode: "payment",
+      payment_method_types: ["card"],
+      line_items: [
+        ...items.map(item => ({
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: `${item.productName} - ${item.variantName}`,
+              description: `Size: ${item.size}, Color: ${item.color}`,
+              images: item.imageUrl ? [item.imageUrl] : [],
+            },
+            unit_amount: item.unitPrice,
+          },
+          quantity: item.quantity,
+        })),
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: "Tax",
+            },
+            unit_amount: taxAmount,
+          },
+          quantity: 1
+        }
+      ],
+      metadata: {
+        cartId: cart.id.toString(),
+        userId: userId || "",
+        checkoutSessionId: checkoutSession.id.toString(),
+      },
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout/cancel`,
+      billing_address_collection: 'required',
+    });
+
+    await prisma.checkoutSession.update({
+      where: { id: checkoutSession.id },
+      data: { stripeSessionId: stripeSession.id }
+    });
+
+    return parseServerActionResponse({
+      status: "SUCCESS",
+      error: "",
+      data: {
+        stripeSessionId: stripeSession.id,
+        sessionUrl: stripeSession.url,
+      },
+    });
+
+
+    
+
+    
+  } catch (error) {
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: error instanceof Error ? error.message : "Unknown error",
+      data: null,
+    })
+  }
+}
+
 
 // export async function getProductBySlug(slug: string) {
 //   const product = await prisma.product.findFirst({

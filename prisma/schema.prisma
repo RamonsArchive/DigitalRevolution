@@ -45,9 +45,10 @@ model GuestUser {
     updatedAt DateTime @updatedAt
 
     // relations
-    cart      Cart?
+    cart      Cart?     @relation(fields: [cartId], references: [id])
     orders    Order[]
     addresses Address[]
+    cartId    Int?
 
     @@index([sessionId])
 }
@@ -85,6 +86,7 @@ model Cart {
 
     items            CartItem[]
     checkoutSessions CheckoutSession[]
+    GuestUser        GuestUser[]
 
     @@index([userId])
     @@index([tempCartId])
@@ -97,20 +99,21 @@ model CartItem {
     cartId Int
 
     // Printful product reference
-    printfulVariantId Int
-    printfulProductId Int
-    variantName       String // e.g. "Unisex T-Shirt (Black / M)"
-    productName       String // e.g. "Unisex T-Shirt"
-    size              String // e.g. "M"
-    color             String // e.g. "Black"
-    sku               String? // Printful SKU
+    printfulVariantId  Int // Keep this - for stock checks
+    printfulExternalId String // ADD THIS - for order creation
+    printfulProductId  Int
+    variantName        String
+    productName        String
+    size               String
+    color              String
+    sku                String?
 
     // Pricing (snapshot at add to cart)
-    unitPrice Int // Price per unit in cents
+    unitPrice Int
     quantity  Int
 
     // Images
-    imageUrl String? // Primary product image
+    imageUrl String?
 
     addedAt   DateTime @default(now())
     updatedAt DateTime @updatedAt

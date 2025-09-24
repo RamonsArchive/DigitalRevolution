@@ -6,6 +6,7 @@ import { Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
 import { updateCartItemQuantity, removeCartItem } from "@/lib/actions";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { createCheckoutSession } from "@/lib/actions";
 interface CartItem {
   id: number;
   printfulVariantId: number;
@@ -32,6 +33,7 @@ const CartPageClient = ({
   cartItems,
 }: CartPageClientProps) => {
   const [isUpdating, setIsUpdating] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   // Calculate totals
   const subtotal = cartItems.reduce(
@@ -87,6 +89,26 @@ const CartPageClient = ({
       console.error("Error removing item:", error);
     } finally {
       setIsUpdating(null);
+    }
+  };
+
+  const handleCheckout = async () => {
+    setIsLoading(true);
+    try {
+      const result = await createCheckoutSession(userId, guestUserId);
+      if (result.status === "ERROR") {
+        toast.error("ERROR", { description: result.error });
+        return;
+      }
+
+      toast.success("SUCCESS", {
+        description: "Checkout session created successfully",
+      });
+      //router.push(`/checkout?session_id=${result.data?.clientSecret}`);
+    } catch (error) {
+      console.error("Error checking out:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -162,10 +184,10 @@ const CartPageClient = ({
                   <div className="flex-1 min-w-0 space-y-4">
                     <div>
                       <h3 className="text-2xl font-bold text-slate-100 mb-3 leading-tight">
-                        {item.productName}
+                        {item.variantName}
                       </h3>
                       <p className="text-slate-300 text-lg mb-4 font-medium">
-                        {item.variantName}
+                        {item.productName}
                       </p>
                     </div>
 
