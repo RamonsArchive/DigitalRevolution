@@ -3,7 +3,8 @@ import { prisma } from "@/lib/prisma";
 import Stripe from "stripe";
 import { createPrintfulOrder } from "@/lib/actions";
 import { parseServerActionResponse } from "@/lib/utils";
-import { Address } from "../../prisma/generated/prisma";
+import { Address, OrderItem } from "../../prisma/generated/prisma";
+import { sendOrderConfirmationEmail } from "@/emails/OrderConfimration";
 
 export const handleStripeWebhook = async (event: Stripe.Event) => {
     try {
@@ -109,6 +110,28 @@ export const handleStripeWebhook = async (event: Stripe.Event) => {
           )
         );
 
+        // Create order items
+        const orderItems = await Promise.all(
+            cart.items.map(item => 
+              prisma.orderItem.create({
+                data: {
+                  orderId: order.id,
+                  printfulVariantId: item.printfulVariantId,
+                  printfulProductId: item.printfulProductId,
+                  productName: item.productName,
+                  variantName: item.variantName,
+                  variantSize: item.size,
+                  variantColor: item.color,
+                  variantSku: item.sku,
+                  images: item.imageUrl ? [item.imageUrl] : [],
+                  unitPrice: item.unitPrice,
+                  quantity: item.quantity,
+                  totalPrice: item.unitPrice * item.quantity
+                }
+              })
+            )
+          );
+
         console.log('Order items created');
   
         // Create Printful order
@@ -168,6 +191,10 @@ export const handleStripeWebhook = async (event: Stripe.Event) => {
 
         console.log('Checkout session updated');
         console.log('Order created successfully:', order.orderNumber);
+
+        await sendOrderConfirmationEmail(order, orderItems as OrderItem[]);
+
+        console.log('Order confirmation email sent');
         
         return parseServerActionResponse({ 
           status: 'SUCCESS', 

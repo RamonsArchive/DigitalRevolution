@@ -221,3 +221,18 @@ interface FilterOption {
     inStockOnly: boolean;
     priceRange: [number, number];
   }
+
+  export type PrintfulShipment = {
+    id: number;                          // Printful's shipment ID
+    carrier?: string | null;             // e.g. "USPS", "FedEx"
+    service?: string | null;             // e.g. "First Class", "Priority"
+    tracking_number?: string | null;     // tracking code
+    tracking_url?: string | null;        // direct link to carrier tracking page
+    created?: string;                    // timestamp (ISO string) when shipment was created
+    shipped_at?: string | null;          // timestamp (ISO string) when package shipped
+    estimated_delivery?: string | null;  // estimated delivery date
+    items?: Array<{
+      item_id: number;                   // ID of item inside the Printful order
+      quantity: number;                  // how many of this item in the shipment
+    }>;
+  };

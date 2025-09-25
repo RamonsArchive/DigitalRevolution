@@ -9,7 +9,6 @@ import React, {
 import { SHOP_DATA } from "@/constants";
 import { Menu, X, ShoppingCart } from "lucide-react";
 import { useScrollThrottle } from "@/hooks/useScrollThrottle";
-import { animateTextTimeline } from "@/lib/utils";
 import ShopSearch from "./ShopSearch";
 import Filters from "./Filters";
 import { useShopFilters } from "@/contexts/ShopContext";
@@ -76,22 +75,6 @@ const ShopNav = () => {
 
   // Scroll throttling effect
   useScrollThrottle({ onScroll: handleScroll });
-
-  // Animation effect for menu
-  useEffect(() => {
-    if (shouldMenuRender) {
-      animateTextTimeline({
-        targets: [".shop-nav-link"],
-        type: "words",
-        duration: 1,
-        ease: "power2.inOut",
-        delay: 0,
-        opacity: 0,
-        y: 100,
-        stagger: 0.1,
-      });
-    }
-  }, [shouldMenuRender]);
 
   // Menu click handlers
   const handleMenuClick = useCallback(() => {

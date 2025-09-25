@@ -136,6 +136,7 @@ const Navbar = () => {
     setShouldRender(false);
   }, []);
 
+  const profileIcon = useMemo(() => <ProfileIcon />, []);
   // Menu icon components - separate for normal and scroll
   const NormalMenuIcon = useMemo(
     () => (
@@ -200,11 +201,11 @@ const Navbar = () => {
         {logo}
         <div className="hidden md:flex items-center h-full gap-6">
           {navigationLinks}
-          <ProfileIcon />
+          {profileIcon}
         </div>
         <div className="flex md:hidden items-center gap-3">
           {ScrollMenuIcon}
-          <ProfileIcon />
+          {profileIcon}
         </div>
       </div>
     );
@@ -222,11 +223,11 @@ const Navbar = () => {
         {logo}
         <div className="hidden md:flex items-center h-full gap-6">
           {navigationLinks}
-          <ProfileIcon />
+          {profileIcon}
         </div>
         <div className="flex md:hidden items-center gap-3">
           {NormalMenuIcon}
-          <ProfileIcon />
+          {profileIcon}
         </div>
       </div>
     );
