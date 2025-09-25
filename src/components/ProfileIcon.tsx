@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { signIn, signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
@@ -7,8 +7,19 @@ import { toast } from "sonner";
 const ClientProfileIcon = () => {
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
-  const userImage = session?.user?.image;
-  const hasValidImage = userImage && userImage.startsWith("http");
+  //const userImage = session?.user?.image || "";
+  console.log("session", session);
+  const [userImage, setUserImage] = useState(session?.user?.image || "");
+
+  useEffect(() => {
+    setUserImage(session?.user?.image || "");
+  }, [session]);
+
+  //   const userImage = useCallback(() => {
+  //     return session?.user?.image || "";
+  //   }, [session]);
+
+  console.log("userImage", userImage);
 
   const handleAuthClick = async () => {
     if (isLoading) return;
@@ -45,7 +56,7 @@ const ClientProfileIcon = () => {
         <div className="w-full h-full flex items-center justify-center">
           <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
         </div>
-      ) : hasValidImage ? (
+      ) : userImage ? (
         <img
           src={userImage}
           alt="User Profile"

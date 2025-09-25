@@ -131,15 +131,18 @@ exports.Prisma.UserScalarFieldEnum = {
   isActive: 'isActive'
 };
 
-exports.Prisma.GuestUserScalarFieldEnum = {
+exports.Prisma.PartnerTicketScalarFieldEnum = {
   id: 'id',
-  sessionId: 'sessionId',
-  email: 'email',
   firstName: 'firstName',
   lastName: 'lastName',
+  email: 'email',
+  phoneNumber: 'phoneNumber',
+  organization: 'organization',
+  message: 'message',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  cartId: 'cartId'
+  status: 'status',
+  adminNotes: 'adminNotes'
 };
 
 exports.Prisma.CartScalarFieldEnum = {
@@ -385,12 +388,15 @@ exports.Prisma.UserOrderByRelevanceFieldEnum = {
   stripeCustomerId: 'stripeCustomerId'
 };
 
-exports.Prisma.GuestUserOrderByRelevanceFieldEnum = {
+exports.Prisma.PartnerTicketOrderByRelevanceFieldEnum = {
   id: 'id',
-  sessionId: 'sessionId',
-  email: 'email',
   firstName: 'firstName',
-  lastName: 'lastName'
+  lastName: 'lastName',
+  email: 'email',
+  phoneNumber: 'phoneNumber',
+  organization: 'organization',
+  message: 'message',
+  adminNotes: 'adminNotes'
 };
 
 exports.Prisma.CartOrderByRelevanceFieldEnum = {
@@ -514,11 +520,17 @@ exports.Prisma.AuditLogOrderByRelevanceFieldEnum = {
   ipAddress: 'ipAddress',
   userAgent: 'userAgent'
 };
-
+exports.TicketStatus = exports.$Enums.TicketStatus = {
+  PENDING: 'PENDING',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  ARCHIVED: 'ARCHIVED',
+  CANCELLED: 'CANCELLED'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
-  GuestUser: 'GuestUser',
+  PartnerTicket: 'PartnerTicket',
   Cart: 'Cart',
   CartItem: 'CartItem',
   Order: 'Order',

@@ -32,25 +32,31 @@ model User {
   isActive Boolean @default(true)
 }
 
-// ──────────────────────────────────────────────────────────────────────────
-// 2) Guest User (for non-logged in users)
-model GuestUser {
-  id        String  @id @default(cuid())
-  sessionId String  @unique
-  email     String? // Optional email for guest checkout
-  firstName String?
-  lastName  String?
+enum TicketStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  ARCHIVED
+  CANCELLED
+}
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model PartnerTicket {
+  id           String       @id @default(uuid())
+  firstName    String
+  lastName     String
+  email        String
+  phoneNumber  String
+  organization String
+  message      String
+  createdAt    DateTime     @default(now()) @map("created_at")
+  updatedAt    DateTime     @updatedAt @map("updated_out")
+  status       TicketStatus @default(PENDING) @map("status")
+  adminNotes   String?
 
-  // relations
-  cart      Cart?     @relation(fields: [cartId], references: [id])
-  orders    Order[]
-  addresses Address[]
-  cartId    Int?
-
-  @@index([sessionId])
+  @@index([email])
+  @@index([status])
+  @@index([createdAt])
+  @@index([updatedAt])
 }
 
 // ──────────────────────────────────────────────────────────────────────────
@@ -86,7 +92,6 @@ model Cart {
 
   items            CartItem[]
   checkoutSessions CheckoutSession[]
-  GuestUser        GuestUser[]
 
   @@index([userId])
   @@index([tempCartId])
@@ -129,9 +134,8 @@ model Order {
   id Int @id @default(autoincrement())
 
   // User relations (either logged in user OR guest)
-  user        User?      @relation(fields: [userId], references: [id])
-  userId      String?    @unique
-  guestUser   GuestUser? @relation(fields: [guestUserId], references: [id])
+  user        User?   @relation(fields: [userId], references: [id])
+  userId      String?
   guestUserId String?
 
   // Order identification
@@ -254,9 +258,8 @@ model Address {
   id Int @id @default(autoincrement())
 
   // User relations (either logged in user OR guest)
-  user        User?      @relation(fields: [userId], references: [id])
+  user        User?   @relation(fields: [userId], references: [id])
   userId      String?
-  guestUser   GuestUser? @relation(fields: [guestUserId], references: [id])
   guestUserId String?
 
   // Address fields

@@ -799,7 +799,7 @@ export const createPrintfulOrder = async (orderId: number, cartItems: CartItem[]
     const response = await fetch('https://api.printful.com/orders', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${process.env.PRINTFUL_API_KEY}`,
+        'Authorization': `Bearer ${process.env.DIGITAL_REVOLUTION_API_KEY}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(printfulOrderData)

@@ -1,13 +1,25 @@
+import { Suspense } from "react";
+import { notFound } from "next/navigation";
 import SuccessPageClient from "@/components/SuccessPageClient";
-import React from "react";
 
-const SuccessPage = async ({
+const SuccessPage = ({
   searchParams,
 }: {
-  searchParams: Promise<{ session_id: string }>;
+  searchParams: { session_id?: string };
 }) => {
-  const sessionId = (await searchParams).session_id;
-  return <SuccessPageClient sessionId={sessionId} />;
+  const sessionId = searchParams.session_id;
+
+  if (!sessionId) {
+    notFound();
+  }
+
+  return (
+    <Suspense
+      fallback={<div className="text-center p-8">Loading order details...</div>}
+    >
+      <SuccessPageClient sessionId={sessionId} />
+    </Suspense>
+  );
 };
 
 export default SuccessPage;
