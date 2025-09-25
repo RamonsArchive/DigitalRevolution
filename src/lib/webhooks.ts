@@ -4,7 +4,7 @@ import Stripe from "stripe";
 import { createPrintfulOrder } from "@/lib/actions";
 import { parseServerActionResponse } from "@/lib/utils";
 import { Address, OrderItem } from "../../prisma/generated/prisma";
-import { sendOrderConfirmationEmail } from "@/emails/OrderConfimration";
+import { sendOrderConfirmationEmailFromOrder } from "@/emails/OrderConfimration";
 
 export const handleStripeWebhook = async (event: Stripe.Event) => {
     try {
@@ -192,7 +192,7 @@ export const handleStripeWebhook = async (event: Stripe.Event) => {
         console.log('Checkout session updated');
         console.log('Order created successfully:', order.orderNumber);
 
-        await sendOrderConfirmationEmail(order, orderItems as OrderItem[]);
+        await sendOrderConfirmationEmailFromOrder(order, orderItems as OrderItem[]);
 
         console.log('Order confirmation email sent');
         

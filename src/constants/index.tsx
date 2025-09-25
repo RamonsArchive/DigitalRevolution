@@ -201,3 +201,38 @@ export const quickSearches = [
     value: "light",
   },
 ];
+
+export const ABOUT_DATA = {
+  id: "about",
+  text: {
+    mainTitle: "About",
+    missionTitle: "Mission",
+    descriptionTitle: "Further Information",
+    howToSupportTitle: "How to Support",
+    missionStatement:
+      "Democracy and egalitarin values cannot be acheived and mantined if countires or coummnites are mere spectators and renters of the digital world",
+    aboutDescription:
+      "Digitial Revolution was founded in 2025 by Ramon McDargh-Mitchell to help spread awarneses and support the underprivleged communites who are left behind in the digital age. The foundation dontates 50% of its profits to causes that help address the digital divide.",
+    missionDescription:
+      "The purpose of our mission is to help protect and spread egalitarin democratic values that cannot be acheived and mantined if countires or coummnites are left out of the digital age. Ones access to the widepsread thoughs of the internet, ownership of thier own data infustructure and ability to particpate in the digial world by thier own rules, protections, and without the limtitations of foreign managers who's intrests often create renters out of digital infusturcture which are oppressive by virtue of the lack of egalitarin rights.",
+    howToSupport:
+      "There are many ways to support our mission, including shopping our newly relased products in our store, donating to our cause, or simply sharing our mission with others",
+  },
+  logo: {
+    src: "/Assets/Logos/lightDRLogo.svg",
+    alt: "Digital Revolution Logo",
+  },
+  images: [
+    {
+      src: "/Assets/About/Images/personal1.png",
+      alt: "Digital Revolution Image 1",
+      description: "Founder!",
+    },
+    {
+      src: "/Assets/About/Images/personal2.png",
+      alt: "Digital Revolution Image 2",
+      description:
+        "Founder rocking the founders edition t-shirt found in the store",
+    },
+  ],
+};
