@@ -206,33 +206,73 @@ export const ABOUT_DATA = {
   id: "about",
   text: {
     mainTitle: "About",
-    missionTitle: "Mission",
-    descriptionTitle: "Further Information",
+    missionTitle: "Mission Statement",
+    descriptionTitle: "Mission Continued...",
     howToSupportTitle: "How to Support",
+    founderTitle: "Our Founder",
+
     missionStatement:
-      "Democracy and egalitarin values cannot be acheived and mantined if countires or coummnites are mere spectators and renters of the digital world",
+      "Democracy and egalitarian values cannot be achieved and maintained if countries or communities are mere spectators and renters of the digital world.",
+
     aboutDescription:
-      "Digitial Revolution was founded in 2025 by Ramon McDargh-Mitchell to help spread awarneses and support the underprivleged communites who are left behind in the digital age. The foundation dontates 50% of its profits to causes that help address the digital divide.",
+      "Digital Revolution was founded in 2025 by Ramon McDargh-Mitchell to help spread awareness and support underprivileged communities who are left behind in the digital age. The foundation donates 50% of its profits to causes that help address the digital divide.",
+
     missionDescription:
-      "The purpose of our mission is to help protect and spread egalitarin democratic values that cannot be acheived and mantined if countires or coummnites are left out of the digital age. Ones access to the widepsread thoughs of the internet, ownership of thier own data infustructure and ability to particpate in the digial world by thier own rules, protections, and without the limtitations of foreign managers who's intrests often create renters out of digital infusturcture which are oppressive by virtue of the lack of egalitarin rights.",
+      "Our mission is to protect and promote egalitarian democratic values that cannot be achieved or maintained when countries or communities are excluded from the digital age. We believe in universal access to the widespread knowledge of the internet, community ownership of data infrastructure, and the ability to participate in the digital world under self-determined rules and protections. We oppose systems that create digital renters rather than owners, which are inherently oppressive due to their lack of egalitarian rights and dependence on foreign managers whose interests may not align with local communities.",
+
+    founderDescription:
+      "Ramon McDargh-Mitchell is a technology advocate and digital rights activist with a background in software development and community organizing. Having witnessed firsthand the growing digital divide in underserved communities, Ramon founded Digital Revolution to bridge the gap between technological advancement and equitable access. Through this foundation, Ramon aims to ensure that technological progress serves humanity's democratic ideals rather than concentrating power in the hands of a few.",
+
     howToSupport:
-      "There are many ways to support our mission, including shopping our newly relased products in our store, donating to our cause, or simply sharing our mission with others",
+      "There are many ways to support our mission: shop our newly released products in our store (with 50% of profits going directly to digital equity initiatives), make a direct donation to our cause, volunteer with partner organizations working on digital literacy, or simply share our mission with others in your community.",
   },
+
   logo: {
     src: "/Assets/Logos/lightDRLogo.svg",
     alt: "Digital Revolution Logo",
   },
+
   images: [
     {
-      src: "/Assets/About/Images/personal1.png",
-      alt: "Digital Revolution Image 1",
-      description: "Founder!",
+      src: "/Assets/About/personal1.png",
+      alt: "Ramon McDargh-Mitchell, Founder of Digital Revolution",
+      description: "Founder and Digital Rights Advocate",
     },
     {
-      src: "/Assets/About/Images/personal2.png",
-      alt: "Digital Revolution Image 2",
+      src: "/Assets/About/personal5.png",
+      alt: "Ramon wearing Digital Revolution founder's edition t-shirt",
       description:
-        "Founder rocking the founders edition t-shirt found in the store",
+        "Ramon sporting the founder's edition t-shirt available in our store",
     },
   ],
+
+  // Additional suggested sections:
+  values: [
+    {
+      title: "Digital Equity",
+      description:
+        "Everyone deserves equal access to digital tools and opportunities",
+    },
+    {
+      title: "Community Ownership",
+      description:
+        "Local communities should control their digital infrastructure",
+    },
+    {
+      title: "Transparent Impact",
+      description: "50% of profits directly fund digital divide initiatives",
+    },
+    {
+      title: "Democratic Values",
+      description:
+        "Technology should strengthen, not weaken, democratic participation",
+    },
+  ],
+
+  stats: {
+    founded: "2025",
+    profitsDonated: "50%",
+    communitiesServed: "Growing daily", // You can update this with actual numbers
+    missionFocus: "Digital equity and democratic access",
+  },
 };

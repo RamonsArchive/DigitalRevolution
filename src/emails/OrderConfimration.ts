@@ -1,5 +1,5 @@
 // emails/orderConfirmation.ts
-"server only";
+import "server-only";
 import resend from "@/lib/resend";
 import type { Order, OrderItem } from "../../prisma/generated/prisma";
 
