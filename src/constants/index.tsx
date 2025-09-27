@@ -210,70 +210,143 @@ export const ABOUT_DATA = {
     descriptionTitle: "Mission Continued...",
     howToSupportTitle: "How to Support",
     founderTitle: "Our Founder",
+    impactTitle: "Our Impact Areas",
 
     missionStatement:
       "Democracy and egalitarian values cannot be achieved and maintained if countries or communities are mere spectators and renters of the digital world.",
 
     aboutDescription:
-      "Digital Revolution was founded in 2025 by Ramon McDargh-Mitchell to help spread awareness and support underprivileged communities who are left behind in the digital age, and thus have less opportunities to succeed. The foundation donates 50% of its profits to causes that help address the digital divide.",
+      "Digital Revolution was founded in 2025 by Ramon McDargh-Mitchell to help spread awareness and support underprivileged communities who are left behind in the digital age, and thus have fewer opportunities to succeed in education, careers, and civic participation. The foundation donates 50% of its profits to causes that help address the digital divide and expand access to STEM education opportunities.",
 
     missionDescription:
-      "Our mission is to protect and promote egalitarian democratic values that cannot be achieved or maintained when countries or communities are excluded from the digital age. We believe in universal access to the widespread knowledge of the internet, community ownership of data infrastructure, and the ability to participate in the digital world under self-determined rules and protections. We oppose systems that create digital renters rather than owners, which are inherently oppressive due to their lack of egalitarian rights and dependence on foreign managers whose interests may not align with local communities.",
+      "Our mission is to protect and promote egalitarian democratic values that cannot be achieved or maintained when countries or communities are excluded from the digital age. We believe in universal access to the widespread knowledge of the internet, community ownership of data infrastructure, and the ability to participate in the digital world under self-determined rules and protections. We oppose systems that create digital renters rather than owners, which are inherently oppressive due to their lack of egalitarian rights and dependence on foreign managers whose interests may not align with local communities. By bridging the digital divide, we also create pathways for individuals to access STEM education, coding bootcamps, online learning platforms, and technology careers that were previously out of reach.",
 
     founderDescription:
-      "Ramon McDargh-Mitchell is a technology advocate and digital rights activist with a background in software development and community organizing. Having witnessed firsthand the growing digital divide in underserved communities, Ramon founded Digital Revolution to bridge the gap between technological advancement and equitable access. Through this foundation, Ramon aims to ensure that technological progress serves humanity's democratic ideals rather than concentrating power in the hands of a few.",
+      "Ramon McDargh-Mitchell is a technology advocate and digital rights activist with a background in software development, computer science education, and community organizing. With experience in both industry and academia, Ramon has seen how digital inequality creates barriers not just to information access, but to STEM career opportunities and educational advancement. Having witnessed firsthand the growing digital divide in underserved communities, Ramon founded Digital Revolution to bridge the gap between technological advancement and equitable access. Through this foundation, Ramon aims to ensure that technological progress serves humanity's democratic ideals while creating pathways for individuals to pursue careers in science, technology, engineering, and mathematics.",
 
     howToSupport:
-      "There are many ways to support our mission: shop our newly released products in our store (with 50% of profits going directly to digital equity initiatives), make a direct donation to our cause, volunteer with partner organizations working on digital literacy, or simply share our mission with others in your community.",
+      "There are many ways to support our mission: shop our newly released products in our store (with 50% of profits going directly to digital equity and STEM education initiatives), make a direct donation to our cause, volunteer with partner organizations working on digital literacy and coding education, mentor individuals pursuing STEM careers, or simply share our mission with others in your community.",
   },
 
+  impactAreas: [
+    {
+      title: "Digital Infrastructure Access",
+      description:
+        "Ensuring communities have reliable internet connectivity and modern computing resources",
+      stemConnection:
+        "Foundation for accessing online STEM courses, research databases, and coding platforms",
+    },
+    {
+      title: "Digital Literacy Programs",
+      description:
+        "Teaching essential computer skills and internet safety to underserved populations",
+      stemConnection:
+        "Building prerequisite skills for STEM education and technology career pathways",
+    },
+    {
+      title: "STEM Education Pathways",
+      description:
+        "Creating bridges to science, technology, engineering, and mathematics opportunities",
+      stemConnection:
+        "Coding bootcamps, online engineering courses, data science workshops, and tech mentorship",
+    },
+    {
+      title: "Community Data Sovereignty",
+      description:
+        "Empowering local communities to own and control their digital infrastructure",
+      stemConnection:
+        "Training local technicians, network administrators, and cybersecurity professionals",
+    },
+  ],
+
   logo: {
-    src: "/Assets/Logos/lightDRLogo.svg",
+    src: "/Logos/lightDRLogo.svg",
     alt: "Digital Revolution Logo",
   },
 
   images: [
     {
-      src: "/Assets/About/personal1.png",
+      src: "/About/personal1.png",
       alt: "Ramon McDargh-Mitchell, Founder of Digital Revolution",
-      description: "Founder and Digital Rights Advocate",
+      description:
+        "Founder, Digital Rights Advocate, and STEM Education Champion",
     },
     {
-      src: "/Assets/About/personal5.png",
+      src: "/About/personal5.png",
       alt: "Ramon wearing Digital Revolution founder's edition t-shirt",
       description:
         "Ramon sporting the founder's edition t-shirt available in our store",
     },
   ],
 
-  // Additional suggested sections:
   values: [
     {
       title: "Digital Equity",
       description:
-        "Everyone deserves equal access to digital tools and opportunities",
+        "Everyone deserves equal access to digital tools, opportunities, and STEM education pathways",
     },
     {
       title: "Community Ownership",
       description:
-        "Local communities should control their digital infrastructure",
+        "Local communities should control their digital infrastructure and technology education programs",
     },
     {
       title: "Transparent Impact",
-      description: "50% of profits directly fund digital divide initiatives",
+      description:
+        "50% of profits directly fund digital divide and STEM accessibility initiatives",
     },
     {
       title: "Democratic Values",
       description:
-        "Technology should strengthen, not weaken, democratic participation",
+        "Technology should strengthen democratic participation and create inclusive pathways to STEM careers",
+    },
+    {
+      title: "Educational Opportunity",
+      description:
+        "Digital access should unlock doors to science, technology, engineering, and mathematics for all",
     },
   ],
 
   stats: {
     founded: "2025",
     profitsDonated: "50%",
-    communitiesServed: "Growing daily", // You can update this with actual numbers
-    missionFocus: "Digital equity and democratic access",
+    communitiesServed: "Growing daily",
+    missionFocus:
+      "Digital equity, democratic access, and STEM opportunity expansion",
+    educationFocus: "Bridging digital divides to unlock STEM potential",
+  },
+
+  initiatives: [
+    {
+      name: "Digital Democracy Project",
+      description:
+        "Ensuring communities can participate fully in digital civic life",
+    },
+    {
+      name: "STEM Bridge Program",
+      description:
+        "Creating pathways from digital literacy to technology careers",
+    },
+    {
+      name: "Community Tech Hubs",
+      description:
+        "Establishing local centers for digital learning and STEM education",
+    },
+    {
+      name: "Open Source Education",
+      description:
+        "Developing freely accessible STEM curricula and coding resources",
+    },
+  ],
+
+  partnerships: {
+    educational: "Universities, community colleges, and coding bootcamps",
+    corporate:
+      "Technology companies providing resources and internship opportunities",
+    nonprofit:
+      "Organizations focused on educational equity and community development",
+    government:
+      "Agencies working on digital inclusion and workforce development",
   },
 };
 
@@ -369,19 +442,19 @@ export const PARTNERS_DATA = {
 
   images: [
     {
-      src: "/Assets/Partners/partner1.png",
-      alt: "Digital Revolution Corporate Partner",
-      description: "Corporate partnership supporting community digital access",
-    },
-    {
-      src: "/Assets/Partners/partner2.png",
+      src: "/Partners/partners2.jpg",
       alt: "Educational Institution Partnership",
       description: "University collaboration on digital literacy programs",
     },
     {
-      src: "/Assets/Partners/partner3.png",
+      src: "/Partners/partners3.jpg",
       alt: "Community Organization Partnership",
       description: "Nonprofit partnership delivering technology training",
+    },
+    {
+      src: "/Partners/partners1.jpg",
+      alt: "Digital Revolution Corporate Partner",
+      description: "Corporate partnership supporting community digital access",
     },
   ],
 
@@ -393,7 +466,7 @@ export const PARTNERS_DATA = {
   },
 
   contactInfo: {
-    email: "partnerships@digitalrevolution.org",
+    email: "clutchdev.apps@gmail.com",
     phone: "Contact via partnership form",
     responseTime: "We respond to all partnership inquiries within 48 hours",
   },

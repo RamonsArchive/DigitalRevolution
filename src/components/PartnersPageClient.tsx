@@ -26,7 +26,7 @@ const PartnersPageClient = ({
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-col gap-16 from-slate-900 via-purple-900 to-slate-900 h-full">
+      <div className="flex flex-col gap-16 bg-gradient-to-b from-bg-primary via-primary-900 to-bg-primary h-full">
         {/* Partnership Overview */}
         <section className="px-6 md:px-12">
           <div className="max-w-4xl mx-auto">
@@ -93,7 +93,7 @@ const PartnersPageClient = ({
         </section>
 
         {/* Partnership Benefits */}
-        <section className="px-6 md:px-12 bg-gradient-to-r from-slate-800/50 to-purple-800/50">
+        <section className="px-6 md:px-12">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-12">
               <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
@@ -171,11 +171,15 @@ const PartnersPageClient = ({
         </section>
 
         {/* Image Gallery */}
-        <section className="px-6 md:px-12 bg-gradient-to-r from-slate-800/30 to-purple-800/30">
+        <section className="px-6 md:px-12">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-12">
-              <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
-                Partnership Gallery
+              <h3 className="flex flex-col gap-2 items-center justify-center text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
+                Partnership Gallery{" "}
+                <span className="text-xs text-slate-300">
+                  <span className="text-red-500">*</span>Placeholders for future
+                  partnerships
+                </span>
               </h3>
               <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
             </div>
