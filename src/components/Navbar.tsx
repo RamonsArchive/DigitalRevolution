@@ -16,10 +16,12 @@ import { SplitText } from "gsap/SplitText";
 import gsap from "gsap";
 import { useScrollThrottle } from "@/hooks/useScrollThrottle";
 import ProfileIcon from "./ProfileIcon";
+import { usePathname } from "next/navigation";
 
 gsap.registerPlugin(SplitText);
 
 const Navbar = () => {
+  const pathname = usePathname();
   const [isDropdown, setIsDropdown] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
@@ -35,6 +37,11 @@ const Navbar = () => {
 
   // Scroll throttling effect
   useScrollThrottle({ onScroll: handleScroll });
+
+  useEffect(() => {
+    // might need to clsoe menu here
+    handleCloseMenu();
+  }, [pathname]);
 
   useEffect(() => {
     if (shouldRender) {
@@ -134,7 +141,7 @@ const Navbar = () => {
   const handleCloseMenu = useCallback(() => {
     setOpenMenu(false);
     setShouldRender(false);
-  }, []);
+  }, [pathname]);
 
   const profileIcon = useMemo(() => <ProfileIcon />, []);
   // Menu icon components - separate for normal and scroll

@@ -3,6 +3,8 @@ import { SplitText } from "gsap/SplitText";
 import { AnimateCardScrollType, AnimateTextScrollType, AnimateTextType, PrintfulProduct } from "./globalTypes";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+type DOMTarget = string | Element | null;
+
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -29,6 +31,7 @@ export const animateText = (props: AnimateTextType) => {
   });
 };
 
+
 // Timeline version - better performance for complex animations
 export const animateTextTimeline = (props: AnimateTextType) => {
   const {targets, type, duration, ease, delay, opacity, y, stagger} = props
@@ -38,8 +41,6 @@ export const animateTextTimeline = (props: AnimateTextType) => {
   targets.forEach((target, index) => {
     const textSplit = new SplitText(target, {type});
     const elements = type === "chars" ? textSplit.chars : type === "words" ? textSplit.words : textSplit.lines;
-
-    
     // Animate to final state
     tl.fromTo(elements, {
         opacity: opacity,
@@ -60,13 +61,13 @@ export const animateTextTimeline = (props: AnimateTextType) => {
 };
 
 export const animateTextScroll = (props: AnimateTextScrollType) => {
-  const {targets, animateClass, type, duration, ease, delay, opacity, y, stagger} = props
+  const {targets, shouldAnimateClass, animateClass, type, duration, ease, delay, opacity, y, stagger} = props
   const {trigger, start, end, scrub} = props.scrollTrigger;
 
   const tl = gsap.timeline();
 
   targets.forEach((target, index) => {
-    const textSplit = new SplitText(target, {type});
+    const textSplit = new SplitText(target as unknown as HTMLElement | string, {type});
     const elements = type === "chars" ? textSplit.chars : type === "words" ? textSplit.words : textSplit.lines;
 
     // Set initial state
@@ -76,9 +77,11 @@ export const animateTextScroll = (props: AnimateTextScrollType) => {
     });
 
     // Apply gradient text class to split elements
-    elements.forEach((element) => {
-      element.classList.add(animateClass);
-    });
+    if (shouldAnimateClass) {
+      elements.forEach((element) => {
+          element.classList.add(animateClass);
+        });
+    }
 
     // Animate to final state with ScrollTrigger
     gsap.to(elements, {
@@ -89,7 +92,7 @@ export const animateTextScroll = (props: AnimateTextScrollType) => {
       delay: delay || 0,
       ease: ease,
       scrollTrigger: {
-        trigger: target,
+        trigger: target as unknown as DOMTarget,
         start: start,
         end: end,
         scrub: scrub,
@@ -194,3 +197,51 @@ export const aggregateProductImages = (product: any) => {
 
   return uniqueImages;
 };
+
+
+// Phone number formatting
+export const updatePhoneNumber = (value: string, phoneNumber: string, setPhoneNumber: (value: string) => void) => {
+  // If the user is backspacing and hit a dash, remove the digit before the dash
+  const prevLength = phoneNumber.length;
+  const newLength = value.length;
+
+  // Check if user is backspacing on a dash
+  if (newLength < prevLength) {
+    const deletedChar = phoneNumber[newLength];
+    if (deletedChar === "-") {
+      // Remove the digit before the dash as well
+      const withoutDash = phoneNumber.slice(0, newLength);
+      const withoutLastDigit = withoutDash.slice(0, -1);
+      setPhoneNumber(withoutLastDigit);
+      return;
+    }
+  }
+
+  // Normal processing
+  const cleanedValue = value.replace(/[^0-9]/g, "");
+
+  if (cleanedValue.length > 10) {
+    return;
+  }
+
+  // Format the number
+  let formattedValue = cleanedValue;
+  if (cleanedValue.length >= 6) {
+    formattedValue = `${cleanedValue.slice(0, 3)}-${cleanedValue.slice(
+      3,
+      6
+    )}-${cleanedValue.slice(6, 10)}`;
+  } else if (cleanedValue.length >= 3) {
+    formattedValue = `${cleanedValue.slice(0, 3)}-${cleanedValue.slice(3)}`;
+  }
+
+  setPhoneNumber(formattedValue);
+};
+
+export const formToDataObject = (formData: FormData) => {
+  const formObject: Record<string, string> = {};
+  for (const [key, value] of formData.entries()) {
+    formObject[key] = value.toString();
+  }
+  return formObject;
+}

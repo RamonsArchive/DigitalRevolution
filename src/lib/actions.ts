@@ -7,6 +7,7 @@ import { prisma } from "./prisma";
 import { revalidateTag, unstable_cache } from 'next/cache';
 import { CartItem, Cart, Address } from "../../prisma/generated/prisma";
 import { stripe } from "./stripe";
+import PartnersTicketEmail from "../emails/PartnersTicketEmail";
 
 
 const PRINTFUL_BASE = "https://api.printful.com";
@@ -868,3 +869,64 @@ export const getOrderByStripeSessionId = async (sessionId: string) => {
     });
   }
 };
+
+const sendEmailToAdmin = async (formData: Record<string, string>) => {
+  try {
+    await PartnersTicketEmail({ formData });
+  } catch (error) {
+    console.error('Failed to send email to admin:', error);
+    throw error;
+  }
+};
+
+export const submitPartnersForm = async (formData: Record<string, string>) => {
+  try {
+    const isRateLimited = await checkRateLimit("submitPartnersForm");
+    if (isRateLimited.status === "ERROR") {
+      return isRateLimited;
+    }
+
+    const {
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      organization,
+      message,
+    } = formData;
+
+    const partnersFromSubmit = await prisma.partnerTicket.create({
+      data: {
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        organization,
+        message,
+      }
+    })
+    if (!partnersFromSubmit) {
+      return parseServerActionResponse({
+        status: "ERROR",
+        error: "Failed to submit partners form",
+        data: null,
+      });
+    }
+
+    await sendEmailToAdmin(formData);
+
+    return parseServerActionResponse({
+      status: "SUCCESS",
+      error: "",
+      data: partnersFromSubmit,
+    });
+
+  } catch (error) {
+    console.error("Error submitting partners form:", error);
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: error instanceof Error ? error.message : "Unknown error",
+      data: null,
+    });
+  }
+}

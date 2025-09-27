@@ -1,7 +1,7 @@
 "use client";
 import { PrintfulProduct } from "@/lib/globalTypes";
 import React, { createContext, useContext, useState } from "react";
-import { CartItem } from "../../../../../../prisma/generated/prisma";
+import { CartItem } from "../../prisma/generated/prisma";
 
 interface ProductContextType {
   selectedProduct: PrintfulProduct | null;
@@ -21,13 +21,7 @@ const ProductProvider = ({ children }: { children: React.ReactNode }) => {
     useState<PrintfulProduct | null>(null);
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [cartItems, setCartItems] = useState<
-    Array<{
-      product: PrintfulProduct;
-      variantIndex: number;
-      quantity: number;
-    }>
-  >([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   return (
     <ProductContext.Provider

@@ -215,7 +215,7 @@ export const ABOUT_DATA = {
       "Democracy and egalitarian values cannot be achieved and maintained if countries or communities are mere spectators and renters of the digital world.",
 
     aboutDescription:
-      "Digital Revolution was founded in 2025 by Ramon McDargh-Mitchell to help spread awareness and support underprivileged communities who are left behind in the digital age. The foundation donates 50% of its profits to causes that help address the digital divide.",
+      "Digital Revolution was founded in 2025 by Ramon McDargh-Mitchell to help spread awareness and support underprivileged communities who are left behind in the digital age, and thus have less opportunities to succeed. The foundation donates 50% of its profits to causes that help address the digital divide.",
 
     missionDescription:
       "Our mission is to protect and promote egalitarian democratic values that cannot be achieved or maintained when countries or communities are excluded from the digital age. We believe in universal access to the widespread knowledge of the internet, community ownership of data infrastructure, and the ability to participate in the digital world under self-determined rules and protections. We oppose systems that create digital renters rather than owners, which are inherently oppressive due to their lack of egalitarian rights and dependence on foreign managers whose interests may not align with local communities.",
@@ -274,5 +274,127 @@ export const ABOUT_DATA = {
     profitsDonated: "50%",
     communitiesServed: "Growing daily", // You can update this with actual numbers
     missionFocus: "Digital equity and democratic access",
+  },
+};
+
+export const PARTNERS_DATA = {
+  id: "partners",
+  text: {
+    mainTitle: "Partners",
+    subTitle: "Partner with us",
+    appreciationTitle: "Our Appreciation",
+    formTitle: "Submit a Partnership Request",
+    typesTitle: "Partnership Types",
+    benefitsTitle: "Partnership Benefits",
+
+    subdescription:
+      "Partner with us to help make a meaningful difference in bridging the digital divide that plagues our communities. Together, we can create lasting change and ensure digital equity for all.",
+
+    appreciationDescription:
+      "We are deeply grateful to our partners for their unwavering support and invaluable contributions to our mission. Their collaboration, resources, and shared vision enable us to expand our reach and amplify our impact. Without these dedicated partnerships, achieving our mission of digital equity would not be possible.",
+
+    partnershipOverview:
+      "Digital Revolution partners with organizations, businesses, educational institutions, and community groups that share our commitment to closing the digital divide. We believe that collaborative efforts create exponentially greater impact than working in isolation.",
+
+    callToAction:
+      "Ready to join forces with us? Whether you're a nonprofit organization, educational institution, technology company, or community group, we'd love to explore how we can work together to advance digital equity.",
+  },
+
+  partnershipTypes: [
+    {
+      type: "Corporate Partners",
+      description:
+        "Technology companies and businesses that provide resources, funding, or in-kind donations",
+      examples: "Hardware donations, software licenses, funding for programs",
+    },
+    {
+      type: "Educational Institutions",
+      description:
+        "Schools, universities, and training centers that help deliver digital literacy programs",
+      examples: "Curriculum development, training venues, student volunteers",
+    },
+    {
+      type: "Nonprofit Organizations",
+      description:
+        "Community organizations that share our mission and can help reach underserved populations",
+      examples: "Program delivery, community outreach, resource sharing",
+    },
+    {
+      type: "Government Agencies",
+      description:
+        "Local and federal agencies working on digital inclusion initiatives",
+      examples: "Policy advocacy, funding opportunities, program coordination",
+    },
+  ],
+
+  benefits: [
+    {
+      title: "Shared Impact",
+      description:
+        "Amplify your organization's social impact through collaborative digital equity initiatives",
+    },
+    {
+      title: "Community Recognition",
+      description:
+        "Gain recognition as a leader in addressing the digital divide in your community",
+    },
+    {
+      title: "Networking Opportunities",
+      description:
+        "Connect with like-minded organizations and expand your professional network",
+    },
+    {
+      title: "Resource Sharing",
+      description:
+        "Access shared resources, knowledge, and best practices from our partner network",
+    },
+    {
+      title: "Transparent Reporting",
+      description:
+        "Receive detailed impact reports showing how your partnership creates measurable change",
+    },
+  ],
+
+  requirements: {
+    title: "Partnership Requirements",
+    description: "We seek partners who:",
+    criteria: [
+      "Share our commitment to digital equity and democratic values",
+      "Demonstrate integrity and transparency in their operations",
+      "Have the capacity to contribute meaningfully to our mission",
+      "Are willing to collaborate and communicate regularly",
+      "Align with our goal of sustainable, community-driven solutions",
+    ],
+  },
+
+  images: [
+    {
+      src: "/Assets/Partners/partner1.png",
+      alt: "Digital Revolution Corporate Partner",
+      description: "Corporate partnership supporting community digital access",
+    },
+    {
+      src: "/Assets/Partners/partner2.png",
+      alt: "Educational Institution Partnership",
+      description: "University collaboration on digital literacy programs",
+    },
+    {
+      src: "/Assets/Partners/partner3.png",
+      alt: "Community Organization Partnership",
+      description: "Nonprofit partnership delivering technology training",
+    },
+  ],
+
+  stats: {
+    currentPartners: "Growing network",
+    programsDelivered: "Multiple initiatives",
+    communitiesReached: "Expanding coverage",
+    impactMetric: "50% of profits donated to digital equity causes",
+  },
+
+  contactInfo: {
+    email: "partnerships@digitalrevolution.org",
+    phone: "Contact via partnership form",
+    responseTime: "We respond to all partnership inquiries within 48 hours",
   },
 };

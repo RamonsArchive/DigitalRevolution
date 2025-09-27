@@ -39,8 +39,9 @@ export type AnimateTextType = {
 }
 
 export type AnimateTextScrollType = {
-    targets: string[];
+    targets: string[] | React.RefObject<HTMLElement>[];
     type: "chars" | "words";
+    shouldAnimateClass: boolean;
     animateClass: string;
     duration: number;
     ease: string;

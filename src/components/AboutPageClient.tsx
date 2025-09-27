@@ -5,12 +5,13 @@ import TitleSection from "./TitleSection";
 import ImageCarousel from "./ImageCarousel";
 import { ABOUT_DATA } from "@/constants";
 import Image from "next/image";
+import Link from "next/link";
 
 const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
   const images = (aboutData.images || []).map((img) => img.src);
   console.log(aboutData);
   return (
-    <div className="min-h-screen flex flex-col bg-bg-primary gap-16">
+    <div className="min-h-screen flex flex-col bg-bg-primary gap-16 pb-20">
       {/* Hero Section with Animated Background */}
       <div className="relative h-[33%] overflow-hidden">
         <TitleSection
@@ -175,12 +176,18 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
                   {aboutData.text.howToSupport}
                 </p>
                 <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-                  <button className="px-8 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 text-white font-bold rounded-xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+                  <Link
+                    href="/shop"
+                    className="px-8 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 text-white font-bold rounded-xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                  >
                     Shop Now
-                  </button>
-                  <button className="px-8 py-4 bg-gradient-to-r from-secondary-500 to-primary-500 text-white font-bold rounded-xl hover:from-secondary-600 hover:to-primary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+                  </Link>
+                  <Link
+                    href="/donate"
+                    className="px-8 py-4 bg-gradient-to-r from-secondary-500 to-primary-500 text-white font-bold rounded-xl hover:from-secondary-600 hover:to-primary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                  >
                     Donate
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

@@ -1,7 +1,10 @@
 import React from "react";
+import { PARTNERS_DATA } from "@/constants";
+import PartnersPageClient from "@/components/PartnersPageClient";
 
-const page = () => {
-  return <div>page</div>;
+const PartnersPage = () => {
+  const partnersData = PARTNERS_DATA;
+  return <PartnersPageClient partnersData={partnersData} />;
 };
 
-export default page;
+export default PartnersPage;
