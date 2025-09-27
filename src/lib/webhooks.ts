@@ -1,3 +1,4 @@
+"use server";
 // lib/webhook.ts - Move your handler here
 import { prisma } from "@/lib/prisma";
 import Stripe from "stripe";
@@ -188,6 +189,15 @@ export const handleStripeWebhook = async (event: Stripe.Event) => {
             stripeEventId: event.id
           }
         });
+
+        if (userId) {
+          await prisma.user.update({
+            where: { id: userId },
+            data: {
+              stripeCustomerId: session.customer
+            }
+          });
+        }
 
         console.log('Checkout session updated');
         console.log('Order created successfully:', order.orderNumber);

@@ -23,6 +23,14 @@ export const verifyPartnersForm = z.object({
       message: "Message must be less than 500 characters",
     }),
   });
+
+
+export const verifyDonateForm = z.object({
+    name: z.string().min(1, { message: "Name is required" }).max(20, {
+        message: "Name must be less than 20 characters",
+    }),
+    email: z.string().email({ message: "Invalid email address" }),
+})
   
   export const loginFormSchema = z.object({
     username: z.string().min(1, { message: "Username is required" }),

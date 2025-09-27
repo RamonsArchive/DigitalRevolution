@@ -930,3 +930,223 @@ export const submitPartnersForm = async (formData: Record<string, string>) => {
     });
   }
 }
+
+const getOrCreateStripeCustomer = async (userId: string, email: string): Promise<string> => {
+  // Check if user already has a Stripe customer ID
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { stripeCustomerId: true, email: true, name: true },
+  });
+
+  if (user?.stripeCustomerId) {
+    return user.stripeCustomerId;
+  }
+
+  // Create new Stripe customer
+  const customer = await stripe.customers.create({
+    email,
+    name: user?.name || undefined,
+    metadata: {
+      userId,
+    },
+  });
+
+  // Update user with Stripe customer ID
+  await prisma.user.update({
+    where: { id: userId },
+    data: { stripeCustomerId: customer.id },
+  });
+
+  return customer.id;
+}
+
+
+
+const createDonationCheckout = async ({userId, amount, name, email}: {userId?: string, amount: number, name: string, email: string}) => {
+  try {
+
+    const session = await stripe.checkout.sessions.create({
+      mode: "payment",
+      line_items: [
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: "Donation to Digital Revolution",
+              description: "Supporting digital equity and STEM education",
+            },
+            unit_amount: amount,
+          },
+          quantity: 1,
+        }
+      ],
+      customer_email: email,
+      metadata: {
+        type: "donation",
+        name: name,
+        userId: userId || "",
+      },
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/donate/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/donate/cancel`,
+    });
+
+    await prisma.donation.create({
+      data: {
+        stripeSessionId: session.id,
+        donorEmail: email,
+        donorName: name,
+        amount: amount,
+        currency: "usd",
+        status: "pending",
+        donationType: "one-time",
+      }
+    })
+      
+     return parseServerActionResponse({
+      status: "SUCCESS",
+      error: "",
+      data: {
+        stripeSessionId: session.id,
+        url: session.url,
+      },
+     })
+
+  } catch (error) {
+    console.error('Error creating donation session:', error);
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: error instanceof Error ? error.message : "Unknown error",
+      data: null,
+    });
+  }
+}
+
+
+export const createSubscriptionCheckout = async ({userId, amount, name, email}: {userId: string, amount: number, name: string, email: string}) => {
+  try {
+    const stripeCustomerId = await getOrCreateStripeCustomer(userId, email);
+    const session = await stripe.checkout.sessions.create({
+      mode: "subscription",
+      customer: stripeCustomerId,
+      line_items: [
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: 'Monthly Donation to Digital Revolution',
+              description: 'Recurring support for digital equity and STEM education',
+            },
+            unit_amount: amount,
+            recurring: {
+              interval: "month",
+            },
+          },
+          quantity: 1,
+        }
+      ],
+      metadata: {
+        type: "subscription",
+        name: name,
+        userId: userId,
+      },
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/donate/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/donate/cancel`,
+      subscription_data: {
+        metadata: {
+          userId,
+          type: "donation",
+        }
+      }
+    })
+
+    if (!session) {
+      return parseServerActionResponse({
+        status: "ERROR",
+        error: "Failed to create subscription session",
+        data: null,
+      });
+    }
+
+    return parseServerActionResponse({
+      status: "SUCCESS",
+      error: "",
+      data: {
+        stripeSessionId: session.id,
+        url: session.url,
+      },
+    });
+    
+  } catch (error) {
+    console.error('Error creating subscription checkout:', error);
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: error instanceof Error ? error.message : "Unknown error",
+      data: null,
+    }); 
+  }
+}
+
+
+export const createDonationSession = async ({userId, amount, name, email}: {userId?: string, amount: number, name: string, email: string}) => {
+  try {
+    const isRateLimited = await checkRateLimit("createDonationCheckout");
+    if (isRateLimited.status === "ERROR") {
+      return isRateLimited;
+    }
+
+    if (!amount || !email) {
+      throw new Error("Amount and email are required");
+    }
+
+    const result = await createDonationCheckout({
+      userId,
+      amount,
+      name,
+      email,
+    })
+
+    return result;
+
+  } catch (error) {
+    console.error('Error creating donation checkout:', error);
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: error instanceof Error ? error.message : "Unknown error",
+      data: null,
+    });
+  }
+}
+
+
+export const createSubscriptionSession = async ({userId, amount, name, email}: {userId: string, amount: number, name: string, email: string}) => {
+  try {
+
+    const isRateLimited = await checkRateLimit("createSubscriptionSession");
+    if (isRateLimited.status === "ERROR") {
+      return isRateLimited;
+    }
+
+
+    if (!userId || !amount || !email) {
+      throw new Error("Amount and email are required");
+    }
+
+    const result = await createSubscriptionCheckout({
+      userId,
+      amount,
+      name,
+      email,
+    })
+    
+    return result;
+
+  } catch (error) {
+    console.error('Error creating subscription session:', error);
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: error instanceof Error ? error.message : "Unknown error",
+      data: null,
+    });
+  }
+}
+

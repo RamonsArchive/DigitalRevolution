@@ -471,3 +471,161 @@ export const PARTNERS_DATA = {
     responseTime: "We respond to all partnership inquiries within 48 hours",
   },
 };
+
+export const DONATE_DATA = {
+  id: "donate",
+  text: {
+    mainTitle: "Donate",
+    subTitle: "Help support our cause with a contribution",
+    description:
+      "Your donation helps us continue our mission to bridge the digital divide and empower communities with the tools they need to succeed in the digital age. Every contribution directly funds digital access programs and creates pathways to STEM education opportunities.",
+
+    impactTitle: "Your Impact",
+    impactDescription:
+      "When you donate to Digital Revolution, you're not just giving money - you're investing in democratic values, digital equity, and educational opportunities. Your contribution helps fund both immediate digital access needs and long-term STEM career pathways for underserved communities.",
+
+    donationTitle: "Donation Options",
+    transparencyTitle: "Transparency Commitment",
+    transparencyDescription:
+      "We believe in complete transparency. 50% of all proceeds (including donations) go directly to digital equity and STEM education initiatives. The remaining 50% supports operational costs, program development, and sustainable growth of our mission.",
+
+    donationOptions: [
+      {
+        id: "one-time",
+        title: "One-Time Donation",
+        subText: "Thank you for your donation!",
+        description:
+          "Make a one-time donation to support our cause and help bridge the digital divide.",
+        amountOptions: ["custom amount"],
+        impact:
+          "Every dollar makes an immediate difference in someone's digital access journey",
+      },
+      {
+        id: "monthly",
+        title: "Monthly Donation",
+        subText: "You can cancel anytime.",
+        description:
+          "Make a monthly donation to provide sustained support for our ongoing programs and STEM education initiatives.",
+        amountOptions: ["5", "10", "20", "50", "100", "200", "500", "1000"],
+        impact:
+          "Monthly giving allows us to plan long-term programs and provide consistent support to communities",
+      },
+    ],
+  },
+
+  impactBreakdown: [
+    {
+      amount: "$25",
+      impact: "Provides digital literacy training materials for one person",
+      stemConnection: "Foundation skills needed for coding and tech careers",
+    },
+    {
+      amount: "$50",
+      impact: "Funds internet access for a family for one month",
+      stemConnection: "Access to online STEM courses and educational platforms",
+    },
+    {
+      amount: "$100",
+      impact: "Supports a community workshop on digital skills",
+      stemConnection:
+        "Group training in basic programming and computer science concepts",
+    },
+    {
+      amount: "$250",
+      impact: "Provides refurbished computer equipment to a student",
+      stemConnection: "Hardware needed for STEM coursework and coding projects",
+    },
+    {
+      amount: "$500",
+      impact: "Funds a month-long coding bootcamp scholarship",
+      stemConnection: "Direct pathway to technology career opportunities",
+    },
+  ],
+
+  fundingAreas: [
+    {
+      area: "Digital Access Infrastructure",
+      percentage: "30%",
+      description: "Internet connectivity, hardware, and basic digital tools",
+      stemImpact: "Creates foundation for accessing online STEM education",
+    },
+    {
+      area: "Education and Training Programs",
+      percentage: "40%",
+      description:
+        "Digital literacy, coding bootcamps, and STEM pathway programs",
+      stemImpact: "Direct skill-building for technology careers",
+    },
+    {
+      area: "Community Partnership Support",
+      percentage: "20%",
+      description:
+        "Supporting local organizations and educational institutions",
+      stemImpact: "Scaling STEM education through community networks",
+    },
+    {
+      area: "Operations and Growth",
+      percentage: "10%",
+      description: "Administrative costs and sustainable program expansion",
+      stemImpact: "Ensuring long-term sustainability of STEM initiatives",
+    },
+  ],
+
+  otherWaysToHelp: [
+    {
+      title: "Shop Our Store",
+      description: "Purchase our products - 50% of profits fund our mission",
+      action: "Every purchase makes a difference",
+    },
+    {
+      title: "Volunteer Your Time",
+      description:
+        "Help teach digital literacy or mentor aspiring STEM students",
+      action: "Share your technical skills with communities in need",
+    },
+    {
+      title: "Corporate Sponsorship",
+      description: "Partner with us to sponsor programs or provide equipment",
+      action: "Amplify your company's social impact",
+    },
+    {
+      title: "Spread the Word",
+      description: "Share our mission on social media and with your network",
+      action: "Awareness is the first step to change",
+    },
+  ],
+
+  donorRecognition: {
+    title: "Recognition Levels",
+    levels: [
+      {
+        name: "Digital Supporter",
+        range: "$1 - $99",
+        benefits: "Thank you email and impact updates",
+      },
+      {
+        name: "Community Champion",
+        range: "$100 - $499",
+        benefits: "Quarterly impact reports and recognition on website",
+      },
+      {
+        name: "STEM Advocate",
+        range: "$500 - $999",
+        benefits: "Annual report, website recognition, and program updates",
+      },
+      {
+        name: "Digital Revolution Partner",
+        range: "$1000+",
+        benefits:
+          "Direct communication with founder, program insights, and partnership opportunities",
+      },
+    ],
+  },
+
+  contributionInfo: {
+    title: "Contributions to Our Mission",
+    description:
+      "Digital Revolution is not yet a registered nonprofit organization. While your generous contributions may not currently qualify as tax-deductible donations, they directly fund our mission to bridge the digital divide and create STEM education opportunities. You will receive a receipt acknowledging your contribution via email.",
+    status: "Working toward 501(c)(3) nonprofit status to maximize your impact",
+  },
+};

@@ -131,6 +131,57 @@ exports.Prisma.UserScalarFieldEnum = {
   isActive: 'isActive'
 };
 
+exports.Prisma.DonationScalarFieldEnum = {
+  id: 'id',
+  stripeSessionId: 'stripeSessionId',
+  stripePaymentIntentId: 'stripePaymentIntentId',
+  donorEmail: 'donorEmail',
+  donorName: 'donorName',
+  userId: 'userId',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  donationType: 'donationType',
+  message: 'message',
+  isAnonymous: 'isAnonymous',
+  createdAt: 'createdAt',
+  completedAt: 'completedAt'
+};
+
+exports.Prisma.SubscriptionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  stripeSubscriptionId: 'stripeSubscriptionId',
+  stripeCustomerId: 'stripeCustomerId',
+  stripePriceId: 'stripePriceId',
+  amount: 'amount',
+  currency: 'currency',
+  interval: 'interval',
+  status: 'status',
+  currentPeriodStart: 'currentPeriodStart',
+  currentPeriodEnd: 'currentPeriodEnd',
+  cancelAtPeriodEnd: 'cancelAtPeriodEnd',
+  canceledAt: 'canceledAt',
+  cancelReason: 'cancelReason',
+  subscriptionType: 'subscriptionType',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SubscriptionPaymentScalarFieldEnum = {
+  id: 'id',
+  subscriptionId: 'subscriptionId',
+  stripeInvoiceId: 'stripeInvoiceId',
+  stripePaymentIntentId: 'stripePaymentIntentId',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  periodStart: 'periodStart',
+  periodEnd: 'periodEnd',
+  createdAt: 'createdAt',
+  paidAt: 'paidAt'
+};
+
 exports.Prisma.PartnerTicketScalarFieldEnum = {
   id: 'id',
   firstName: 'firstName',
@@ -388,6 +439,37 @@ exports.Prisma.UserOrderByRelevanceFieldEnum = {
   stripeCustomerId: 'stripeCustomerId'
 };
 
+exports.Prisma.DonationOrderByRelevanceFieldEnum = {
+  stripeSessionId: 'stripeSessionId',
+  stripePaymentIntentId: 'stripePaymentIntentId',
+  donorEmail: 'donorEmail',
+  donorName: 'donorName',
+  userId: 'userId',
+  currency: 'currency',
+  status: 'status',
+  donationType: 'donationType',
+  message: 'message'
+};
+
+exports.Prisma.SubscriptionOrderByRelevanceFieldEnum = {
+  userId: 'userId',
+  stripeSubscriptionId: 'stripeSubscriptionId',
+  stripeCustomerId: 'stripeCustomerId',
+  stripePriceId: 'stripePriceId',
+  currency: 'currency',
+  interval: 'interval',
+  status: 'status',
+  cancelReason: 'cancelReason',
+  subscriptionType: 'subscriptionType'
+};
+
+exports.Prisma.SubscriptionPaymentOrderByRelevanceFieldEnum = {
+  stripeInvoiceId: 'stripeInvoiceId',
+  stripePaymentIntentId: 'stripePaymentIntentId',
+  currency: 'currency',
+  status: 'status'
+};
+
 exports.Prisma.PartnerTicketOrderByRelevanceFieldEnum = {
   id: 'id',
   firstName: 'firstName',
@@ -530,6 +612,9 @@ exports.TicketStatus = exports.$Enums.TicketStatus = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Donation: 'Donation',
+  Subscription: 'Subscription',
+  SubscriptionPayment: 'SubscriptionPayment',
   PartnerTicket: 'PartnerTicket',
   Cart: 'Cart',
   CartItem: 'CartItem',

@@ -17,16 +17,20 @@ model User {
     provider String?
 
     // Stripe integration
-    stripeCustomerId String? @unique // Store Stripe customer ID for reuse
+    stripeCustomerId String? @unique
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    // relations
+    // Existing relations
     cart        Cart?
     orders      Order[]
     addresses   Address[]
     promoUsages PromoCodeUsage[]
+
+    // New donation/subscription relations
+    donations     Donation[]
+    subscriptions Subscription[]
 
     // Soft delete
     isActive Boolean @default(true)
@@ -38,6 +42,118 @@ enum TicketStatus {
     COMPLETED
     ARCHIVED
     CANCELLED
+}
+
+// Add these models to your existing schema
+
+// ──────────────────────────────────────────────────────────────────────────
+// Donation tracking for one-time contributions
+model Donation {
+    id Int @id @default(autoincrement())
+
+    // Stripe session info
+    stripeSessionId       String  @unique
+    stripePaymentIntentId String? @unique
+
+    // Donor information (for non-authenticated users)
+    donorEmail String
+    donorName  String?
+
+    // Optional user relation (if authenticated)
+    user   User?   @relation(fields: [userId], references: [id])
+    userId String?
+
+    // Donation details
+    amount   Int // Amount in cents
+    currency String @default("usd")
+    status   String // "pending", "completed", "failed", "canceled"
+
+    // Metadata
+    donationType String  @default("one-time") // "one-time", "memorial", "honor"
+    message      String? // Optional donor message
+    isAnonymous  Boolean @default(false)
+
+    // Timestamps
+    createdAt   DateTime  @default(now())
+    completedAt DateTime?
+
+    @@index([donorEmail])
+    @@index([userId])
+    @@index([status])
+    @@index([createdAt])
+}
+
+// ──────────────────────────────────────────────────────────────────────────
+// Subscription management for recurring donations
+model Subscription {
+    id Int @id @default(autoincrement())
+
+    // Required: User must be authenticated for subscriptions
+    user   User   @relation(fields: [userId], references: [id])
+    userId String
+
+    // Stripe subscription info
+    stripeSubscriptionId String  @unique
+    stripeCustomerId     String // Should match user.stripeCustomerId
+    stripePriceId        String? // If using pre-created Stripe prices
+
+    // Subscription details
+    amount   Int // Amount in cents
+    currency String @default("usd")
+    interval String // "month", "year"
+    status   String // "active", "canceled", "past_due", "incomplete", "trialing", "unpaid"
+
+    // Subscription lifecycle
+    currentPeriodStart DateTime?
+    currentPeriodEnd   DateTime?
+    cancelAtPeriodEnd  Boolean   @default(false)
+    canceledAt         DateTime?
+    cancelReason       String? // Why they canceled
+
+    // Metadata
+    subscriptionType String @default("donation") // "donation", "membership"
+
+    // Timestamps
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // Relations
+    payments SubscriptionPayment[]
+
+    @@index([userId])
+    @@index([stripeSubscriptionId])
+    @@index([status])
+    @@index([currentPeriodEnd])
+}
+
+// ──────────────────────────────────────────────────────────────────────────
+// Track individual payments within subscriptions
+model SubscriptionPayment {
+    id Int @id @default(autoincrement())
+
+    subscription   Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+    subscriptionId Int
+
+    // Stripe payment info
+    stripeInvoiceId       String  @unique
+    stripePaymentIntentId String? @unique
+
+    // Payment details
+    amount   Int // Amount in cents
+    currency String @default("usd")
+    status   String // "paid", "open", "void", "uncollectible"
+
+    // Period this payment covers
+    periodStart DateTime
+    periodEnd   DateTime
+
+    // Timestamps
+    createdAt DateTime  @default(now())
+    paidAt    DateTime?
+
+    @@index([subscriptionId])
+    @@index([status])
+    @@index([periodStart])
 }
 
 model PartnerTicket {
