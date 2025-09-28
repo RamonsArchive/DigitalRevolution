@@ -984,3 +984,193 @@ export const SHARE_DATA = {
     ],
   },
 };
+
+export const FOOTER_LINKS = [
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/profile.php?id=61569189908839",
+    handle: "Digital Revolution",
+    platform: "facebook",
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/ramon.mnm",
+    handle: "Digital Revolution",
+    platform: "instagram",
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/ramonmnm100",
+    handle: "Digital Revolution",
+    platform: "linkedin",
+  },
+  {
+    label: "TikTok",
+    href: "https://www.tiktok.com/@ramonm_m?lang=en",
+    handle: "Digital Revolution",
+    platform: "tiktok",
+  },
+];
+
+export const FOOTER_CONTACT = [
+  {
+    email: "clutchdev.apps@gmail.com",
+    phone: "949-910-7879",
+  },
+];
+
+export const QUICK_LINKS = [
+  {
+    label: "Return Policy",
+    href: "/return-policy",
+  },
+  {
+    label: "Terms of Service",
+    href: "/terms-of-service",
+  },
+  {
+    label: "Privacy Policy",
+    href: "/privacy-policy",
+  },
+];
+
+export const ReturnPolicy = [
+  {
+    id: 1,
+    title: "Return Policy",
+    content:
+      "Items must be returned within 30 days of purchase for a full refund. We accept returns for damaged, defective, or undelivered items. Unfortunately, we cannot accept returns on items that have been worn, washed, or show signs of use. Custom or personalized items are also non-returnable unless defective. To initiate a return, please contact us with your order number and reason for return. Return shipping costs are the customer's responsibility unless the item was damaged or defective upon arrival.",
+  },
+  {
+    id: 2,
+    title: "Refund Process",
+    content:
+      "Once we receive and inspect your returned item, we'll process your refund within 5-7 business days to your original payment method. You'll receive an email confirmation when the refund is processed. Please note that it may take additional time for the refund to appear on your statement depending on your payment provider.",
+  },
+];
+
+export const TermsOfService = [
+  {
+    id: 1,
+    title: "Acceptance of Terms",
+    content:
+      "By accessing or purchasing from Digital Revolution, you agree to these Terms of Service. If you don't agree with these terms, please don't use our site or make purchases.",
+  },
+  {
+    id: 2,
+    title: "About Digital Revolution",
+    content:
+      "Digital Revolution is a foundation dedicated to bridging the digital divide and creating STEM education opportunities. We sell products where 50% of profits go directly to digital equity and STEM education initiatives. Our mission is to ensure technology serves democratic values and creates opportunities for all communities.",
+  },
+  {
+    id: 3,
+    title: "Product Orders and Fulfillment",
+    content:
+      "We partner with Printful for product fulfillment. Orders typically ship within 3-7 business days. Shipping times vary by location. We'll provide tracking information once your order ships. Product colors and sizes may vary slightly from what appears on your screen.",
+  },
+  {
+    id: 4,
+    title: "Pricing and Payment",
+    content:
+      "All prices are in USD and subject to change without notice. We accept major credit cards and process payments through Stripe. Your payment will be charged when you place your order. We reserve the right to cancel orders if pricing errors occur.",
+  },
+  {
+    id: 5,
+    title: "Prohibited Uses",
+    content:
+      "You may not use our site for any unlawful purposes, to transmit harmful code, or to interfere with site functionality. Don't attempt unauthorized access to our systems or other users' accounts.",
+  },
+  {
+    id: 6,
+    title: "Intellectual Property",
+    content:
+      "All content on our site, including logos, text, images, and designs, belongs to Digital Revolution unless otherwise noted. You may not reproduce or distribute our content without permission.",
+  },
+  {
+    id: 7,
+    title: "Limitation of Liability",
+    content:
+      "Digital Revolution is not liable for any indirect, incidental, or consequential damages arising from your use of our site or products. Our liability is limited to the amount you paid for your order. We provide products 'as is' without warranties of any kind.",
+  },
+  {
+    id: 8,
+    title: "Site Availability",
+    content:
+      "We strive to keep our site available but cannot guarantee uninterrupted access. We may need to take the site down for maintenance or updates without notice.",
+  },
+  {
+    id: 9,
+    title: "Changes to Terms",
+    content:
+      "We may update these terms occasionally. Continued use of our site after changes constitutes acceptance of new terms. We'll post the updated date when changes are made.",
+  },
+  {
+    id: 10,
+    title: "Contact Information",
+    content:
+      "Questions about these terms? Contact us at support@digitalrevolution.org. We're here to help clarify anything about our policies.",
+  },
+] as const;
+
+export const PrivacyPolicy = [
+  {
+    id: 1,
+    title: "Information We Collect",
+    content:
+      "We collect information you provide when creating accounts, making purchases, or contacting us. This includes your name, email, shipping address, and payment information. We also collect basic usage data to improve our site, but we don't track your personal browsing behavior across other sites.",
+  },
+  {
+    id: 2,
+    title: "How We Use Your Information",
+    content:
+      "We use your information to process orders, provide customer support, and send important updates about your purchases. If you subscribe to our newsletter, we'll send periodic updates about our mission and impact. You can unsubscribe anytime.",
+  },
+  {
+    id: 3,
+    title: "Information Sharing",
+    content:
+      "We don't sell, rent, or trade your personal information to third parties. We only share information with our service providers (like Stripe for payments and Printful for fulfillment) who need it to serve you. These partners are bound by confidentiality agreements.",
+  },
+  {
+    id: 4,
+    title: "Data Security",
+    content:
+      "We implement industry-standard security measures to protect your information. Payment processing is handled by Stripe with bank-level encryption. However, no online system is 100% secure, so we can't guarantee absolute security.",
+  },
+  {
+    id: 5,
+    title: "Your Rights",
+    content:
+      "You can request to see, update, or delete your personal information by contacting us. You can also unsubscribe from our emails at any time. We'll respond to privacy requests within 30 days.",
+  },
+  {
+    id: 6,
+    title: "Data Retention",
+    content:
+      "We keep your order information for as long as necessary to provide support and comply with legal requirements. Account information is kept until you request deletion or your account becomes inactive for an extended period.",
+  },
+  {
+    id: 7,
+    title: "Cookies and Tracking",
+    content:
+      "We use essential cookies to make our site function properly and remember your cart contents. We don't use advertising cookies or cross-site tracking. You can disable cookies in your browser, but this may affect site functionality.",
+  },
+  {
+    id: 8,
+    title: "Third-Party Services",
+    content:
+      "We use Google Analytics to understand site usage and Stripe for secure payment processing. These services have their own privacy policies. We also use Printful for order fulfillment, which handles shipping information according to their privacy policy.",
+  },
+  {
+    id: 9,
+    title: "Updates to Privacy Policy",
+    content:
+      "We may update this privacy policy as our services evolve. We'll post the updated date and notify you of significant changes. Continued use of our site means you accept the updated policy.",
+  },
+  {
+    id: 10,
+    title: "Contact Us",
+    content:
+      "Privacy questions or concerns? Email us at privacy@digitalrevolution.org. We're committed to protecting your privacy and will address any concerns promptly.",
+  },
+] as const;

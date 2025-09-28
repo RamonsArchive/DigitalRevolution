@@ -34,6 +34,7 @@ const CartPageClient = ({
 }: CartPageClientProps) => {
   const [isUpdating, setIsUpdating] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [outOfStockItems, setOutOfStockItems] = useState<CartItem[]>([]);
   const router = useRouter();
   // Calculate totals
   const subtotal = cartItems.reduce(
@@ -102,7 +103,13 @@ const CartPageClient = ({
       console.log("result of checkout session", result);
       if (result.status === "ERROR") {
         toast.error("ERROR", { description: result.error });
-        router.refresh();
+        if (
+          result.error.includes("Some items are out of stock") &&
+          result.data &&
+          "outOfStockItems" in result.data
+        ) {
+          setOutOfStockItems(result.data.outOfStockItems as CartItem[]);
+        }
         return;
       }
 
@@ -114,6 +121,12 @@ const CartPageClient = ({
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const isItemOutOfStock = (item: CartItem) => {
+    return outOfStockItems.some(
+      (outOfStockItem) => outOfStockItem.id === item.id
+    );
   };
 
   if (cartItems.length === 0) {
@@ -162,9 +175,138 @@ const CartPageClient = ({
             {cartItems.map((item) => (
               <div
                 key={item.id}
-                className="bg-gray-800/60 backdrop-blur-sm rounded-2xl p-8 border border-gray-600/40 hover:border-gray-500/60 transition-all duration-300 shadow-xl hover:shadow-2xl"
+                className={`bg-gray-800/60 backdrop-blur-sm rounded-2xl p-8 border transition-all duration-300 shadow-xl hover:shadow-2xl ${
+                  isItemOutOfStock(item)
+                    ? "border-red-500/50 hover:border-red-400/60 bg-red-900/10"
+                    : "border-gray-600/40 hover:border-gray-500/60"
+                }`}
               >
-                <div className="flex items-start space-x-8">
+                {/* Mobile Layout - Stacked */}
+                <div className="flex flex-col lg:hidden space-y-4">
+                  {/* Product Image */}
+                  <div className="flex justify-center">
+                    <div className="w-32 h-32 bg-gray-700/80 rounded-2xl overflow-hidden shadow-xl border border-gray-600/30">
+                      {item.imageUrl ? (
+                        <Image
+                          src={item.imageUrl}
+                          alt={item.productName}
+                          width={128}
+                          height={128}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gray-600/80 flex items-center justify-center">
+                          <ShoppingBag className="w-12 h-12 text-gray-300" />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Product Details */}
+                  <div className="text-center space-y-3">
+                    <h3 className="text-xl font-bold text-slate-100 leading-tight">
+                      {item.variantName}
+                    </h3>
+                    <p className="text-slate-300 text-base font-medium">
+                      {item.productName}
+                    </p>
+
+                    <div className="flex flex-wrap justify-center gap-2 text-sm">
+                      <span className="text-slate-200 bg-gray-700/80 px-3 py-1 rounded-lg font-bold border border-gray-600/50">
+                        {item.size}
+                      </span>
+                      <span className="text-slate-200 bg-gray-700/80 px-3 py-1 rounded-lg font-bold border border-gray-600/50">
+                        {item.color}
+                      </span>
+                      {item.sku && (
+                        <span className="text-slate-300 text-xs font-mono bg-gray-800/50 px-2 py-1 rounded-md">
+                          {item.sku}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Out of Stock Error Message */}
+                  {isItemOutOfStock(item) && (
+                    <div className="p-3 bg-red-900/90 border border-red-500/50 rounded-xl">
+                      <div className="flex items-center gap-3">
+                        <div className="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0">
+                          <span className="text-white text-xs font-bold">
+                            !
+                          </span>
+                        </div>
+                        <div>
+                          <p className="text-red-200 font-semibold text-xs">
+                            Out of stock
+                          </p>
+                          <p className="text-red-300 text-xs">
+                            Remove or reduce quantity
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Price and Controls */}
+                  <div className="space-y-4">
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-slate-100">
+                        {formatPrice(item.unitPrice * item.quantity)}
+                      </div>
+                    </div>
+
+                    {/* Quantity Controls */}
+                    <div className="flex items-center justify-center space-x-3">
+                      <button
+                        onClick={() =>
+                          handleQuantityChange(
+                            item.id,
+                            Math.max(1, item.quantity - 1)
+                          )
+                        }
+                        className="w-10 h-10 bg-gray-700/80 hover:bg-gray-600/80 rounded-lg flex items-center justify-center transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg border border-gray-600/50"
+                        disabled={item.quantity <= 1 || isUpdating === item.id}
+                      >
+                        <Minus className="w-5 h-5 text-slate-200" />
+                      </button>
+
+                      <span className="w-16 text-center text-slate-100 font-bold text-lg bg-gray-800/80 px-3 py-2 rounded-lg border border-gray-600/50">
+                        {isUpdating === item.id ? (
+                          <div className="w-5 h-5 border-2 border-slate-200 border-t-transparent rounded-full animate-spin mx-auto" />
+                        ) : (
+                          item.quantity
+                        )}
+                      </span>
+
+                      <button
+                        onClick={() =>
+                          handleQuantityChange(item.id, item.quantity + 1)
+                        }
+                        className="w-10 h-10 bg-gray-700/80 hover:bg-gray-600/80 rounded-lg flex items-center justify-center transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg border border-gray-600/50"
+                        disabled={isUpdating === item.id}
+                      >
+                        <Plus className="w-5 h-5 text-slate-200" />
+                      </button>
+                    </div>
+
+                    {/* Remove Button */}
+                    <button
+                      onClick={() => handleRemoveItem(item.id)}
+                      className="w-full text-red-300 hover:text-red-200 text-sm flex items-center justify-center space-x-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed bg-red-900/30 hover:bg-red-900/40 px-4 py-2 rounded-lg border border-red-800/50 font-semibold"
+                      disabled={isUpdating === item.id}
+                    >
+                      {isUpdating === item.id ? (
+                        <div className="w-4 h-4 border-2 border-red-300 border-t-transparent rounded-full animate-spin" />
+                      ) : (
+                        <Trash2 className="w-4 h-4" />
+                      )}
+                      <span>Remove</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Desktop Layout - Horizontal */}
+                <div className="hidden lg:flex items-start space-x-8">
                   {/* Product Image */}
                   <div className="flex-shrink-0">
                     <div className="w-28 h-28 bg-gray-700/80 rounded-2xl overflow-hidden shadow-xl border border-gray-600/30">
@@ -224,6 +366,28 @@ const CartPageClient = ({
                       )}
                     </div>
                   </div>
+
+                  {/* Out of Stock Error Message */}
+                  {isItemOutOfStock(item) && (
+                    <div className="mt-4 p-4 bg-red-900/90 border border-red-500/50 rounded-xl">
+                      <div className="flex items-center gap-3">
+                        <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0">
+                          <span className="text-white text-xs font-bold">
+                            !
+                          </span>
+                        </div>
+                        <div>
+                          <p className="text-red-200 font-semibold text-sm">
+                            This item is currently out of stock
+                          </p>
+                          <p className="text-red-300 text-xs mt-1">
+                            Please remove this item or reduce quantity to
+                            proceed with checkout
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Price and Controls */}
                   <div className="flex-shrink-0 text-right space-y-6">

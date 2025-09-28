@@ -12,7 +12,7 @@ const ShopPage = () => {
   const { filteredProducts } = useShopFilters();
 
   return (
-    <div className="w-full min-h-screen">
+    <div className="w-full min-h-screen pb-20">
       <div className="flex gap-5 px-5 md:px-10">
         {/* Fixed Filters Sidebar - Desktop Only */}
         <div className="hidden md:block w-80 flex-shrink-0">

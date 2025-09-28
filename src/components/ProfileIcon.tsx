@@ -188,7 +188,7 @@ const ClientProfileIcon = () => {
 
   return (
     <>
-      <div ref={dropDownRefOuter} className="relative">
+      <div ref={dropDownRefOuter} className="relative mt-1">
         <button
           onClick={handleAuthClick}
           disabled={isLoading}

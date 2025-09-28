@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "@/components/Navbar";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "sonner";
+import Footer from "@/components/Footer";
 
 const layout = async ({ children }: { children: React.ReactNode }) => {
   return (
@@ -10,6 +11,7 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
         <Navbar />
         {children}
         <Toaster richColors />
+        <Footer />
       </SessionProvider>
     </>
   );

@@ -325,16 +325,23 @@ const ProductPageClient = ({
   );
 
   return (
-    <section className="flex flex-col p-5 md:p-10 gap-10 min-h-screen">
-      <p className="text-sm text-slate-300 cursor-pointer">
-        <Link
-          href="/shop"
-          className="flex items-center gap-2 hover:text-slate-100 transition-colors"
-        >
-          <span>←</span>
-          <span className="underline">Back to Shop</span>
-        </Link>
-      </p>
+    <section className="flex flex-col p-5 md:p-10 gap-10 min-h-screen pb-20">
+      <div className="group relative w-fit">
+        <div className="absolute -inset-1 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-300"></div>
+        <div className="relative bg-gradient-to-r from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-lg p-3 border border-slate-700/50 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+          <Link
+            href="/shop"
+            className="flex items-center gap-3 text-slate-200 hover:text-white transition-all duration-300 font-medium"
+          >
+            <div className="w-8 h-8 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <span className="text-white text-sm font-bold leading-none">
+                ←
+              </span>
+            </div>
+            <span className="text-base font-semibold">Back to Shop</span>
+          </Link>
+        </div>
+      </div>
       <div className="flex flex-col lg:flex-row gap-10 w-full">
         {/* Image Gallery */}
         <div className="flex flex-col lg:flex-row gap-4 w-full lg:w-[60%]">
