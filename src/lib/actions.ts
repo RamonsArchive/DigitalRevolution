@@ -1150,3 +1150,31 @@ export const createSubscriptionSession = async ({userId, amount, name, email}: {
   }
 }
 
+
+export const getSubscription = async (userId: string) => {
+  try {
+    const subscriptions = await prisma.subscription.findMany({
+      where: { userId: userId },
+    });
+    if (!subscriptions) {
+      return parseServerActionResponse({
+        status: "ERROR",
+        error: "No subscriptions found",
+        data: null,
+      });
+    }
+    return parseServerActionResponse({
+      status: "SUCCESS",
+      error: "",
+      data: subscriptions,
+    });
+  } catch (error) {
+    console.error('Error getting subscription:', error);
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: error instanceof Error ? error.message : "Unknown error",
+      data: null,
+    });
+  }
+}
+

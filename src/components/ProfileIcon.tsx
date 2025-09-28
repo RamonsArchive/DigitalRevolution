@@ -3,11 +3,13 @@ import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { signIn, signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
+import Link from "next/link";
 
 const ClientProfileIcon = () => {
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [dropDownOpen, setDropDownOpen] = useState(false);
 
   // useMemo for expensive computations or objects that depend on specific values
   // Only recalculate when session.user.image actually changes
@@ -26,15 +28,20 @@ const ClientProfileIcon = () => {
     []
   ); // No dependencies since it's a static handler
 
+  const handleSignOut = useCallback(async () => {
+    setDropDownOpen(false);
+    await signOut({ redirect: false });
+    toast.success("SUCCESS", { description: "Logged out successfully" });
+    setImageError(false); // Reset error state on logout
+  }, []);
+
   const handleAuthClick = useCallback(async () => {
     if (isLoading) return;
 
     try {
       setIsLoading(true);
       if (session) {
-        await signOut({ redirect: false });
-        toast.success("SUCCESS", { description: "Logged out successfully" });
-        setImageError(false); // Reset error state on logout
+        setDropDownOpen(true);
       } else {
         await signIn("google", { callbackUrl: "/" });
         toast.success("SUCCESS", { description: "Logged in successfully" });
@@ -63,6 +70,23 @@ const ClientProfileIcon = () => {
       isLoading ? "opacity-50 cursor-not-allowed" : "hover:scale-105"
     }`;
   }, [isLoading]);
+
+  const dropDownCard = useMemo(() => {
+    return (
+      <div
+        className={`absolute top-10 right-0 w-40 bg-white rounded-lg shadow-lg ${dropDownOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-full pointer-events-none"}`}
+      >
+        <Link href="/profile" className="w-full h-full">
+          Profile
+        </Link>
+        <Link href="/orders" className="w-full h-full">
+          Orders
+        </Link>
+
+        <button onClick={handleSignOut}>Sign Out</button>
+      </div>
+    );
+  }, [dropDownOpen]);
 
   return (
     <button

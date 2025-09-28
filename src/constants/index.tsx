@@ -629,3 +629,15 @@ export const DONATE_DATA = {
     status: "Working toward 501(c)(3) nonprofit status to maximize your impact",
   },
 };
+
+export const PROFILE_DATA = {
+  id: "profile",
+  text: {
+    mainTitle: "Profile",
+    subTitle: "Manage your profile",
+  },
+  cancelSubscription: {
+    title: "Cancel Subscription",
+    pleaseProvideReason: "Please provide a reason for your cancellation",
+  },
+};
