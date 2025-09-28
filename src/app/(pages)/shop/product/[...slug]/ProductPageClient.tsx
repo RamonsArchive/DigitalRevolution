@@ -7,7 +7,7 @@ import React, {
   useCallback,
 } from "react";
 import Image from "next/image";
-import { PrintfulProduct } from "@/lib/globalTypes";
+import { PrintfulProduct, PrintfulSyncVariant } from "@/lib/globalTypes";
 import { CartItem } from "../../../../../../prisma/generated/prisma";
 import { useGSAP } from "@gsap/react";
 import { useProduct } from "@/contexts/ProductContext";
@@ -62,6 +62,8 @@ const ProductPageClient = ({
   const product = allProducts.find(
     (p: PrintfulProduct) => p.sync_product.external_id?.toLowerCase() === slug
   );
+
+  console.log("product", product);
 
   // State for product details
   const [productDetails, setProductDetails] = useState<any>(null);
@@ -162,6 +164,7 @@ const ProductPageClient = ({
 
   // Handle variant selection
   const handleVariantSelect = (variantIndex: number) => {
+    console.log("handleVariantSelect", variantIndex);
     setSelectedVariantIndex(variantIndex);
     // Find corresponding image for this variant
     const variantImageIndex = productImages.findIndex(
@@ -227,6 +230,17 @@ const ProductPageClient = ({
 
   const availableSizes = useMemo(() => {
     const sizes = [...new Set(product.sync_variants.map((v: any) => v.size))];
+    return sizes;
+  }, [product.sync_variants]);
+
+  const availableSizesForColor = useMemo(() => {
+    const sizes = [
+      ...new Set(
+        product.sync_variants.map(
+          (v: PrintfulSyncVariant) => v.size && v.color === currentVariant.color
+        )
+      ),
+    ];
     return sizes;
   }, [product.sync_variants]);
 
@@ -375,9 +389,9 @@ const ProductPageClient = ({
                   Color
                 </h3>
                 <div className="flex gap-2 flex-wrap">
-                  {availableColors.map((color: any) => {
+                  {availableColors.map((color: string) => {
                     const variantIndex = product.sync_variants.findIndex(
-                      (v: any) => v.color === color
+                      (v: PrintfulSyncVariant) => v.color === color
                     );
                     return (
                       <button
@@ -405,9 +419,9 @@ const ProductPageClient = ({
                   Size
                 </h3>
                 <div className="flex gap-2 flex-wrap">
-                  {availableSizes.map((size: any) => {
+                  {availableSizes.map((size: string) => {
                     const variantIndex = product.sync_variants.findIndex(
-                      (v: any) => v.size === size
+                      (v: PrintfulSyncVariant) => v.size === size
                     );
                     return (
                       <button

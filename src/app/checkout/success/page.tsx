@@ -2,12 +2,12 @@ import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import SuccessPageClient from "@/components/SuccessPageClient";
 
-const SuccessPage = ({
+const SuccessPage = async ({
   searchParams,
 }: {
-  searchParams: { session_id?: string };
+  searchParams: Promise<{ session_id?: string }>;
 }) => {
-  const sessionId = searchParams.session_id;
+  const sessionId = (await searchParams).session_id;
 
   if (!sessionId) {
     notFound();
