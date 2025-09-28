@@ -36,42 +36,56 @@ export const NAV_LINKS = [
 export const HOME_TEXT_SECTIONS = {
   section1: {
     id: "section-1",
-    title: <>We're on a mission to make tech accessible to all </>,
+    title: <>Bridging the Digital Divide for Democratic Values</>,
+    subtitle: (
+      <>Creating pathways from digital exclusion to STEM opportunities</>
+    ),
     description: (
       <>
-        We're a non-profit foundation that advocates on the behalf of the{" "}
+        Digital Revolution advocates for{" "}
         <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          underprivileged
+          underprivileged communities
         </span>{" "}
-        who's lack of{" "}
+        whose lack of{" "}
         <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          technology access
+          digital access and infrastructure
         </span>{" "}
-        and{" "}
+        creates barriers to{" "}
         <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          infrastructure
-        </span>{" "}
-        is a barrier to their success and a threat to{" "}
-        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          democratic free society values
+          STEM education
         </span>
+        ,{" "}
+        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
+          technology careers
+        </span>
+        , and{" "}
+        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
+          democratic participation
+        </span>
+        . We believe technology should create owners, not renters of the digital
+        world.
       </>
     ),
+    mission:
+      "Democracy and egalitarian values cannot be achieved if countries or communities are mere spectators in the digital age.",
   },
 
   section2: {
     id: "section-2",
-    title: <>Here are the facts!</>,
+    title: <>The Digital Divide Reality</>,
+    subtitle: <>These facts demonstrate the urgent need for action</>,
     description: [
       <React.Fragment key="fact-1">
         Over{" "}
         <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          two billion people
+          2.6 billion people
         </span>{" "}
-        do not have access to{" "}
+        worldwide lack access to{" "}
         <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          reliable data connectivity
+          reliable internet connectivity
         </span>
+        , cutting them off from online education platforms, coding bootcamps,
+        and remote STEM opportunities.
       </React.Fragment>,
       <React.Fragment key="fact-2">
         The{" "}
@@ -86,25 +100,40 @@ export const HOME_TEXT_SECTIONS = {
         <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
           93% in Europe
         </span>
+        , creating vast disparities in access to STEM education resources.
       </React.Fragment>,
       <React.Fragment key="fact-3">
-        Many have linked the{" "}
+        The{" "}
         <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
           digital divide
         </span>{" "}
-        to poor{" "}
+        directly correlates with{" "}
         <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          economic and social outcomes
+          reduced economic mobility
         </span>
-        , such as fewer job opportunities, less competitive economies, or lower
-        student performance, showing how it{" "}
+        , fewer{" "}
         <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          exacerbates existing inequalities
+          technology career opportunities
+        </span>
+        , and lower student performance in STEM fields, particularly{" "}
+        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
+          exacerbating existing inequalities
         </span>{" "}
-        along racial and other social lines.
+        along racial and socioeconomic lines.
+      </React.Fragment>,
+      <React.Fragment key="fact-4">
+        Only{" "}
+        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
+          37% of students
+        </span>{" "}
+        in underserved communities have access to{" "}
+        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
+          high-speed internet at home
+        </span>
+        , limiting their ability to participate in online STEM courses and
+        coding programs that could launch technology careers.
       </React.Fragment>,
     ],
-
     sources: [
       {
         title: "Technological Advancements and Human Development",
@@ -119,23 +148,142 @@ export const HOME_TEXT_SECTIONS = {
 
   section3: {
     id: "section-3",
-    title: <>How you can support</>,
-    description: [
+    title: <>Our Impact Approach</>,
+    subtitle: (
+      <>50% of profits fund digital equity and STEM education initiatives</>
+    ),
+    description:
+      "We don't just identify problems—we create solutions. Our foundation operates on a transparent model where half of all proceeds directly fund digital literacy programs, STEM education pathways, and community technology infrastructure.",
+    impactAreas: [
+      {
+        icon: "🌐",
+        title: "Digital Infrastructure",
+        description:
+          "Internet connectivity and technology access for underserved communities",
+        outcome:
+          "Foundation for accessing online STEM education and career opportunities",
+      },
+      {
+        icon: "💻",
+        title: "STEM Education Pathways",
+        description:
+          "Coding bootcamps, engineering courses, and technology career training",
+        outcome: "Direct bridges from digital literacy to technology careers",
+      },
+      {
+        icon: "🏛️",
+        title: "Community Technology Centers",
+        description:
+          "Local hubs for digital learning and technology skill development",
+        outcome:
+          "Sustainable, community-owned digital education infrastructure",
+      },
+      {
+        icon: "🎓",
+        title: "Educational Partnerships",
+        description:
+          "Collaborations with schools and universities for inclusive STEM programs",
+        outcome:
+          "Systemic change in how technology education reaches underserved populations",
+      },
+    ],
+  },
+
+  section4: {
+    id: "section-4",
+    title: <>From Digital Exclusion to STEM Careers</>,
+    subtitle: (
+      <>Creating pathways that transform lives and strengthen democracy</>
+    ),
+    description:
+      "Every person we help gain digital access becomes capable of pursuing STEM education, launching technology careers, and participating fully in democratic society. This isn't just about internet access—it's about creating digital citizens who own their place in the technological future.",
+    pathway: [
+      {
+        step: 1,
+        title: "Digital Access",
+        description:
+          "Internet connectivity and basic digital literacy training",
+      },
+      {
+        step: 2,
+        title: "Skill Building",
+        description:
+          "Introduction to coding, computer science, and STEM concepts",
+      },
+      {
+        step: 3,
+        title: "Career Pathways",
+        description:
+          "Advanced training, bootcamps, and technology career preparation",
+      },
+      {
+        step: 4,
+        title: "Community Leadership",
+        description: "Graduates become local technology leaders and mentors",
+      },
+    ],
+  },
+
+  section5: {
+    id: "section-5",
+    title: <>Support Our Mission</>,
+    subtitle: <>Multiple ways to create lasting change in digital equity</>,
+    description:
+      "Whether you shop our store, make a donation, share our mission, or partner with us, you're contributing to a future where technology serves democratic values and creates opportunities for all.",
+    supportOptions: [
       {
         href: "/shop",
-        label: "Shop our store",
+        label: "Shop Our Store",
+        description: "50% of profits fund digital equity initiatives",
+        impact:
+          "Direct funding for STEM education and technology access programs",
       },
       {
         href: "/donate",
-        label: "Donate to our cause",
+        label: "Make a Donation",
+        description: "One-time or monthly contributions to our cause",
+        impact: "Immediate support for communities needing digital resources",
       },
       {
         href: "/share",
-        label: "Share our mission",
+        label: "Share Our Mission",
+        description: "Spread awareness about digital equity on social media",
+        impact: "Help us reach more communities who need our programs",
       },
       {
         href: "/partners",
-        label: "Partner with us",
+        label: "Partner With Us",
+        description:
+          "Collaborate on digital equity and STEM education initiatives",
+        impact: "Scale our impact through organizational partnerships",
+      },
+    ],
+  },
+
+  stats: {
+    title: "Transparency in Action",
+    description:
+      "We believe in complete transparency about our impact and funding",
+    metrics: [
+      {
+        number: "50%",
+        label: "Profits Donated",
+        description: "Half of all proceeds fund digital equity causes",
+      },
+      {
+        number: "2025",
+        label: "Foundation Year",
+        description: "Established to address growing digital inequality",
+      },
+      {
+        number: "100%",
+        label: "Transparency",
+        description: "Complete openness about funding and impact",
+      },
+      {
+        number: "📈",
+        label: "Communities Served",
+        description: "Expanding reach to underserved populations",
       },
     ],
   },
@@ -822,7 +970,7 @@ export const SHARE_DATA = {
         description: "Of profits donated to digital equity causes",
       },
       {
-        metric: "Growing",
+        metric: "📈",
         description: "Communities reached through our programs",
       },
       {
