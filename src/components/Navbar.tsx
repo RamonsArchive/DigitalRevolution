@@ -199,7 +199,7 @@ const Navbar = () => {
   const scrollNavbar = useMemo(() => {
     return (
       <div
-        className={`fixed flex bg-bg-primary px-10 py-5 w-full items-center justify-between top-0 left-0 right-0 h-[42px] transition-all duration-300 ease-in-out z-10 overflow-y-hidden ${
+        className={`fixed flex bg-bg-primary px-10 py-5 w-full items-center justify-between top-0 left-0 right-0 h-[42px] transition-all duration-300 ease-in-out z-10 ${
           isDropdown
             ? "translate-y-0 opacity-100"
             : "-translate-y-full opacity-0"
@@ -221,7 +221,7 @@ const Navbar = () => {
   const normalNavbar = useMemo(() => {
     return (
       <div
-        className={`flex w-full bg-bg-primary items-center justify-between px-10 py-5 h-[42px] transition-all duration-300 ease-in-out z-10 overflow-y-hidden ${
+        className={`flex w-full bg-bg-primary items-center justify-between px-10 py-5 h-[42px] transition-all duration-300 ease-in-out z-10 ${
           isDropdown
             ? "opacity-0 -translate-y-full"
             : "opacity-100 translate-y-0"

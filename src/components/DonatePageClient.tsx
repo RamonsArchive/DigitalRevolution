@@ -160,7 +160,7 @@ const DonatePageClient = ({
 
   return (
     <div className="min-h-screen flex flex-col bg-bg-primary gap-16 pb-20">
-      <div className="relative h-[33%] overflow-hidden">
+      <div className="relative h-[33%]">
         <TitleSection
           title={donateData.text.mainTitle}
           titleClassName="font-courier-prime text-6xl md:text-8xl font-bold text-center"

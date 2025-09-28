@@ -6,6 +6,7 @@ import React, {
   useCallback,
   useRef,
 } from "react";
+import { createPortal } from "react-dom";
 import { signIn, signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
@@ -16,7 +17,13 @@ const ClientProfileIcon = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [dropDownOpen, setDropDownOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Set client-side flag
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -132,7 +139,7 @@ const ClientProfileIcon = () => {
 
     return (
       <div
-        className={`absolute top-12 right-0 w-48 bg-slate-800 backdrop-blur-sm rounded-xl shadow-2xl border border-slate-600 transition-all duration-300 z-[999] ${
+        className={`fixed top-16 right-4 w-48 bg-slate-800 backdrop-blur-sm rounded-xl shadow-2xl border border-slate-600 transition-all duration-300 z-[99999] ${
           dropDownOpen
             ? "opacity-100 translate-y-0 pointer-events-auto"
             : "opacity-0 -translate-y-2 pointer-events-none"
@@ -140,6 +147,7 @@ const ClientProfileIcon = () => {
         style={{
           backgroundColor: "rgb(30 41 59)", // Force background color
           color: "white", // Force text color
+          zIndex: 99999, // Force z-index
         }}
       >
         <div className="py-2 text-white">
@@ -182,34 +190,37 @@ const ClientProfileIcon = () => {
   }, [dropDownOpen, session, handleSignOut]);
 
   return (
-    <div ref={dropdownRef} className="relative">
-      <button
-        onClick={handleAuthClick}
-        disabled={isLoading}
-        className={buttonClassName}
-        aria-label={session ? "User menu" : "Sign in"}
-      >
-        {isLoading ? (
-          <div className="w-full h-full flex items-center justify-center">
-            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-          </div>
-        ) : (
-          <img
-            src={finalImageSrc}
-            alt="User Profile"
-            width={32}
-            height={32}
-            className="w-full h-full object-cover"
-            onError={handleImageError}
-            loading="lazy"
-            crossOrigin="anonymous"
-            // Force re-render when user changes, not just image URL
-            key={session?.user?.id || "placeholder"}
-          />
-        )}
-      </button>
-      {dropDownCard}
-    </div>
+    <>
+      <div ref={dropdownRef} className="relative">
+        <button
+          onClick={handleAuthClick}
+          disabled={isLoading}
+          className={buttonClassName}
+          aria-label={session ? "User menu" : "Sign in"}
+        >
+          {isLoading ? (
+            <div className="w-full h-full flex items-center justify-center">
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : (
+            <img
+              src={finalImageSrc}
+              alt="User Profile"
+              width={32}
+              height={32}
+              className="w-full h-full object-cover"
+              onError={handleImageError}
+              loading="lazy"
+              crossOrigin="anonymous"
+              // Force re-render when user changes, not just image URL
+              key={session?.user?.id || "placeholder"}
+            />
+          )}
+        </button>
+      </div>
+      {/* Render dropdown in portal to avoid clipping issues */}
+      {isClient && dropDownOpen && createPortal(dropDownCard, document.body)}
+    </>
   );
 };
 
