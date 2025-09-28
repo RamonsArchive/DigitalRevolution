@@ -1,11 +1,11 @@
 import { z } from "zod";
 
 export const verifyPartnersForm = z.object({
-    firstName: z.string().min(1, { message: "Name is required" }).max(20, {
-      message: "Name must be less than 20 characters",
+    firstName: z.string().min(1, { message: "Name is required" }).max(25, {
+      message: "Name must be less than 25 characters",
     }),
-    lastName: z.string().min(1, { message: "Last name is required" }).max(20, {
-      message: "Last name must be less than 20 characters",
+    lastName: z.string().min(1, { message: "Last name is required" }).max(25, {
+      message: "Last name must be less than 25 characters",
     }),
     email: z.string().email({ message: "Invalid email address" }),
     phone: z
@@ -26,8 +26,8 @@ export const verifyPartnersForm = z.object({
 
 
 export const verifyDonateForm = z.object({
-    name: z.string().min(1, { message: "Name is required" }).max(20, {
-        message: "Name must be less than 20 characters",
+    name: z.string().min(1, { message: "Name is required" }).max(25, {
+        message: "Name must be less than 25 characters",
     }),
     email: z.string().email({ message: "Invalid email address" }),
 })

@@ -11,6 +11,7 @@ import { signIn, signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import Link from "next/link";
+import { useClickOutside } from "@/hooks/useClickOutside";
 
 const ClientProfileIcon = () => {
   const { data: session } = useSession();
@@ -18,30 +19,25 @@ const ClientProfileIcon = () => {
   const [imageError, setImageError] = useState(false);
   const [dropDownOpen, setDropDownOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropDownRefInner = useRef<HTMLDivElement>(null);
+  const dropDownRefOuter = useRef<HTMLDivElement>(null);
 
   // Set client-side flag
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setDropDownOpen(false);
-      }
-    };
-
-    if (dropDownOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-      return () =>
-        document.removeEventListener("mousedown", handleClickOutside);
-    }
-  }, [dropDownOpen]);
+  useClickOutside({
+    insideRef: dropDownRefInner,
+    outsideRef: dropDownRefOuter,
+    currentState: dropDownOpen,
+    onInsideClick: () => {
+      setDropDownOpen(false);
+    },
+    onOutsideClick: () => {
+      setDropDownOpen(false);
+    },
+  });
 
   // useMemo for expensive computations or objects that depend on specific values
   const userImageUrl = useMemo(() => {
@@ -139,6 +135,7 @@ const ClientProfileIcon = () => {
 
     return (
       <div
+        ref={dropDownRefInner}
         className={`fixed top-16 right-4 w-48 bg-slate-800 backdrop-blur-sm rounded-xl shadow-2xl border border-slate-600 transition-all duration-300 z-[99999] ${
           dropDownOpen
             ? "opacity-100 translate-y-0 pointer-events-auto"
@@ -191,7 +188,7 @@ const ClientProfileIcon = () => {
 
   return (
     <>
-      <div ref={dropdownRef} className="relative">
+      <div ref={dropDownRefOuter} className="relative">
         <button
           onClick={handleAuthClick}
           disabled={isLoading}

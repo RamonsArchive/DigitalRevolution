@@ -1049,7 +1049,7 @@ export const createSubscriptionCheckout = async ({userId, amount, name, email}: 
         name: name,
         userId: userId,
       },
-      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/donate/success?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/donate/subscription/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/donate/cancel`,
       subscription_data: {
         metadata: {
@@ -1153,6 +1153,16 @@ export const createSubscriptionSession = async ({userId, amount, name, email}: {
 
 export const getSubscription = async (userId: string) => {
   try {
+
+    const isRateLimited = await checkRateLimit("getSubscription");
+    if (isRateLimited.status === "ERROR") {
+      return isRateLimited;
+    }
+
+    if (!userId) {
+      throw new Error("User ID is required");
+    }
+
     const subscriptions = await prisma.subscription.findMany({
       where: { userId: userId },
     });
@@ -1178,3 +1188,126 @@ export const getSubscription = async (userId: string) => {
   }
 }
 
+
+export const getDonationByStripeSessionId = async (stripeSessionId: string) => {
+  try {
+
+    const isRateLimited = await checkRateLimit("getDonationByStripeSessionId");
+    if (isRateLimited.status === "ERROR") {
+      return isRateLimited;
+    }
+
+    if (!stripeSessionId) {
+      throw new Error("User ID is required");
+    }
+
+    const donation = await prisma.donation.findFirst({
+      where: { stripeSessionId: stripeSessionId },
+    });
+
+    if (!donation) {
+      return parseServerActionResponse({
+        status: "ERROR",
+        error: "Donation not found",
+        data: null,
+      });
+    }
+
+    return parseServerActionResponse({
+      status: "SUCCESS",
+      error: "",
+      data: donation,
+    });
+  } catch (error) {
+    console.error('Error getting donation:', error);
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: error instanceof Error ? error.message : "Unknown error",
+      data: null,
+    });
+  }
+}
+
+export const getLatestSubscription = async (userId: string) => {
+  try {
+    const isRateLimited = await checkRateLimit("getLatestSubscription");
+    if (isRateLimited.status === "ERROR") {
+      return isRateLimited;
+    }
+
+    const subscription = await prisma.subscription.findFirst({
+      where: { userId: userId },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    if (!subscription) {
+      return parseServerActionResponse({
+        status: "ERROR",
+        error: "Subscription not found",
+        data: null,
+      });
+    }
+
+    return parseServerActionResponse({
+      status: "SUCCESS",
+      error: "",
+      data: subscription,
+    });
+  } catch (error) {
+    console.error('Error getting subscription:', error);
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: error instanceof Error ? error.message : "Unknown error",
+      data: null,
+    });
+  }
+}
+
+export const getSubscriptionByStripeSessionId = async (stripeSessionId: string) => {
+  try {
+    const isRateLimited = await checkRateLimit("getSubscriptionByStripeSessionId");
+    if (isRateLimited.status === "ERROR") {
+      return isRateLimited;
+    }
+
+    if (!stripeSessionId) {
+      throw new Error("Session ID is required");
+    }
+
+    // First, we need to get the session from Stripe to find the subscription ID
+    const session = await stripe.checkout.sessions.retrieve(stripeSessionId);
+    
+    if (!session.subscription) {
+      return parseServerActionResponse({
+        status: "ERROR",
+        error: "No subscription found in session",
+        data: null,
+      });
+    }
+
+    const subscription = await prisma.subscription.findFirst({
+      where: { stripeSubscriptionId: session.subscription as string },
+    });
+
+    if (!subscription) {
+      return parseServerActionResponse({
+        status: "ERROR",
+        error: "Subscription not found",
+        data: null,
+      });
+    }
+
+    return parseServerActionResponse({
+      status: "SUCCESS",
+      error: "",
+      data: subscription,
+    });
+  } catch (error) {
+    console.error('Error getting subscription by session ID:', error);
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: error instanceof Error ? error.message : "Unknown error",
+      data: null,
+    });
+  }
+}
