@@ -1397,3 +1397,42 @@ export const cancelSubscription = async (subscriptionId: number, reason: string)
     });
   }
 };
+
+export const getOrders = async (userId: string) => {
+  try {
+    const isRateLimited = await checkRateLimit("getOrders");
+    if (isRateLimited.status === "ERROR") {
+      return isRateLimited;
+    }
+
+    const orders = await prisma.order.findMany({
+      where: { userId: userId },
+      include: {
+        items: true,
+        address: true,
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    if (!orders) {
+      return parseServerActionResponse({
+        status: "ERROR",
+        error: "No orders found",
+        data: null,
+      });
+    }
+
+    return parseServerActionResponse({
+      status: "SUCCESS",
+      error: "",
+      data: orders,
+    });
+  } catch (error) {
+    console.error('Error getting orders:', error);
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: error instanceof Error ? error.message : "Unknown error",
+      data: null,
+    });
+  }
+}

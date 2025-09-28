@@ -641,3 +641,198 @@ export const PROFILE_DATA = {
     pleaseProvideReason: "Please provide a reason for your cancellation",
   },
 };
+
+export const SHARE_DATA = {
+  id: "share",
+  text: {
+    mainTitle: "Share",
+    subTitle: "Share our mission with others",
+    description:
+      "Help us spread awareness about digital equity and STEM opportunities by sharing our mission with your network. Every share helps us reach more communities that need digital access and educational pathways.",
+    promotion: "Tag us in your posts and we'll feature you on our website!",
+    whyShareTitle: "Why Share Our Mission?",
+    whyShareDescription:
+      "When you share Digital Revolution's mission, you're helping us reach underserved communities who may not know about available digital resources and STEM education opportunities. Your voice helps amplify our impact.",
+    hashtagsTitle: "Use Our Hashtags",
+    sharingTipsTitle: "Sharing Tips",
+  },
+
+  hashtags: [
+    "#DigitalRevolution",
+    "#DigitalEquity",
+    "#STEMForAll",
+    "#BridgeTheGap",
+    "#TechForGood",
+    "#DigitalInclusion",
+    "#STEMEducation",
+    "#CommunityTech",
+    "#CodeForChange",
+    "#DigitalDemocracy",
+  ],
+
+  sharingReasons: [
+    {
+      icon: "🌐",
+      title: "Bridge the Digital Divide",
+      description:
+        "Help communities gain access to internet connectivity and digital tools necessary for modern life and education",
+    },
+    {
+      icon: "💻",
+      title: "Create STEM Pathways",
+      description:
+        "Connect individuals to coding bootcamps, engineering courses, and technology career opportunities",
+    },
+    {
+      icon: "🎓",
+      title: "Support Education",
+      description:
+        "Enable access to online learning platforms, research databases, and educational resources",
+    },
+    {
+      icon: "🤝",
+      title: "Strengthen Democracy",
+      description:
+        "Ensure all communities can participate fully in digital civic life and democratic processes",
+    },
+  ],
+
+  shareableContent: [
+    {
+      type: "Mission Statement",
+      content:
+        "Democracy and egalitarian values cannot be achieved and maintained if countries or communities are mere spectators and renters of the digital world. Join @DigitalRevolution in bridging the gap!",
+      hashtags: ["#DigitalRevolution", "#DigitalEquity", "#STEMForAll"],
+    },
+    {
+      type: "Impact Focus",
+      content:
+        "50% of Digital Revolution's profits go directly to digital equity initiatives and STEM education programs. Shopping with purpose makes a difference!",
+      hashtags: ["#TechForGood", "#STEMEducation", "#DigitalInclusion"],
+    },
+    {
+      type: "Call to Action",
+      content:
+        "Digital access shouldn't be a privilege. Help us create pathways from digital exclusion to technology careers. Every community deserves digital equity.",
+      hashtags: ["#BridgeTheGap", "#CodeForChange", "#CommunityTech"],
+    },
+  ],
+
+  sharingTips: [
+    {
+      tip: "Personal Connection",
+      description:
+        "Share why digital equity matters to you personally or in your community",
+    },
+    {
+      tip: "Tag Friends",
+      description:
+        "Tag friends who work in tech, education, or community development",
+    },
+    {
+      tip: "Add Your Story",
+      description:
+        "Share how digital access has impacted your education or career journey",
+    },
+    {
+      tip: "Use Visuals",
+      description:
+        "Share photos of our products or screenshots of our mission content",
+    },
+    {
+      tip: "Engage Regularly",
+      description:
+        "Regular posts about digital equity help keep the conversation going",
+    },
+  ],
+
+  promotionLinks: [
+    {
+      label: "Facebook",
+      href: "https://www.facebook.com/profile.php?id=61569189908839",
+      handle: "Digital Revolution",
+      platform: "facebook",
+    },
+    {
+      label: "Instagram",
+      href: "https://www.instagram.com/ramon.mnm",
+      handle: "Digital Revolution",
+      platform: "instagram",
+    },
+    {
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/in/ramonmnm100",
+      handle: "Digital Revolution",
+      platform: "linkedin",
+    },
+    {
+      label: "TikTok",
+      href: "https://www.tiktok.com/@ramonm_m?lang=en",
+      handle: "Digital Revolution",
+      platform: "tiktok",
+    },
+  ],
+
+  featuredContent: {
+    title: "Get Featured",
+    description:
+      "Share content about our mission and tag us for a chance to be featured on our website and social media channels",
+    requirements: [
+      "Tag Digital Revolution in your post",
+      "Use relevant hashtags from our list",
+      "Share authentic content about digital equity or STEM education",
+      "Follow our social media accounts",
+    ],
+    benefits: [
+      "Featured on our website's community section",
+      "Shared on our social media channels",
+      "Recognition as a digital equity advocate",
+      "Connect with like-minded community members",
+    ],
+  },
+
+  communityGoals: [
+    {
+      goal: "Reach 1,000 digital equity advocates",
+      description:
+        "Building a community of people passionate about closing the digital divide",
+    },
+    {
+      goal: "Connect 500 individuals to STEM opportunities",
+      description:
+        "Helping people discover coding bootcamps, tech careers, and educational pathways",
+    },
+    {
+      goal: "Support 100 communities",
+      description:
+        "Providing digital resources and technology access to underserved areas",
+    },
+    {
+      goal: "Fund 50 scholarships",
+      description:
+        "Sponsoring coding bootcamps and technology education programs",
+    },
+  ],
+
+  impactStats: {
+    title: "Sharing Creates Impact",
+    stats: [
+      {
+        metric: "50%",
+        description: "Of profits donated to digital equity causes",
+      },
+      {
+        metric: "Growing",
+        description: "Communities reached through our programs",
+      },
+      {
+        metric: "100%",
+        description: "Transparency in how we use contributions",
+      },
+      {
+        metric: "2025",
+        description: "Year we started bridging the digital divide",
+      },
+    ],
+  },
+};
