@@ -337,7 +337,7 @@ const OrdersPageClient = ({ orders }: OrdersPageClientProps) => {
                                             Qty: {item.quantity}
                                           </span>
                                           <span className="font-bold text-slate-100">
-                                            {formatPrice(item.totalPrice)}
+                                            {formatPrice(item.unitPrice)}
                                           </span>
                                         </div>
                                       </div>

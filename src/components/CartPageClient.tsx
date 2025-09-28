@@ -77,6 +77,7 @@ const CartPageClient = ({
 
   const handleRemoveItem = async (itemId: number) => {
     setIsUpdating(itemId);
+    console.log("handleRemoveItem", userId, guestUserId, itemId);
     try {
       const result = await removeCartItem(userId, guestUserId, itemId);
 
@@ -95,6 +96,8 @@ const CartPageClient = ({
   const handleCheckout = async () => {
     setIsLoading(true);
     try {
+      console.log("userId", userId);
+      console.log("guestUserId", guestUserId);
       const result = await createCheckoutSession(userId, guestUserId);
       console.log("result of checkout session", result);
       if (result.status === "ERROR") {
@@ -331,7 +334,7 @@ const CartPageClient = ({
               {/* Checkout Button */}
               <button
                 onClick={handleCheckout}
-                className="w-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white font-bold py-6 px-8 rounded-2xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-2xl hover:shadow-3xl text-xl"
+                className="w-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white font-bold py-6 px-8 rounded-2xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-2xl hover:shadow-3xl text-xl cursor-pointer"
               >
                 Proceed to Checkout
               </button>

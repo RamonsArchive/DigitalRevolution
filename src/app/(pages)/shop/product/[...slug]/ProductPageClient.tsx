@@ -175,6 +175,40 @@ const ProductPageClient = ({
     }
   };
 
+  // Handle color selection - find first available size for the selected color
+  const handleColorSelect = (color: string) => {
+    const inStockVariants = product.sync_variants.filter(
+      (v: any) => v.availability_status === "active"
+    );
+    const colorVariants = inStockVariants.filter((v: any) => v.color === color);
+
+    if (colorVariants.length > 0) {
+      // Find the variant index in the original array
+      const variantIndex = product.sync_variants.findIndex(
+        (v: any) => v.id === colorVariants[0].id
+      );
+      handleVariantSelect(variantIndex);
+    }
+  };
+
+  // Handle size selection - find variant with current color and selected size
+  const handleSizeSelect = (size: string) => {
+    const inStockVariants = product.sync_variants.filter(
+      (v: any) => v.availability_status === "active"
+    );
+    const sizeVariant = inStockVariants.find(
+      (v: any) => v.color === currentVariant.color && v.size === size
+    );
+
+    if (sizeVariant) {
+      // Find the variant index in the original array
+      const variantIndex = product.sync_variants.findIndex(
+        (v: any) => v.id === sizeVariant.id
+      );
+      handleVariantSelect(variantIndex);
+    }
+  };
+
   // Handle add to cart
   const handleAddToCart = () => {
     addToCart(userId, guestUserId, product, selectedVariantIndex, quantity);
@@ -222,27 +256,37 @@ const ProductPageClient = ({
     }
   };
 
-  // Get unique colors and sizes for variant selection
+  // Get unique colors and sizes for variant selection (only in-stock variants)
   const availableColors = useMemo(() => {
-    const colors = [...new Set(product.sync_variants.map((v: any) => v.color))];
+    const inStockVariants = product.sync_variants.filter(
+      (v: any) => v.availability_status === "active"
+    );
+    const colors = [...new Set(inStockVariants.map((v: any) => v.color))];
     return colors;
   }, [product.sync_variants]);
 
   const availableSizes = useMemo(() => {
-    const sizes = [...new Set(product.sync_variants.map((v: any) => v.size))];
+    const inStockVariants = product.sync_variants.filter(
+      (v: any) => v.availability_status === "active"
+    );
+    const sizes = [...new Set(inStockVariants.map((v: any) => v.size))];
     return sizes;
   }, [product.sync_variants]);
 
+  // Get available sizes for the currently selected color (only in-stock)
   const availableSizesForColor = useMemo(() => {
+    const inStockVariants = product.sync_variants.filter(
+      (v: any) => v.availability_status === "active"
+    );
     const sizes = [
       ...new Set(
-        product.sync_variants.map(
-          (v: PrintfulSyncVariant) => v.size && v.color === currentVariant.color
-        )
+        inStockVariants
+          .filter((v: PrintfulSyncVariant) => v.color === currentVariant.color)
+          .map((v: PrintfulSyncVariant) => v.size)
       ),
     ];
     return sizes;
-  }, [product.sync_variants]);
+  }, [product.sync_variants, currentVariant.color]);
 
   const addToCart = useCallback(
     async (
@@ -390,16 +434,12 @@ const ProductPageClient = ({
                 </h3>
                 <div className="flex gap-2 flex-wrap">
                   {availableColors.map((color: string) => {
-                    const variantIndex = product.sync_variants.findIndex(
-                      (v: PrintfulSyncVariant) => v.color === color
-                    );
                     return (
                       <button
                         key={color}
-                        onClick={() => handleVariantSelect(variantIndex)}
+                        onClick={() => handleColorSelect(color)}
                         className={`px-4 py-2 rounded-lg border-2 transition-all duration-300 cursor-pointer hover:bg-gray-400 ${
-                          product.sync_variants[selectedVariantIndex].color ===
-                          color
+                          currentVariant.color === color
                             ? "border-primary-500 bg-primary-50 text-primary-700"
                             : "border-gray-200 hover:border-gray-300 text-slate-300"
                         }`}
@@ -413,23 +453,19 @@ const ProductPageClient = ({
             )}
 
             {/* Size Selection */}
-            {availableSizes.length > 1 && (
+            {availableSizesForColor.length > 1 && (
               <div>
                 <h3 className="text-sm font-medium text-slate-300 mb-2">
                   Size
                 </h3>
                 <div className="flex gap-2 flex-wrap">
-                  {availableSizes.map((size: string) => {
-                    const variantIndex = product.sync_variants.findIndex(
-                      (v: PrintfulSyncVariant) => v.size === size
-                    );
+                  {availableSizesForColor.map((size: string) => {
                     return (
                       <button
                         key={size}
-                        onClick={() => handleVariantSelect(variantIndex)}
+                        onClick={() => handleSizeSelect(size)}
                         className={`px-4 py-2 rounded-lg border-2 transition-all duration-300 ${
-                          product.sync_variants[selectedVariantIndex].size ===
-                          size
+                          currentVariant.size === size
                             ? "border-primary-500 bg-primary-50 text-primary-700"
                             : "border-gray-200 hover:border-gray-300 text-slate-300 cursor-pointer hover:bg-gray-400"
                         }`}
