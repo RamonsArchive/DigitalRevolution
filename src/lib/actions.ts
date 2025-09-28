@@ -8,6 +8,7 @@ import { revalidateTag, unstable_cache } from 'next/cache';
 import { CartItem, Cart, Address } from "../../prisma/generated/prisma";
 import { stripe } from "./stripe";
 import PartnersTicketEmail from "../emails/PartnersTicketEmail";
+import { sendSubscriptionCancelledEmail } from "./donation-emails";
 
 
 const PRINTFUL_BASE = "https://api.printful.com";
@@ -1311,3 +1312,88 @@ export const getSubscriptionByStripeSessionId = async (stripeSessionId: string) 
     });
   }
 }
+
+
+
+export const cancelSubscription = async (subscriptionId: number, reason: string) => {
+  try {
+    const isRateLimited = await checkRateLimit("cancelSubscription");
+    if (isRateLimited.status === "ERROR") {
+      return isRateLimited;
+    }
+
+    // First, get the subscription from database to get Stripe subscription ID
+    const subscription = await prisma.subscription.findUnique({
+      where: { id: subscriptionId },
+      include: { user: true }
+    });
+
+    if (!subscription) {
+      return parseServerActionResponse({
+        status: "ERROR",
+        error: "Subscription not found",
+        data: null,
+      });
+    }
+
+    if (subscription.status === 'canceled') {
+      return parseServerActionResponse({
+        status: "ERROR",
+        error: "Subscription is already canceled",
+        data: null,
+      });
+    }
+
+    // Cancel the subscription in Stripe
+    try {
+      // Option 1: Cancel immediately
+      await stripe.subscriptions.cancel(subscription.stripeSubscriptionId);
+
+    } catch (stripeError: any) {
+      console.error('Stripe cancellation error:', stripeError);
+      return parseServerActionResponse({
+        status: "ERROR",
+        error: `Failed to cancel subscription with Stripe: ${stripeError.message}`,
+        data: null,
+      });
+    }
+
+    // Update subscription in local database
+    const updatedSubscription = await prisma.subscription.update({
+      where: { id: subscriptionId },
+      data: {
+        status: "canceled",
+        cancelReason: reason,
+        canceledAt: new Date(),
+      },
+      include: { user: true }
+    });
+
+    // Send cancellation confirmation email
+    try {
+      await sendSubscriptionCancelledEmail(
+        updatedSubscription,
+        updatedSubscription.user.email,
+        updatedSubscription.user.name || undefined,
+        reason
+      );
+    } catch (emailError) {
+      console.error('Failed to send cancellation email:', emailError);
+      // Don't fail the entire operation if email fails
+    }
+
+    return parseServerActionResponse({
+      status: "SUCCESS",
+      error: "",
+      data: updatedSubscription,
+    });
+
+  } catch (error) {
+    console.error('Error canceling subscription:', error);
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: error instanceof Error ? error.message : "Unknown error",
+      data: null,
+    });
+  }
+};

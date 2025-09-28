@@ -5,11 +5,12 @@ import React, { useState } from "react";
 import TitleSection from "./TitleSection";
 import { Subscription } from "../../prisma/generated/prisma";
 import { z } from "zod";
+import { cancelSubscription } from "@/lib/actions";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const cancelSubscriptionSchema = z.object({
-  reason: z
-    .string()
-    .min(10, "Please provide a reason (at least 10 characters)"),
+  reason: z.string().min(5, "Please provide a reason (at least 5 characters)"),
 });
 
 const ProfilePageClient = ({
@@ -25,7 +26,7 @@ const ProfilePageClient = ({
   const [cancelReason, setCancelReason] = useState("");
   const [errors, setErrors] = useState<{ reason?: string }>({});
   const [showCancelForm, setShowCancelForm] = useState<number | null>(null);
-
+  const router = useRouter();
   const handleCancelSubscription = async (subscriptionId: number) => {
     setErrors({});
 
@@ -35,17 +36,23 @@ const ProfilePageClient = ({
       await cancelSubscriptionSchema.parseAsync(formData);
 
       // TODO: Call your backend function to cancel subscription
-      console.log(
-        "Cancelling subscription:",
-        subscriptionId,
-        "Reason:",
-        cancelReason
-      );
+      const result = await cancelSubscription(subscriptionId, cancelReason);
+      console.log("result", result);
+
+      if (result.status === "ERROR") {
+        toast.error("ERROR", { description: result.error });
+        return;
+      }
+
+      toast.success("SUCCESS", {
+        description: "Subscription cancelled successfully",
+      });
 
       // Reset form
       setCancelReason("");
       setShowCancelForm(null);
       setCancellingSubscription(null);
+      router.refresh();
     } catch (error) {
       if (error instanceof z.ZodError) {
         const fieldErrors = z.flattenError(error).fieldErrors as Record<
