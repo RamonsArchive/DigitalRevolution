@@ -13,6 +13,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async signIn({ user, account, profile }) {
       // Remove unused parameters - v5 doesn't pass email and credentials to signIn
+      console.log("Profile", profile);
+      console.log("profiel sub", profile?.sub);
       if (!profile?.sub) return false;
       
       try {

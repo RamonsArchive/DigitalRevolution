@@ -7,21 +7,21 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     console.log('📦 Printful webhook received:', { 
       type: body.type, 
-      orderId: body.data?.id,
+      orderId: body.data?.order?.id,
       timestamp: new Date().toISOString()
     });
 
     switch (body.type) {
       case 'order_created':
-        await handleOrderCreated(body.data);
+        await handleOrderCreated(body.data.order);
         break;
 
       case 'package_shipped':
-        await handlePackageShipped(body.data);
+        await handlePackageShipped(body.data.order);
         break;
 
       case 'order_updated':
-        await handleOrderUpdated(body.data);
+        await handleOrderUpdated(body.data.order);
         break;
 
       default:
