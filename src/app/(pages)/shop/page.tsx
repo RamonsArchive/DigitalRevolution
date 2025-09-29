@@ -7,6 +7,8 @@ import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import ShopTitleSection from "@/components/ShopTitleSection";
 import Filters from "@/components/Filters";
 
+export const dynamic = "force-dynamic";
+
 const ShopPage = () => {
   const { filteredProducts } = useShopFilters();
 
