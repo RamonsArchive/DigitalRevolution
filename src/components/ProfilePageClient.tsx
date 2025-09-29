@@ -146,7 +146,7 @@ const ProfilePageClient = ({
                     No Active Subscriptions
                   </h4>
                   <p className="text-slate-300 mb-6">
-                    You don't have any active subscriptions yet.
+                    You don&apos;t have any active subscriptions yet.
                   </p>
                   <a
                     href="/donate"
@@ -249,9 +249,9 @@ const ProfilePageClient = ({
                                 Cancel Subscription
                               </h5>
                               <p className="text-slate-300 text-sm mb-4">
-                                We're sorry to see you go! Please let us know
-                                why you're cancelling so we can improve our
-                                service.
+                                We&apos;re sorry to see you go! Please let us
+                                know why you&apos;re cancelling so we can
+                                improve our service.
                               </p>
 
                               <div className="mb-4">

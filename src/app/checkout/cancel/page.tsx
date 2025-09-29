@@ -48,7 +48,7 @@ const CancelPage = () => {
         <div className="bg-gray-800/40 rounded-xl p-6 border border-gray-600/40">
           <h3 className="text-slate-300 font-semibold mb-2">Need Help?</h3>
           <p className="text-slate-400 text-sm">
-            If you're experiencing issues with checkout, please contact our
+            If you&apos;re experiencing issues with checkout, please contact our
             support team.
           </p>
         </div>

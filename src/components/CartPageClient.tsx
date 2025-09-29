@@ -33,7 +33,6 @@ const CartPageClient = ({
   cartItems,
 }: CartPageClientProps) => {
   const [isUpdating, setIsUpdating] = useState<number | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [outOfStockItems, setOutOfStockItems] = useState<CartItem[]>([]);
   const router = useRouter();
   // Calculate totals
@@ -95,7 +94,6 @@ const CartPageClient = ({
   };
 
   const handleCheckout = async () => {
-    setIsLoading(true);
     try {
       console.log("userId", userId);
       console.log("guestUserId", guestUserId);
@@ -118,8 +116,6 @@ const CartPageClient = ({
     } catch (error) {
       console.error("Error checking out:", error);
       router.refresh();
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -141,7 +137,7 @@ const CartPageClient = ({
               Your cart is empty
             </h1>
             <p className="text-slate-400">
-              Looks like you haven't added any items yet.
+              Looks like you haven&apos;t added any items yet.
             </p>
           </div>
           <a
