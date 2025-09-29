@@ -10,6 +10,7 @@ interface TitleSectionProps {
   titleClassName?: string;
   descriptionClassName?: string;
   containerClassName?: string;
+  shouldAnimate?: boolean;
 }
 
 gsap.registerPlugin(SplitText);
@@ -19,26 +20,29 @@ const TitleSection = ({
   titleClassName,
   descriptionClassName,
   containerClassName,
+  shouldAnimate = true,
 }: TitleSectionProps) => {
   useGSAP(() => {
-    const titleSplit = new SplitText(".title", { type: "chars" });
-    gsap.set(titleSplit.chars, {
-      opacity: 0,
-      y: 100,
-    });
-    gsap.to(titleSplit.chars, {
-      opacity: 1,
-      y: 0,
-      stagger: 0.03,
-      duration: 1,
-      ease: "power2.inOut",
-    });
-
-    return () => {
-      titleSplit.chars.forEach((char: Element) => {
-        char.remove();
+    if (shouldAnimate) {
+      const titleSplit = new SplitText(".title", { type: "chars" });
+      gsap.set(titleSplit.chars, {
+        opacity: 0,
+        y: 100,
       });
-    };
+      gsap.to(titleSplit.chars, {
+        opacity: 1,
+        y: 0,
+        stagger: 0.03,
+        duration: 1,
+        ease: "power2.inOut",
+      });
+
+      return () => {
+        titleSplit.chars.forEach((char: Element) => {
+          char.remove();
+        });
+      };
+    }
   });
 
   return (

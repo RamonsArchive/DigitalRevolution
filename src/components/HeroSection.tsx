@@ -109,6 +109,7 @@ export default function HeroSection({
                 titleClassName="font-courier-prime text-4xl font-bold gradient-text text-center rounded-xl"
                 descriptionClassName="font-courier-prime text-lg text-white text-start rounded-xl"
                 containerClassName="hero-section-title-section flex flex-col justify-start gap-5 w-full max-w-2xl px-10 py-10 px-5 rounded-xl"
+                shouldAnimate={false}
               />
             </div>
           </div>
