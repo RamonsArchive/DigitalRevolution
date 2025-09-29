@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "sonner";
 import Footer from "@/components/Footer";
+import { Analytics } from "@vercel/analytics/next";
 
 const layout = async ({ children }: { children: React.ReactNode }) => {
   return (
@@ -13,6 +14,7 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
         <Toaster richColors />
         <Footer />
       </SessionProvider>
+      <Analytics />
     </>
   );
 };

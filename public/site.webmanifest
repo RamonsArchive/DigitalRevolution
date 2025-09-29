@@ -1,0 +1,29 @@
+{
+  "name": "Digital Revolution - Expanding Access to Technology for All",
+  "short_name": "Digital Revolution",
+  "description": "Join the Digital Revolution! We're expanding access to technology, STEM education, and digital literacy for underserved communities.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#1e293b",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/Assets/Logos/lightDRLogo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["education", "technology", "social-impact"],
+  "lang": "en",
+  "dir": "ltr",
+  "scope": "/",
+  "id": "digital-revolution-app"
+}
