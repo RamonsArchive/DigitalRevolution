@@ -182,17 +182,19 @@ const ProductPageClient = ({
 
   // Handle color selection - find first available size for the selected color
   const handleColorSelect = (color: string) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const inStockVariants = product.sync_variants.filter(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (v: any) => v.availability_status === "active"
     );
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const colorVariants = inStockVariants.filter((v: any) => v.color === color);
+    const colorVariants = inStockVariants.filter(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (v: any) => v.color === color
+    );
 
     if (colorVariants.length > 0) {
       // Find the variant index in the original array
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const variantIndex = product.sync_variants.findIndex(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (v: any) => v.id === colorVariants[0].id
       );
       handleVariantSelect(variantIndex);
@@ -201,19 +203,19 @@ const ProductPageClient = ({
 
   // Handle size selection - find variant with current color and selected size
   const handleSizeSelect = (size: string) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const inStockVariants = product.sync_variants.filter(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (v: any) => v.availability_status === "active"
     );
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const sizeVariant = inStockVariants.find(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (v: any) => v.color === currentVariant.color && v.size === size
     );
 
     if (sizeVariant) {
       // Find the variant index in the original array
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const variantIndex = product.sync_variants.findIndex(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (v: any) => v.id === sizeVariant.id
       );
       handleVariantSelect(variantIndex);
@@ -269,29 +271,41 @@ const ProductPageClient = ({
 
   // Get unique colors and sizes for variant selection (only in-stock variants)
   const availableColors = useMemo(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const inStockVariants = product.sync_variants.filter(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (v: any) => v.availability_status === "active"
     );
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const colors = [...new Set(inStockVariants.map((v: any) => v.color))];
+    const colors = [
+      ...new Set(
+        inStockVariants.map(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (v: any) => v.color
+        )
+      ),
+    ];
     return colors;
   }, [product.sync_variants]);
 
   const availableSizes = useMemo(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const inStockVariants = product.sync_variants.filter(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (v: any) => v.availability_status === "active"
     );
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const sizes = [...new Set(inStockVariants.map((v: any) => v.size))];
+    const sizes = [
+      ...new Set(
+        inStockVariants.map(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (v: any) => v.size
+        )
+      ),
+    ];
     return sizes;
   }, [product.sync_variants]);
 
   // Get available sizes for the currently selected color (only in-stock)
   const availableSizesForColor = useMemo(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const inStockVariants = product.sync_variants.filter(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (v: any) => v.availability_status === "active"
     );
     const sizes = [

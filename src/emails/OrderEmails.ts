@@ -27,6 +27,7 @@ const F = {
 // Order confirmation email
 export async function sendOrderConfirmationEmail(order: Order, items: OrderItem[]) {
   const fullName = `${order.customerFirstName} ${order.customerLastName ?? ""}`.trim();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ship = (order.shippingAddress as any) || {};
 
   const html = `<!DOCTYPE html><html><head><meta charset="utf-8"/>
@@ -166,8 +167,10 @@ export async function sendOrderConfirmationEmail(order: Order, items: OrderItem[
 }
 
 // Order shipped email
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function sendOrderShippedEmail(order: Order, items: OrderItem[], trackingData: any) {
   const fullName = `${order.customerFirstName} ${order.customerLastName ?? ""}`.trim();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ship = (order.shippingAddress as any) || {};
 
   const html = `<!DOCTYPE html><html><head><meta charset="utf-8"/>

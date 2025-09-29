@@ -8,7 +8,9 @@ interface Order {
   customerEmail: string;
   amountTotal: number;
   status: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   shippingAddress: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   items: any[];
 }
 
@@ -177,6 +179,7 @@ const SuccessPageClient = ({
             Items Ordered:
           </h3>
           <div className="space-y-4">
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
             {order.items?.map((item: any) => (
               <div
                 key={item.id}

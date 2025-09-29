@@ -20,6 +20,7 @@ const F = {
 export const sendShippingNotificationEmail = async (order: Order, shipment: PrintfulShipment) => {
   try {
     // Parse shipping address from JSON
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const shippingAddress = order.shippingAddress as any;
     
     const emailHtml = `<!DOCTYPE html>

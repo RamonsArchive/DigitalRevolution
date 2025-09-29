@@ -7,7 +7,7 @@ import type { Order, OrderItem } from "../../prisma/generated/prisma";
 export type OrderEmailOptions = {
   from?: string;               // e.g. "Digital Revolution <orders@yourdomain.com>"
   brandName?: string;          // e.g. "Digital Revolution"
-  orderUrl?: string;           // e.g. `${APP_URL}/orders/${order.id}`
+  orderUrl?: string;           // e.g. `${AP:P_URL}/orders/${order.id}`
   supportUrl?: string;         // e.g. `${APP_URL}/support`
 };
 
@@ -58,6 +58,7 @@ function emailHTML(order: Order, items: OrderItem[], opts: Required<OrderEmailOp
     order.trackingCode || order.trackingNumber ? `<span class="badge shipped">📦 Shipped</span>` : `<span class="badge processing">⏳ Processing</span>`;
 
   // pull shipping snapshot
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ship = (order.shippingAddress as any) || {};
   const fullName = `${order.customerFirstName} ${order.customerLastName ?? ""}`.trim();
 
@@ -99,7 +100,7 @@ function emailHTML(order: Order, items: OrderItem[], opts: Required<OrderEmailOp
 <body>
   <div class="container">
     <div class="header">
-      <img src="${process.env.NEXT_PUBLIC_APP_URL}/Assets/Logos/lightDRLogo.svg" alt="${F.esc(opts.brandName)}" class="logo" />
+      <img src="/Assets/Logos/lightDRLogo.svg" alt="${F.esc(opts.brandName)}" class="logo" />
       <div class="brand">${F.esc(opts.brandName)}</div>
       <h1>Order Confirmation</h1>
       <div>${statusBadge}</div>

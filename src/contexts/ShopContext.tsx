@@ -122,6 +122,7 @@ const ShopProvider = ({
       searchParams.get(URL_KEYS.brands)?.split(",").filter(Boolean) || [];
     const types =
       searchParams.get(URL_KEYS.productTypes)?.split(",").filter(Boolean) || [];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const sortBy = (searchParams.get(URL_KEYS.sortBy) as any) || "name";
     const searchQuery = searchParams.get(URL_KEYS.searchQuery) || "";
     const inStockOnly = searchParams.get(URL_KEYS.inStockOnly) === "true";

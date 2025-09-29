@@ -11,6 +11,7 @@ export const handleStripeWebhook = async (event: Stripe.Event) => {
     try {
        
       if (event.type === 'checkout.session.completed') {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const session = event.data.object as any;
         console.log('session', session);
         if (!session.metadata) {

@@ -169,6 +169,7 @@ export const getProductBySlug = (slug: string, allProducts: PrintfulProduct[]) =
 };
 
 // Utility function to aggregate product images from variants
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const aggregateProductImages = (product: any) => {
   const images: Array<{
     url: string;
@@ -177,6 +178,7 @@ export const aggregateProductImages = (product: any) => {
     size: string;
   }> = [];
   
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   product.sync_variants.forEach((variant: any) => {
     // Get the preview image from files array (index 1 as mentioned)
     const previewFile = variant.files?.[1];

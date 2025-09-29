@@ -1349,6 +1349,7 @@ export const cancelSubscription = async (subscriptionId: number, reason: string)
       // Option 1: Cancel immediately
       await stripe.subscriptions.cancel(subscription.stripeSubscriptionId);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (stripeError: any) {
       console.error('Stripe cancellation error:', stripeError);
       return parseServerActionResponse({

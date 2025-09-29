@@ -81,6 +81,7 @@ const OrdersPageClient = ({ orders }: OrdersPageClientProps) => {
           typeof item.images === "object" &&
           "images" in item.images
         ) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const imagesArray = (item.images as any).images;
           if (Array.isArray(imagesArray) && imagesArray.length > 0) {
             return imagesArray[0];
@@ -296,6 +297,7 @@ const OrdersPageClient = ({ orders }: OrdersPageClientProps) => {
                                         "images" in item.images ? (
                                           <Image
                                             src={
+                                              // eslint-disable-next-line @typescript-eslint/no-explicit-any
                                               (item.images as any)
                                                 .images?.[0] ||
                                               "/placeholder.jpg"

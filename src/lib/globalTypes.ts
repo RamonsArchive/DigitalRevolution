@@ -19,6 +19,7 @@ export type ActionState = {
   export interface PrintfulSyncProductsResponse {
     code: number;
     result: PrintfulSyncProduct[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     extra: any[]; // usually empty
     paging?: {
       total: number;
@@ -161,6 +162,7 @@ export interface PrintfulFile {
     weight: number;
     care_instructions: string;
     features: string[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     specifications: Record<string, any>;
   }
   
