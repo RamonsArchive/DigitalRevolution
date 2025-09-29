@@ -28,8 +28,8 @@ export async function POST(request: NextRequest) {
       }, { status: 400 });
     }
 
-    if (!process.env.STRIPE_WEBHOOK_SECRET) {
-      console.error('STRIPE_WEBHOOK_SECRET not configured');
+    if (!process.env.STRIPE_SHOP_WEBHOOK_SECRET) {
+      console.error('STRIPE_SHOP_WEBHOOK_SECRET not configured');
       return NextResponse.json({ 
         error: 'Webhook secret not configured' 
       }, { status: 500 });
@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
       event = stripe.webhooks.constructEvent(
         body,
         signature,
-        process.env.STRIPE_WEBHOOK_SECRET
+        process.env.STRIPE_SHOP_WEBHOOK_SECRET!
       );
       
       console.log('✅ Webhook signature verified');

@@ -1,9 +1,14 @@
 // app/api/webhooks/stripe/route.ts
 import { headers } from 'next/headers';
 import Stripe from 'stripe';
-import { stripe } from '@/lib/stripe';
 import { prisma } from '@/lib/prisma';
 import { sendSubscriptionPaymentEmail, sendSubscriptionConfirmationEmail, sendDonationConfirmationEmail, sendSubscriptionCancelledEmail } from '@/lib/donation-emails';
+
+
+// Initialize Stripe with your secret key
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: '2025-08-27.basil',
+});
 
 export async function POST(req: Request) {
   const body = await req.text();
@@ -15,7 +20,7 @@ export async function POST(req: Request) {
     event = stripe.webhooks.constructEvent(
       body,
       signature,
-      process.env.STRIPE_WEBHOOK_SECRET!
+      process.env.STRIPE_DONATION_WEBHOOK_SECRET!
     );
   } catch (err) {
     return new Response('Invalid signature', { status: 400 });
@@ -143,8 +148,6 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
     throw new Error('Subscription not found');
   }
   await sendSubscriptionCancelledEmail(storedSubscription, user.email, user.name || "", storedSubscription.cancelReason || "");
-
-  
 }
 
 async function handlePaymentSucceeded(invoice: Stripe.Invoice) {
