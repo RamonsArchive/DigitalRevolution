@@ -98,7 +98,7 @@ export async function sendDonationConfirmationEmail(donation: Donation) {
   </body></html>`;
 
   const { error } = await resend.emails.send({
-    from: process.env.RESEND_FROM || "Digital Revolution <onboarding@resend.dev>",
+    from: `Digital Revolution <${process.env.RESEND_FROM}>`,
     to: donation.donorEmail,
     subject: `Thank you for your donation! - Digital Revolution`,
     html,
@@ -165,7 +165,7 @@ export async function sendSubscriptionConfirmationEmail(subscription: Subscripti
   </body></html>`;
 
   const { error } = await resend.emails.send({
-    from: process.env.RESEND_FROM || "Digital Revolution <onboarding@resend.dev>",
+    from: `Digital Revolution <${process.env.RESEND_FROM}>`,
     to: userEmail,
     subject: `Monthly subscription confirmed - Welcome to Digital Revolution!`,
     html,
@@ -242,7 +242,7 @@ export async function sendSubscriptionPaymentEmail(invoice: Stripe.Invoice, subs
   </body></html>`;
 
   const { error } = await resend.emails.send({
-    from: process.env.RESEND_FROM || "Digital Revolution <onboarding@resend.dev>",
+    from: `Digital Revolution <${process.env.RESEND_FROM}>`,
     to: subscription.user.email,
     subject: `Monthly payment received - ${F.money(invoice.amount_paid)} - Digital Revolution`,
     html,
@@ -316,7 +316,7 @@ export async function sendSubscriptionCancelledEmail(subscription: Subscription,
   </body></html>`;
 
   const { error } = await resend.emails.send({
-    from: process.env.RESEND_FROM || "Digital Revolution <onboarding@resend.dev>",
+    from: `Digital Revolution <${process.env.RESEND_FROM}>`,
     to: userEmail,
     subject: `Subscription cancelled - Thank you for your support - Digital Revolution`,
     html,

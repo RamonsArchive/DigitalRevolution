@@ -85,9 +85,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return session;
     },
   },
-  
-//   // Optional: Custom pages
-//   pages: {
-//     error: '/auth/error',
-//   },
+
 })

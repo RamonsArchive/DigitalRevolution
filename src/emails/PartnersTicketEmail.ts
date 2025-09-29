@@ -136,7 +136,7 @@ const PartnersTicketEmail = async ({ formData }: { formData: Record<string, stri
   `
 
   const { error } = await resend.emails.send({
-    from: 'Digital Revolution <onboarding@resend.dev>',
+    from: `Digital Revolution <${process.env.RESEND_FROM}>`,
     to: emailToUse,
     subject: `New Partnership Inquiry from ${formData.firstName} ${formData.lastName} - ${formData.organization}`,
     html: emailHtml

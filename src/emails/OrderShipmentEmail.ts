@@ -106,7 +106,7 @@ export const sendShippingNotificationEmail = async (order: Order, shipment: Prin
     </html>`;
 
     const { error } = await resend.emails.send({
-      from: process.env.RESEND_FROM || 'Digital Revolution <onboarding@resend.dev>',
+      from: `Digital Revolution <${process.env.RESEND_FROM}>`,
       to: order.customerEmail || 'rmcdeem.m@gmail.com',
       subject: `📦 Your Digital Revolution order ${order.orderNumber} has shipped!`,
       html: emailHtml

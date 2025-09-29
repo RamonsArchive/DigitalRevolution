@@ -5,7 +5,6 @@ import React, { Suspense } from "react";
 import ProductCard from "@/components/ProductCard";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import ShopTitleSection from "@/components/ShopTitleSection";
-import SideBarFilters from "@/components/SideBarFilters";
 import Filters from "@/components/Filters";
 
 const ShopPage = () => {

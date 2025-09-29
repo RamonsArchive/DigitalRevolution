@@ -188,7 +188,7 @@ export async function sendOrderConfirmationEmailFromOrder(
   options: OrderEmailOptions = {}
 ) {
   const opts: Required<OrderEmailOptions> = {
-    from: options.from ?? (process.env.RESEND_FROM || "Digital Revolution <onboarding@resend.dev>"),
+    from: `Digital Revolution <${process.env.RESEND_FROM}>`,
     brandName: options.brandName ?? "Digital Revolution",
     orderUrl: options.orderUrl ?? "",
     supportUrl: options.supportUrl ?? "",

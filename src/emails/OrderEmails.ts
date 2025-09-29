@@ -153,7 +153,7 @@ export async function sendOrderConfirmationEmail(order: Order, items: OrderItem[
 </body></html>`;
 
   const { error } = await resend.emails.send({
-    from: process.env.RESEND_FROM || "Digital Revolution <onboarding@resend.dev>",
+    from: `Digital Revolution <${process.env.RESEND_FROM}>`,
     to: order.customerEmail,
     subject: `Order Confirmation – ${order.orderNumber}`,
     html,
@@ -295,7 +295,7 @@ export async function sendOrderShippedEmail(order: Order, items: OrderItem[], tr
 </body></html>`;
 
   const { error } = await resend.emails.send({
-    from: process.env.RESEND_FROM || "Digital Revolution <onboarding@resend.dev>",
+    from: `Digital Revolution <${process.env.RESEND_FROM}>`,
     to: order.customerEmail,
     subject: `Your Order Has Shipped – ${order.orderNumber}`,
     html,
@@ -361,7 +361,7 @@ export async function sendOrderUpdatedEmail(order: Order, items: OrderItem[], up
 </body></html>`;
 
   const { error } = await resend.emails.send({
-    from: process.env.RESEND_FROM || "Digital Revolution <onboarding@resend.dev>",
+    from: `Digital Revolution <${process.env.RESEND_FROM}>`,
     to: order.customerEmail,
     subject: `Order Update – ${order.orderNumber}`,
     html,
