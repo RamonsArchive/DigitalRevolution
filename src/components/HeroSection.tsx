@@ -19,6 +19,39 @@ export default function HeroSection({
   const titleRef = useRef<HTMLDivElement>(null);
   const { title: title1, description: description1 } = section1;
 
+  // Safari video playback fix
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      // Force play for Safari
+      const playVideo = async () => {
+        try {
+          await video.play();
+        } catch (error) {
+          console.log("Video autoplay failed:", error);
+        }
+      };
+
+      // Try to play immediately
+      playVideo();
+
+      // Also try on user interaction (Safari requirement)
+      const handleUserInteraction = () => {
+        playVideo();
+        document.removeEventListener("touchstart", handleUserInteraction);
+        document.removeEventListener("click", handleUserInteraction);
+      };
+
+      document.addEventListener("touchstart", handleUserInteraction);
+      document.addEventListener("click", handleUserInteraction);
+
+      return () => {
+        document.removeEventListener("touchstart", handleUserInteraction);
+        document.removeEventListener("click", handleUserInteraction);
+      };
+    }
+  }, []);
+
   // Professional approach: Pin the video and animate title
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -92,8 +125,13 @@ export default function HeroSection({
           muted
           loop
           playsInline
+          webkit-playsinline="true"
+          preload="auto"
+          controls={false}
         >
           <source src="/Hero/heroVid2.mp4" type="video/mp4" />
+          <source src="/Hero/heroVid2.MOV" type="video/quicktime" />
+          Your browser does not support the video tag.
         </video>
         {/* Dark overlay for better contrast */}
         <div className="absolute inset-0 bg-black/40 z-0"></div>

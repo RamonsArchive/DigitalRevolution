@@ -125,7 +125,7 @@ const Navbar = () => {
       <Link href="/" className="flex items-center">
         <div className="relative w-[225px]">
           <Image
-            src="/Assets/Logos/lightDRlogo.svg"
+            src="/Assets/Logos/lightDRLogo.svg"
             alt="DR Logo"
             width={100}
             height={100}
