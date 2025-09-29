@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getOrderByStripeSessionId } from "@/lib/actions";
+import Link from "next/link";
 
 interface Order {
   orderNumber: string;
@@ -228,12 +229,12 @@ const SuccessPageClient = ({
               You&apos;ll receive an email confirmation shortly with tracking
               information.
             </p>
-            <button
-              onClick={() => (window.location.href = "/")}
+            <Link
+              href="/shop"
               className="bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-8 py-4 rounded-xl font-semibold hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-xl"
             >
               Continue Shopping
-            </button>
+            </Link>
           </div>
         </div>
       </div>
