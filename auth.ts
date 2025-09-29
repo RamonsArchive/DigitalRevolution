@@ -9,6 +9,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     })
   ],
+  debug: true, // add this to see the profile in the console
   trustHost: true,
   callbacks: {
     async signIn({ user, account, profile }) {
