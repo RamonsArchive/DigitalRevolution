@@ -24,6 +24,7 @@ const HeroFacts = ({ section2 }: HeroFactsProps) => {
 
     animateTextScroll({
       targets: textToAnimate,
+      shouldAnimateClass: true,
       animateClass: "gradient-text",
       type: "words",
       duration: 1,
