@@ -9,7 +9,6 @@ import {
   CheckCircle,
   Clock,
   XCircle,
-  ArrowLeft,
   ExternalLink,
   Calendar,
   MapPin,
@@ -107,8 +106,8 @@ const OrdersPageClient = ({ orders }: OrdersPageClientProps) => {
                 No Orders Yet
               </h1>
               <p className="text-slate-400 text-lg mb-8">
-                You haven't placed any orders yet. Start shopping to see your
-                orders here!
+                You haven&apos;t placed any orders yet. Start shopping to see
+                your orders here!
               </p>
               <Link
                 href="/shop"

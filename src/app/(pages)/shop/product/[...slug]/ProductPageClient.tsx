@@ -38,6 +38,7 @@ const ProductPageClient = ({
   cartItems,
   slug,
 }: ProductPageClientProps) => {
+  // CRITICAL: ALL HOOKS MUST BE DECLARED FIRST - BEFORE ANY LOGIC OR EARLY RETURNS
   const router = useRouter();
   const {
     selectedVariantIndex,
@@ -47,35 +48,35 @@ const ProductPageClient = ({
     setCartItems,
   } = useProduct();
 
-  // All hooks must be declared before any early returns
+  const { allProducts } = useShopFilters();
+
+  // All useState hooks
   const [isImageTransitioning, setIsImageTransitioning] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [productDetails, setProductDetails] = useState<any>(null);
   const [isLoadingDetails, setIsLoadingDetails] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
+  // All useRef hooks
   const mainImageRef = useRef<HTMLDivElement>(null);
   const thumbnailRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Find product from context using slug
-  const { allProducts } = useShopFilters();
-  const product = allProducts.find(
-    (p: PrintfulProduct) => p.sync_product.external_id?.toLowerCase() === slug
-  );
+  // Find product from context using slug - this is safe to do here
+  const product = useMemo(() => {
+    return allProducts.find(
+      (p: PrintfulProduct) => p.sync_product.external_id?.toLowerCase() === slug
+    );
+  }, [allProducts, slug]);
 
-  console.log("product", product);
-
-  // All useMemo hooks must be declared before early returns
-  // Aggregate all product images from variants
+  // All useMemo hooks
   const productImages: ProductImage[] = useMemo(() => {
     if (!product) return [];
 
     const images: ProductImage[] = [];
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    product.sync_variants.forEach((variant: any) => {
-      // Get the preview image from files array (index 1 as mentioned)
+    product.sync_variants.forEach((variant: PrintfulSyncVariant) => {
       const previewFile = variant.files?.[1];
       if (previewFile?.preview_url) {
         images.push({
@@ -96,7 +97,6 @@ const ProductPageClient = ({
     return uniqueImages;
   }, [product]);
 
-  // Get unique colors and sizes for variant selection (only in-stock variants)
   const availableColors = useMemo(() => {
     if (!product) return [];
 
@@ -121,7 +121,6 @@ const ProductPageClient = ({
     return sizes;
   }, [product]);
 
-  // Get available sizes for the currently selected color (only in-stock)
   const availableSizesForColor = useMemo(() => {
     if (!product) return [];
 
@@ -141,6 +140,15 @@ const ProductPageClient = ({
     return sizes;
   }, [product, selectedVariantIndex]);
 
+  const currentVariant = useMemo(() => {
+    return product?.sync_variants[selectedVariantIndex] || null;
+  }, [product, selectedVariantIndex]);
+
+  const currentImage = useMemo(() => {
+    return productImages[selectedImageIndex] || null;
+  }, [productImages, selectedImageIndex]);
+
+  // All useCallback hooks
   const addToCart = useCallback(
     async (
       userId: string,
@@ -165,10 +173,7 @@ const ProductPageClient = ({
           return;
         }
         toast.success("SUCCESS", { description: "Added to cart" });
-        // set cart items in context
         router.refresh();
-
-        // revlaidate cart items
       } catch (error) {
         console.error("Error adding to cart:", error);
         toast.error("ERROR", { description: error as string });
@@ -177,18 +182,137 @@ const ProductPageClient = ({
     [router]
   );
 
-  // useEffect hooks
+  const handleImageSelect = useCallback(
+    (index: number) => {
+      if (index !== selectedImageIndex && !isImageTransitioning) {
+        setIsImageTransitioning(true);
+        setSelectedImageIndex(index);
+      }
+    },
+    [selectedImageIndex, isImageTransitioning, setSelectedImageIndex]
+  );
+
+  const handleVariantSelect = useCallback(
+    (variantIndex: number) => {
+      if (!product) return;
+
+      console.log("handleVariantSelect", variantIndex);
+      setSelectedVariantIndex(variantIndex);
+
+      const variantImageIndex = productImages.findIndex(
+        (img) => img.variantId === product.sync_variants[variantIndex].id
+      );
+      if (variantImageIndex !== -1) {
+        handleImageSelect(variantImageIndex);
+      }
+    },
+    [product, productImages, setSelectedVariantIndex, handleImageSelect]
+  );
+
+  const handleColorSelect = useCallback(
+    (color: string) => {
+      if (!product) return;
+
+      const inStockVariants = product.sync_variants.filter(
+        (v: PrintfulSyncVariant) => v.availability_status === "active"
+      );
+      const colorVariants = inStockVariants.filter(
+        (v: PrintfulSyncVariant) => v.color === color
+      );
+
+      if (colorVariants.length > 0) {
+        const variantIndex = product.sync_variants.findIndex(
+          (v: PrintfulSyncVariant) => v.id === colorVariants[0].id
+        );
+        handleVariantSelect(variantIndex);
+      }
+    },
+    [product, handleVariantSelect]
+  );
+
+  const handleSizeSelect = useCallback(
+    (size: string) => {
+      if (!product || !currentVariant) return;
+
+      const inStockVariants = product.sync_variants.filter(
+        (v: PrintfulSyncVariant) => v.availability_status === "active"
+      );
+      const sizeVariant = inStockVariants.find(
+        (v: PrintfulSyncVariant) =>
+          v.color === currentVariant.color && v.size === size
+      );
+
+      if (sizeVariant) {
+        const variantIndex = product.sync_variants.findIndex(
+          (v: PrintfulSyncVariant) => v.id === sizeVariant.id
+        );
+        handleVariantSelect(variantIndex);
+      }
+    },
+    [product, currentVariant, handleVariantSelect]
+  );
+
+  const handleAddToCart = useCallback(() => {
+    if (!product) return;
+    addToCart(userId, guestUserId, product, selectedVariantIndex, quantity);
+    console.log(`Added ${quantity} ${product.sync_product.name} to cart`);
+  }, [addToCart, userId, guestUserId, product, selectedVariantIndex, quantity]);
+
+  const handleSwipe = useCallback(
+    (direction: "left" | "right") => {
+      if (isImageTransitioning) return;
+
+      if (
+        direction === "left" &&
+        selectedImageIndex < productImages.length - 1
+      ) {
+        handleImageSelect(selectedImageIndex + 1);
+      } else if (direction === "right" && selectedImageIndex > 0) {
+        handleImageSelect(selectedImageIndex - 1);
+      }
+    },
+    [
+      isImageTransitioning,
+      selectedImageIndex,
+      productImages.length,
+      handleImageSelect,
+    ]
+  );
+
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  }, []);
+
+  const onTouchMove = useCallback((e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  }, []);
+
+  const onTouchEnd = useCallback(() => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const minSwipeDistance = 50;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      handleSwipe("left");
+    } else if (isRightSwipe) {
+      handleSwipe("right");
+    }
+  }, [touchStart, touchEnd, handleSwipe]);
+
+  // All useEffect hooks
   useEffect(() => {
     setCartItems(cartItems);
   }, [cartItems, setCartItems]);
 
-  // Fetch product details on-demand
   useEffect(() => {
     if (product && !productDetails) {
       setIsLoadingDetails(true);
       const firstVariant = product.sync_variants[0];
       if (firstVariant) {
-        // Import the function dynamically to avoid server-side issues
         import("@/lib/actions").then(({ getProductDetailsByVariantId }) => {
           console.log("getProductDetailsByVariantId", firstVariant.variant_id);
           getProductDetailsByVariantId(firstVariant.variant_id).then(
@@ -204,7 +328,7 @@ const ProductPageClient = ({
     }
   }, [product, productDetails]);
 
-  // GSAP animations for image transitions
+  // useGSAP hook
   useGSAP(() => {
     if (mainImageRef.current && isImageTransitioning) {
       gsap.fromTo(
@@ -221,7 +345,7 @@ const ProductPageClient = ({
     }
   }, [selectedImageIndex, isImageTransitioning]);
 
-  // Early return if no product (after all hooks are declared)
+  // NOW WE CAN SAFELY DO EARLY RETURNS - ALL HOOKS HAVE BEEN DECLARED
   if (!product) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -237,111 +361,7 @@ const ProductPageClient = ({
     );
   }
 
-  // Get current variant and image (after null check)
-  const currentVariant = product.sync_variants[selectedVariantIndex];
-  const currentImage = productImages[selectedImageIndex];
-
-  // Handle image selection
-  const handleImageSelect = (index: number) => {
-    if (index !== selectedImageIndex && !isImageTransitioning) {
-      setIsImageTransitioning(true);
-      setSelectedImageIndex(index);
-    }
-  };
-
-  // Handle variant selection
-  const handleVariantSelect = (variantIndex: number) => {
-    console.log("handleVariantSelect", variantIndex);
-    setSelectedVariantIndex(variantIndex);
-    // Find corresponding image for this variant
-    const variantImageIndex = productImages.findIndex(
-      (img) => img.variantId === product.sync_variants[variantIndex].id
-    );
-    if (variantImageIndex !== -1) {
-      handleImageSelect(variantImageIndex);
-    }
-  };
-
-  // Handle color selection - find first available size for the selected color
-  const handleColorSelect = (color: string) => {
-    const inStockVariants = product.sync_variants.filter(
-      (v: PrintfulSyncVariant) => v.availability_status === "active"
-    );
-    const colorVariants = inStockVariants.filter(
-      (v: PrintfulSyncVariant) => v.color === color
-    );
-
-    if (colorVariants.length > 0) {
-      // Find the variant index in the original array
-      const variantIndex = product.sync_variants.findIndex(
-        (v: PrintfulSyncVariant) => v.id === colorVariants[0].id
-      );
-      handleVariantSelect(variantIndex);
-    }
-  };
-
-  // Handle size selection - find variant with current color and selected size
-  const handleSizeSelect = (size: string) => {
-    const inStockVariants = product.sync_variants.filter(
-      (v: PrintfulSyncVariant) => v.availability_status === "active"
-    );
-    const sizeVariant = inStockVariants.find(
-      (v: PrintfulSyncVariant) =>
-        v.color === currentVariant.color && v.size === size
-    );
-
-    if (sizeVariant) {
-      // Find the variant index in the original array
-      const variantIndex = product.sync_variants.findIndex(
-        (v: PrintfulSyncVariant) => v.id === sizeVariant.id
-      );
-      handleVariantSelect(variantIndex);
-    }
-  };
-
-  // Handle add to cart
-  const handleAddToCart = () => {
-    addToCart(userId, guestUserId, product, selectedVariantIndex, quantity);
-    // Show success feedback (you can add a toast notification here)
-    console.log(`Added ${quantity} ${product.sync_product.name} to cart`);
-  };
-
-  // Mobile swipe handling
-  const handleSwipe = (direction: "left" | "right") => {
-    if (isImageTransitioning) return;
-
-    if (direction === "left" && selectedImageIndex < productImages.length - 1) {
-      handleImageSelect(selectedImageIndex + 1);
-    } else if (direction === "right" && selectedImageIndex > 0) {
-      handleImageSelect(selectedImageIndex - 1);
-    }
-  };
-
-  // Touch handling for mobile swipe
-  const minSwipeDistance = 50;
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const onTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-
-    if (isLeftSwipe) {
-      handleSwipe("left");
-    } else if (isRightSwipe) {
-      handleSwipe("right");
-    }
-  };
+  console.log("product", product);
 
   return (
     <section className="flex flex-col p-5 md:p-10 gap-10 min-h-screen pb-20">
@@ -465,7 +485,7 @@ const ProductPageClient = ({
                         key={color}
                         onClick={() => handleColorSelect(color)}
                         className={`px-4 py-2 rounded-lg border-2 transition-all duration-300 cursor-pointer hover:bg-gray-400 ${
-                          currentVariant.color === color
+                          currentVariant?.color === color
                             ? "border-primary-500 bg-primary-50 text-primary-700"
                             : "border-gray-200 hover:border-gray-300 text-slate-300"
                         }`}
@@ -491,7 +511,7 @@ const ProductPageClient = ({
                         key={size}
                         onClick={() => handleSizeSelect(size)}
                         className={`px-4 py-2 rounded-lg border-2 transition-all duration-300 ${
-                          currentVariant.size === size
+                          currentVariant?.size === size
                             ? "border-primary-500 bg-primary-50 text-primary-700"
                             : "border-gray-200 hover:border-gray-300 text-slate-300 cursor-pointer hover:bg-gray-400"
                         }`}

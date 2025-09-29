@@ -216,7 +216,7 @@ const Navbar = () => {
         </div>
       </div>
     );
-  }, [isDropdown, logo, navigationLinks, ScrollMenuIcon]);
+  }, [isDropdown, logo, navigationLinks, ScrollMenuIcon, profileIcon]);
 
   const normalNavbar = useMemo(() => {
     return (

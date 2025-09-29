@@ -120,7 +120,7 @@ const SuccessPageClient = ({
               Order Not Found
             </h1>
             <p className="text-yellow-200 text-lg">
-              We couldn't find your order details, but your payment was
+              We couldn&apos;t find your order details, but your payment was
               processed successfully. Please check your email for confirmation.
             </p>
           </div>
@@ -225,7 +225,7 @@ const SuccessPageClient = ({
 
           <div className="mt-8 text-center">
             <p className="text-slate-400 mb-6">
-              You'll receive an email confirmation shortly with tracking
+              You&apos;ll receive an email confirmation shortly with tracking
               information.
             </p>
             <button
