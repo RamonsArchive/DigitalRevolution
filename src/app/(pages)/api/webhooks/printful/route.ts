@@ -45,6 +45,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function handleOrderCreated(printfulOrder: any) {
   try {
     console.log('🆕 Processing order created:', printfulOrder.id);
@@ -87,6 +88,7 @@ async function handleOrderCreated(printfulOrder: any) {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function handlePackageShipped(printfulOrder: any) {
   try {
     console.log('📦 Processing package shipped:', printfulOrder.id);
@@ -161,6 +163,7 @@ async function handlePackageShipped(printfulOrder: any) {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function handleOrderUpdated(printfulOrder: any) {
   try {
     console.log('📝 Processing order updated:', printfulOrder.id);

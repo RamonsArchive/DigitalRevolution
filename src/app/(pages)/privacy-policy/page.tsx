@@ -66,7 +66,7 @@ const PrivacyPolicyPage = () => {
                     Your Privacy Matters
                   </h2>
                   <p className="text-slate-300 text-lg leading-relaxed max-w-3xl mx-auto">
-                    We're committed to protecting your privacy and being
+                    We&apos;re committed to protecting your privacy and being
                     transparent about how we collect, use, and protect your
                     information.
                   </p>
@@ -156,7 +156,7 @@ const PrivacyPolicyPage = () => {
                     Questions About Your Privacy?
                   </h3>
                   <p className="text-slate-300 mb-6">
-                    We're here to help. Contact us if you have any questions
+                    We&apos;re here to help. Contact us if you have any questions
                     about your data or privacy rights.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">

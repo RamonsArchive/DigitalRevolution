@@ -51,7 +51,7 @@ const ReturnPolicyPage = () => {
                   </h2>
                   <p className="text-slate-300 text-lg leading-relaxed max-w-3xl mx-auto">
                     We want you to be completely satisfied with your purchase.
-                    Here's everything you need to know about returns and
+                    Here&apos;s everything you need to know about returns and
                     refunds.
                   </p>
                 </div>
@@ -111,7 +111,7 @@ const ReturnPolicyPage = () => {
                     <AlertCircle className="w-8 h-8 text-red-400 flex-shrink-0" />
                     <div>
                       <h4 className="text-lg font-bold text-red-100 mb-2">
-                        What We Don't Accept
+                        What We Don&apos;t Accept
                       </h4>
                       <ul className="text-red-200 text-sm space-y-1">
                         <li>• Worn or washed items</li>
@@ -135,7 +135,7 @@ const ReturnPolicyPage = () => {
                   </h3>
                   <p className="text-slate-300 mb-6">
                     Contact us with your order number and reason for return.
-                    We'll guide you through the process.
+                    We&apos;ll guide you through the process.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <a

@@ -49,6 +49,12 @@ const ProductPageClient = ({
 
   const [isImageTransitioning, setIsImageTransitioning] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [productDetails, setProductDetails] = useState<any>(null);
+  const [isLoadingDetails, setIsLoadingDetails] = useState(false);
+  const [selectedColor, setSelectedColor] = useState<string>("");
+  const [selectedSize, setSelectedSize] = useState<string>("");
+
   useEffect(() => {
     setCartItems(cartItems);
   }, [cartItems]);
@@ -57,6 +63,23 @@ const ProductPageClient = ({
   const thumbnailRefs = useRef<(HTMLDivElement | null)[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // GSAP animations for image transitions
+  useGSAP(() => {
+    if (mainImageRef.current && isImageTransitioning) {
+      gsap.fromTo(
+        mainImageRef.current,
+        { opacity: 0, scale: 1.1 },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.6,
+          ease: "power2.out",
+          onComplete: () => setIsImageTransitioning(false),
+        }
+      );
+    }
+  }, [selectedImageIndex, isImageTransitioning]);
+
   // Find product from context using slug
   const { allProducts } = useShopFilters();
   const product = allProducts.find(
@@ -64,10 +87,6 @@ const ProductPageClient = ({
   );
 
   console.log("product", product);
-
-  // State for product details
-  const [productDetails, setProductDetails] = useState<any>(null);
-  const [isLoadingDetails, setIsLoadingDetails] = useState(false);
 
   // Fetch product details on-demand
   useEffect(() => {
@@ -91,26 +110,13 @@ const ProductPageClient = ({
     }
   }, [product, productDetails]);
 
-  // Early return if no product
-  if (!product) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">
-            Product Not Found
-          </h1>
-          <p className="text-slate-300">
-            The product you're looking for doesn't exist.
-          </p>
-        </div>
-      </div>
-    );
-  }
-
   // Aggregate all product images from variants
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const productImages: ProductImage[] = useMemo(() => {
+    if (!product) return [];
     const images: ProductImage[] = [];
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     product.sync_variants.forEach((variant: any) => {
       // Get the preview image from files array (index 1 as mentioned)
       const previewFile = variant.files?.[1];
@@ -131,28 +137,27 @@ const ProductPageClient = ({
     );
 
     return uniqueImages;
-  }, [product.sync_variants]);
+  }, [product?.sync_variants]);
+
+  // Early return if no product
+  if (!product) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+            Product Not Found
+          </h1>
+          <p className="text-slate-300">
+            The product you&apos;re looking for doesn&apos;t exist.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   // Get current variant
   const currentVariant = product.sync_variants[selectedVariantIndex];
   const currentImage = productImages[selectedImageIndex];
-
-  // GSAP animations for image transitions
-  useGSAP(() => {
-    if (mainImageRef.current && isImageTransitioning) {
-      gsap.fromTo(
-        mainImageRef.current,
-        { opacity: 0, scale: 1.1 },
-        {
-          opacity: 1,
-          scale: 1,
-          duration: 0.6,
-          ease: "power2.out",
-          onComplete: () => setIsImageTransitioning(false),
-        }
-      );
-    }
-  }, [selectedImageIndex, isImageTransitioning]);
 
   // Handle image selection
   const handleImageSelect = (index: number) => {
@@ -177,13 +182,16 @@ const ProductPageClient = ({
 
   // Handle color selection - find first available size for the selected color
   const handleColorSelect = (color: string) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const inStockVariants = product.sync_variants.filter(
       (v: any) => v.availability_status === "active"
     );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const colorVariants = inStockVariants.filter((v: any) => v.color === color);
 
     if (colorVariants.length > 0) {
       // Find the variant index in the original array
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const variantIndex = product.sync_variants.findIndex(
         (v: any) => v.id === colorVariants[0].id
       );
@@ -193,15 +201,18 @@ const ProductPageClient = ({
 
   // Handle size selection - find variant with current color and selected size
   const handleSizeSelect = (size: string) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const inStockVariants = product.sync_variants.filter(
       (v: any) => v.availability_status === "active"
     );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const sizeVariant = inStockVariants.find(
       (v: any) => v.color === currentVariant.color && v.size === size
     );
 
     if (sizeVariant) {
       // Find the variant index in the original array
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const variantIndex = product.sync_variants.findIndex(
         (v: any) => v.id === sizeVariant.id
       );
@@ -258,23 +269,28 @@ const ProductPageClient = ({
 
   // Get unique colors and sizes for variant selection (only in-stock variants)
   const availableColors = useMemo(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const inStockVariants = product.sync_variants.filter(
       (v: any) => v.availability_status === "active"
     );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const colors = [...new Set(inStockVariants.map((v: any) => v.color))];
     return colors;
   }, [product.sync_variants]);
 
   const availableSizes = useMemo(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const inStockVariants = product.sync_variants.filter(
       (v: any) => v.availability_status === "active"
     );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const sizes = [...new Set(inStockVariants.map((v: any) => v.size))];
     return sizes;
   }, [product.sync_variants]);
 
   // Get available sizes for the currently selected color (only in-stock)
   const availableSizesForColor = useMemo(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const inStockVariants = product.sync_variants.filter(
       (v: any) => v.availability_status === "active"
     );
@@ -584,6 +600,7 @@ const ProductPageClient = ({
                       </h4>
                       <ul className="text-sm text-slate-200 list-disc list-inside ">
                         {productDetails.materials.map(
+                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
                           (material: any, index: number) => (
                             <li key={index}>
                               {material.name} ({material.percentage}%)
