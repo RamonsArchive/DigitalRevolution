@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { CheckCircle, Heart, Users, Globe, ArrowLeft } from "lucide-react";
 import { Donation } from "../../prisma/generated/prisma";
@@ -31,8 +30,8 @@ const DonateSuccessClient = ({ donation, error }: DonateSuccessClientProps) => {
                 Donation Not Found
               </h1>
               <p className="text-slate-300 text-lg mb-8">
-                We couldn't find your donation details. Please contact support
-                if you believe this is an error.
+                We couldn&apos;t find your donation details. Please contact
+                support if you believe this is an error.
               </p>
               <Link
                 href="/donate"
@@ -170,7 +169,7 @@ const DonateSuccessClient = ({ donation, error }: DonateSuccessClientProps) => {
                         Your Message
                       </p>
                       <p className="text-slate-200 italic">
-                        "{donation.message}"
+                        &quot;{donation.message}&quot;
                       </p>
                     </div>
                   )}
@@ -259,13 +258,13 @@ const DonateSuccessClient = ({ donation, error }: DonateSuccessClientProps) => {
                     <span className="text-3xl">📧</span>
                   </div>
                   <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-emerald-200 to-cyan-200 bg-clip-text text-transparent">
-                    What's Next?
+                    What&apos;s Next?
                   </h2>
                 </div>
                 <p className="text-slate-200 leading-relaxed text-lg max-w-3xl mx-auto mb-8">
-                  You'll receive a confirmation email shortly with your donation
-                  receipt. Follow us on social media to stay updated on how your
-                  contribution is making a difference!
+                  You&apos;ll receive a confirmation email shortly with your
+                  donation receipt. Follow us on social media to stay updated on
+                  how your contribution is making a difference!
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link
