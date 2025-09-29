@@ -1,5 +1,3 @@
-import { Ticket, User, Building, Phone, Mail, MessageSquare } from 'lucide-react'
-import React from 'react'
 import resend from '@/lib/resend'
 
 const PartnersTicketEmail = async ({ formData }: { formData: Record<string, string> }) => {

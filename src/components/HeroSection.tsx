@@ -93,6 +93,8 @@ export default function HeroSection({
         end: "+=600vh",
         pin: true,
         pinSpacing: true,
+        invalidateOnRefresh: true,
+        anticipatePin: 1,
         scrub: 0.3,
         animation: timeline,
       });
@@ -116,11 +118,11 @@ export default function HeroSection({
   return (
     <>
       {/* Hero Container - this gets scrolled past */}
-      <div ref={containerRef} className="relative flex h-[100dvh] w-full">
+      <div ref={containerRef} className="relative flex h-screen w-full">
         {/* Video Background - this gets PINNED */}
         <video
           ref={videoRef}
-          className="flex inset-0 w-full h-[100dvh] object-cover z-0"
+          className="absolute inset-0 w-full h-full object-cover z-0"
           autoPlay
           muted
           loop
@@ -140,7 +142,7 @@ export default function HeroSection({
           className="hidden fixed inset-0 w-full items-center justify-center rounded-xl z-1"
         >
           <div className="flex flex-col gap-20">
-            <div className="flex h-[100dvh] items-center justify-center">
+            <div className="flex h-screen items-center justify-center">
               <TitleSection
                 title={title1}
                 description={description1}
