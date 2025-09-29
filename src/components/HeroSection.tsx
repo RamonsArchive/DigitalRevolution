@@ -140,7 +140,7 @@ export default function HeroSection({
           className="hidden fixed inset-0 w-full items-center justify-center rounded-xl z-1"
         >
           <div className="flex flex-col gap-20">
-            <div className="flex w-full items-center justify-center">
+            <div className="flex h-[100dvh] items-center justify-center">
               <TitleSection
                 title={title1}
                 description={description1}
