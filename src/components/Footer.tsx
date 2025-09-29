@@ -56,7 +56,7 @@ const Footer = () => {
             </div>
 
             {/* Quick Links */}
-            <div className="space-y-6">
+            <div className="space-y-6 pl-2 md:pl-0">
               <div>
                 <h4 className="text-xl font-bold text-slate-100 mb-4 flex items-center gap-2">
                   <ArrowRight className="w-5 h-5 text-primary-400" />
@@ -79,7 +79,7 @@ const Footer = () => {
             </div>
 
             {/* Contact Info */}
-            <div className="space-y-6">
+            <div className="space-y-6 pl-2 md:pl-0">
               <div>
                 <h4 className="text-xl font-bold text-slate-100 mb-4 flex items-center gap-2">
                   <Mail className="w-4 h-4 text-primary-400" />
@@ -109,7 +109,7 @@ const Footer = () => {
             </div>
 
             {/* Social Media */}
-            <div className="space-y-6">
+            <div className="space-y-6 pl-2 md:pl-0">
               <div>
                 <h4 className="text-xl font-bold text-slate-100 mb-4 flex items-center gap-2">
                   <span className="text-primary-400">📱</span>

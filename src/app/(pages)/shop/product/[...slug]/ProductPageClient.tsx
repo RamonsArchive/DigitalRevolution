@@ -47,11 +47,13 @@ const ProductPageClient = ({
     setCartItems,
   } = useProduct();
 
+  // All hooks must be declared before any early returns
   const [isImageTransitioning, setIsImageTransitioning] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  useEffect(() => {
-    setCartItems(cartItems);
-  }, [cartItems]);
+  const [productDetails, setProductDetails] = useState<any>(null);
+  const [isLoadingDetails, setIsLoadingDetails] = useState(false);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   const mainImageRef = useRef<HTMLDivElement>(null);
   const thumbnailRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -64,51 +66,11 @@ const ProductPageClient = ({
 
   console.log("product", product);
 
-  // State for product details
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [productDetails, setProductDetails] = useState<any>(null);
-  const [isLoadingDetails, setIsLoadingDetails] = useState(false);
-
-  // Fetch product details on-demand
-  useEffect(() => {
-    if (product && !productDetails) {
-      setIsLoadingDetails(true);
-      const firstVariant = product.sync_variants[0];
-      if (firstVariant) {
-        // Import the function dynamically to avoid server-side issues
-        import("@/lib/actions").then(({ getProductDetailsByVariantId }) => {
-          console.log("getProductDetailsByVariantId", firstVariant.variant_id);
-          getProductDetailsByVariantId(firstVariant.variant_id).then(
-            (result) => {
-              if (result.status === "SUCCESS") {
-                setProductDetails(result.data);
-              }
-              setIsLoadingDetails(false);
-            }
-          );
-        });
-      }
-    }
-  }, [product, productDetails]);
-
-  // Early return if no product
-  if (!product) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">
-            Product Not Found
-          </h1>
-          <p className="text-slate-300">
-            The product you're looking for doesn't exist.
-          </p>
-        </div>
-      </div>
-    );
-  }
-
+  // All useMemo hooks must be declared before early returns
   // Aggregate all product images from variants
   const productImages: ProductImage[] = useMemo(() => {
+    if (!product) return [];
+
     const images: ProductImage[] = [];
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -132,11 +94,115 @@ const ProductPageClient = ({
     );
 
     return uniqueImages;
-  }, [product.sync_variants]);
+  }, [product]);
 
-  // Get current variant
-  const currentVariant = product.sync_variants[selectedVariantIndex];
-  const currentImage = productImages[selectedImageIndex];
+  // Get unique colors and sizes for variant selection (only in-stock variants)
+  const availableColors = useMemo(() => {
+    if (!product) return [];
+
+    const inStockVariants = product.sync_variants.filter(
+      (v: PrintfulSyncVariant) => v.availability_status === "active"
+    );
+    const colors = [
+      ...new Set(inStockVariants.map((v: PrintfulSyncVariant) => v.color)),
+    ];
+    return colors;
+  }, [product]);
+
+  const availableSizes = useMemo(() => {
+    if (!product) return [];
+
+    const inStockVariants = product.sync_variants.filter(
+      (v: PrintfulSyncVariant) => v.availability_status === "active"
+    );
+    const sizes = [
+      ...new Set(inStockVariants.map((v: PrintfulSyncVariant) => v.size)),
+    ];
+    return sizes;
+  }, [product]);
+
+  // Get available sizes for the currently selected color (only in-stock)
+  const availableSizesForColor = useMemo(() => {
+    if (!product) return [];
+
+    const currentVariant = product.sync_variants[selectedVariantIndex];
+    if (!currentVariant) return [];
+
+    const inStockVariants = product.sync_variants.filter(
+      (v: PrintfulSyncVariant) => v.availability_status === "active"
+    );
+    const sizes = [
+      ...new Set(
+        inStockVariants
+          .filter((v: PrintfulSyncVariant) => v.color === currentVariant.color)
+          .map((v: PrintfulSyncVariant) => v.size)
+      ),
+    ];
+    return sizes;
+  }, [product, selectedVariantIndex]);
+
+  const addToCart = useCallback(
+    async (
+      userId: string,
+      guestUserId: string,
+      product: PrintfulProduct,
+      variantIndex: number,
+      quantity: number
+    ) => {
+      try {
+        const result = await writeToCart(
+          userId,
+          guestUserId,
+          product,
+          variantIndex,
+          quantity
+        );
+
+        if (result.status === "ERROR") {
+          toast.error("ERROR", {
+            description: result.error as unknown as string,
+          });
+          return;
+        }
+        toast.success("SUCCESS", { description: "Added to cart" });
+        // set cart items in context
+        router.refresh();
+
+        // revlaidate cart items
+      } catch (error) {
+        console.error("Error adding to cart:", error);
+        toast.error("ERROR", { description: error as string });
+      }
+    },
+    [router]
+  );
+
+  // useEffect hooks
+  useEffect(() => {
+    setCartItems(cartItems);
+  }, [cartItems, setCartItems]);
+
+  // Fetch product details on-demand
+  useEffect(() => {
+    if (product && !productDetails) {
+      setIsLoadingDetails(true);
+      const firstVariant = product.sync_variants[0];
+      if (firstVariant) {
+        // Import the function dynamically to avoid server-side issues
+        import("@/lib/actions").then(({ getProductDetailsByVariantId }) => {
+          console.log("getProductDetailsByVariantId", firstVariant.variant_id);
+          getProductDetailsByVariantId(firstVariant.variant_id).then(
+            (result) => {
+              if (result.status === "SUCCESS") {
+                setProductDetails(result.data);
+              }
+              setIsLoadingDetails(false);
+            }
+          );
+        });
+      }
+    }
+  }, [product, productDetails]);
 
   // GSAP animations for image transitions
   useGSAP(() => {
@@ -154,6 +220,26 @@ const ProductPageClient = ({
       );
     }
   }, [selectedImageIndex, isImageTransitioning]);
+
+  // Early return if no product (after all hooks are declared)
+  if (!product) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+            Product Not Found
+          </h1>
+          <p className="text-slate-300">
+            The product you&apos;re looking for doesn&apos;t exist.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Get current variant and image (after null check)
+  const currentVariant = product.sync_variants[selectedVariantIndex];
+  const currentImage = productImages[selectedImageIndex];
 
   // Handle image selection
   const handleImageSelect = (index: number) => {
@@ -232,9 +318,6 @@ const ProductPageClient = ({
   };
 
   // Touch handling for mobile swipe
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
-
   const minSwipeDistance = 50;
 
   const onTouchStart = (e: React.TouchEvent) => {
@@ -259,78 +342,6 @@ const ProductPageClient = ({
       handleSwipe("right");
     }
   };
-
-  // Get unique colors and sizes for variant selection (only in-stock variants)
-  const availableColors = useMemo(() => {
-    const inStockVariants = product.sync_variants.filter(
-      (v: PrintfulSyncVariant) => v.availability_status === "active"
-    );
-    const colors = [
-      ...new Set(inStockVariants.map((v: PrintfulSyncVariant) => v.color)),
-    ];
-    return colors;
-  }, [product.sync_variants]);
-
-  const availableSizes = useMemo(() => {
-    const inStockVariants = product.sync_variants.filter(
-      (v: PrintfulSyncVariant) => v.availability_status === "active"
-    );
-    const sizes = [
-      ...new Set(inStockVariants.map((v: PrintfulSyncVariant) => v.size)),
-    ];
-    return sizes;
-  }, [product.sync_variants]);
-
-  // Get available sizes for the currently selected color (only in-stock)
-  const availableSizesForColor = useMemo(() => {
-    const inStockVariants = product.sync_variants.filter(
-      (v: PrintfulSyncVariant) => v.availability_status === "active"
-    );
-    const sizes = [
-      ...new Set(
-        inStockVariants
-          .filter((v: PrintfulSyncVariant) => v.color === currentVariant.color)
-          .map((v: PrintfulSyncVariant) => v.size)
-      ),
-    ];
-    return sizes;
-  }, [product.sync_variants, currentVariant.color]);
-
-  const addToCart = useCallback(
-    async (
-      userId: string,
-      guestUserId: string,
-      product: PrintfulProduct,
-      variantIndex: number,
-      quantity: number
-    ) => {
-      try {
-        const result = await writeToCart(
-          userId,
-          guestUserId,
-          product,
-          variantIndex,
-          quantity
-        );
-
-        if (result.status === "ERROR") {
-          toast.error("ERROR", {
-            description: result.error as unknown as string,
-          });
-          return;
-        }
-        toast.success("SUCCESS", { description: "Added to cart" });
-        // set cart items in context
-        router.refresh();
-
-        // revlaidate cart items
-      } catch (error) {
-        console.error("Error adding to cart:", error);
-        toast.error("ERROR", { description: error as string });
-      }
-    },
-    []
-  );
 
   return (
     <section className="flex flex-col p-5 md:p-10 gap-10 min-h-screen pb-20">
@@ -608,7 +619,7 @@ const ProductPageClient = ({
                 {productDetails.features &&
                   productDetails.features.length > 0 && (
                     <div className="">
-                      <h4 className="text-md font-semiboldtext-slate-300 underline">
+                      <h4 className="text-md font-semibold text-slate-300 underline">
                         Features
                       </h4>
                       <ul className="text-sm text-slate-200 list-disc list-inside ">

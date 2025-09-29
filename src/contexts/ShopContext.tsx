@@ -420,7 +420,7 @@ const ShopProvider = ({
   const filteredProducts = useMemo(() => {
     const filters = currentFilters;
 
-    let filtered = allProducts.filter((product) => {
+    const filtered = allProducts.filter((product) => {
       // Filter by category/gender first
       if (filters.searchQuery) {
         const query = filters.searchQuery.toLowerCase();

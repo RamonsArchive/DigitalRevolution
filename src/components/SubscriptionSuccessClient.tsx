@@ -3,12 +3,10 @@
 import React from "react";
 import Link from "next/link";
 import {
-  CheckCircle,
   Heart,
   Users,
   Globe,
   ArrowLeft,
-  Calendar,
   RefreshCw,
   CreditCard,
 } from "lucide-react";
@@ -62,7 +60,7 @@ const SubscriptionSuccessClient = ({
                 Subscription Not Found
               </h1>
               <p className="text-slate-300 text-lg mb-8">
-                We couldn't find your subscription details. Please contact
+                We couldn&apos;t find your subscription details. Please contact
                 support if you believe this is an error.
               </p>
               <Link
@@ -199,7 +197,7 @@ const SubscriptionSuccessClient = ({
                       <p className="text-yellow-200 text-sm">
                         Your subscription will end on{" "}
                         {getNextBillingDate(subscription.currentPeriodEnd)}.
-                        You'll continue to have access until then.
+                        You&apos;ll continue to have access until then.
                       </p>
                     </div>
                   )}
@@ -292,8 +290,8 @@ const SubscriptionSuccessClient = ({
                 </div>
                 <p className="text-slate-200 leading-relaxed text-lg max-w-3xl mx-auto mb-8">
                   You can manage your subscription, update payment methods, or
-                  cancel anytime from your profile page. We'll send you email
-                  reminders before each billing cycle.
+                  cancel anytime from your profile page. We&apos;ll send you
+                  email reminders before each billing cycle.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link
