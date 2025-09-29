@@ -21,6 +21,7 @@ const HeroHelp = ({
 
     animateTextScroll({
       targets: textToAnimate,
+      shouldAnimateClass: true,
       animateClass: "dark-gradient-text",
       type: "words",
       duration: 1,

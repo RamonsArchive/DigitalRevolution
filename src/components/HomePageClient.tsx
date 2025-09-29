@@ -1,28 +1,16 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import {
-  Globe,
-  GraduationCap,
-  Building2,
   Users,
-  ArrowRight,
-  Target,
   TrendingUp,
-  Heart,
   Share2,
   ShoppingBag,
   DollarSign,
   ExternalLink,
-  CheckCircle,
-  Lightbulb,
   BookOpen,
-  Award,
 } from "lucide-react";
-import { useGSAP } from "@gsap/react";
-import { animateTextScroll, animateCardsScroll } from "@/lib/utils";
 
 interface HomePageClientProps {
   homeData: typeof import("@/constants").HOME_TEXT_SECTIONS;
