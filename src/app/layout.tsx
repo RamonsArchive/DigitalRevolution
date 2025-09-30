@@ -347,7 +347,26 @@ export default function RootLayout({
           }}
         />
 
-        {/* Favicon handled automatically by Next.js with standard naming */}
+        {/* Favicon - Manual configuration for Safari compatibility */}
+        <link rel="icon" href="/favicon.ico?v=3" sizes="any" />
+        <link rel="icon" href="/icon.png?v=3" type="image/png" sizes="32x32" />
+        <link
+          rel="icon"
+          href="/icon-16x16.png?v=3"
+          type="image/png"
+          sizes="16x16"
+        />
+        <link
+          rel="icon"
+          href="/icon-32x32.png?v=3"
+          type="image/png"
+          sizes="32x32"
+        />
+        <link
+          rel="apple-touch-icon"
+          href="/apple-icon.png?v=3"
+          sizes="180x180"
+        />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="msapplication-TileColor" content="#1e293b" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
