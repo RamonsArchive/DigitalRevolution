@@ -80,6 +80,10 @@ interface ShopContextType {
   toggleCategoryExpanded: (category: keyof FilterUIState) => void;
   toggleOptionSelected: (category: keyof FilterUIState, option: string) => void;
   clearFilters: () => void;
+  // Data setters for hydration
+  setAllProducts: (products: PrintfulProduct[]) => void;
+  setAvailableFilters: (filters: ShopFilters) => void;
+  setProductDetailsMap: (map: Map<number, ProductDetails>) => void;
 }
 
 const ShopContext = createContext<ShopContextType | null>(null);
@@ -93,13 +97,17 @@ interface ShopProviderProps {
 
 const ShopProvider = ({
   children,
-  allProducts,
-  availableFilters,
-  productDetailsMap,
+  allProducts: initialProducts,
+  availableFilters: initialFilters,
+  productDetailsMap: initialDetailsMap,
 }: ShopProviderProps) => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+
+  const [allProducts, setAllProducts] = useState(initialProducts);
+  const [availableFilters, setAvailableFilters] = useState(initialFilters);
+  const [productDetailsMap, setProductDetailsMap] = useState(initialDetailsMap);
 
   // UI state (not synced to URL)
   const [categoryExpansions, setCategoryExpansions] = useState({
@@ -573,6 +581,11 @@ const ShopProvider = ({
         toggleCategoryExpanded,
         toggleOptionSelected,
         clearFilters,
+
+        // Data setters for hydration
+        setAllProducts,
+        setAvailableFilters,
+        setProductDetailsMap,
       }}
     >
       {children}

@@ -1,49 +1,26 @@
-"use client";
-import { useShopFilters } from "@/contexts/ShopContext";
-import { PrintfulProduct } from "@/lib/globalTypes";
-import React, { Suspense } from "react";
-import ProductCard from "@/components/ProductCard";
-import ProductCardSkeleton from "@/components/ProductCardSkeleton";
-import ShopTitleSection from "@/components/ShopTitleSection";
-import Filters from "@/components/Filters";
+import React from "react";
 
-export const dynamic = "force-dynamic";
+import { getProductsAndFilters } from "@/lib/actions";
 
-const ShopPage = () => {
-  const { filteredProducts } = useShopFilters();
+import ShopHomeClient from "@/components/ShopHomeClient";
+
+const ShopPage = async () => {
+  const result = await getProductsAndFilters({ limit: 100, offset: 0 });
+  console.log(result);
+
+  if (result.status === "ERROR") {
+    return (
+      <div className="absolute inset-0 flex items-center justify-center text-center text-2xl font-bold">
+        Error loading products. Please try again later.
+      </div>
+    );
+  }
 
   return (
-    <div className="w-full min-h-screen pb-20">
-      <div className="flex gap-5 px-3 md:px-10">
-        {/* Fixed Filters Sidebar - Desktop Only */}
-        <div className="hidden md:block w-80 flex-shrink-0">
-          <div className="sticky top-40 max-h-[calc(100vh-12rem)] overflow-y-auto">
-            <div className="flex flex-col gap-10">
-              <h1 className="font-courier-prime text-2xl font-bold">Filters</h1>
-              <Filters />
-            </div>
-          </div>
-        </div>
-
-        {/* Products Grid */}
-        <div className="flex-1">
-          <div className="flex flex-col gap-5 w-full">
-            <ShopTitleSection />
-
-            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-5 p-3 md:p-0">
-              {filteredProducts.map((product: PrintfulProduct) => (
-                <Suspense
-                  key={product.sync_product.id}
-                  fallback={<ProductCardSkeleton />}
-                >
-                  <ProductCard product={product} />
-                </Suspense>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <ShopHomeClient
+      initialProducts={result.data.allProducts}
+      initialFilters={result.data.filters}
+    />
   );
 };
 
