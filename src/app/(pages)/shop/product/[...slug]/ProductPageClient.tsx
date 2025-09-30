@@ -14,7 +14,7 @@ import { useProduct } from "@/contexts/ProductContext";
 import { useShopFilters } from "@/contexts/ShopContext";
 import gsap from "gsap";
 import { toast } from "sonner";
-import { writeToCart } from "@/lib/actions";
+import { writeToCart, createCheckoutSession } from "@/lib/actions";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -257,6 +257,23 @@ const ProductPageClient = ({
     addToCart(userId, guestUserId, product, selectedVariantIndex, quantity);
     console.log(`Added ${quantity} ${product.sync_product.name} to cart`);
   }, [addToCart, userId, guestUserId, product, selectedVariantIndex, quantity]);
+
+  const handleBuyNow = useCallback(async () => {
+    try {
+      await handleAddToCart();
+      const result = await createCheckoutSession(userId, guestUserId);
+      if (result.status === "ERROR") {
+        toast.error("ERROR", { description: result.error as string });
+        return;
+      }
+      toast.success("SUCCESS", { description: "Redirecting to checkout" });
+      router.push((result.data as { sessionUrl: string })?.sessionUrl || "/");
+    } catch (error) {
+      console.error("Error buying now:", error);
+      toast.error("ERROR", { description: error as string });
+      return;
+    }
+  }, [handleAddToCart]);
 
   const handleSwipe = useCallback(
     (direction: "left" | "right") => {
@@ -557,7 +574,10 @@ const ProductPageClient = ({
             >
               Add to Cart ({cartItems.length})
             </button>
-            <button className="flex-1 bg-gradient-to-r from-tertiary-500 to-tertiary-600 text-white py-4 px-6 rounded-xl font-semibold text-lg hover:from-tertiary-600 hover:to-tertiary-700 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
+            <button
+              onClick={handleBuyNow}
+              className="flex-1 bg-gradient-to-r from-tertiary-500 to-tertiary-600 text-white py-4 px-6 rounded-xl font-semibold text-lg hover:from-tertiary-600 hover:to-tertiary-700 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer"
+            >
               Buy Now
             </button>
           </div>
