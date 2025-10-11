@@ -69,7 +69,7 @@ const CartPageClient = ({
         toast.error("ERROR", { description: "Failed to update quantity" });
       }
     } catch (error) {
-      console.error("Error updating quantity:", error);
+      // Error updating quantity
     } finally {
       setIsUpdating(null);
     }
@@ -82,11 +82,9 @@ const CartPageClient = ({
 
       if (result.status === "SUCCESS") {
         router.refresh(); // Refresh to get updated data
-      } else {
-        console.error("Failed to remove item:", result.error);
       }
     } catch (error) {
-      console.error("Error removing item:", error);
+      // Error removing item
     } finally {
       setIsUpdating(null);
     }
@@ -94,10 +92,7 @@ const CartPageClient = ({
 
   const handleCheckout = async () => {
     try {
-      console.log("userId", userId);
-      console.log("guestUserId", guestUserId);
       const result = await createCheckoutSession(userId, guestUserId);
-      console.log("result of checkout session", result);
       if (result.status === "ERROR") {
         toast.error("ERROR", { description: result.error });
         if (
@@ -113,7 +108,6 @@ const CartPageClient = ({
       router.push((result.data as { sessionUrl: string })?.sessionUrl || "/");
       //router.push(`/checkout?session_id=${result.data?.clientSecret}`);
     } catch (error) {
-      console.error("Error checking out:", error);
       router.refresh();
     }
   };

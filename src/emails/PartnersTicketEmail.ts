@@ -141,7 +141,6 @@ const PartnersTicketEmail = async ({ formData }: { formData: Record<string, stri
   })
 
   if (error) {
-    console.error('Failed to send partners ticket email:', error)
     throw error
   }
 

@@ -56,7 +56,6 @@ export const getProductsAndFilters = async ({limit = 100,
         return await getCachedProductsAndFilters({limit, offset});
 
     } catch (error) {
-        console.error(error);
         return parseServerActionResponse({
             status: "ERROR",
             error: error,
@@ -92,7 +91,6 @@ const getSyncProducts = async ({limit = 100,
         })
 
     } catch (error) {
-        console.error(error);
         return parseServerActionResponse({
             status: "ERROR",
             error: error,
@@ -126,7 +124,6 @@ export const getProductDetails = async (productId: number) => {
             data: data.result,
         })
     } catch (error) {
-        console.error(`Error fetching product ${productId}:`, error);
         return parseServerActionResponse({
             status: "ERROR",
             error: error,
@@ -165,7 +162,6 @@ const getAllProductsBatch = async (productJson: PrintfulSyncProductsResponse) =>
         })
 
     } catch (error) {
-        console.error(error);
         return parseServerActionResponse({
             status: "ERROR",
             error: error,
@@ -176,7 +172,6 @@ const getAllProductsBatch = async (productJson: PrintfulSyncProductsResponse) =>
 
 // New function to fetch detailed product information from Printful Catalog API
 export const getProductCatalogDetails = async (variantId: number) => {
-  console.log("I'm in the getProductCatalogDetails function");
   try {
     const isRateLimited = await checkRateLimit("getProductCatalogDetails");
     if (isRateLimited.status === "ERROR") {
@@ -190,14 +185,12 @@ export const getProductCatalogDetails = async (variantId: number) => {
         "Content-Type": "application/json",
       },
     });
-    console.log(response);
 
     if (!response.ok) {
       throw new Error(`Printful Catalog API error: ${response.status} ${response.statusText}`);
     }
 
     const data = await response.json();
-    console.log(data);
     
     return parseServerActionResponse({
       status: "SUCCESS",
@@ -214,7 +207,6 @@ export const getProductCatalogDetails = async (variantId: number) => {
       },
     });
   } catch (error) {
-    console.error("Error fetching product catalog details:", error);
     return parseServerActionResponse({
       status: "ERROR",
       error: error,
@@ -259,7 +251,6 @@ export const getProductDetailsByVariant = async (variantId: number) => {
       },
     });
   } catch (error) {
-    console.error("Error fetching product details by variant:", error);
     return parseServerActionResponse({
       status: "ERROR",
       error: error,
@@ -283,7 +274,6 @@ export const getProductDetailsByVariantId = async (variantId: number) => {
 
     return detailsResult;
   } catch (error) {
-    console.error("Error fetching product details by variant ID:", error);
     return parseServerActionResponse({
       status: "ERROR",
       error: error,
@@ -401,7 +391,6 @@ export const writeToCart = async (
     });
 
   } catch (error) {
-    console.error("Error writing to cart:", error);
     return parseServerActionResponse({
       status: "ERROR",
       error: error instanceof Error ? error.message : "Unknown error occurred",
@@ -480,7 +469,6 @@ export const updateCartItemQuantity = async (
     });
 
   } catch (error) {
-    console.error("Error updating cart item quantity:", error);
     return parseServerActionResponse({
       status: "ERROR",
       error: error instanceof Error ? error.message : "Unknown error occurred",
@@ -546,7 +534,6 @@ export const removeCartItem = async (
     });
 
   } catch (error) {
-    console.error("Error removing cart item:", error);
     return parseServerActionResponse({
       status: "ERROR",
       error: error instanceof Error ? error.message : "Unknown error occurred",
@@ -588,7 +575,6 @@ export const getCart = async (userId: string, guestUserId?: string) => {
           estimatedTotal: cartItems.reduce((sum, item) => sum + (item.unitPrice * item.quantity), 0)
         };
       } catch (error) {
-        console.error("Error getting cart items:", error);
         throw error;
       }
     },
@@ -645,7 +631,6 @@ export const validateCartForCheckout = async (userId: string, guestUserId: strin
           });
           
           const data = await response.json();
-          console.log("Stock check data:", data);
           return parseServerActionResponse({
             status: 'SUCCESS',
             error: "",
@@ -655,7 +640,6 @@ export const validateCartForCheckout = async (userId: string, guestUserId: strin
             }
           });
         } catch (error) {
-          console.error(`Stock check failed for item ${item.id}:`, error);
           return parseServerActionResponse({
             status: "ERROR",
             error: "",
@@ -843,7 +827,6 @@ export const createPrintfulOrder = async (orderId: number, cartItems: CartItem[]
       }
     });
   } catch (error) {
-    console.error('Printful order creation failed:', error);
     return parseServerActionResponse({
       status: 'ERROR',
       error: error instanceof Error ? error.message : 'Unknown error',
@@ -882,7 +865,6 @@ export const getOrderByStripeSessionId = async (sessionId: string) => {
       data: order,
     });
   } catch (error) {
-    console.error('Error fetching order:', error);
     return parseServerActionResponse({
       status: "ERROR",
       error: error,
@@ -895,7 +877,6 @@ const sendEmailToAdmin = async (formData: Record<string, string>) => {
   try {
     await PartnersTicketEmail({ formData });
   } catch (error) {
-    console.error('Failed to send email to admin:', error);
     throw error;
   }
 };
@@ -943,7 +924,6 @@ export const submitPartnersForm = async (formData: Record<string, string>) => {
     });
 
   } catch (error) {
-    console.error("Error submitting partners form:", error);
     return parseServerActionResponse({
       status: "ERROR",
       error: error instanceof Error ? error.message : "Unknown error",
@@ -1033,7 +1013,6 @@ const createDonationCheckout = async ({userId, amount, name, email}: {userId?: s
      })
 
   } catch (error) {
-    console.error('Error creating donation session:', error);
     return parseServerActionResponse({
       status: "ERROR",
       error: error instanceof Error ? error.message : "Unknown error",
@@ -1098,7 +1077,6 @@ export const createSubscriptionCheckout = async ({userId, amount, name, email}: 
     });
     
   } catch (error) {
-    console.error('Error creating subscription checkout:', error);
     return parseServerActionResponse({
       status: "ERROR",
       error: error instanceof Error ? error.message : "Unknown error",
@@ -1129,7 +1107,6 @@ export const createDonationSession = async ({userId, amount, name, email}: {user
     return result;
 
   } catch (error) {
-    console.error('Error creating donation checkout:', error);
     return parseServerActionResponse({
       status: "ERROR",
       error: error instanceof Error ? error.message : "Unknown error",
@@ -1162,7 +1139,6 @@ export const createSubscriptionSession = async ({userId, amount, name, email}: {
     return result;
 
   } catch (error) {
-    console.error('Error creating subscription session:', error);
     return parseServerActionResponse({
       status: "ERROR",
       error: error instanceof Error ? error.message : "Unknown error",
@@ -1200,7 +1176,6 @@ export const getSubscription = async (userId: string) => {
       data: subscriptions,
     });
   } catch (error) {
-    console.error('Error getting subscription:', error);
     return parseServerActionResponse({
       status: "ERROR",
       error: error instanceof Error ? error.message : "Unknown error",
@@ -1240,7 +1215,6 @@ export const getDonationByStripeSessionId = async (stripeSessionId: string) => {
       data: donation,
     });
   } catch (error) {
-    console.error('Error getting donation:', error);
     return parseServerActionResponse({
       status: "ERROR",
       error: error instanceof Error ? error.message : "Unknown error",
@@ -1275,7 +1249,6 @@ export const getLatestSubscription = async (userId: string) => {
       data: subscription,
     });
   } catch (error) {
-    console.error('Error getting subscription:', error);
     return parseServerActionResponse({
       status: "ERROR",
       error: error instanceof Error ? error.message : "Unknown error",
@@ -1324,7 +1297,6 @@ export const getSubscriptionByStripeSessionId = async (stripeSessionId: string) 
       data: subscription,
     });
   } catch (error) {
-    console.error('Error getting subscription by session ID:', error);
     return parseServerActionResponse({
       status: "ERROR",
       error: error instanceof Error ? error.message : "Unknown error",
@@ -1371,7 +1343,6 @@ export const cancelSubscription = async (subscriptionId: number, reason: string)
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (stripeError: any) {
-      console.error('Stripe cancellation error:', stripeError);
       return parseServerActionResponse({
         status: "ERROR",
         error: `Failed to cancel subscription with Stripe: ${stripeError.message}`,
@@ -1399,7 +1370,6 @@ export const cancelSubscription = async (subscriptionId: number, reason: string)
         reason
       );
     } catch (emailError) {
-      console.error('Failed to send cancellation email:', emailError);
       // Don't fail the entire operation if email fails
     }
 
@@ -1410,7 +1380,6 @@ export const cancelSubscription = async (subscriptionId: number, reason: string)
     });
 
   } catch (error) {
-    console.error('Error canceling subscription:', error);
     return parseServerActionResponse({
       status: "ERROR",
       error: error instanceof Error ? error.message : "Unknown error",
@@ -1449,7 +1418,6 @@ export const getOrders = async (userId: string) => {
       data: orders,
     });
   } catch (error) {
-    console.error('Error getting orders:', error);
     return parseServerActionResponse({
       status: "ERROR",
       error: error instanceof Error ? error.message : "Unknown error",
@@ -1509,7 +1477,6 @@ export const getSingleProductBySlug = async (slug: string) => {
     });
 
   } catch (error) {
-    console.error('Error getting single product by slug:', error);
     return parseServerActionResponse({
       status: "ERROR",
       error: error instanceof Error ? error.message : "Unknown error",

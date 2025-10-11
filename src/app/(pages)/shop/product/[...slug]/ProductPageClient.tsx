@@ -95,12 +95,10 @@ const ProductPageClient = ({
         .then((result) => {
           if (result.status === "SUCCESS") {
             setFetchedProduct(result.data as PrintfulProduct);
-          } else {
-            console.error("Failed to fetch product:", result.error);
           }
         })
         .catch((error) => {
-          console.error("Error fetching product:", error);
+          // Error fetching product
         });
     }
   }, [contextProduct, fetchedProduct, hasFetchAttempted, slug]);
@@ -210,7 +208,6 @@ const ProductPageClient = ({
         toast.success("SUCCESS", { description: "Added to cart" });
         router.refresh();
       } catch (error) {
-        console.error("Error adding to cart:", error);
         toast.error("ERROR", { description: error as string });
       }
     },
@@ -302,7 +299,6 @@ const ProductPageClient = ({
       toast.success("SUCCESS", { description: "Redirecting to checkout" });
       router.push((result.data as { sessionUrl: string })?.sessionUrl || "/");
     } catch (error) {
-      console.error("Error buying now:", error);
       toast.error("ERROR", { description: error as string });
       return;
     }

@@ -28,7 +28,7 @@ export default function HeroSection({
         try {
           await video.play();
         } catch (error) {
-          console.log("Video autoplay failed:", error);
+          // Video autoplay failed
         }
       };
 

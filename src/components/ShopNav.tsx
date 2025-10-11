@@ -78,13 +78,11 @@ const ShopNav = () => {
 
   // Menu click handlers
   const handleMenuClick = useCallback(() => {
-    console.log("Menu clicked - opening menu");
     setOpenMenu(true);
     setShouldMenuRender(true);
   }, []);
 
   const handleCloseMenu = useCallback(() => {
-    console.log("Closing menu");
     setOpenMenu(false);
     setShouldMenuRender(false);
   }, []);

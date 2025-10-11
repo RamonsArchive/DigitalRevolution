@@ -18,7 +18,6 @@ const ProductPage = async ({
   // fetch cart items here on server and revlaidate.
 
   const cartItems = await getCart(userId, guestUserId || "");
-  console.log(cartItems);
 
   return (
     <ProductPageClient

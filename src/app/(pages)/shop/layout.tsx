@@ -28,7 +28,6 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
       </ShopProvider>
     );
   } catch (error) {
-    console.error("Failed to fetch products:", error);
     // Provide fallback empty filters
     const emptyFilters = {
       colors: [],
