@@ -14,7 +14,11 @@ import { useProduct } from "@/contexts/ProductContext";
 import { useShopFilters } from "@/contexts/ShopContext";
 import gsap from "gsap";
 import { toast } from "sonner";
-import { writeToCart, createCheckoutSession } from "@/lib/actions";
+import {
+  writeToCart,
+  createCheckoutSession,
+  getSingleProductBySlug,
+} from "@/lib/actions";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -63,12 +67,43 @@ const ProductPageClient = ({
   const mainImageRef = useRef<HTMLDivElement>(null);
   const thumbnailRefs = useRef<(HTMLDivElement | null)[]>([]);
 
+  // State to hold fetched product when not in context
+  const [fetchedProduct, setFetchedProduct] = useState<PrintfulProduct | null>(
+    null
+  );
+  const [hasFetchAttempted, setHasFetchAttempted] = useState(false);
+
   // Find product from context using slug - this is safe to do here
-  const product = useMemo(() => {
+  const contextProduct = useMemo(() => {
     return allProducts.find(
       (p: PrintfulProduct) => p.sync_product.external_id?.toLowerCase() === slug
     );
   }, [allProducts, slug]);
+
+  // Use context product if available, otherwise use fetched product
+  const product = contextProduct || fetchedProduct;
+
+  // Determine if we should be loading (no product yet and haven't attempted fetch)
+  const isLoadingProduct =
+    !contextProduct && !fetchedProduct && !hasFetchAttempted;
+
+  // Fetch product if not in context (for direct links)
+  useEffect(() => {
+    if (!contextProduct && !fetchedProduct && !hasFetchAttempted) {
+      setHasFetchAttempted(true);
+      getSingleProductBySlug(slug)
+        .then((result) => {
+          if (result.status === "SUCCESS") {
+            setFetchedProduct(result.data as PrintfulProduct);
+          } else {
+            console.error("Failed to fetch product:", result.error);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching product:", error);
+        });
+    }
+  }, [contextProduct, fetchedProduct, hasFetchAttempted, slug]);
 
   // All useMemo hooks
   const productImages: ProductImage[] = useMemo(() => {
@@ -200,7 +235,7 @@ const ProductPageClient = ({
       setSelectedVariantIndex(variantIndex);
 
       const variantImageIndex = productImages.findIndex(
-        (img) => img.variantId === product.sync_variants[variantIndex].id
+        (img) => img.variantId === product?.sync_variants[variantIndex].id
       );
       if (variantImageIndex !== -1) {
         handleImageSelect(variantImageIndex);
@@ -363,16 +398,55 @@ const ProductPageClient = ({
   }, [selectedImageIndex, isImageTransitioning]);
 
   // NOW WE CAN SAFELY DO EARLY RETURNS - ALL HOOKS HAVE BEEN DECLARED
-  if (!product) {
+  // Show loading state while fetching product
+  if (isLoadingProduct) {
+    return (
+      <div className="fixed inset-0 z-[999] flex items-center justify-center bg-slate-950/80 backdrop-blur-md">
+        <div className="relative">
+          {/* Animated gradient background */}
+          <div className="absolute -inset-8 bg-gradient-to-r from-primary-500/20 via-secondary-500/20 to-primary-500/20 rounded-3xl blur-2xl animate-pulse"></div>
+
+          {/* Content card */}
+          <div className="relative bg-slate-900/90 backdrop-blur-sm rounded-2xl p-12 border border-slate-700/50 shadow-2xl">
+            <div className="text-center space-y-6">
+              {/* Spinner with gradient */}
+              <div className="relative w-20 h-20 mx-auto">
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 opacity-20 animate-ping"></div>
+                <div className="relative w-20 h-20 rounded-full border-4 border-slate-800 border-t-primary-500 border-r-secondary-500 animate-spin"></div>
+              </div>
+
+              {/* Loading text with gradient */}
+              <div className="space-y-2">
+                <h2 className="text-2xl font-bold bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent animate-pulse">
+                  Loading Product
+                </h2>
+                <p className="text-slate-400 text-sm">Just a moment...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error if product not found after loading
+  if (!product && !isLoadingProduct) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+          <h1 className="text-2xl font-bold text-slate-200 mb-4">
             Product Not Found
           </h1>
-          <p className="text-slate-300">
+          <p className="text-slate-300 mb-6">
             The product you&apos;re looking for doesn&apos;t exist.
           </p>
+          <Link
+            href="/shop"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-lg hover:scale-105 transition-transform duration-300"
+          >
+            <span>←</span>
+            <span>Back to Shop</span>
+          </Link>
         </div>
       </div>
     );
@@ -418,7 +492,7 @@ const ProductPageClient = ({
               >
                 <Image
                   src={image.url}
-                  alt={`${product.sync_product.name} - ${image.color}`}
+                  alt={`${product?.sync_product.name} - ${image.color}`}
                   fill
                   className="object-cover"
                   sizes="80px"
@@ -438,7 +512,7 @@ const ProductPageClient = ({
               {currentImage && (
                 <Image
                   src={currentImage.url}
-                  alt={`${product.sync_product.name} - ${currentImage.color}`}
+                  alt={`${product?.sync_product.name} - ${currentImage.color}`}
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 60vw"
@@ -478,7 +552,7 @@ const ProductPageClient = ({
           {/* Title and Price */}
           <div className="space-y-2">
             <h1 className="text-3xl lg:text-4xl font-bold text-slate-300 font-courier-prime">
-              {product.sync_product.name}
+              {product?.sync_product.name}
             </h1>
             {currentVariant?.retail_price && (
               <div className="text-2xl font-bold text-primary-600">
@@ -590,15 +664,15 @@ const ProductPageClient = ({
             <div className="space-y-2 text-sm text-slate-200">
               <p>
                 <span className="font-medium">Product ID:</span>{" "}
-                {product.sync_product.id}
+                {product?.sync_product.id}
               </p>
               <p>
                 <span className="font-medium">Variants:</span>{" "}
-                {product.sync_product.variants}
+                {product?.sync_product.variants}
               </p>
               <p>
                 <span className="font-medium">Synced:</span>{" "}
-                {product.sync_product.synced}
+                {product?.sync_product.synced}
               </p>
               {currentVariant && (
                 <>

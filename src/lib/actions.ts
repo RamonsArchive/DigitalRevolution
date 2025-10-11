@@ -1,5 +1,5 @@
 "use server";
-import { PrintfulProduct, PrintfulSyncProductsResponse } from "./globalTypes";
+import { PrintfulProduct, PrintfulSyncProductsResponse, PrintfulSyncProduct } from "./globalTypes";
 import { checkRateLimit } from "./rateLimiter";
 import { parseServerActionResponse } from "./utils";
 import { extractFiltersFromProducts } from "./filters";
@@ -1430,6 +1430,66 @@ export const getOrders = async (userId: string) => {
     });
   } catch (error) {
     console.error('Error getting orders:', error);
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: error instanceof Error ? error.message : "Unknown error",
+      data: null,
+    });
+  }
+}
+
+export const getSingleProductBySlug = async (slug: string) => {
+  try {
+    const isRateLimited = await checkRateLimit("getSingleProductBySlug");
+    if (isRateLimited.status === "ERROR") {
+      return isRateLimited;
+    }
+
+    const headers: Record<string, string> = {
+      Authorization: `Bearer ${process.env.DIGITAL_REVOLUTION_API_KEY!}`,
+    };
+
+    // Step 1: Fetch the lightweight sync products list to find the sync_product_id
+    const syncProductsUrl = `${PRINTFUL_BASE}/store/products?limit=100`;
+    const syncRes = await fetch(syncProductsUrl, { headers, cache: "no-store" });
+    
+    if (!syncRes.ok) {
+      throw new Error(`Failed to fetch product list: ${syncRes.status} ${syncRes.statusText}`);
+    }
+
+    const syncData = await syncRes.json();
+    
+    // Find the product with matching external_id (slug)
+    const matchingProduct = syncData.result?.find(
+      (p: PrintfulSyncProduct) => p.external_id?.toLowerCase() === slug.toLowerCase()
+    );
+
+    if (!matchingProduct) {
+      return parseServerActionResponse({
+        status: "ERROR",
+        error: "Product not found",
+        data: null,
+      });
+    }
+
+    // Step 2: Fetch the full product details using the sync_product_id
+    const productDetailsUrl = `${PRINTFUL_BASE}/store/products/${matchingProduct.id}`;
+    const detailsRes = await fetch(productDetailsUrl, { headers, cache: "no-store" });
+
+    if (!detailsRes.ok) {
+      throw new Error(`Failed to fetch product details: ${detailsRes.status} ${detailsRes.statusText}`);
+    }
+
+    const detailsData = await detailsRes.json();
+    
+    return parseServerActionResponse({
+      status: "SUCCESS",
+      error: "",
+      data: detailsData.result,
+    });
+
+  } catch (error) {
+    console.error('Error getting single product by slug:', error);
     return parseServerActionResponse({
       status: "ERROR",
       error: error instanceof Error ? error.message : "Unknown error",
