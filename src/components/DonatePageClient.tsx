@@ -33,8 +33,6 @@ const DonatePageClient = ({
   const [errors, setErrors] = useState<{ name?: string; email?: string }>({});
 
   const handleSetAmount = (amount: number) => {
-    console.log("Setting amount:", amount);
-    console.log("Setting amoutn in cents:", amount * 100);
     setAmount(amount * 100); // convert to cents for stripe
     setSelectedAmount(amount.toString());
     setCustomAmount("");

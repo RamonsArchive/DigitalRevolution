@@ -61,7 +61,6 @@ const Navbar = () => {
 
   // Menu click handler
   const handleMenuClick = useCallback(() => {
-    console.log("Navbar menu clicked - opening menu");
     setOpenMenu(true);
     setShouldRender(true);
   }, []);

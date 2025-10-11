@@ -9,7 +9,6 @@ import Link from "next/link";
 
 const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
   const images = (aboutData.images || []).map((img) => img.src);
-  console.log(aboutData);
   return (
     <div className="min-h-screen flex flex-col bg-bg-primary gap-16 pb-20">
       {/* Hero Section with Animated Background */}

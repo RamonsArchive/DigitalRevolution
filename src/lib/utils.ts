@@ -139,8 +139,6 @@ export const extractGenderFromProduct = (product: PrintfulProduct): string => {
   // Get the base product name from any variant
   const baseProductName = product.sync_product.name || "";
   const gender = baseProductName.split("-").pop()?.trim().toLowerCase() || "";
-  console.log("gender", gender);
-  console.log([...gender].map(c => c.charCodeAt(0)));
   
   // Map Printful's gender terms to your navigation categories
   const genderMap: Record<string, string> = {
