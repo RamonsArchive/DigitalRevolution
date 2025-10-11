@@ -22,16 +22,6 @@ export const handleStripeWebhook = async (event: Stripe.Event) => {
           });
         }
         const { cartId, userId, guestUserId, checkoutSessionId } = session.metadata;
-        console.log('cartId', cartId);
-        console.log('userId', userId);
-        console.log('guestUserId', guestUserId);
-        console.log('checkoutSessionId', checkoutSessionId);
-  
-        // DEBUG: Log the entire session to see what's available
-        console.log('=== FULL SESSION DEBUG ===');
-        console.log('Session status:', session.status);
-        console.log('Shipping details:', session.shipping_details);
-        console.log('Customer details:', session.customer_details);
   
         // Get cart items
         const cart = await prisma.cart.findFirst({
