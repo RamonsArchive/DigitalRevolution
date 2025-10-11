@@ -12,6 +12,39 @@ import { sendSubscriptionCancelledEmail } from "./donation-emails";
 
 
 const PRINTFUL_BASE = "https://api.printful.com";
+
+// Cached version of products and filters fetch
+const getCachedProductsAndFilters = unstable_cache(
+  async ({limit = 100, offset = 0}: { limit?: number; offset?: number }) => {
+    const syncProducts = await getSyncProducts({limit, offset});
+    if (syncProducts.status === "ERROR") {
+      return syncProducts;
+    }
+    
+    // batch get the products and their variants
+    const allProducts = await getAllProductsBatch(syncProducts.data);
+    if (allProducts.status === "ERROR") {
+      return allProducts;
+    }
+
+    const filters = await extractFiltersFromProducts(allProducts.data as PrintfulProduct[]);
+
+    return parseServerActionResponse({
+      status: "SUCCESS",
+      error: "",
+      data: {
+        allProducts: allProducts.data,
+        filters: filters,
+      },
+    });
+  },
+  ['products-and-filters'], // Cache key
+  {
+    revalidate: 300, // Revalidate every 5 minutes
+    tags: ['products']
+  }
+);
+
 export const getProductsAndFilters = async ({limit = 100,
     offset = 0}: { limit?: number; offset?: number }) => {
     try {
@@ -20,26 +53,7 @@ export const getProductsAndFilters = async ({limit = 100,
             return isRateLimited;
         }
 
-        const syncProducts = await getSyncProducts({limit, offset});
-        if (syncProducts.status === "ERROR") {
-            return syncProducts;
-        }
-        // batch get the products and their varinats
-        const allProducts = await getAllProductsBatch(syncProducts.data);
-        if (allProducts.status === "ERROR") {
-            return allProducts;
-        }
-
-        const filters = await extractFiltersFromProducts(allProducts.data as PrintfulProduct[]);
-
-        return parseServerActionResponse({
-            status: "SUCCESS",
-            error: "",
-            data: {
-                allProducts: allProducts.data,
-                filters: filters,
-            },
-        })
+        return await getCachedProductsAndFilters({limit, offset});
 
     } catch (error) {
         console.error(error);
@@ -60,7 +74,10 @@ const getSyncProducts = async ({limit = 100,
     try {
         // get sync products high level info
         const url = `${PRINTFUL_BASE}/store/products?limit=${limit}&offset=${offset}`;
-        const res = await fetch(url, { headers, cache: "no-store" });
+        const res = await fetch(url, { 
+            headers, 
+            next: { revalidate: 300 } // Cache for 5 minutes
+        });
         if (!res.ok) {
             const text = await res.text().catch(() => "");
             throw new Error(
@@ -93,7 +110,10 @@ export const getProductDetails = async (productId: number) => {
     try {
 
         const url = `${PRINTFUL_BASE}/store/products/${productId}`;
-        const res = await fetch(url, { headers, cache: "no-store" });
+        const res = await fetch(url, { 
+            headers, 
+            next: { revalidate: 300 } // Cache for 5 minutes
+        });
         
         if (!res.ok) {
             throw new Error(`Failed to fetch product ${productId}: ${res.statusText}`);
