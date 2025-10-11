@@ -231,7 +231,6 @@ const ProductPageClient = ({
     (variantIndex: number) => {
       if (!product) return;
 
-      console.log("handleVariantSelect", variantIndex);
       setSelectedVariantIndex(variantIndex);
 
       const variantImageIndex = productImages.findIndex(
@@ -290,7 +289,6 @@ const ProductPageClient = ({
   const handleAddToCart = useCallback(() => {
     if (!product) return;
     addToCart(userId, guestUserId, product, selectedVariantIndex, quantity);
-    console.log(`Added ${quantity} ${product.sync_product.name} to cart`);
   }, [addToCart, userId, guestUserId, product, selectedVariantIndex, quantity]);
 
   const handleBuyNow = useCallback(async () => {
@@ -366,7 +364,6 @@ const ProductPageClient = ({
       const firstVariant = product.sync_variants[0];
       if (firstVariant) {
         import("@/lib/actions").then(({ getProductDetailsByVariantId }) => {
-          console.log("getProductDetailsByVariantId", firstVariant.variant_id);
           getProductDetailsByVariantId(firstVariant.variant_id).then(
             (result) => {
               if (result.status === "SUCCESS") {
@@ -451,8 +448,6 @@ const ProductPageClient = ({
       </div>
     );
   }
-
-  console.log("product", product);
 
   return (
     <section className="flex flex-col p-5 md:p-10 gap-10 min-h-screen pb-20">

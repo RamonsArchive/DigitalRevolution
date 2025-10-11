@@ -7,12 +7,9 @@ import CartPageClient from "@/components/CartPageClient";
 const CartPage = async () => {
   const session = await auth();
   const userId = session?.user?.id || "";
-  console.log("userId", userId);
   const cookieStore = await cookies();
   const guestUserId = cookieStore.get("userId")?.value || "";
-  console.log("guestUserId", guestUserId);
   const cartItems = await getCart(userId, guestUserId);
-  console.log("cartItems", cartItems);
 
   return (
     <CartPageClient

@@ -77,7 +77,6 @@ const CartPageClient = ({
 
   const handleRemoveItem = async (itemId: number) => {
     setIsUpdating(itemId);
-    console.log("handleRemoveItem", userId, guestUserId, itemId);
     try {
       const result = await removeCartItem(userId, guestUserId, itemId);
 
