@@ -49,7 +49,7 @@ export const sendShippingNotificationEmail = async (order: Order, shipment: Prin
     <body>
       <div class="container">
         <div class="header">
-          <img src="${process.env.NEXT_PUBLIC_APP_URL}/Assets/Logos/lightDRLogo.svg" alt="Digital Revolution" class="logo" />
+          <img src="${process.env.NEXT_PUBLIC_APP_URL}/Assets/Logos/advLogoDark-4.png" alt="Digital Revolution" class="logo" />
           <div class="brand">Digital Revolution</div>
           <h1>Your Order Has Shipped!</h1>
           <div class="shipped-badge">📦 On Its Way</div>

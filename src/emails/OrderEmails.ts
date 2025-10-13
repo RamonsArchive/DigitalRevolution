@@ -66,7 +66,7 @@ export async function sendOrderConfirmationEmail(order: Order, items: OrderItem[
 <body>
   <div class="container">
     <div class="header">
-      <img src="${process.env.NEXT_PUBLIC_APP_URL}/Assets/Logos/lightDRLogo.svg" alt="Digital Revolution" class="logo" />
+      <img src="${process.env.NEXT_PUBLIC_APP_URL}/Assets/Logos/advLogoDark-4.png" alt="Digital Revolution" class="logo" />
       <div class="brand">Digital Revolution</div>
       <h1>Order Confirmation</h1>
       <div class="badge processing">⏳ Processing</div>
@@ -210,7 +210,7 @@ export async function sendOrderShippedEmail(order: Order, items: OrderItem[], tr
 <body>
   <div class="container">
     <div class="header">
-      <img src="${process.env.NEXT_PUBLIC_APP_URL}/Assets/Logos/lightDRLogo.svg" alt="Digital Revolution" class="logo" />
+      <img src="${process.env.NEXT_PUBLIC_APP_URL}/Assets/Logos/advLogoDark-4.png" alt="Digital Revolution" class="logo" />
       <div class="brand">Digital Revolution</div>
       <h1>Your Order Has Shipped! 📦</h1>
       <div class="badge shipped">📦 Shipped</div>
@@ -335,7 +335,7 @@ export async function sendOrderUpdatedEmail(order: Order, items: OrderItem[], up
 <body>
   <div class="container">
     <div class="header">
-      <img src="${process.env.NEXT_PUBLIC_APP_URL}/Assets/Logos/lightDRLogo.svg" alt="Digital Revolution" class="logo" />
+      <img src="${process.env.NEXT_PUBLIC_APP_URL}/Assets/Logos/advLogoDark-4.png" alt="Digital Revolution" class="logo" />
       <div class="brand">Digital Revolution</div>
       <h1>Order Update</h1>
       <div class="badge updated">📝 Updated</div>

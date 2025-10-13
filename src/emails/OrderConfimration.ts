@@ -100,7 +100,7 @@ function emailHTML(order: Order, items: OrderItem[], opts: Required<OrderEmailOp
 <body>
   <div class="container">
     <div class="header">
-      <img src="/Assets/Logos/lightDRLogo.svg" alt="${F.esc(opts.brandName)}" class="logo" />
+      <img src="${process.env.NEXT_PUBLIC_APP_URL}/Assets/Logos/advLogoDark-4.png" alt="${F.esc(opts.brandName)}" class="logo" />
       <div class="brand">${F.esc(opts.brandName)}</div>
       <h1>Order Confirmation</h1>
       <div>${statusBadge}</div>
