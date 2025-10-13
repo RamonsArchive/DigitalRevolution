@@ -93,7 +93,6 @@ const CartPageClient = ({
   const handleCheckout = async () => {
     try {
       const result = await createCheckoutSession(userId, guestUserId);
-      console.log("result of checkout session", result);
       if (result.status === "ERROR") {
         toast.error("ERROR", { description: result.error });
         if (

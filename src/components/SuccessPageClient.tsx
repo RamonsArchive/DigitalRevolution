@@ -33,12 +33,7 @@ const SuccessPageClient = ({
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        console.log(
-          `Attempting to fetch order, try ${retryCount + 1}/${maxRetries}`
-        );
-
         const result = await getOrderByStripeSessionId(sessionId);
-        console.log("Order fetch result:", result);
 
         if (result.status === "SUCCESS" && result.data) {
           setOrder(result.data);

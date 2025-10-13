@@ -84,7 +84,6 @@ const DonatePageClient = ({
         name: name,
         email: email,
       };
-      console.log("Donation data:", donationData);
 
       let result = null;
       if (paymentMethod === "one-time") {

@@ -37,7 +37,6 @@ const ProfilePageClient = ({
 
       // TODO: Call your backend function to cancel subscription
       const result = await cancelSubscription(subscriptionId, cancelReason);
-      console.log("result", result);
 
       if (result.status === "ERROR") {
         toast.error("ERROR", { description: result.error });
