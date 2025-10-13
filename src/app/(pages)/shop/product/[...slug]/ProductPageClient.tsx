@@ -547,8 +547,16 @@ const ProductPageClient = ({
               {product?.sync_product.name}
             </h1>
             {currentVariant?.retail_price && (
-              <div className="text-2xl font-bold text-primary-600">
-                ${currentVariant.retail_price}
+              <div className="flex items-center gap-3 flex-wrap">
+                <div className="text-2xl font-bold text-primary-600">
+                  ${currentVariant.retail_price}
+                </div>
+                <div className="relative flex items-center gap-2 rounded-md px-2 py-1 bg-gradient-to-r from-red-500/90 via-orange-500/90 to-pink-500/90 shadow-md shadow-red-500/20 border border-red-400/20">
+                  <div className="absolute inset-0 bg-gradient-to-r from-red-500 via-orange-500 to-pink-500 rounded-md blur-sm opacity-30 -z-10"></div>
+                  <span className="text-xs font-bold text-white drop-shadow">
+                    🚚 Free Shipping
+                  </span>
+                </div>
               </div>
             )}
           </div>

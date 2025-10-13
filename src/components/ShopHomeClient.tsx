@@ -39,12 +39,12 @@ const ShopHomeClient = ({
         {/* Products Grid */}
         <div className="flex-1">
           <div className="flex flex-col gap-5 w-full">
-            <div className="flex flex-row gap-5 items-center">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 items-center">
               <ShopTitleSection />
-              <div className="relative flex flex-row h-fit gap-5 rounded-lg p-3 bg-gradient-to-r from-red-500/90 via-orange-500/90 to-pink-500/90 shadow-lg shadow-red-500/30 backdrop-blur-sm border border-red-400/20">
+              <div className="relative flex flex-row h-fit gap-5 rounded-lg p-2 md:p-3 bg-gradient-to-r from-red-500/90 via-orange-500/90 to-pink-500/90 shadow-lg shadow-red-500/30 backdrop-blur-sm border border-red-400/20">
                 <div className="absolute inset-0 bg-gradient-to-r from-red-500 via-orange-500 to-pink-500 rounded-lg blur-md opacity-40 -z-10 animate-pulse"></div>
-                <p className="font-courier-prime text-sm font-bold text-white drop-shadow-lg">
-                  Free Shipping on all orders!
+                <p className="font-courier-prime text-xs sm:text-sm font-bold text-white drop-shadow-lg">
+                  🚚 Free Shipping on all orders!
                 </p>
               </div>
             </div>
