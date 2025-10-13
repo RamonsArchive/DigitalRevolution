@@ -33,8 +33,8 @@ export const handleStripeWebhook = async (event: Stripe.Event) => {
         }
   
         // Extract shipping address from Stripe session
-        const collectedInformation = session.collected_information;
-        const shippingDetails = collectedInformation?.shipping_details?.address;
+        const collectedInformation = session.collected_information?.shipping_details;
+        const shippingDetails = collectedInformation?.address;
         const customerDetails = session.customer_details; // don't use for address
         console.log("Shipping details in handleStripeWebhook", shippingDetails);
         const shippingAddress = {
