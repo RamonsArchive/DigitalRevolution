@@ -690,6 +690,7 @@ export const createCheckoutSession = async (userId: string, guestUserId: string)
     }
 
     const cartValidation = await validateCartForCheckout(userId, guestUserId);
+    console.log("cartValidation", cartValidation);
     if (cartValidation.status === "ERROR") {
       return cartValidation;
     }

@@ -51,7 +51,7 @@ async function handleOrderCreated(printfulOrder: any) {
     console.log('🆕 Processing order created:', printfulOrder.id);
 
     const order = await prisma.order.findUnique({
-      where: { printfulOrderId: printfulOrder.id },
+      where: { printfulOrderId: String(printfulOrder.id) },
       include: { items: true }
     });
 
@@ -98,7 +98,7 @@ async function handlePackageShipped(printfulOrder: any) {
     }
 
     const order = await prisma.order.findUnique({
-      where: { printfulOrderId: printfulOrder.id },
+      where: { printfulOrderId: String(printfulOrder.id) },
       include: { items: true }
     });
 
@@ -173,7 +173,7 @@ async function handleOrderUpdated(printfulOrder: any) {
     }
 
     const order = await prisma.order.findUnique({
-      where: { printfulOrderId: printfulOrder.id },
+      where: { printfulOrderId: String(printfulOrder.id) },
       include: { items: true }
     });
 

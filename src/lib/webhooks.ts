@@ -9,11 +9,10 @@ import { sendOrderConfirmationEmailFromOrder } from "@/emails/OrderConfimration"
 
 export const handleStripeWebhook = async (event: Stripe.Event) => {
     try {
-       
       if (event.type === 'checkout.session.completed') {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const session = event.data.object as any;
-        console.log('session', session);
+        console.log('session in handleStripeWebhook', session);
         if (!session.metadata) {
           return parseServerActionResponse({ 
             status: 'ERROR', 
@@ -34,19 +33,21 @@ export const handleStripeWebhook = async (event: Stripe.Event) => {
         }
   
         // Extract shipping address from Stripe session
-        const shippingDetails = session.shipping_address_collection;
-        const customerDetails = session.customer_details;
+        const collectedInformation = session.collected_information;
+        const shippingDetails = collectedInformation?.shipping_details?.address;
+        const customerDetails = session.customer_details; // don't use for address
+        console.log("Shipping details in handleStripeWebhook", shippingDetails);
         const shippingAddress = {
-            firstName: customerDetails?.name?.split(' ')[0] || 'Unknown',
-            lastName: customerDetails?.name?.split(' ').slice(1).join(' ') || 'Customer',
+            firstName: collectedInformation?.name?.split(' ')[0] || 'Unknown',
+            lastName: collectedInformation?.name?.split(' ').slice(1).join(' ') || 'Customer',
             email: customerDetails?.email || '',
             phone: customerDetails?.phone || '',
-            line1: customerDetails?.address?.line1 || shippingDetails?.address?.line1 || '',
-            line2: customerDetails?.address?.line2 || shippingDetails?.address?.line2 || '',
-            city: customerDetails?.address?.city || shippingDetails?.address?.city || '',
-            state: customerDetails?.address?.state || shippingDetails?.address?.state || '',
-            country: customerDetails?.address?.country || shippingDetails?.address?.country || 'US',
-            postalCode: customerDetails?.address?.postal_code || shippingDetails?.address?.postal_code || '',
+            line1: shippingDetails?.address?.line1 || '',
+            line2: shippingDetails?.address?.line2 || '',
+            city: shippingDetails?.address?.city || '',
+            state: shippingDetails?.address?.state || '',
+            country: shippingDetails?.address?.country || 'US',
+            postalCode: shippingDetails?.address?.postal_code || '',
           };
   
         console.log('Extracted shipping address:', shippingAddress);
@@ -79,28 +80,6 @@ export const handleStripeWebhook = async (event: Stripe.Event) => {
         });
   
         console.log('Order created:', order.orderNumber);
-
-        // Create order items
-        await Promise.all(
-          cart.items.map(item => 
-            prisma.orderItem.create({
-              data: {
-                orderId: order.id,
-                printfulVariantId: item.printfulVariantId,
-                printfulProductId: item.printfulProductId,
-                productName: item.productName,
-                variantName: item.variantName,
-                variantSize: item.size,
-                variantColor: item.color,
-                variantSku: item.sku,
-                images: item.imageUrl ? [item.imageUrl] : [],
-                unitPrice: item.unitPrice,
-                quantity: item.quantity,
-                totalPrice: item.unitPrice * item.quantity
-              }
-            })
-          )
-        );
 
         // Create order items
         const orderItems = await Promise.all(

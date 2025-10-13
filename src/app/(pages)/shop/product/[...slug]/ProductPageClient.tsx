@@ -283,14 +283,15 @@ const ProductPageClient = ({
     [product, currentVariant, handleVariantSelect]
   );
 
-  const handleAddToCart = useCallback(() => {
-    if (!product) return;
-    addToCart(userId, guestUserId, product, selectedVariantIndex, quantity);
-  }, [addToCart, userId, guestUserId, product, selectedVariantIndex, quantity]);
-
-  const handleBuyNow = useCallback(async () => {
+  const handleBuyNow = async () => {
     try {
-      await handleAddToCart();
+      await addToCart(
+        userId,
+        guestUserId,
+        product as PrintfulProduct,
+        selectedVariantIndex,
+        quantity
+      );
       const result = await createCheckoutSession(userId, guestUserId);
       if (result.status === "ERROR") {
         toast.error("ERROR", { description: result.error as string });
@@ -302,7 +303,7 @@ const ProductPageClient = ({
       toast.error("ERROR", { description: error as string });
       return;
     }
-  }, [handleAddToCart]);
+  };
 
   const handleSwipe = useCallback(
     (direction: "left" | "right") => {
@@ -634,7 +635,15 @@ const ProductPageClient = ({
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <button
-              onClick={handleAddToCart}
+              onClick={() =>
+                addToCart(
+                  userId,
+                  guestUserId,
+                  product as PrintfulProduct,
+                  selectedVariantIndex,
+                  quantity
+                )
+              }
               className="flex-1 bg-gradient-to-r from-primary-500 to-secondary-500 text-white py-4 px-6 rounded-xl font-semibold text-lg hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer"
             >
               Add to Cart ({cartItems.length})

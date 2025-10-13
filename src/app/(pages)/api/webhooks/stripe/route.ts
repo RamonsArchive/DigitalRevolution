@@ -45,6 +45,8 @@ export async function POST(request: NextRequest) {
         signature,
         process.env.STRIPE_SHOP_WEBHOOK_SECRET!
       );
+
+      console.log('event in stripe webhook handler', event);
       
       console.log('✅ Webhook signature verified');
       console.log('Event type:', event.type);
