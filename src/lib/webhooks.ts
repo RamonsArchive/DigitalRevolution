@@ -42,12 +42,12 @@ export const handleStripeWebhook = async (event: Stripe.Event) => {
             lastName: collectedInformation?.name?.split(' ').slice(1).join(' ') || 'Customer',
             email: customerDetails?.email || '',
             phone: customerDetails?.phone || '',
-            line1: shippingDetails?.address?.line1 || '',
-            line2: shippingDetails?.address?.line2 || '',
-            city: shippingDetails?.address?.city || '',
-            state: shippingDetails?.address?.state || '',
-            country: shippingDetails?.address?.country || 'US',
-            postalCode: shippingDetails?.address?.postal_code || '',
+            line1: shippingDetails?.line1 || '',
+            line2: shippingDetails?.line2 || '',
+            city: shippingDetails?.city || '',
+            state: shippingDetails?.state || '',
+            country: shippingDetails?.country || 'US',
+            postalCode: shippingDetails?.postal_code || '',
           };
   
         console.log('Extracted shipping address:', shippingAddress);
