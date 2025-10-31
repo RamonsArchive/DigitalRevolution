@@ -38,11 +38,11 @@ const ProductCard = ({ product }: { product: PrintfulProduct }) => {
             </div>
           )}
 
-          {/* Hover indicator */}
-          <div className="mt-3 flex items-center text-primary-500 opacity-0 group-hover:opacity-100g group-active:opacity-100 transition-opacity duration-300">
+          {/* View Details indicator - Always visible on mobile, hover on desktop */}
+          <div className="mt-2 md:mt-3 flex items-center text-primary-500 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
             <span className="text-sm font-medium">View Details</span>
             <svg
-              className="w-4 h-4 ml-1 transform group-hover:translate-x-1 group-active:translate-x-1 transition-transform duration-300"
+              className="w-4 h-4 ml-1 transform md:group-hover:translate-x-1 transition-transform duration-300"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
