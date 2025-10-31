@@ -69,11 +69,7 @@ export async function middleware(request: NextRequest) {
   
   // Apply NextAuth protection for specific routes
   // response = await withNextAuth(request, response);
-  
-  // Check for early returns (redirects)
-  if (response.headers.get('location')) {
-    return response;
-  }
+
   
   // Apply admin authentication for admin routes
   response = await withAdminAuth(request, response);
