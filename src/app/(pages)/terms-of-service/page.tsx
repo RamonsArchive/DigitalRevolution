@@ -3,39 +3,29 @@ import Link from "next/link";
 import { TermsOfService } from "@/constants";
 import TitleSection from "@/components/TitleSection";
 import { IconCard, InfoCard } from "@/components/cards";
-import {
-  ArrowLeft,
-  FileText,
-  Scale,
-  Shield,
-  CreditCard,
-  AlertTriangle,
-  Copyright,
-  Zap,
-  Globe,
-} from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 const TermsOfServicePage = () => {
-  const getIcon = (id: number) => {
+  const getIcon = (id: number): string => {
     switch (id) {
       case 1:
-        return <FileText className="w-6 h-6" />;
+        return "📄";
       case 2:
-        return <Globe className="w-6 h-6" />;
+        return "🌐";
       case 3:
-        return <Shield className="w-6 h-6" />;
+        return "🛡️";
       case 4:
-        return <CreditCard className="w-6 h-6" />;
+        return "💳";
       case 5:
-        return <AlertTriangle className="w-6 h-6" />;
+        return "⚠️";
       case 6:
-        return <Copyright className="w-6 h-6" />;
+        return "©️";
       case 7:
-        return <Scale className="w-6 h-6" />;
+        return "⚖️";
       case 8:
-        return <Zap className="w-6 h-6" />;
+        return "⚡";
       default:
-        return <FileText className="w-6 h-6" />;
+        return "📄";
     }
   };
 
@@ -57,7 +47,7 @@ const TermsOfServicePage = () => {
             {/* Introduction */}
             <div className="mb-12">
               <InfoCard
-                icon={Scale}
+                icon="⚖️"
                 title="Legal Terms & Conditions"
                 description="Please read these terms carefully before using our services. By accessing Digital Revolution, you agree to be bound by these terms."
               />
@@ -70,7 +60,7 @@ const TermsOfServicePage = () => {
                   key={term.id}
                   icon={getIcon(term.id)}
                   title={term.title}
-                  content={<p>{term.content}</p>}
+                  content={term.content}
                 />
               ))}
             </div>
@@ -78,7 +68,7 @@ const TermsOfServicePage = () => {
             {/* Contact Section */}
             <div className="mt-16">
               <InfoCard
-                icon={Scale}
+                icon="⚖️"
                 title="Questions About These Terms?"
                 description="If you have any questions about these Terms of Service, please contact us."
                 gradientFrom="from-secondary-500/20"

@@ -3,7 +3,7 @@ import React from "react";
 interface IconCardProps {
   icon: string;
   title: string;
-  content: React.ReactNode;
+  content: string | React.ReactNode;
   gradientFrom?: string;
   gradientTo?: string;
   className?: string;
@@ -40,7 +40,7 @@ const IconCard: React.FC<IconCardProps> = ({
               {title}
             </h3>
             <div className="text-slate-300 leading-relaxed text-lg flex-grow">
-              {content}
+              {typeof content === "string" ? <p>{content}</p> : content}
             </div>
           </div>
         </div>

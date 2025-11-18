@@ -3,40 +3,29 @@ import Link from "next/link";
 import { PrivacyPolicy } from "@/constants";
 import TitleSection from "@/components/TitleSection";
 import { IconCard, FeatureCard, InfoCard } from "@/components/cards";
-import {
-  ArrowLeft,
-  Shield,
-  Database,
-  Eye,
-  Share2,
-  Lock,
-  UserCheck,
-  Clock,
-  Cookie,
-  ExternalLink,
-} from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 const PrivacyPolicyPage = () => {
-  const getIcon = (id: number) => {
+  const getIcon = (id: number): string => {
     switch (id) {
       case 1:
-        return <Database className="w-6 h-6" />;
+        return "💾";
       case 2:
-        return <Eye className="w-6 h-6" />;
+        return "👁️";
       case 3:
-        return <Share2 className="w-6 h-6" />;
+        return "🔗";
       case 4:
-        return <Lock className="w-6 h-6" />;
+        return "🔒";
       case 5:
-        return <UserCheck className="w-6 h-6" />;
+        return "✅";
       case 6:
-        return <Clock className="w-6 h-6" />;
+        return "⏰";
       case 7:
-        return <Cookie className="w-6 h-6" />;
+        return "🍪";
       case 8:
-        return <ExternalLink className="w-6 h-6" />;
+        return "🔗";
       default:
-        return <Shield className="w-6 h-6" />;
+        return "🛡️";
     }
   };
 
@@ -58,7 +47,7 @@ const PrivacyPolicyPage = () => {
             {/* Introduction */}
             <div className="mb-12">
               <InfoCard
-                icon={Shield}
+                icon="🛡️"
                 title="Your Privacy Matters"
                 description="We're committed to protecting your privacy and being transparent about how we collect, use, and protect your information."
               />
@@ -71,7 +60,7 @@ const PrivacyPolicyPage = () => {
                   key={policy.id}
                   icon={getIcon(policy.id)}
                   title={policy.title}
-                  content={<p>{policy.content}</p>}
+                  content={policy.content}
                 />
               ))}
             </div>
@@ -79,7 +68,7 @@ const PrivacyPolicyPage = () => {
             {/* Key Privacy Principles */}
             <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
               <FeatureCard
-                icon={Lock}
+                icon="🔒"
                 title="Secure"
                 description="Bank-level encryption for all data transmission and storage"
                 gradientFrom="from-blue-500/20"
@@ -88,7 +77,7 @@ const PrivacyPolicyPage = () => {
                 borderColor="border-blue-500/30"
               />
               <FeatureCard
-                icon={UserCheck}
+                icon="✅"
                 title="Transparent"
                 description="Clear communication about what data we collect and why"
                 gradientFrom="from-green-500/20"
@@ -97,7 +86,7 @@ const PrivacyPolicyPage = () => {
                 borderColor="border-green-500/30"
               />
               <FeatureCard
-                icon={Shield}
+                icon="🛡️"
                 title="Respectful"
                 description="Your data belongs to you - we never sell or misuse it"
                 gradientFrom="from-purple-500/20"
@@ -110,7 +99,7 @@ const PrivacyPolicyPage = () => {
             {/* Contact Section */}
             <div className="mt-16">
               <InfoCard
-                icon={Shield}
+                icon="🛡️"
                 title="Questions About Your Privacy?"
                 description="We're here to help. Contact us if you have any questions about your data or privacy rights."
                 gradientFrom="from-secondary-500/20"

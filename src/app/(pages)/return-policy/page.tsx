@@ -3,24 +3,17 @@ import Link from "next/link";
 import { ReturnPolicy } from "@/constants";
 import TitleSection from "@/components/TitleSection";
 import { IconCard, FeatureCard, InfoCard } from "@/components/cards";
-import {
-  ArrowLeft,
-  RotateCcw,
-  Clock,
-  Mail,
-  CheckCircle,
-  AlertCircle,
-} from "lucide-react";
+import { ArrowLeft, Mail } from "lucide-react";
 
 const ReturnPolicyPage = () => {
-  const getIcon = (id: number) => {
+  const getIcon = (id: number): string => {
     switch (id) {
       case 1:
-        return <RotateCcw className="w-6 h-6" />;
+        return "🔄";
       case 2:
-        return <Clock className="w-6 h-6" />;
+        return "⏰";
       default:
-        return <RotateCcw className="w-6 h-6" />;
+        return "🔄";
     }
   };
 
@@ -42,7 +35,7 @@ const ReturnPolicyPage = () => {
             {/* Introduction */}
             <div className="mb-12">
               <InfoCard
-                icon={RotateCcw}
+                icon="🔄"
                 title="Return & Refund Policy"
                 description="We want you to be completely satisfied with your purchase. Here's everything you need to know about returns and refunds."
               />
@@ -55,7 +48,7 @@ const ReturnPolicyPage = () => {
                   key={policy.id}
                   icon={getIcon(policy.id)}
                   title={policy.title}
-                  content={<p>{policy.content}</p>}
+                  content={policy.content}
                 />
               ))}
             </div>
@@ -63,7 +56,7 @@ const ReturnPolicyPage = () => {
             {/* Important Notes */}
             <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
               <FeatureCard
-                icon={CheckCircle}
+                icon="✅"
                 title="What We Accept"
                 description={
                   <ul className="text-green-200 text-sm space-y-1 text-left">
@@ -79,7 +72,7 @@ const ReturnPolicyPage = () => {
                 borderColor="border-green-500/30"
               />
               <FeatureCard
-                icon={AlertCircle}
+                icon="⚠️"
                 title="What We Don't Accept"
                 description={
                   <ul className="text-red-200 text-sm space-y-1 text-left">
@@ -99,7 +92,7 @@ const ReturnPolicyPage = () => {
             {/* Contact Section */}
             <div className="mt-16">
               <InfoCard
-                icon={RotateCcw}
+                icon="🔄"
                 title="Need to Start a Return?"
                 description="Contact us with your order number and reason for return. We'll guide you through the process."
                 gradientFrom="from-secondary-500/20"
