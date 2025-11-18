@@ -6,6 +6,7 @@ import ImageCarousel from "./ImageCarousel";
 import { ABOUT_DATA } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
+import { ImpactCard, FeatureCard, InfoCard, IconCard } from "@/components/cards";
 
 const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
   const images = (aboutData.images || []).map((img) => img.src);
@@ -112,42 +113,21 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
               <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {aboutData.impactAreas?.map((area, idx) => (
-                <div key={idx} className="group relative">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                  <div className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50 shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-105">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition duration-300">
-                        <span className="text-lg">
-                          {idx === 0
-                            ? "🌐"
-                            : idx === 1
-                              ? "📚"
-                              : idx === 2
-                                ? "🔬"
-                                : "🏛️"}
-                        </span>
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="text-xl font-bold text-slate-100 mb-3 group-hover:text-primary-200 transition-colors">
-                          {area.title}
-                        </h4>
-                        <p className="text-slate-300 text-sm leading-relaxed mb-3">
-                          {area.description}
-                        </p>
-                        <div className="bg-slate-700/50 rounded-lg p-3">
-                          <p className="text-slate-400 text-xs font-medium mb-1">
-                            STEM Connection:
-                          </p>
-                          <p className="text-slate-200 text-xs leading-relaxed">
-                            {area.stemConnection}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+              {aboutData.impactAreas?.map((area, idx) => {
+                const icons = ["🌐", "📚", "🔬", "🏛️"];
+                return (
+                  <ImpactCard
+                    key={idx}
+                    icon={icons[idx] || "📌"}
+                    title={area.title}
+                    description={area.description}
+                    stemLabel="STEM Connection"
+                    stemContent={area.stemConnection}
+                    layout="horizontal"
+                    className="h-full"
+                  />
+                );
+              })}
             </div>
           </div>
         </section>
@@ -162,34 +142,18 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
               <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-              {aboutData.values?.map((v, idx) => (
-                <div key={idx} className="group relative">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                  <div className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50 shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-105">
-                    <div className="text-center">
-                      <div className="w-16 h-16 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition duration-300">
-                        <span className="text-2xl">
-                          {idx === 0
-                            ? "⚖️"
-                            : idx === 1
-                              ? "🏘️"
-                              : idx === 2
-                                ? "📊"
-                                : idx === 3
-                                  ? "🗳️"
-                                  : "🎓"}
-                        </span>
-                      </div>
-                      <h4 className="text-lg font-bold text-slate-100 mb-3 group-hover:text-primary-200 transition-colors">
-                        {v.title}
-                      </h4>
-                      <p className="text-slate-300 text-sm leading-relaxed">
-                        {v.description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
+              {aboutData.values?.map((v, idx) => {
+                const icons = ["⚖️", "🏘️", "📊", "🗳️", "🎓"];
+                return (
+                  <FeatureCard
+                    key={idx}
+                    icon={icons[idx] || "📌"}
+                    title={v.title}
+                    description={v.description}
+                    className="h-full"
+                  />
+                );
+              })}
             </div>
           </div>
         </section>
@@ -204,34 +168,20 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
               <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {aboutData.initiatives?.map((initiative, idx) => (
-                <div key={idx} className="group relative">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-secondary-500/20 to-primary-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                  <div className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-6 border border-secondary-500/30 shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-105">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-gradient-to-r from-secondary-500 to-primary-500 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition duration-300">
-                        <span className="text-lg">
-                          {idx === 0
-                            ? "🗳️"
-                            : idx === 1
-                              ? "🌉"
-                              : idx === 2
-                                ? "🏢"
-                                : "📖"}
-                        </span>
-                      </div>
-                      <div>
-                        <h4 className="text-lg font-bold text-slate-100 mb-2 group-hover:text-secondary-200 transition-colors">
-                          {initiative.name}
-                        </h4>
-                        <p className="text-slate-300 text-sm leading-relaxed">
-                          {initiative.description}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+              {aboutData.initiatives?.map((initiative, idx) => {
+                const icons = ["🗳️", "🌉", "🏢", "📖"];
+                return (
+                  <IconCard
+                    key={idx}
+                    icon={icons[idx] || "📌"}
+                    title={initiative.name}
+                    content={<p>{initiative.description}</p>}
+                    gradientFrom="from-secondary-500/20"
+                    gradientTo="to-primary-500/20"
+                    className="h-full"
+                  />
+                );
+              })}
             </div>
           </div>
         </section>

@@ -150,10 +150,13 @@ export const HOME_TEXT_SECTIONS = {
     id: "section-3",
     title: <>Our Impact Approach</>,
     subtitle: (
-      <>50% of profits fund digital equity and STEM education initiatives</>
+      <>
+        100% of donations and 50% of proceeds from the shop go to STEM education
+        initiatives
+      </>
     ),
     description:
-      "We don't just identify problems—we create solutions. Our foundation operates on a transparent model where half of all proceeds directly fund digital literacy programs, STEM education pathways, and community technology infrastructure.",
+      "We don't just identify problems—we create solutions. Our foundation operates on a transparent model where 100% of donations and 50% of proceeds from the shop directly fund digital literacy programs, STEM education pathways, and community technology infrastructure.",
     impactAreas: [
       {
         icon: "🌐",
@@ -199,25 +202,25 @@ export const HOME_TEXT_SECTIONS = {
       "Every person we help gain digital access becomes capable of pursuing STEM education, launching technology careers, and participating fully in democratic society. This isn't just about internet access—it's about creating digital citizens who own their place in the technological future.",
     pathway: [
       {
-        step: 1,
+        icon: "🌐",
         title: "Digital Access",
         description:
           "Internet connectivity and basic digital literacy training",
       },
       {
-        step: 2,
+        icon: "📚",
         title: "Skill Building",
         description:
           "Introduction to coding, computer science, and STEM concepts",
       },
       {
-        step: 3,
+        icon: "🚀",
         title: "Career Pathways",
         description:
           "Advanced training, bootcamps, and technology career preparation",
       },
       {
-        step: 4,
+        icon: "👥",
         title: "Community Leadership",
         description: "Graduates become local technology leaders and mentors",
       },
@@ -234,7 +237,8 @@ export const HOME_TEXT_SECTIONS = {
       {
         href: "/shop",
         label: "Shop Our Store",
-        description: "50% of profits fund digital equity initiatives",
+        description:
+          "50% of proceeds from the shop go to STEM education initiatives",
         impact:
           "Direct funding for STEM education and technology access programs",
       },
@@ -266,9 +270,9 @@ export const HOME_TEXT_SECTIONS = {
       "We believe in complete transparency about our impact and funding",
     metrics: [
       {
-        number: "50%",
-        label: "Profits Donated",
-        description: "Half of all proceeds fund digital equity causes",
+        number: "100%",
+        label: "Donations",
+        description: "100% of donations go to STEM education initiatives",
       },
       {
         number: "2025",
@@ -364,7 +368,7 @@ export const ABOUT_DATA = {
       "Democracy and egalitarian values cannot be achieved and maintained if countries or communities are mere spectators and renters of the digital world.",
 
     aboutDescription:
-      "Digital Revolution was founded in 2025 by Ramon McDargh-Mitchell to help spread awareness and support underprivileged communities who are left behind in the digital age, and thus have fewer opportunities to succeed in education, careers, and civic participation. The foundation donates 50% of its profits to causes that help address the digital divide and expand access to STEM education opportunities.",
+      "Digital Revolution was founded in 2025 by Ramon McDargh-Mitchell to help spread awareness and support underprivileged communities who are left behind in the digital age, and thus have fewer opportunities to succeed in education, careers, and civic participation. The foundation donates 100% of donations and 50% of proceeds from the shop to causes that help address the digital divide and expand access to STEM education opportunities.",
 
     missionDescription:
       "Our mission is to protect and promote egalitarian democratic values that cannot be achieved or maintained when countries or communities are excluded from the digital age. We believe in universal access to the widespread knowledge of the internet, community ownership of data infrastructure, and the ability to participate in the digital world under self-determined rules and protections. We oppose systems that create digital renters rather than owners, which are inherently oppressive due to their lack of egalitarian rights and dependence on foreign managers whose interests may not align with local communities. By bridging the digital divide, we also create pathways for individuals to access STEM education, coding bootcamps, online learning platforms, and technology careers that were previously out of reach.",
@@ -373,7 +377,7 @@ export const ABOUT_DATA = {
       "Ramon McDargh-Mitchell is a technology advocate and digital rights activist with a background in software development, computer science education, and community organizing. With experience in both industry and academia, Ramon has seen how digital inequality creates barriers not just to information access, but to STEM career opportunities and educational advancement. Having witnessed firsthand the growing digital divide in underserved communities, Ramon founded Digital Revolution to bridge the gap between technological advancement and equitable access. Through this foundation, Ramon aims to ensure that technological progress serves humanity's democratic ideals while creating pathways for individuals to pursue careers in science, technology, engineering, and mathematics.",
 
     howToSupport:
-      "There are many ways to support our mission: shop our newly released products in our store (with 50% of profits going directly to digital equity and STEM education initiatives), make a direct donation to our cause, volunteer with partner organizations working on digital literacy and coding education, mentor individuals pursuing STEM careers, or simply share our mission with others in your community.",
+      "There are many ways to support our mission: shop our newly released products in our store (with 50% of proceeds going directly to STEM education initiatives), make a direct donation to our cause (100% of donations go to STEM education initiatives), volunteer with partner organizations working on digital literacy and coding education, mentor individuals pursuing STEM careers, or simply share our mission with others in your community.",
   },
 
   impactAreas: [
@@ -441,7 +445,7 @@ export const ABOUT_DATA = {
     {
       title: "Transparent Impact",
       description:
-        "50% of profits directly fund digital divide and STEM accessibility initiatives",
+        "100% of donations and 50% of proceeds from the shop directly fund digital divide and STEM accessibility initiatives",
     },
     {
       title: "Democratic Values",
@@ -457,7 +461,7 @@ export const ABOUT_DATA = {
 
   stats: {
     founded: "2025",
-    profitsDonated: "50%",
+    profitsDonated: "100% donations, 50% shop proceeds",
     communitiesServed: "Growing daily",
     missionFocus:
       "Digital equity, democratic access, and STEM opportunity expansion",
@@ -610,7 +614,8 @@ export const PARTNERS_DATA = {
     currentPartners: "Growing network",
     programsDelivered: "Multiple initiatives",
     communitiesReached: "Expanding coverage",
-    impactMetric: "50% of profits donated to digital equity causes",
+    impactMetric:
+      "100% of donations and 50% of shop proceeds donated to digital equity causes",
   },
 
   contactInfo: {
@@ -635,7 +640,7 @@ export const DONATE_DATA = {
     donationTitle: "Donation Options",
     transparencyTitle: "Transparency Commitment",
     transparencyDescription:
-      "We believe in complete transparency. 50% of all proceeds (including donations) go directly to digital equity and STEM education initiatives. The remaining 50% supports operational costs, program development, and sustainable growth of our mission.",
+      "We believe in complete transparency. 100% of donations go directly to digital equity and STEM education initiatives. 50% of proceeds from the shop go to STEM education initiatives, while the remaining 50% supports operational costs, program development, and sustainable growth of our mission.",
 
     donationOptions: [
       {
@@ -722,7 +727,8 @@ export const DONATE_DATA = {
   otherWaysToHelp: [
     {
       title: "Shop Our Store",
-      description: "Purchase our products - 50% of profits fund our mission",
+      description:
+        "Purchase our products - 50% of proceeds from the shop go to STEM education initiatives",
       action: "Every purchase makes a difference",
     },
     {
@@ -855,7 +861,7 @@ export const SHARE_DATA = {
     {
       type: "Impact Focus",
       content:
-        "50% of Digital Revolution's profits go directly to digital equity initiatives and STEM education programs. Shopping with purpose makes a difference!",
+        "100% of donations and 50% of proceeds from the shop go directly to digital equity initiatives and STEM education programs. Shopping with purpose makes a difference!",
       hashtags: ["#TechForGood", "#STEMEducation", "#DigitalInclusion"],
     },
     {
@@ -966,8 +972,8 @@ export const SHARE_DATA = {
     title: "Sharing Creates Impact",
     stats: [
       {
-        metric: "50%",
-        description: "Of profits donated to digital equity causes",
+        metric: "100%",
+        description: "Of donations go to STEM education initiatives",
       },
       {
         metric: "📈",
@@ -1060,7 +1066,7 @@ export const TermsOfService = [
     id: 2,
     title: "About Digital Revolution",
     content:
-      "Digital Revolution is a foundation dedicated to bridging the digital divide and creating STEM education opportunities. We sell products where 50% of profits go directly to digital equity and STEM education initiatives. Our mission is to ensure technology serves democratic values and creates opportunities for all communities.",
+      "Digital Revolution is a foundation dedicated to bridging the digital divide and creating STEM education opportunities. 100% of donations and 50% of proceeds from the shop go directly to digital equity and STEM education initiatives. Our mission is to ensure technology serves democratic values and creates opportunities for all communities.",
   },
   {
     id: 3,

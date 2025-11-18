@@ -6,6 +6,7 @@ import TitleSection from "./TitleSection";
 import ImageCarousel from "./ImageCarousel";
 import PartnersForm from "./PartnersForm";
 import Image from "next/image";
+import { FeatureCard, IconCard, InfoCard } from "@/components/cards";
 
 const PartnersPageClient = ({
   partnersData,
@@ -59,35 +60,23 @@ const PartnersPageClient = ({
               <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {partnersData.partnershipTypes?.map((type, idx) => (
-                <div key={idx} className="group relative">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                  <div className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50 shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-105">
-                    <div className="text-center">
-                      <div className="w-16 h-16 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition duration-300">
-                        <span className="text-2xl">
-                          {idx === 0
-                            ? "🏢"
-                            : idx === 1
-                              ? "🎓"
-                              : idx === 2
-                                ? "🤝"
-                                : "🏛️"}
-                        </span>
-                      </div>
-                      <h4 className="text-xl font-bold text-slate-100 mb-3 group-hover:text-primary-200 transition-colors">
-                        {type.type}
-                      </h4>
-                      <p className="text-slate-300 text-sm leading-relaxed mb-3">
-                        {type.description}
-                      </p>
-                      <div className="text-xs text-slate-400 italic">
-                        Examples: {type.examples}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+              {partnersData.partnershipTypes?.map((type, idx) => {
+                const icons = ["🏢", "🎓", "🤝", "🏛️"];
+                return (
+                  <FeatureCard
+                    key={idx}
+                    icon={icons[idx] || "📌"}
+                    title={type.type}
+                    description={
+                      <>
+                        <p className="mb-3">{type.description}</p>
+                        <p className="text-xs italic">Examples: {type.examples}</p>
+                      </>
+                    }
+                    className="h-full"
+                  />
+                );
+              })}
             </div>
           </div>
         </section>
@@ -102,36 +91,20 @@ const PartnersPageClient = ({
               <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {partnersData.benefits?.map((benefit, idx) => (
-                <div key={idx} className="group relative">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-secondary-500/20 to-primary-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                  <div className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-6 border border-secondary-500/30 shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-105">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-gradient-to-r from-secondary-500 to-primary-500 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition duration-300">
-                        <span className="text-lg">
-                          {idx === 0
-                            ? "📈"
-                            : idx === 1
-                              ? "⭐"
-                              : idx === 2
-                                ? "🌐"
-                                : idx === 3
-                                  ? "🔄"
-                                  : "📊"}
-                        </span>
-                      </div>
-                      <div>
-                        <h4 className="text-lg font-bold text-slate-100 mb-2 group-hover:text-secondary-200 transition-colors">
-                          {benefit.title}
-                        </h4>
-                        <p className="text-slate-300 text-sm leading-relaxed">
-                          {benefit.description}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+              {partnersData.benefits?.map((benefit, idx) => {
+                const icons = ["📈", "⭐", "🌐", "🔄", "📊"];
+                return (
+                  <IconCard
+                    key={idx}
+                    icon={icons[idx] || "📌"}
+                    title={benefit.title}
+                    content={<p>{benefit.description}</p>}
+                    gradientFrom="from-secondary-500/20"
+                    gradientTo="to-primary-500/20"
+                    className="h-full"
+                  />
+                );
+              })}
             </div>
           </div>
         </section>

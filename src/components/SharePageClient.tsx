@@ -11,7 +11,6 @@ import {
   ExternalLink,
   Copy,
   Check,
-  Heart,
   Globe,
   BookOpen,
   Handshake,
@@ -21,12 +20,15 @@ import {
   MessageCircle,
   Award,
   TrendingUp,
-  Users2,
-  GraduationCap,
-  Building2,
 } from "lucide-react";
 import { SHARE_DATA } from "@/constants";
 import TitleSection from "./TitleSection";
+import {
+  FeatureCard,
+  IconCard,
+  InfoCard,
+  ShareableContentCard,
+} from "@/components/cards";
 
 const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
   const [copiedText, setCopiedText] = useState<string | null>(null);
@@ -107,22 +109,13 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {shareData.sharingReasons.map((reason, idx) => (
-                <div key={idx} className="group relative">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                  <div className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50 shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-105">
-                    <div className="text-center">
-                      <div className="w-16 h-16 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition duration-300">
-                        <span className="text-2xl">{reason.icon}</span>
-                      </div>
-                      <h4 className="text-lg font-bold text-slate-100 mb-3 group-hover:text-primary-200 transition-colors">
-                        {reason.title}
-                      </h4>
-                      <p className="text-slate-300 text-sm leading-relaxed">
-                        {reason.description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                <FeatureCard
+                  key={idx}
+                  icon={reason.icon}
+                  title={reason.title}
+                  description={reason.description}
+                  className="h-full"
+                />
               ))}
             </div>
           </div>
@@ -186,64 +179,23 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
             </div>
             <div className="space-y-6">
               {shareData.shareableContent.map((content, idx) => (
-                <div key={idx} className="group relative">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                  <div className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50 shadow-xl group-hover:shadow-2xl transition-all duration-300">
-                    <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-4">
-                          <span className="px-3 py-1 bg-gradient-to-r from-primary-500 to-secondary-500 text-white text-sm font-semibold rounded-full">
-                            {content.type}
-                          </span>
-                        </div>
-                        <p className="text-slate-200 text-lg leading-relaxed mb-4">
-                          {content.content}
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {content.hashtags.map((hashtag, hashtagIdx) => (
-                            <span
-                              key={hashtagIdx}
-                              className="px-2 py-1 bg-slate-700/50 text-slate-300 text-sm rounded-md"
-                            >
-                              {hashtag}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="flex flex-col gap-2">
-                        <button
-                          onClick={() =>
-                            copyToClipboard(content.content, `content-${idx}`)
-                          }
-                          className="px-4 py-2 bg-slate-700/50 hover:bg-slate-600/50 text-slate-200 font-semibold rounded-xl transition-all duration-300 hover:scale-105 flex items-center gap-2"
-                        >
-                          {copiedText === `content-${idx}` ? (
-                            <Check className="w-4 h-4 text-emerald-400" />
-                          ) : (
-                            <Copy className="w-4 h-4" />
-                          )}
-                          Copy Text
-                        </button>
-                        <button
-                          onClick={() =>
-                            copyToClipboard(
-                              `${content.content} ${content.hashtags.join(" ")}`,
-                              `full-${idx}`
-                            )
-                          }
-                          className="px-4 py-2 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 flex items-center gap-2"
-                        >
-                          {copiedText === `full-${idx}` ? (
-                            <Check className="w-4 h-4" />
-                          ) : (
-                            <Copy className="w-4 h-4" />
-                          )}
-                          Copy All
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <ShareableContentCard
+                  key={idx}
+                  type={content.type}
+                  content={content.content}
+                  hashtags={content.hashtags}
+                  onCopyText={() =>
+                    copyToClipboard(content.content, `content-${idx}`)
+                  }
+                  onCopyAll={() =>
+                    copyToClipboard(
+                      `${content.content} ${content.hashtags.join(" ")}`,
+                      `full-${idx}`
+                    )
+                  }
+                  isTextCopied={copiedText === `content-${idx}`}
+                  isAllCopied={copiedText === `full-${idx}`}
+                />
               ))}
             </div>
           </div>
@@ -300,24 +252,15 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {shareData.sharingTips.map((tip, idx) => (
-                <div key={idx} className="group relative">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-secondary-500/20 to-primary-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                  <div className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50 shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-105">
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-gradient-to-r from-secondary-500 to-primary-500 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition duration-300">
-                        <span className="text-lg">💡</span>
-                      </div>
-                      <div>
-                        <h4 className="text-lg font-bold text-slate-100 mb-2 group-hover:text-secondary-200 transition-colors">
-                          {tip.tip}
-                        </h4>
-                        <p className="text-slate-300 text-sm leading-relaxed">
-                          {tip.description}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <IconCard
+                  key={idx}
+                  icon="💡"
+                  title={tip.tip}
+                  content={<p>{tip.description}</p>}
+                  gradientFrom="from-secondary-500/20"
+                  gradientTo="to-primary-500/20"
+                  className="h-full"
+                />
               ))}
             </div>
           </div>
@@ -398,33 +341,18 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
               <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {shareData.communityGoals.map((goal, idx) => (
-                <div key={idx} className="group relative">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                  <div className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50 shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-105">
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition duration-300">
-                        {idx === 0 && <Users2 className="w-6 h-6 text-white" />}
-                        {idx === 1 && (
-                          <GraduationCap className="w-6 h-6 text-white" />
-                        )}
-                        {idx === 2 && (
-                          <Building2 className="w-6 h-6 text-white" />
-                        )}
-                        {idx === 3 && <Heart className="w-6 h-6 text-white" />}
-                      </div>
-                      <div>
-                        <h4 className="text-lg font-bold text-slate-100 mb-2 group-hover:text-primary-200 transition-colors">
-                          {goal.goal}
-                        </h4>
-                        <p className="text-slate-300 text-sm leading-relaxed">
-                          {goal.description}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+              {shareData.communityGoals.map((goal, idx) => {
+                const icons = ["👥", "🎓", "🏢", "❤️"];
+                return (
+                  <IconCard
+                    key={idx}
+                    icon={icons[idx] || "👥"}
+                    title={goal.goal}
+                    content={<p>{goal.description}</p>}
+                    className="h-full"
+                  />
+                );
+              })}
             </div>
           </div>
         </section>

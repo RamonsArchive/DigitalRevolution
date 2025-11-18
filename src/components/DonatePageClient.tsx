@@ -16,6 +16,13 @@ import {
   createSubscriptionSession,
 } from "@/lib/actions";
 import { useRouter } from "next/navigation";
+import {
+  ImpactBreakdownCard,
+  FundingAreaCard,
+  DonationOptionCard,
+  InfoCard,
+  FeatureCard,
+} from "@/components/cards";
 const DonatePageClient = ({
   session,
   donateData,
@@ -171,22 +178,12 @@ const DonatePageClient = ({
         {/* Donation Description */}
         <section className="px-6 md:px-12">
           <div className="max-w-4xl mx-auto">
-            <div className="group relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary-500 via-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
-              <div className="relative bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-primary-500/30 shadow-2xl text-center">
-                <div className="flex items-center justify-center mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mr-4">
-                    <span className="text-3xl">💝</span>
-                  </div>
-                  <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
-                    {donateData.text.subTitle}
-                  </h2>
-                </div>
-                <p className="text-slate-200 leading-relaxed text-lg max-w-3xl mx-auto">
-                  {donateData.text.description}
-                </p>
-              </div>
-            </div>
+            <InfoCard
+              icon="💝"
+              title={donateData.text.subTitle}
+              description={donateData.text.description}
+              borderColor="border-primary-500/30"
+            />
           </div>
         </section>
 
@@ -201,29 +198,13 @@ const DonatePageClient = ({
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
               {donateData.impactBreakdown?.map((impact, idx) => (
-                <div key={idx} className="group relative">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                  <div className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50 shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-105">
-                    <div className="text-center">
-                      <div className="w-16 h-16 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition duration-300">
-                        <span className="text-2xl font-bold text-white">
-                          {impact.amount}
-                        </span>
-                      </div>
-                      <h4 className="text-lg font-bold text-slate-100 mb-3 group-hover:text-primary-200 transition-colors">
-                        {impact.impact}
-                      </h4>
-                      <div className="bg-slate-700/50 rounded-lg p-3">
-                        <p className="text-slate-400 text-xs font-medium mb-1">
-                          STEM Impact:
-                        </p>
-                        <p className="text-slate-200 text-xs leading-relaxed">
-                          {impact.stemConnection}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <ImpactBreakdownCard
+                  key={idx}
+                  amount={impact.amount}
+                  impact={impact.impact}
+                  stemConnection={impact.stemConnection}
+                  className="h-full"
+                />
               ))}
             </div>
           </div>
@@ -242,59 +223,24 @@ const DonatePageClient = ({
             {/* Payment Method Selection */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               {donateData.text.donationOptions?.map((option) => (
-                <div key={option.id} className="group relative">
-                  <div
-                    className={`absolute -inset-1 rounded-3xl blur transition duration-500 ${
-                      paymentMethod === option.id
-                        ? "bg-gradient-to-r from-emerald-500 to-cyan-500 opacity-40"
-                        : "bg-gradient-to-r from-primary-500/20 to-secondary-500/20 opacity-0 group-hover:opacity-100"
-                    }`}
-                  ></div>
-                  <div
-                    className={`relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-6 border shadow-xl transition-all duration-300 group-hover:scale-105 cursor-pointer ${
-                      paymentMethod === option.id
-                        ? "border-emerald-500/50 shadow-emerald-500/20"
-                        : "border-slate-700/50 group-hover:shadow-2xl"
-                    }`}
-                    onClick={() => setPaymentMethod(option.id)}
-                  >
-                    <div className="text-center">
-                      <div
-                        className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 transition duration-300 ${
-                          paymentMethod === option.id
-                            ? "bg-gradient-to-r from-emerald-500 to-cyan-500 scale-110"
-                            : "bg-gradient-to-r from-primary-500 to-secondary-500 group-hover:scale-110"
-                        }`}
-                      >
-                        <span className="text-2xl">
-                          {option.id === "one-time" ? "💳" : "🔄"}
-                        </span>
-                      </div>
-                      <h4
-                        className={`text-xl font-bold mb-3 transition-colors ${
-                          paymentMethod === option.id
-                            ? "text-emerald-200"
-                            : "text-slate-100 group-hover:text-primary-200"
-                        }`}
-                      >
-                        {option.title}
-                      </h4>
-                      <p className="text-slate-300 text-sm leading-relaxed mb-3">
-                        {option.description}
-                      </p>
-                      <p className="text-slate-400 text-xs italic">
-                        {option.subText}
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                <DonationOptionCard
+                  key={option.id}
+                  id={option.id}
+                  title={option.title}
+                  description={option.description}
+                  subText={option.subText}
+                  isSelected={paymentMethod === option.id}
+                  onClick={() => setPaymentMethod(option.id)}
+                  className="h-full"
+                />
               ))}
             </div>
 
             {/* Amount Selection */}
             <div className="group relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary-500 via-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
-              <div className="relative bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 border border-primary-500/30 shadow-2xl">
+              <div className="relative bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 border border-primary-500/30 shadow-2xl transition-all duration-300 group-hover:shadow-2xl group-hover:border-primary-400/50 overflow-hidden">
+                {/* Gradient overlay - matches card height exactly */}
+                <div className="absolute inset-0 bg-gradient-to-r from-primary-500/20 via-secondary-500/20 to-primary-500/20 rounded-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-1000 pointer-events-none blur-sm" />
                 <h4 className="text-2xl font-bold text-slate-100 mb-6 text-center">
                   Choose Your Amount
                 </h4>
@@ -428,34 +374,14 @@ const DonatePageClient = ({
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {donateData.fundingAreas?.map((area, idx) => (
-                <div key={idx} className="group relative">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-secondary-500/20 to-primary-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                  <div className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-6 border border-secondary-500/30 shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-105">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-gradient-to-r from-secondary-500 to-primary-500 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition duration-300">
-                        <span className="text-lg font-bold text-white">
-                          {area.percentage}
-                        </span>
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="text-lg font-bold text-slate-100 mb-2 group-hover:text-secondary-200 transition-colors">
-                          {area.area}
-                        </h4>
-                        <p className="text-slate-300 text-sm leading-relaxed mb-3">
-                          {area.description}
-                        </p>
-                        <div className="bg-slate-700/50 rounded-lg p-3">
-                          <p className="text-slate-400 text-xs font-medium mb-1">
-                            STEM Impact:
-                          </p>
-                          <p className="text-slate-200 text-xs leading-relaxed">
-                            {area.stemImpact}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <FundingAreaCard
+                  key={idx}
+                  percentage={area.percentage}
+                  area={area.area}
+                  description={area.description}
+                  stemImpact={area.stemImpact}
+                  className="h-full"
+                />
               ))}
             </div>
           </div>
@@ -471,35 +397,23 @@ const DonatePageClient = ({
               <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {donateData.otherWaysToHelp?.map((way, idx) => (
-                <div key={idx} className="group relative">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                  <div className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50 shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-105">
-                    <div className="text-center">
-                      <div className="w-16 h-16 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition duration-300">
-                        <span className="text-2xl">
-                          {idx === 0
-                            ? "🛍️"
-                            : idx === 1
-                              ? "👥"
-                              : idx === 2
-                                ? "🤝"
-                                : "📢"}
-                        </span>
-                      </div>
-                      <h4 className="text-lg font-bold text-slate-100 mb-3 group-hover:text-primary-200 transition-colors">
-                        {way.title}
-                      </h4>
-                      <p className="text-slate-300 text-sm leading-relaxed mb-3">
-                        {way.description}
-                      </p>
-                      <p className="text-slate-400 text-xs italic">
-                        {way.action}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
+              {donateData.otherWaysToHelp?.map((way, idx) => {
+                const icons = ["🛍️", "👥", "🤝", "📢"];
+                return (
+                  <FeatureCard
+                    key={idx}
+                    icon={icons[idx] || "📌"}
+                    title={way.title}
+                    description={
+                      <>
+                        <p className="mb-3">{way.description}</p>
+                        <p className="text-xs italic">{way.action}</p>
+                      </>
+                    }
+                    className="h-full"
+                  />
+                );
+              })}
             </div>
           </div>
         </section>
@@ -507,27 +421,21 @@ const DonatePageClient = ({
         {/* Transparency Commitment */}
         <section className="px-6 md:px-12">
           <div className="max-w-4xl mx-auto">
-            <div className="group relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-pink-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
-              <div className="relative bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-orange-500/30 shadow-2xl text-center">
-                <div className="flex items-center justify-center mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-pink-500 rounded-2xl flex items-center justify-center mr-4">
-                    <span className="text-3xl">🔍</span>
-                  </div>
-                  <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-orange-200 to-pink-200 bg-clip-text text-transparent">
-                    {donateData.text.transparencyTitle}
-                  </h2>
-                </div>
-                <p className="text-slate-200 leading-relaxed text-lg max-w-3xl mx-auto mb-6">
-                  {donateData.text.transparencyDescription}
+            <InfoCard
+              icon="🔍"
+              title={donateData.text.transparencyTitle}
+              description={donateData.text.transparencyDescription}
+              borderColor="border-orange-500/30"
+              gradientFrom="from-orange-500/20"
+              gradientTo="to-pink-500/20"
+              iconBgClassName="bg-gradient-to-r from-orange-500 to-pink-500"
+            >
+              <div className="bg-slate-700/50 rounded-xl p-4 max-w-2xl mx-auto">
+                <p className="text-slate-300 text-sm italic">
+                  {donateData.contributionInfo.status}
                 </p>
-                <div className="bg-slate-700/50 rounded-xl p-4 max-w-2xl mx-auto">
-                  <p className="text-slate-300 text-sm italic">
-                    {donateData.contributionInfo.status}
-                  </p>
-                </div>
               </div>
-            </div>
+            </InfoCard>
           </div>
         </section>
       </div>
