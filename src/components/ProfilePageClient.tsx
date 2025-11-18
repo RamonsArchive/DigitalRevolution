@@ -100,9 +100,9 @@ const ProfilePageClient = ({
         titleClassName="font-lexend text-6xl md:text-8xl font-bold text-center"
         containerClassName="flex items-center justify-center py-20 md:py-32 px-8 md:px-12 h-full"
       />
-      <div className="flex flex-col gap-16 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
+      <div className="flex flex-col gap-[4.5rem] md:gap-20 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
         {/* Profile Overview */}
-        <section className="px-6 md:px-12">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-4xl mx-auto">
             <div className="group relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-primary-500 via-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
@@ -125,7 +125,7 @@ const ProfilePageClient = ({
         </section>
 
         {/* Subscriptions Section */}
-        <section className="px-6 md:px-12">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
               <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
@@ -319,7 +319,7 @@ const ProfilePageClient = ({
         </section>
 
         {/* Account Information */}
-        <section className="px-6 md:px-12">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-4xl mx-auto">
             <div className="group relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>

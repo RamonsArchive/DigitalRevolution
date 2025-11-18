@@ -145,7 +145,7 @@ async function handlePackageShipped(printfulOrder: any) {
 
       // Send shipping notification email
       try {
-        await sendOrderShippedEmail(updatedOrder, order.items, shipment);
+        await sendOrderShippedEmail(updatedOrder, order.items);
         console.log("✅ Shipping email sent successfully");
       } catch (emailError) {
         console.error("❌ Failed to send shipping email:", emailError);

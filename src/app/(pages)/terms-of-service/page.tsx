@@ -41,11 +41,11 @@ const TermsOfServicePage = () => {
       </div>
 
       {/* Content Section */}
-      <div className="flex flex-col gap-16 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
-        <section className="px-6 md:px-12">
+      <div className="flex flex-col gap-[4.5rem] md:gap-20 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-4xl mx-auto">
             {/* Introduction */}
-            <div className="mb-12">
+            <div className="mb-[3.5rem] md:mb-16">
               <InfoCard
                 icon="⚖️"
                 title="Legal Terms & Conditions"
@@ -54,7 +54,7 @@ const TermsOfServicePage = () => {
             </div>
 
             {/* Terms Sections */}
-            <div className="space-y-8">
+            <div className="space-y-[2.25rem] md:space-y-10">
               {TermsOfService.map((term) => (
                 <IconCard
                   key={term.id}
@@ -66,7 +66,7 @@ const TermsOfServicePage = () => {
             </div>
 
             {/* Contact Section */}
-            <div className="mt-16">
+            <div className="mt-[4.5rem] md:mt-20">
               <InfoCard
                 icon="⚖️"
                 title="Questions About These Terms?"

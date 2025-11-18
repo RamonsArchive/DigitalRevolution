@@ -174,9 +174,9 @@ const DonatePageClient = ({
         />
       </div>
       {/* Main Content */}
-      <div className="flex flex-col gap-16 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
+      <div className="flex flex-col gap-[4.5rem] md:gap-20 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
         {/* Donation Description */}
-        <section className="px-6 md:px-12">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-4xl mx-auto">
             <InfoCard
               icon="💝"
@@ -188,9 +188,9 @@ const DonatePageClient = ({
         </section>
 
         {/* Impact Breakdown */}
-        <section className="px-6 md:px-12">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12">
+            <div className="text-center mb-[3.5rem] md:mb-16">
               <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 {donateData.text.impactTitle}
               </h3>
@@ -211,9 +211,9 @@ const DonatePageClient = ({
         </section>
 
         {/* Donation Options */}
-        <section className="px-6 md:px-12">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
+            <div className="text-center mb-[3.5rem] md:mb-16">
               <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 {donateData.text.donationTitle}
               </h3>
@@ -364,9 +364,9 @@ const DonatePageClient = ({
         </section>
 
         {/* Funding Areas */}
-        <section className="px-6 md:px-12">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12">
+            <div className="text-center mb-[3.5rem] md:mb-16">
               <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 How Your Donation is Used
               </h3>
@@ -388,9 +388,9 @@ const DonatePageClient = ({
         </section>
 
         {/* Other Ways to Help */}
-        <section className="px-6 md:px-12">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
+            <div className="text-center mb-[3.5rem] md:mb-16">
               <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 Other Ways to Help
               </h3>
@@ -419,7 +419,7 @@ const DonatePageClient = ({
         </section>
 
         {/* Transparency Commitment */}
-        <section className="px-6 md:px-12">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-4xl mx-auto">
             <InfoCard
               icon="🔍"

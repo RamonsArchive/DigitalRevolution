@@ -19,10 +19,10 @@ const HomePageClient = ({ homeData }: HomePageClientProps) => {
   return (
     <div className="min-h-screen bg-bg-primary">
       {/* Digital Divide Reality Section */}
-      <section className="px-6 md:px-12 py-20 bg-gradient-to-b from-bg-primary via-slate-900 to-bg-primary">
+      <section className="px-6 md:px-12 py-[5.5rem] md:py-24 bg-gradient-to-b from-bg-primary via-slate-900 to-bg-primary">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="section-title text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-6">
+          <div className="text-center mb-[4.5rem] md:mb-20 overflow-visible">
+            <h2 className="section-title text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-6 pb-3 overflow-visible">
               {homeData.section2.title}
             </h2>
             <p className="section-subtitle text-xl text-slate-300 max-w-3xl mx-auto">
@@ -80,10 +80,10 @@ const HomePageClient = ({ homeData }: HomePageClientProps) => {
       </section>
 
       {/* Impact Approach Section */}
-      <section className="px-6 md:px-12 py-20 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary">
+      <section className="px-6 md:px-12 py-[5.5rem] md:py-24 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="section-title text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-6">
+          <div className="text-center mb-[4.5rem] md:mb-20 overflow-visible">
+            <h2 className="section-title text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-6 pb-3 overflow-visible">
               {homeData.section3.title}
             </h2>
             <p className="section-subtitle text-xl text-slate-300 max-w-4xl mx-auto mb-8">
@@ -112,10 +112,10 @@ const HomePageClient = ({ homeData }: HomePageClientProps) => {
       </section>
 
       {/* Pathway Section */}
-      <section className="px-6 md:px-12 py-20 bg-gradient-to-b from-bg-primary via-slate-900 to-bg-primary">
+      <section className="px-6 md:px-12 py-[5.5rem] md:py-24 bg-gradient-to-b from-bg-primary via-slate-900 to-bg-primary">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="section-title text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-6">
+          <div className="text-center mb-[4.5rem] md:mb-20 overflow-visible">
+            <h2 className="section-title text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-6 pb-3 overflow-visible">
               {homeData.section4.title}
             </h2>
             <p className="section-subtitle text-xl text-slate-300 max-w-4xl mx-auto mb-8">
@@ -141,10 +141,10 @@ const HomePageClient = ({ homeData }: HomePageClientProps) => {
       </section>
 
       {/* Support Our Mission Section */}
-      <section className="px-6 md:px-12 py-20 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary">
+      <section className="px-6 md:px-12 py-[5.5rem] md:py-24 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="section-title text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-6">
+          <div className="text-center mb-[4.5rem] md:mb-20 overflow-visible">
+            <h2 className="section-title text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-6 pb-3 overflow-visible">
               {homeData.section5.title}
             </h2>
             <p className="section-subtitle text-xl text-slate-300 max-w-4xl mx-auto mb-8">
@@ -181,7 +181,7 @@ const HomePageClient = ({ homeData }: HomePageClientProps) => {
       </section>
 
       {/* Stats Section */}
-      <section className="px-6 md:px-12 py-20 bg-gradient-to-b from-bg-primary via-slate-900 to-bg-primary">
+      <section className="px-6 md:px-12 py-[5.5rem] md:py-24 bg-gradient-to-b from-bg-primary via-slate-900 to-bg-primary">
         <div className="max-w-6xl mx-auto">
           <InfoCard
             icon="📈"

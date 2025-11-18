@@ -28,8 +28,8 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
       </div>
 
       {/* Mission & Vision Cards */}
-      <div className="flex flex-col gap-16 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
-        <section className="px-6 md:px-12">
+      <div className="flex flex-col gap-[4.5rem] md:gap-20 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-7xl mx-auto grid grid-cols-1 gap-8">
             <div className="group relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
@@ -68,7 +68,7 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
         </section>
 
         {/* Founder Section */}
-        <section className="px-6 md:px-12 bg-gradient-to-br">
+        <section className="px-6 md:px-12 py-12 md:py-16 bg-gradient-to-br">
           <div className="max-w-6xl mx-auto">
             <div className="group relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-primary-500 via-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
@@ -110,9 +110,9 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
         </section>
 
         {/* Impact Areas */}
-        <section className="px-6 md:px-12">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12">
+            <div className="text-center mb-[3.5rem] md:mb-16">
               <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 {aboutData.text.impactTitle}
               </h3>
@@ -139,9 +139,9 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
         </section>
 
         {/* Values Grid */}
-        <section className="px-6 md:px-12">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12">
+            <div className="text-center mb-[3.5rem] md:mb-16">
               <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 Our Values
               </h3>
@@ -165,9 +165,9 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
         </section>
 
         {/* Initiatives */}
-        <section className="px-6 md:px-12">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
+            <div className="text-center mb-[3.5rem] md:mb-16">
               <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 Our Initiatives
               </h3>
@@ -193,7 +193,7 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
         </section>
 
         {/* Stats Section */}
-        <section className="px-6 md:px-12">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-6xl mx-auto">
             <div className="group relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-primary-500 via-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
@@ -256,9 +256,9 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
         </section>
 
         {/* Image Gallery */}
-        <section className="px-6 md:px-12">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12">
+            <div className="text-center mb-[3.5rem] md:mb-16">
               <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 Gallery
               </h3>
@@ -271,7 +271,7 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
         </section>
 
         {/* How to Support */}
-        <section className="px-6 md:px-12">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-4xl mx-auto">
             <div className="group relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-primary-500 via-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>

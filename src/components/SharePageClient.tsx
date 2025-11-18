@@ -64,9 +64,9 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-col gap-16 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
+      <div className="flex flex-col gap-[4.5rem] md:gap-20 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
         {/* Mission Description */}
-        <section className="px-6 md:px-12">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-4xl mx-auto">
             <div className="group relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
@@ -93,9 +93,9 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
         </section>
 
         {/* Why Share Section */}
-        <section className="px-6 md:px-12">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
+            <div className="text-center mb-[3.5rem] md:mb-16">
               <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 {shareData.text.whyShareTitle}
               </h3>
@@ -116,7 +116,7 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
         </section>
 
         {/* Hashtags Section */}
-        <section className="px-6 md:px-12">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-4xl mx-auto">
             <div className="group relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
@@ -163,9 +163,9 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
         </section>
 
         {/* Shareable Content */}
-        <section className="px-6 md:px-12">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
+            <div className="text-center mb-[3.5rem] md:mb-16">
               <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 Ready-to-Share Content
               </h3>
@@ -196,7 +196,7 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
         </section>
 
         {/* Social Media Links */}
-        <section className="px-6 md:px-12">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-4xl mx-auto">
             <div className="group relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-primary-500 via-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
@@ -236,9 +236,9 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
         </section>
 
         {/* Sharing Tips */}
-        <section className="px-6 md:px-12">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
+            <div className="text-center mb-[3.5rem] md:mb-16">
               <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 {shareData.text.sharingTipsTitle}
               </h3>
@@ -261,7 +261,7 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
         </section>
 
         {/* Get Featured Section */}
-        <section className="px-6 md:px-12">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-4xl mx-auto">
             <div className="group relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
@@ -326,9 +326,9 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
         </section>
 
         {/* Community Goals */}
-        <section className="px-6 md:px-12">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
+            <div className="text-center mb-[3.5rem] md:mb-16">
               <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 Our Community Goals
               </h3>
@@ -352,7 +352,7 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
         </section>
 
         {/* Impact Stats */}
-        <section className="px-6 md:px-12">
+        <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-4xl mx-auto">
             <div className="group relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-primary-500 via-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
