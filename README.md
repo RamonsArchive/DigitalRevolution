@@ -272,15 +272,79 @@ Built-in rate limiting prevents API abuse and ensures fair usage across all endp
 - **DigitalOcean** - VPS deployment
 - **AWS** - Enterprise deployment
 
+## 🔍 Code Quality & CI/CD
+
+### Pre-commit Workflow
+
+Before committing your changes, run the following checks to ensure code quality:
+
+```bash
+# Run all checks (lint, format check, type check)
+npm run check
+
+# Or run individually:
+npm run lint          # Check for linting errors
+npm run format:check  # Check code formatting
+npm run type-check    # Check TypeScript types
+```
+
+### Available Scripts
+
+- `npm run dev` - Start development server with Turbopack
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run lint:fix` - Fix auto-fixable ESLint issues
+- `npm run format` - Format code with Prettier
+- `npm run format:check` - Check code formatting
+- `npm run type-check` - Run TypeScript type checking
+- `npm run check` - Run all checks (lint + format + type-check)
+
+### Automated CI/CD
+
+GitHub Actions automatically runs quality checks on every push and pull request:
+
+1. **ESLint** - Checks for code quality and best practices
+2. **Prettier** - Verifies code formatting consistency
+3. **TypeScript** - Validates type safety
+
+The CI pipeline runs on:
+- Push to `main` or `develop` branches
+- Pull requests targeting `main` or `develop` branches
+
+**Note**: You don't need to manually configure GitHub Actions - the workflow file (`.github/workflows/ci.yml`) is already set up and will run automatically when you push to GitHub.
+
+### Fixing Issues
+
+If CI fails, fix the issues locally:
+
+```bash
+# Fix linting issues
+npm run lint:fix
+
+# Fix formatting issues
+npm run format
+
+# Check types (fix any TypeScript errors in your code)
+npm run type-check
+```
+
 ## 🤝 Contributing
 
 We welcome contributions to Digital Revolution! Please see our contributing guidelines:
 
 1. Fork the repository
-2. Create a feature branch
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+4. **Run quality checks before committing:**
+   ```bash
+   npm run check
+   ```
+5. Commit your changes (`git commit -m 'Add amazing feature'`)
+6. Push to your branch (`git push origin feature/amazing-feature`)
+7. Open a pull request
+
+**Important**: All pull requests must pass the CI checks (linting, formatting, and type checking) before they can be merged.
 
 ## 📄 License
 

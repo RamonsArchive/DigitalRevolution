@@ -1,33 +1,38 @@
 "use server";
-import { PrintfulProduct, PrintfulSyncProductsResponse, PrintfulSyncProduct } from "./globalTypes";
+import {
+  PrintfulProduct,
+  PrintfulSyncProductsResponse,
+  PrintfulSyncProduct,
+} from "./globalTypes";
 import { checkRateLimit } from "./rateLimiter";
 import { parseServerActionResponse } from "./utils";
 import { extractFiltersFromProducts } from "./filters";
 import { prisma } from "./prisma";
-import { revalidateTag, unstable_cache } from 'next/cache';
+import { revalidateTag, unstable_cache } from "next/cache";
 import { CartItem, Cart, Address } from "../../prisma/generated/prisma";
 import { stripe } from "./stripe";
 import PartnersTicketEmail from "../emails/PartnersTicketEmail";
 import { sendSubscriptionCancelledEmail } from "./donation-emails";
 
-
 const PRINTFUL_BASE = "https://api.printful.com";
 
 // Cached version of products and filters fetch
 const getCachedProductsAndFilters = unstable_cache(
-  async ({limit = 100, offset = 0}: { limit?: number; offset?: number }) => {
-    const syncProducts = await getSyncProducts({limit, offset});
+  async ({ limit = 100, offset = 0 }: { limit?: number; offset?: number }) => {
+    const syncProducts = await getSyncProducts({ limit, offset });
     if (syncProducts.status === "ERROR") {
       return syncProducts;
     }
-    
+
     // batch get the products and their variants
     const allProducts = await getAllProductsBatch(syncProducts.data);
     if (allProducts.status === "ERROR") {
       return allProducts;
     }
 
-    const filters = await extractFiltersFromProducts(allProducts.data as PrintfulProduct[]);
+    const filters = await extractFiltersFromProducts(
+      allProducts.data as PrintfulProduct[]
+    );
 
     return parseServerActionResponse({
       status: "SUCCESS",
@@ -38,137 +43,145 @@ const getCachedProductsAndFilters = unstable_cache(
       },
     });
   },
-  ['products-and-filters'], // Cache key
+  ["products-and-filters"], // Cache key
   {
     revalidate: 300, // Revalidate every 5 minutes
-    tags: ['products']
+    tags: ["products"],
   }
 );
 
-export const getProductsAndFilters = async ({limit = 100,
-    offset = 0}: { limit?: number; offset?: number }) => {
-    try {
-        const isRateLimited = await checkRateLimit("getProductsAndFilters");
-        if (isRateLimited.status === "ERROR") {
-            return isRateLimited;
-        }
-
-        return await getCachedProductsAndFilters({limit, offset});
-
-    } catch (error) {
-        return parseServerActionResponse({
-            status: "ERROR",
-            error: error,
-            data: null,
-        })
+export const getProductsAndFilters = async ({
+  limit = 100,
+  offset = 0,
+}: {
+  limit?: number;
+  offset?: number;
+}) => {
+  try {
+    const isRateLimited = await checkRateLimit("getProductsAndFilters");
+    if (isRateLimited.status === "ERROR") {
+      return isRateLimited;
     }
-    
-}
 
-const getSyncProducts = async ({limit = 100,
-    offset = 0}: { limit?: number; offset?: number }) => {
-    const headers: Record<string, string> = {
-        Authorization: `Bearer ${process.env.DIGITAL_REVOLUTION_API_KEY!}`,
-    };
-    try {
-        // get sync products high level info
-        const url = `${PRINTFUL_BASE}/store/products?limit=${limit}&offset=${offset}`;
-        const res = await fetch(url, { 
-            headers, 
-            next: { revalidate: 300 } // Cache for 5 minutes
-        });
-        if (!res.ok) {
-            const text = await res.text().catch(() => "");
-            throw new Error(
-              `Printful fetch failed: ${res.status} ${res.statusText} :: ${text}`
-            );
-          }
-        const productJson = await res.json();
-        return parseServerActionResponse({
-            status: "SUCCESS",
-            error: "",
-            data: productJson,
-        })
-
-    } catch (error) {
-        return parseServerActionResponse({
-            status: "ERROR",
-            error: error,
-            data: null,
-        })
-    }
-    
-}
-
-export const getProductDetails = async (productId: number) => {
-    const headers: Record<string, string> = {
-        Authorization: `Bearer ${process.env.DIGITAL_REVOLUTION_API_KEY!}`,
-    };
-    
-    try {
-
-        const url = `${PRINTFUL_BASE}/store/products/${productId}`;
-        const res = await fetch(url, { 
-            headers, 
-            next: { revalidate: 300 } // Cache for 5 minutes
-        });
-        
-        if (!res.ok) {
-            throw new Error(`Failed to fetch product ${productId}: ${res.statusText}`);
-        }
-        
-        const data = await res.json();
-        return parseServerActionResponse({
-            status: "SUCCESS",
-            error: "",
-            data: data.result,
-        })
-    } catch (error) {
-        return parseServerActionResponse({
-            status: "ERROR",
-            error: error,
-            data: null,
-        })
-    }
+    return await getCachedProductsAndFilters({ limit, offset });
+  } catch (error) {
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: error,
+      data: null,
+    });
+  }
 };
 
-
-
-const getAllProductsBatch = async (productJson: PrintfulSyncProductsResponse) => {
-    try {
-        if (!productJson.result) {
-            throw new Error("No products found");
-        }
-        const products = productJson.result;
-        const batchSize = 5; // Process 5 products at a time to respect rate limits
-        const allProductsWithVariants = [];
-
-        for (let i = 0; i < products.length; i += batchSize) {
-            const batch = products.slice(i, i + batchSize);
-            const batchPromises = batch.map(product => getProductDetails(product.id));
-            const batchResults = await Promise.all(batchPromises);
-            const successfulResults = batchResults
-            .filter(result => result.status === "SUCCESS")
-            .map(result => result.data);
-            allProductsWithVariants.push(...successfulResults);
-
-            // no delay for max speed
-        }
-
-        return parseServerActionResponse({
-            status: "SUCCESS",
-            error: "",
-            data: allProductsWithVariants,
-        })
-
-    } catch (error) {
-        return parseServerActionResponse({
-            status: "ERROR",
-            error: error,
-            data: null,
-        })
+const getSyncProducts = async ({
+  limit = 100,
+  offset = 0,
+}: {
+  limit?: number;
+  offset?: number;
+}) => {
+  const headers: Record<string, string> = {
+    Authorization: `Bearer ${process.env.DIGITAL_REVOLUTION_API_KEY!}`,
+  };
+  try {
+    // get sync products high level info
+    const url = `${PRINTFUL_BASE}/store/products?limit=${limit}&offset=${offset}`;
+    const res = await fetch(url, {
+      headers,
+      next: { revalidate: 300 }, // Cache for 5 minutes
+    });
+    if (!res.ok) {
+      const text = await res.text().catch(() => "");
+      throw new Error(
+        `Printful fetch failed: ${res.status} ${res.statusText} :: ${text}`
+      );
     }
-}
+    const productJson = await res.json();
+    return parseServerActionResponse({
+      status: "SUCCESS",
+      error: "",
+      data: productJson,
+    });
+  } catch (error) {
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: error,
+      data: null,
+    });
+  }
+};
+
+export const getProductDetails = async (productId: number) => {
+  const headers: Record<string, string> = {
+    Authorization: `Bearer ${process.env.DIGITAL_REVOLUTION_API_KEY!}`,
+  };
+
+  try {
+    const url = `${PRINTFUL_BASE}/store/products/${productId}`;
+    const res = await fetch(url, {
+      headers,
+      next: { revalidate: 300 }, // Cache for 5 minutes
+    });
+
+    if (!res.ok) {
+      throw new Error(
+        `Failed to fetch product ${productId}: ${res.statusText}`
+      );
+    }
+
+    const data = await res.json();
+    return parseServerActionResponse({
+      status: "SUCCESS",
+      error: "",
+      data: data.result,
+    });
+  } catch (error) {
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: error,
+      data: null,
+    });
+  }
+};
+
+const getAllProductsBatch = async (
+  productJson: PrintfulSyncProductsResponse
+) => {
+  try {
+    if (!productJson.result) {
+      throw new Error("No products found");
+    }
+    const products = productJson.result;
+    const batchSize = 5; // Process 5 products at a time to respect rate limits
+    const allProductsWithVariants = [];
+
+    for (let i = 0; i < products.length; i += batchSize) {
+      const batch = products.slice(i, i + batchSize);
+      const batchPromises = batch.map((product) =>
+        getProductDetails(product.id)
+      );
+      const batchResults = await Promise.all(batchPromises);
+      const successfulResults = batchResults
+        .filter((result) => result.status === "SUCCESS")
+        .map((result) => result.data);
+      allProductsWithVariants.push(...successfulResults);
+
+      // no delay for max speed
+    }
+
+    return parseServerActionResponse({
+      status: "SUCCESS",
+      error: "",
+      data: allProductsWithVariants,
+    });
+  } catch (error) {
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: error,
+      data: null,
+    });
+  }
+};
 
 // New function to fetch detailed product information from Printful Catalog API
 export const getProductCatalogDetails = async (variantId: number) => {
@@ -179,19 +192,24 @@ export const getProductCatalogDetails = async (variantId: number) => {
     }
 
     // Use the Catalog API endpoint (public API, no auth required)
-    const response = await fetch(`https://api.printful.com/products/variant/${variantId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `https://api.printful.com/products/variant/${variantId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (!response.ok) {
-      throw new Error(`Printful Catalog API error: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `Printful Catalog API error: ${response.status} ${response.statusText}`
+      );
     }
 
     const data = await response.json();
-    
+
     return parseServerActionResponse({
       status: "SUCCESS",
       error: "",
@@ -223,19 +241,24 @@ export const getProductDetailsByVariant = async (variantId: number) => {
       return isRateLimited;
     }
 
-    const response = await fetch(`https://api.printful.com/products/variant/${variantId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `https://api.printful.com/products/variant/${variantId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (!response.ok) {
-      throw new Error(`Printful Variant API error: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `Printful Variant API error: ${response.status} ${response.statusText}`
+      );
     }
 
     const data = await response.json();
-    
+
     return parseServerActionResponse({
       status: "SUCCESS",
       error: "",
@@ -263,7 +286,7 @@ export const getProductDetailsByVariant = async (variantId: number) => {
 export const getProductDetailsByVariantId = async (variantId: number) => {
   try {
     const detailsResult = await getProductDetailsByVariant(variantId);
-    
+
     if (detailsResult.status === "SUCCESS") {
       return parseServerActionResponse({
         status: "SUCCESS",
@@ -283,11 +306,11 @@ export const getProductDetailsByVariantId = async (variantId: number) => {
 };
 
 export const writeToCart = async (
-  userId: string, 
+  userId: string,
   guestUserId: string,
-  product: PrintfulProduct, 
-  variantIndex: number, 
-  quantity: number,
+  product: PrintfulProduct,
+  variantIndex: number,
+  quantity: number
 ) => {
   try {
     const isRateLimited = await checkRateLimit("writeToCart");
@@ -306,16 +329,16 @@ export const writeToCart = async (
     }
 
     // Build the where condition to find the cart
-    const cartWhereCondition = userId 
-      ? { userId } 
+    const cartWhereCondition = userId
+      ? { userId }
       : { tempCartId: guestUserId };
 
     // Find or create the cart
     let cart = await prisma.cart.findFirst({
       where: cartWhereCondition,
       include: {
-        items: true
-      }
+        items: true,
+      },
     });
 
     // Create cart if it doesn't exist
@@ -326,30 +349,30 @@ export const writeToCart = async (
           expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
         },
         include: {
-          items: true
-        }
+          items: true,
+        },
       });
     }
 
     // Check if item already exists in cart
     const existingCartItem = cart.items.find(
-      item => item.printfulVariantId === selectedVariant.variant_id
+      (item) => item.printfulVariantId === selectedVariant.variant_id
     );
 
     let updatedCartItem;
 
     if (existingCartItem) {
       // Update existing cart item - add to existing quantity
-    
+
       //const newQuantity = existingCartItem.quantity + quantity;
       const newQuantity = existingCartItem.quantity + quantity;
-    
+
       updatedCartItem = await prisma.cartItem.update({
         where: { id: existingCartItem.id },
-        data: { 
+        data: {
           quantity: newQuantity,
-          updatedAt: new Date()
-        }
+          updatedAt: new Date(),
+        },
       });
     } else {
       // Create new cart item with Printful data
@@ -366,18 +389,21 @@ export const writeToCart = async (
           sku: selectedVariant.sku || null,
           unitPrice: Math.round(parseFloat(selectedVariant.retail_price) * 100), // Convert to cents
           quantity: quantity,
-          imageUrl: selectedVariant.files?.[1]?.preview_url || selectedVariant.product.image || null,
-        }
+          imageUrl:
+            selectedVariant.files?.[1]?.preview_url ||
+            selectedVariant.product.image ||
+            null,
+        },
       });
     }
 
     // Update cart's updatedAt timestamp
     await prisma.cart.update({
       where: { id: cart.id },
-      data: { updatedAt: new Date() }
+      data: { updatedAt: new Date() },
     });
 
-    const cacheKey = userId || guestUserId || 'anonymous';
+    const cacheKey = userId || guestUserId || "anonymous";
     revalidateTag(`cart-${cacheKey}`);
 
     return parseServerActionResponse({
@@ -386,10 +412,9 @@ export const writeToCart = async (
       data: {
         cartItem: updatedCartItem,
         action: existingCartItem ? "updated" : "created",
-        totalQuantity: updatedCartItem.quantity
+        totalQuantity: updatedCartItem.quantity,
       },
     });
-
   } catch (error) {
     return parseServerActionResponse({
       status: "ERROR",
@@ -421,8 +446,8 @@ export const updateCartItemQuantity = async (
     }
 
     // Build the where condition to find the cart
-    const cartWhereCondition = userId 
-      ? { userId } 
+    const cartWhereCondition = userId
+      ? { userId }
       : { tempCartId: guestUserId };
 
     // Find the cart
@@ -440,23 +465,23 @@ export const updateCartItemQuantity = async (
 
     // Update the cart item quantity
     const updatedItem = await prisma.cartItem.update({
-      where: { 
+      where: {
         id: itemId,
-        cartId: cart.id // Ensure the item belongs to the user's cart
+        cartId: cart.id, // Ensure the item belongs to the user's cart
       },
-      data: { 
+      data: {
         quantity: newQuantity,
-        updatedAt: new Date()
-      }
+        updatedAt: new Date(),
+      },
     });
 
     // Update cart's updatedAt timestamp
     await prisma.cart.update({
       where: { id: cart.id },
-      data: { updatedAt: new Date() }
+      data: { updatedAt: new Date() },
     });
 
-    const cacheKey = userId || guestUserId || 'anonymous';
+    const cacheKey = userId || guestUserId || "anonymous";
     revalidateTag(`cart-${cacheKey}`);
 
     return parseServerActionResponse({
@@ -464,10 +489,9 @@ export const updateCartItemQuantity = async (
       error: "",
       data: {
         cartItem: updatedItem,
-        action: "updated"
+        action: "updated",
       },
     });
-
   } catch (error) {
     return parseServerActionResponse({
       status: "ERROR",
@@ -490,8 +514,8 @@ export const removeCartItem = async (
     }
 
     // Build the where condition to find the cart
-    const cartWhereCondition = userId 
-      ? { userId } 
+    const cartWhereCondition = userId
+      ? { userId }
       : { tempCartId: guestUserId };
 
     // Find the cart
@@ -509,19 +533,19 @@ export const removeCartItem = async (
 
     // Delete the cart item
     await prisma.cartItem.delete({
-      where: { 
+      where: {
         id: itemId,
-        cartId: cart.id // Ensure the item belongs to the user's cart
-      }
+        cartId: cart.id, // Ensure the item belongs to the user's cart
+      },
     });
 
     // Update cart's updatedAt timestamp
     await prisma.cart.update({
       where: { id: cart.id },
-      data: { updatedAt: new Date() }
+      data: { updatedAt: new Date() },
     });
 
-    const cacheKey = userId || guestUserId || 'anonymous';
+    const cacheKey = userId || guestUserId || "anonymous";
     revalidateTag(`cart-${cacheKey}`);
 
     return parseServerActionResponse({
@@ -529,10 +553,9 @@ export const removeCartItem = async (
       error: "",
       data: {
         action: "removed",
-        itemId: itemId
+        itemId: itemId,
       },
     });
-
   } catch (error) {
     return parseServerActionResponse({
       status: "ERROR",
@@ -544,14 +567,14 @@ export const removeCartItem = async (
 
 // Fixed getCart with proper cache keys
 export const getCart = async (userId: string, guestUserId?: string) => {
-  const cacheKey = userId || guestUserId || 'anonymous';
-  
+  const cacheKey = userId || guestUserId || "anonymous";
+
   const getCachedCart = unstable_cache(
     async () => {
       try {
         // Build the where condition for finding the cart
-        const whereCondition = userId 
-          ? { userId } 
+        const whereCondition = userId
+          ? { userId }
           : { tempCartId: guestUserId };
 
         // Find the cart and its items
@@ -560,10 +583,10 @@ export const getCart = async (userId: string, guestUserId?: string) => {
           include: {
             items: {
               orderBy: {
-                addedAt: 'desc'
-              }
-            }
-          }
+                addedAt: "desc",
+              },
+            },
+          },
         });
 
         const cartItems = cart?.items || [];
@@ -572,7 +595,10 @@ export const getCart = async (userId: string, guestUserId?: string) => {
           cartItems,
           cartId: cart?.id || null,
           totalItems: cartItems.reduce((sum, item) => sum + item.quantity, 0),
-          estimatedTotal: cartItems.reduce((sum, item) => sum + (item.unitPrice * item.quantity), 0)
+          estimatedTotal: cartItems.reduce(
+            (sum, item) => sum + item.unitPrice * item.quantity,
+            0
+          ),
         };
       } catch (error) {
         throw error;
@@ -581,7 +607,7 @@ export const getCart = async (userId: string, guestUserId?: string) => {
     [`cart-${cacheKey}`],
     {
       tags: [`cart-${cacheKey}`],
-      revalidate: 300 // 5 minutes
+      revalidate: 300, // 5 minutes
     }
   );
 
@@ -602,21 +628,22 @@ export const getCart = async (userId: string, guestUserId?: string) => {
 };
 
 // 1. Validate cart and check stock
-export const validateCartForCheckout = async (userId: string, guestUserId: string) => {
+export const validateCartForCheckout = async (
+  userId: string,
+  guestUserId: string
+) => {
   try {
-    const whereCondition = userId 
-      ? { userId } 
-      : { tempCartId: guestUserId };
+    const whereCondition = userId ? { userId } : { tempCartId: guestUserId };
     const cart = await prisma.cart.findFirst({
       where: whereCondition,
-      include: { items: true }
+      include: { items: true },
     });
 
     if (!cart || cart.items.length === 0) {
       return parseServerActionResponse({
         status: "ERROR",
         data: null,
-        error: 'Cart is empty or not found'
+        error: "Cart is empty or not found",
       });
     }
 
@@ -624,20 +651,23 @@ export const validateCartForCheckout = async (userId: string, guestUserId: strin
     const stockChecks = await Promise.all(
       cart.items.map(async (item) => {
         try {
-          const response = await fetch(`https://api.printful.com/products/variant/${item.printfulVariantId}`, {
-            headers: {
-              'Authorization': `Bearer ${process.env.DIGITAL_REVOLUTION_API_KEY}`
+          const response = await fetch(
+            `https://api.printful.com/products/variant/${item.printfulVariantId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${process.env.DIGITAL_REVOLUTION_API_KEY}`,
+              },
             }
-          });
-          
+          );
+
           const data = await response.json();
           return parseServerActionResponse({
-            status: 'SUCCESS',
+            status: "SUCCESS",
             error: "",
             data: {
               item,
-              isInStock: data.result?.variant?.in_stock || false
-            }
+              isInStock: data.result?.variant?.in_stock || false,
+            },
           });
         } catch (error) {
           return parseServerActionResponse({
@@ -645,21 +675,23 @@ export const validateCartForCheckout = async (userId: string, guestUserId: strin
             error: "",
             data: {
               item,
-              isInStock: false // Assume out of stock if check fails
-            }
+              isInStock: false, // Assume out of stock if check fails
+            },
           });
         }
       })
     );
 
-    const outOfStockItems = stockChecks.filter(check => !check.data?.isInStock);
+    const outOfStockItems = stockChecks.filter(
+      (check) => !check.data?.isInStock
+    );
     if (outOfStockItems.length > 0) {
       return parseServerActionResponse({
         status: "ERROR",
         error: "Some items are out of stock",
         data: {
-          outOfStockItems: outOfStockItems.map(check => check.data?.item)
-        }
+          outOfStockItems: outOfStockItems.map((check) => check.data?.item),
+        },
       });
     }
 
@@ -668,21 +700,22 @@ export const validateCartForCheckout = async (userId: string, guestUserId: strin
       error: "",
       data: {
         cart,
-        items: cart.items
-      }
+        items: cart.items,
+      },
     });
-
   } catch (error) {
     return parseServerActionResponse({
-      status: 'ERROR',
+      status: "ERROR",
       error: error instanceof Error ? error.message : "Unknown error",
       data: null,
     });
   }
 };
 
-
-export const createCheckoutSession = async (userId: string, guestUserId: string) => {
+export const createCheckoutSession = async (
+  userId: string,
+  guestUserId: string
+) => {
   try {
     const isRateLimited = await checkRateLimit("createCheckoutSession");
     if (isRateLimited.status === "ERROR") {
@@ -695,9 +728,13 @@ export const createCheckoutSession = async (userId: string, guestUserId: string)
       return cartValidation;
     }
     const cart = (cartValidation.data as unknown as { cart: Cart }).cart;
-    const items = (cartValidation.data as unknown as { items: CartItem[] }).items;
+    const items = (cartValidation.data as unknown as { items: CartItem[] })
+      .items;
 
-    const subtotal = items.reduce((sum, item) => sum + (item.unitPrice * item.quantity), 0);
+    const subtotal = items.reduce(
+      (sum, item) => sum + item.unitPrice * item.quantity,
+      0
+    );
 
     const shippingCost = 0; // free shipping for all orders
     const taxAmount = Math.round(subtotal * 0.08); // 8% tax
@@ -713,14 +750,14 @@ export const createCheckoutSession = async (userId: string, guestUserId: string)
         promoDiscount: 0,
         estimatedTotal: total,
         status: "pending",
-      }
-    })
+      },
+    });
 
     const stripeSession = await stripe.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
       line_items: [
-        ...items.map(item => ({
+        ...items.map((item) => ({
           price_data: {
             currency: "usd",
             product_data: {
@@ -740,8 +777,8 @@ export const createCheckoutSession = async (userId: string, guestUserId: string)
             },
             unit_amount: taxAmount,
           },
-          quantity: 1
-        }
+          quantity: 1,
+        },
       ],
       metadata: {
         cartId: cart.id.toString(),
@@ -751,16 +788,16 @@ export const createCheckoutSession = async (userId: string, guestUserId: string)
       },
       success_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout/cancel`,
-      billing_address_collection: 'required',
+      billing_address_collection: "required",
       shipping_address_collection: {
-        allowed_countries: ['US', 'CA'], // This is required!
+        allowed_countries: ["US", "CA"], // This is required!
       },
-      customer_creation: 'always',
+      customer_creation: "always",
     });
 
     await prisma.checkoutSession.update({
       where: { id: checkoutSession.id },
-      data: { stripeSessionId: stripeSession.id }
+      data: { stripeSessionId: stripeSession.id },
     });
 
     return parseServerActionResponse({
@@ -771,73 +808,74 @@ export const createCheckoutSession = async (userId: string, guestUserId: string)
         sessionUrl: stripeSession.url,
       },
     });
-
-    
   } catch (error) {
     return parseServerActionResponse({
       status: "ERROR",
       error: error instanceof Error ? error.message : "Unknown error",
       data: null,
-    })
+    });
   }
-}
+};
 
-
-export const createPrintfulOrder = async (orderId: number, cartItems: CartItem[], shippingAddress: Address, email: string | null) => {
+export const createPrintfulOrder = async (
+  orderId: number,
+  cartItems: CartItem[],
+  shippingAddress: Address,
+  email: string | null
+) => {
   try {
     const printfulOrderData = {
       recipient: {
         name: `${shippingAddress.firstName} ${shippingAddress.lastName}`,
         address1: shippingAddress.line1,
-        address2: shippingAddress.line2 || '',
+        address2: shippingAddress.line2 || "",
         city: shippingAddress.city,
         state_code: shippingAddress.state,
         country_code: shippingAddress.country,
         zip: shippingAddress.postalCode,
-        phone: shippingAddress.phone || '',
-        email: email || ''
+        phone: shippingAddress.phone || "",
+        email: email || "",
       },
-      items: cartItems.map(item => ({
+      items: cartItems.map((item) => ({
         external_variant_id: item.printfulExternalId,
-        quantity: item.quantity
-      }))
+        quantity: item.quantity,
+      })),
     };
 
-    const response = await fetch('https://api.printful.com/orders', {
-      method: 'POST',
+    const response = await fetch("https://api.printful.com/orders", {
+      method: "POST",
       headers: {
-        'Authorization': `Bearer ${process.env.DIGITAL_REVOLUTION_API_KEY}`,
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${process.env.DIGITAL_REVOLUTION_API_KEY}`,
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(printfulOrderData)
+      body: JSON.stringify(printfulOrderData),
     });
 
     const result = await response.json();
 
     if (!response.ok) {
-      throw new Error(`Printful order creation failed: ${result.error?.message}`);
+      throw new Error(
+        `Printful order creation failed: ${result.error?.message}`
+      );
     }
 
     return parseServerActionResponse({
-      status: 'SUCCESS',
+      status: "SUCCESS",
       error: "",
       data: {
         printfulOrderId: result.result.id,
         printfulStatus: result.result.status,
-        printfulData: result.result
-      }
+        printfulData: result.result,
+      },
     });
   } catch (error) {
     return parseServerActionResponse({
-      status: 'ERROR',
-      error: error instanceof Error ? error.message : 'Unknown error',
+      status: "ERROR",
+      error: error instanceof Error ? error.message : "Unknown error",
       data: null,
     });
   }
 };
-
-
-
 
 /////////////////////////////////////////////////////
 // Get order by stripe session id
@@ -846,11 +884,11 @@ export const getOrderByStripeSessionId = async (sessionId: string) => {
   try {
     const order = await prisma.order.findFirst({
       where: {
-        stripeSessionId: sessionId
+        stripeSessionId: sessionId,
       },
       include: {
-        items: true
-      }
+        items: true,
+      },
     });
     if (!order) {
       return parseServerActionResponse({
@@ -889,14 +927,8 @@ export const submitPartnersForm = async (formData: Record<string, string>) => {
       return isRateLimited;
     }
 
-    const {
-      firstName,
-      lastName,
-      email,
-      phoneNumber,
-      organization,
-      message,
-    } = formData;
+    const { firstName, lastName, email, phoneNumber, organization, message } =
+      formData;
 
     const partnersFromSubmit = await prisma.partnerTicket.create({
       data: {
@@ -906,8 +938,8 @@ export const submitPartnersForm = async (formData: Record<string, string>) => {
         phoneNumber,
         organization,
         message,
-      }
-    })
+      },
+    });
     if (!partnersFromSubmit) {
       return parseServerActionResponse({
         status: "ERROR",
@@ -923,7 +955,6 @@ export const submitPartnersForm = async (formData: Record<string, string>) => {
       error: "",
       data: partnersFromSubmit,
     });
-
   } catch (error) {
     return parseServerActionResponse({
       status: "ERROR",
@@ -931,9 +962,12 @@ export const submitPartnersForm = async (formData: Record<string, string>) => {
       data: null,
     });
   }
-}
+};
 
-const getOrCreateStripeCustomer = async (userId: string, email: string): Promise<string> => {
+const getOrCreateStripeCustomer = async (
+  userId: string,
+  email: string
+): Promise<string> => {
   // Check if user already has a Stripe customer ID
   const user = await prisma.user.findUnique({
     where: { id: userId },
@@ -960,13 +994,20 @@ const getOrCreateStripeCustomer = async (userId: string, email: string): Promise
   });
 
   return customer.id;
-}
+};
 
-
-
-const createDonationCheckout = async ({userId, amount, name, email}: {userId?: string, amount: number, name: string, email: string}) => {
+const createDonationCheckout = async ({
+  userId,
+  amount,
+  name,
+  email,
+}: {
+  userId?: string;
+  amount: number;
+  name: string;
+  email: string;
+}) => {
   try {
-
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items: [
@@ -980,7 +1021,7 @@ const createDonationCheckout = async ({userId, amount, name, email}: {userId?: s
             unit_amount: amount,
           },
           quantity: 1,
-        }
+        },
       ],
       customer_email: email,
       metadata: {
@@ -1001,18 +1042,17 @@ const createDonationCheckout = async ({userId, amount, name, email}: {userId?: s
         currency: "usd",
         status: "pending",
         donationType: "one-time",
-      }
-    })
-      
-     return parseServerActionResponse({
+      },
+    });
+
+    return parseServerActionResponse({
       status: "SUCCESS",
       error: "",
       data: {
         stripeSessionId: session.id,
         url: session.url,
       },
-     })
-
+    });
   } catch (error) {
     return parseServerActionResponse({
       status: "ERROR",
@@ -1020,10 +1060,19 @@ const createDonationCheckout = async ({userId, amount, name, email}: {userId?: s
       data: null,
     });
   }
-}
+};
 
-
-export const createSubscriptionCheckout = async ({userId, amount, name, email}: {userId: string, amount: number, name: string, email: string}) => {
+export const createSubscriptionCheckout = async ({
+  userId,
+  amount,
+  name,
+  email,
+}: {
+  userId: string;
+  amount: number;
+  name: string;
+  email: string;
+}) => {
   try {
     const stripeCustomerId = await getOrCreateStripeCustomer(userId, email);
     const session = await stripe.checkout.sessions.create({
@@ -1034,8 +1083,9 @@ export const createSubscriptionCheckout = async ({userId, amount, name, email}: 
           price_data: {
             currency: "usd",
             product_data: {
-              name: 'Monthly Donation to Digital Revolution',
-              description: 'Recurring support for digital equity and STEM education',
+              name: "Monthly Donation to Digital Revolution",
+              description:
+                "Recurring support for digital equity and STEM education",
             },
             unit_amount: amount,
             recurring: {
@@ -1043,7 +1093,7 @@ export const createSubscriptionCheckout = async ({userId, amount, name, email}: 
             },
           },
           quantity: 1,
-        }
+        },
       ],
       metadata: {
         type: "subscription",
@@ -1056,9 +1106,9 @@ export const createSubscriptionCheckout = async ({userId, amount, name, email}: 
         metadata: {
           userId,
           type: "donation",
-        }
-      }
-    })
+        },
+      },
+    });
 
     if (!session) {
       return parseServerActionResponse({
@@ -1076,18 +1126,26 @@ export const createSubscriptionCheckout = async ({userId, amount, name, email}: 
         url: session.url,
       },
     });
-    
   } catch (error) {
     return parseServerActionResponse({
       status: "ERROR",
       error: error instanceof Error ? error.message : "Unknown error",
       data: null,
-    }); 
+    });
   }
-}
+};
 
-
-export const createDonationSession = async ({userId, amount, name, email}: {userId?: string, amount: number, name: string, email: string}) => {
+export const createDonationSession = async ({
+  userId,
+  amount,
+  name,
+  email,
+}: {
+  userId?: string;
+  amount: number;
+  name: string;
+  email: string;
+}) => {
   try {
     const isRateLimited = await checkRateLimit("createDonationCheckout");
     if (isRateLimited.status === "ERROR") {
@@ -1103,10 +1161,9 @@ export const createDonationSession = async ({userId, amount, name, email}: {user
       amount,
       name,
       email,
-    })
+    });
 
     return result;
-
   } catch (error) {
     return parseServerActionResponse({
       status: "ERROR",
@@ -1114,17 +1171,24 @@ export const createDonationSession = async ({userId, amount, name, email}: {user
       data: null,
     });
   }
-}
+};
 
-
-export const createSubscriptionSession = async ({userId, amount, name, email}: {userId: string, amount: number, name: string, email: string}) => {
+export const createSubscriptionSession = async ({
+  userId,
+  amount,
+  name,
+  email,
+}: {
+  userId: string;
+  amount: number;
+  name: string;
+  email: string;
+}) => {
   try {
-
     const isRateLimited = await checkRateLimit("createSubscriptionSession");
     if (isRateLimited.status === "ERROR") {
       return isRateLimited;
     }
-
 
     if (!userId || !amount || !email) {
       throw new Error("Amount and email are required");
@@ -1135,10 +1199,9 @@ export const createSubscriptionSession = async ({userId, amount, name, email}: {
       amount,
       name,
       email,
-    })
-    
-    return result;
+    });
 
+    return result;
   } catch (error) {
     return parseServerActionResponse({
       status: "ERROR",
@@ -1146,12 +1209,10 @@ export const createSubscriptionSession = async ({userId, amount, name, email}: {
       data: null,
     });
   }
-}
-
+};
 
 export const getSubscription = async (userId: string) => {
   try {
-
     const isRateLimited = await checkRateLimit("getSubscription");
     if (isRateLimited.status === "ERROR") {
       return isRateLimited;
@@ -1183,12 +1244,10 @@ export const getSubscription = async (userId: string) => {
       data: null,
     });
   }
-}
-
+};
 
 export const getDonationByStripeSessionId = async (stripeSessionId: string) => {
   try {
-
     const isRateLimited = await checkRateLimit("getDonationByStripeSessionId");
     if (isRateLimited.status === "ERROR") {
       return isRateLimited;
@@ -1222,7 +1281,7 @@ export const getDonationByStripeSessionId = async (stripeSessionId: string) => {
       data: null,
     });
   }
-}
+};
 
 export const getLatestSubscription = async (userId: string) => {
   try {
@@ -1233,7 +1292,7 @@ export const getLatestSubscription = async (userId: string) => {
 
     const subscription = await prisma.subscription.findFirst({
       where: { userId: userId },
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: "desc" },
     });
 
     if (!subscription) {
@@ -1256,11 +1315,15 @@ export const getLatestSubscription = async (userId: string) => {
       data: null,
     });
   }
-}
+};
 
-export const getSubscriptionByStripeSessionId = async (stripeSessionId: string) => {
+export const getSubscriptionByStripeSessionId = async (
+  stripeSessionId: string
+) => {
   try {
-    const isRateLimited = await checkRateLimit("getSubscriptionByStripeSessionId");
+    const isRateLimited = await checkRateLimit(
+      "getSubscriptionByStripeSessionId"
+    );
     if (isRateLimited.status === "ERROR") {
       return isRateLimited;
     }
@@ -1271,7 +1334,7 @@ export const getSubscriptionByStripeSessionId = async (stripeSessionId: string) 
 
     // First, we need to get the session from Stripe to find the subscription ID
     const session = await stripe.checkout.sessions.retrieve(stripeSessionId);
-    
+
     if (!session.subscription) {
       return parseServerActionResponse({
         status: "ERROR",
@@ -1304,11 +1367,12 @@ export const getSubscriptionByStripeSessionId = async (stripeSessionId: string) 
       data: null,
     });
   }
-}
+};
 
-
-
-export const cancelSubscription = async (subscriptionId: number, reason: string) => {
+export const cancelSubscription = async (
+  subscriptionId: number,
+  reason: string
+) => {
   try {
     const isRateLimited = await checkRateLimit("cancelSubscription");
     if (isRateLimited.status === "ERROR") {
@@ -1318,7 +1382,7 @@ export const cancelSubscription = async (subscriptionId: number, reason: string)
     // First, get the subscription from database to get Stripe subscription ID
     const subscription = await prisma.subscription.findUnique({
       where: { id: subscriptionId },
-      include: { user: true }
+      include: { user: true },
     });
 
     if (!subscription) {
@@ -1329,7 +1393,7 @@ export const cancelSubscription = async (subscriptionId: number, reason: string)
       });
     }
 
-    if (subscription.status === 'canceled') {
+    if (subscription.status === "canceled") {
       return parseServerActionResponse({
         status: "ERROR",
         error: "Subscription is already canceled",
@@ -1342,7 +1406,7 @@ export const cancelSubscription = async (subscriptionId: number, reason: string)
       // Option 1: Cancel immediately
       await stripe.subscriptions.cancel(subscription.stripeSubscriptionId);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (stripeError: any) {
       return parseServerActionResponse({
         status: "ERROR",
@@ -1359,7 +1423,7 @@ export const cancelSubscription = async (subscriptionId: number, reason: string)
         cancelReason: reason,
         canceledAt: new Date(),
       },
-      include: { user: true }
+      include: { user: true },
     });
 
     // Send cancellation confirmation email
@@ -1379,7 +1443,6 @@ export const cancelSubscription = async (subscriptionId: number, reason: string)
       error: "",
       data: updatedSubscription,
     });
-
   } catch (error) {
     return parseServerActionResponse({
       status: "ERROR",
@@ -1402,7 +1465,7 @@ export const getOrders = async (userId: string) => {
         items: true,
         address: true,
       },
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: "desc" },
     });
 
     if (!orders) {
@@ -1425,7 +1488,7 @@ export const getOrders = async (userId: string) => {
       data: null,
     });
   }
-}
+};
 
 export const getSingleProductBySlug = async (slug: string) => {
   try {
@@ -1440,17 +1503,23 @@ export const getSingleProductBySlug = async (slug: string) => {
 
     // Step 1: Fetch the lightweight sync products list to find the sync_product_id
     const syncProductsUrl = `${PRINTFUL_BASE}/store/products?limit=100`;
-    const syncRes = await fetch(syncProductsUrl, { headers, cache: "no-store" });
-    
+    const syncRes = await fetch(syncProductsUrl, {
+      headers,
+      cache: "no-store",
+    });
+
     if (!syncRes.ok) {
-      throw new Error(`Failed to fetch product list: ${syncRes.status} ${syncRes.statusText}`);
+      throw new Error(
+        `Failed to fetch product list: ${syncRes.status} ${syncRes.statusText}`
+      );
     }
 
     const syncData = await syncRes.json();
-    
+
     // Find the product with matching external_id (slug)
     const matchingProduct = syncData.result?.find(
-      (p: PrintfulSyncProduct) => p.external_id?.toLowerCase() === slug.toLowerCase()
+      (p: PrintfulSyncProduct) =>
+        p.external_id?.toLowerCase() === slug.toLowerCase()
     );
 
     if (!matchingProduct) {
@@ -1463,20 +1532,24 @@ export const getSingleProductBySlug = async (slug: string) => {
 
     // Step 2: Fetch the full product details using the sync_product_id
     const productDetailsUrl = `${PRINTFUL_BASE}/store/products/${matchingProduct.id}`;
-    const detailsRes = await fetch(productDetailsUrl, { headers, cache: "no-store" });
+    const detailsRes = await fetch(productDetailsUrl, {
+      headers,
+      cache: "no-store",
+    });
 
     if (!detailsRes.ok) {
-      throw new Error(`Failed to fetch product details: ${detailsRes.status} ${detailsRes.statusText}`);
+      throw new Error(
+        `Failed to fetch product details: ${detailsRes.status} ${detailsRes.statusText}`
+      );
     }
 
     const detailsData = await detailsRes.json();
-    
+
     return parseServerActionResponse({
       status: "SUCCESS",
       error: "",
       data: detailsData.result,
     });
-
   } catch (error) {
     return parseServerActionResponse({
       status: "ERROR",
@@ -1484,4 +1557,4 @@ export const getSingleProductBySlug = async (slug: string) => {
       data: null,
     });
   }
-}
+};
