@@ -170,11 +170,12 @@ const DonatePageClient = ({
         <TitleSection
           title={donateData.text.mainTitle}
           titleClassName="font-lexend text-6xl md:text-8xl font-bold text-center"
-          containerClassName="flex items-center justify-center py-20 md:py-32 h-full"
+          containerClassName="flex items-center justify-center py-20 md:py-32 px-8 md:px-12 h-full"
+          isHero={true}
         />
       </div>
       {/* Main Content */}
-      <div className="flex flex-col gap-16 bg-gradient-to-b from-bg-primary via-primary-900 to-bg-primary h-full">
+      <div className="flex flex-col gap-16 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
         {/* Donation Description */}
         <section className="px-6 md:px-12">
           <div className="max-w-4xl mx-auto">
@@ -426,8 +427,8 @@ const DonatePageClient = ({
               title={donateData.text.transparencyTitle}
               description={donateData.text.transparencyDescription}
               borderColor="border-orange-500/30"
-              gradientFrom="from-orange-500/20"
-              gradientTo="to-pink-500/20"
+              gradientFrom="from-orange-500/10"
+              gradientTo="to-pink-500/10"
               iconBgClassName="bg-gradient-to-r from-orange-500 to-pink-500"
             >
               <div className="bg-slate-700/50 rounded-xl p-4 max-w-2xl mx-auto">

@@ -22,8 +22,8 @@ const ShareableContentCard: React.FC<ShareableContentCardProps> = ({
   onCopyAll,
   isTextCopied,
   isAllCopied,
-  gradientFrom = "from-primary-500/20",
-  gradientTo = "to-secondary-500/20",
+  gradientFrom = "from-primary-500/10",
+  gradientTo = "to-secondary-500/10",
   className = "",
 }) => {
   return (

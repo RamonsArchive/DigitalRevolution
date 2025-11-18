@@ -88,7 +88,7 @@ const HomePageClient = ({ homeData }: HomePageClientProps) => {
       </section>
 
       {/* Impact Approach Section */}
-      <section className="px-6 md:px-12 py-20 bg-gradient-to-b from-bg-primary via-primary-900 to-bg-primary">
+      <section className="px-6 md:px-12 py-20 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="section-title text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-6">
@@ -149,7 +149,7 @@ const HomePageClient = ({ homeData }: HomePageClientProps) => {
       </section>
 
       {/* Support Our Mission Section */}
-      <section className="px-6 md:px-12 py-20 bg-gradient-to-b from-bg-primary via-primary-900 to-bg-primary">
+      <section className="px-6 md:px-12 py-20 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="section-title text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-6">
@@ -175,8 +175,8 @@ const HomePageClient = ({ homeData }: HomePageClientProps) => {
                     impactLabel="Impact"
                     impactContent={option.impact}
                     layout="vertical"
-                    gradientFrom="from-emerald-500/20"
-                    gradientTo="to-cyan-500/20"
+                    gradientFrom="from-emerald-500/10"
+                    gradientTo="to-cyan-500/10"
                     iconGradientFrom="from-emerald-500"
                     iconGradientTo="to-cyan-500"
                     className="h-full"

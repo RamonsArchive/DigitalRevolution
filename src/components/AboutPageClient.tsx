@@ -6,7 +6,12 @@ import ImageCarousel from "./ImageCarousel";
 import { ABOUT_DATA } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
-import { ImpactCard, FeatureCard, InfoCard, IconCard } from "@/components/cards";
+import {
+  ImpactCard,
+  FeatureCard,
+  InfoCard,
+  IconCard,
+} from "@/components/cards";
 
 const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
   const images = (aboutData.images || []).map((img) => img.src);
@@ -17,12 +22,13 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
         <TitleSection
           title={aboutData.text.mainTitle}
           titleClassName="font-lexend text-6xl md:text-8xl font-bold text-center"
-          containerClassName="flex items-center justify-center py-20 md:py-32 h-full"
+          containerClassName="flex items-center justify-center py-20 md:py-32 px-8 md:px-12 h-full"
+          isHero={true}
         />
       </div>
 
       {/* Mission & Vision Cards */}
-      <div className="flex flex-col gap-16 bg-gradient-to-b from-bg-primary via-primary-900 to-bg-primary h-full">
+      <div className="flex flex-col gap-16 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
         <section className="px-6 md:px-12">
           <div className="max-w-7xl mx-auto grid grid-cols-1 gap-8">
             <div className="group relative">
@@ -176,8 +182,8 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
                     icon={icons[idx] || "📌"}
                     title={initiative.name}
                     content={<p>{initiative.description}</p>}
-                    gradientFrom="from-secondary-500/20"
-                    gradientTo="to-primary-500/20"
+                    gradientFrom="from-secondary-500/10"
+                    gradientTo="to-primary-500/10"
                     className="h-full"
                   />
                 );

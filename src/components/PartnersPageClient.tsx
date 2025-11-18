@@ -22,12 +22,13 @@ const PartnersPageClient = ({
         <TitleSection
           title={partnersData.text.mainTitle}
           titleClassName="font-lexend text-6xl md:text-8xl font-bold text-center"
-          containerClassName="flex items-center justify-center py-20 md:py-32 h-full"
+          containerClassName="flex items-center justify-center py-20 md:py-32 px-8 md:px-12 h-full"
+          isHero={true}
         />
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-col gap-16 bg-gradient-to-b from-bg-primary via-primary-900 to-bg-primary h-full">
+      <div className="flex flex-col gap-16 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
         {/* Partnership Overview */}
         <section className="px-6 md:px-12">
           <div className="max-w-4xl mx-auto">
@@ -70,7 +71,9 @@ const PartnersPageClient = ({
                     description={
                       <>
                         <p className="mb-3">{type.description}</p>
-                        <p className="text-xs italic">Examples: {type.examples}</p>
+                        <p className="text-xs italic">
+                          Examples: {type.examples}
+                        </p>
                       </>
                     }
                     className="h-full"
@@ -99,8 +102,8 @@ const PartnersPageClient = ({
                     icon={icons[idx] || "📌"}
                     title={benefit.title}
                     content={<p>{benefit.description}</p>}
-                    gradientFrom="from-secondary-500/20"
-                    gradientTo="to-primary-500/20"
+                    gradientFrom="from-secondary-500/10"
+                    gradientTo="to-primary-500/10"
                     className="h-full"
                   />
                 );

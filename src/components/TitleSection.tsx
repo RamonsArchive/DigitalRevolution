@@ -11,6 +11,7 @@ interface TitleSectionProps {
   descriptionClassName?: string;
   containerClassName?: string;
   shouldAnimate?: boolean;
+  isHero?: boolean;
 }
 
 gsap.registerPlugin(SplitText);
@@ -21,6 +22,7 @@ const TitleSection = ({
   descriptionClassName,
   containerClassName,
   shouldAnimate = true,
+  isHero = false,
 }: TitleSectionProps) => {
   useGSAP(() => {
     if (shouldAnimate) {
@@ -47,7 +49,11 @@ const TitleSection = ({
 
   return (
     <div
-      className={`title bg-gradient-to-b from-bg-primary via-secondary-900 to-bg-primary ${containerClassName}`}
+      className={`title ${
+        isHero
+          ? "bg-gradient-to-b from-bg-primary via-secondary-950/80 to-bg-primary"
+          : "bg-gradient-to-b from-bg-primary via-slate-900/30 to-bg-primary"
+      } ${containerClassName}`}
     >
       <h1 className={`text-white ${titleClassName}`}>{title}</h1>
       <p className={`text-white/90 ${descriptionClassName}`}>{description}</p>

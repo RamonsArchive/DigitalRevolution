@@ -36,7 +36,7 @@ const DonationOptionCard: React.FC<DonationOptionCardProps> = ({
           className={`absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500 pointer-events-none ${
             isSelected
               ? "bg-gradient-to-r from-emerald-500/40 to-cyan-500/40 opacity-100"
-              : "bg-gradient-to-r from-primary-500/20 to-secondary-500/20 group-hover:opacity-100"
+              : "bg-gradient-to-r from-primary-500/10 to-secondary-500/10 group-hover:opacity-100"
           }`}
         />
 
