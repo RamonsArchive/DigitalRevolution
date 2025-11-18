@@ -57,7 +57,7 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
       <div className="relative h-[33%] overflow-hidden">
         <TitleSection
           title={shareData.text.mainTitle}
-          titleClassName="font-lexend text-6xl md:text-8xl font-bold text-center"
+          titleClassName="font-lexend text-6xl md:text-8xl font-extrabold text-center"
           containerClassName="flex items-center justify-center py-20 md:py-32 px-8 md:px-12 h-full"
           isHero={true}
         />
@@ -75,11 +75,11 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
                   <div className="w-16 h-16 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center flex-shrink-0">
                     <Share2 className="w-8 h-8 text-white" />
                   </div>
-                  <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
+                  <h2 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
                     {shareData.text.subTitle}
                   </h2>
                 </div>
-                <p className="text-slate-200 leading-relaxed text-lg max-w-3xl mx-auto mb-6">
+                <p className="text-slate-200 leading-relaxed text-lg font-medium max-w-3xl mx-auto mb-6">
                   {shareData.text.description}
                 </p>
                 <div className="bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 border border-emerald-500/30 rounded-xl p-4 max-w-2xl mx-auto">

@@ -22,10 +22,10 @@ const HomePageClient = ({ homeData }: HomePageClientProps) => {
       <section className="px-6 md:px-12 py-[5.5rem] md:py-24 bg-gradient-to-b from-bg-primary via-slate-900 to-bg-primary">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-[4.5rem] md:mb-20 overflow-visible">
-            <h2 className="section-title text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-6 pb-3 overflow-visible">
+            <h2 className="section-title text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-6 pb-3 overflow-visible">
               {homeData.section2.title}
             </h2>
-            <p className="section-subtitle text-xl text-slate-300 max-w-3xl mx-auto">
+            <p className="section-subtitle text-xl font-medium text-slate-300 max-w-3xl mx-auto">
               {homeData.section2.subtitle}
             </p>
           </div>
@@ -83,13 +83,13 @@ const HomePageClient = ({ homeData }: HomePageClientProps) => {
       <section className="px-6 md:px-12 py-[5.5rem] md:py-24 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-[4.5rem] md:mb-20 overflow-visible">
-            <h2 className="section-title text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-6 pb-3 overflow-visible">
+            <h2 className="section-title text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-6 pb-3 overflow-visible">
               {homeData.section3.title}
             </h2>
             <p className="section-subtitle text-xl text-slate-300 max-w-4xl mx-auto mb-8">
               {homeData.section3.subtitle}
             </p>
-            <p className="section-description text-lg text-slate-400 max-w-3xl mx-auto">
+            <p className="section-description text-lg font-normal text-slate-400 max-w-3xl mx-auto">
               {homeData.section3.description}
             </p>
           </div>
@@ -115,13 +115,13 @@ const HomePageClient = ({ homeData }: HomePageClientProps) => {
       <section className="px-6 md:px-12 py-[5.5rem] md:py-24 bg-gradient-to-b from-bg-primary via-slate-900 to-bg-primary">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-[4.5rem] md:mb-20 overflow-visible">
-            <h2 className="section-title text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-6 pb-3 overflow-visible">
+            <h2 className="section-title text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-6 pb-3 overflow-visible">
               {homeData.section4.title}
             </h2>
             <p className="section-subtitle text-xl text-slate-300 max-w-4xl mx-auto mb-8">
               {homeData.section4.subtitle}
             </p>
-            <p className="section-description text-lg text-slate-400 max-w-3xl mx-auto">
+            <p className="section-description text-lg font-normal text-slate-400 max-w-3xl mx-auto">
               {homeData.section4.description}
             </p>
           </div>
@@ -144,13 +144,13 @@ const HomePageClient = ({ homeData }: HomePageClientProps) => {
       <section className="px-6 md:px-12 py-[5.5rem] md:py-24 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-[4.5rem] md:mb-20 overflow-visible">
-            <h2 className="section-title text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-6 pb-3 overflow-visible">
+            <h2 className="section-title text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-6 pb-3 overflow-visible">
               {homeData.section5.title}
             </h2>
             <p className="section-subtitle text-xl text-slate-300 max-w-4xl mx-auto mb-8">
               {homeData.section5.subtitle}
             </p>
-            <p className="section-description text-lg text-slate-400 max-w-3xl mx-auto">
+            <p className="section-description text-lg font-normal text-slate-400 max-w-3xl mx-auto">
               {homeData.section5.description}
             </p>
           </div>

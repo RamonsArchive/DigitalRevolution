@@ -31,14 +31,14 @@ const ImpactBreakdownCard: React.FC<ImpactBreakdownCardProps> = ({
           <div className="w-16 h-16 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition duration-300">
             <span className="text-2xl font-bold text-white">{amount}</span>
           </div>
-          <h4 className="text-lg font-bold text-slate-100 mb-3 group-hover:text-primary-200 transition-colors">
+          <h4 className="text-lg font-semibold text-slate-100 mb-3 group-hover:text-primary-200 transition-colors">
             {impact}
           </h4>
           <div className="bg-slate-700/50 rounded-lg p-3 flex-grow">
-            <p className="text-slate-400 text-xs font-medium mb-1">
+            <p className="text-slate-400 text-xs font-semibold mb-1">
               STEM Impact:
             </p>
-            <p className="text-slate-200 text-xs leading-relaxed">
+            <p className="text-slate-200 text-xs font-normal leading-relaxed">
               {stemConnection}
             </p>
           </div>

@@ -40,11 +40,11 @@ const InfoCard: React.FC<InfoCardProps> = ({
             >
               <span className="text-3xl">{icon}</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
+            <h2 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
               {title}
             </h2>
             {description && (
-              <div className="text-slate-300 text-lg leading-relaxed max-w-3xl mx-auto">
+              <div className="text-slate-300 text-lg font-medium leading-relaxed max-w-3xl mx-auto">
                 {description}
               </div>
             )}

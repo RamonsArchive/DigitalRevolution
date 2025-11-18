@@ -22,10 +22,10 @@ const StatsMetricsCard: React.FC<StatsMetricsCardProps> = ({
           <div className="w-20 h-20 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
             <span className="text-3xl font-bold text-white">{stat.number}</span>
           </div>
-          <h4 className="text-lg font-bold text-slate-100 mb-2">
+          <h4 className="text-lg font-semibold text-slate-100 mb-2">
             {stat.label}
           </h4>
-          <p className="text-slate-300 text-sm leading-relaxed">
+          <p className="text-slate-300 text-sm font-normal leading-relaxed">
             {stat.description}
           </p>
         </div>

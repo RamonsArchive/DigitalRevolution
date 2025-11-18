@@ -40,17 +40,17 @@ const FundingAreaCard: React.FC<FundingAreaCardProps> = ({
             <span className="text-lg font-bold text-white">{percentage}</span>
           </div>
           <div className="flex-1 flex flex-col">
-            <h4 className="text-lg font-bold text-slate-100 mb-2 group-hover:text-secondary-200 transition-colors">
+            <h4 className="text-lg font-semibold text-slate-100 mb-2 group-hover:text-secondary-200 transition-colors">
               {area}
             </h4>
-            <p className="text-slate-300 text-sm leading-relaxed mb-3">
+            <p className="text-slate-300 text-sm font-normal leading-relaxed mb-3">
               {description}
             </p>
             <div className="bg-slate-700/50 rounded-lg p-3 flex-grow">
-              <p className="text-slate-400 text-xs font-medium mb-1">
+              <p className="text-slate-400 text-xs font-semibold mb-1">
                 STEM Impact:
               </p>
-              <p className="text-slate-200 text-xs leading-relaxed">
+              <p className="text-slate-200 text-xs font-normal leading-relaxed">
                 {stemImpact}
               </p>
             </div>

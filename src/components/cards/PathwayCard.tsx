@@ -39,10 +39,10 @@ const PathwayCard: React.FC<PathwayCardProps> = ({
           >
             {icon && <span className="text-2xl">{icon}</span>}
           </div>
-          <h3 className="text-lg font-bold text-slate-100 mb-3 group-hover:text-secondary-200 transition-colors">
+          <h3 className="text-lg font-semibold text-slate-100 mb-3 group-hover:text-secondary-200 transition-colors">
             {title}
           </h3>
-          <p className="text-slate-300 text-sm leading-relaxed flex-grow">
+          <p className="text-slate-300 text-sm font-normal leading-relaxed flex-grow">
             {description}
           </p>
         </div>

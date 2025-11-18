@@ -36,10 +36,10 @@ const IconCard: React.FC<IconCardProps> = ({
             <span className="text-lg">{icon}</span>
           </div>
           <div className="flex-1 flex flex-col">
-            <h3 className="text-2xl font-bold text-slate-100 mb-4 group-hover:text-primary-200 transition-colors">
+            <h3 className="text-2xl font-semibold text-slate-100 mb-4 group-hover:text-primary-200 transition-colors">
               {title}
             </h3>
-            <div className="text-slate-300 leading-relaxed text-lg flex-grow">
+            <div className="text-slate-300 leading-relaxed text-lg font-normal flex-grow">
               {typeof content === "string" ? <p>{content}</p> : content}
             </div>
           </div>

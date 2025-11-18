@@ -49,27 +49,27 @@ const ImpactCard: React.FC<ImpactCardProps> = ({
               <span className="text-lg">{icon}</span>
             </div>
             <div className="flex-1 flex flex-col">
-              <h4 className="text-xl font-bold text-slate-100 mb-3 group-hover:text-primary-200 transition-colors">
+              <h4 className="text-xl font-semibold text-slate-100 mb-3 group-hover:text-primary-200 transition-colors">
                 {title}
               </h4>
-              <p className="text-slate-300 text-sm leading-relaxed mb-3">
+              <p className="text-slate-300 text-sm font-normal leading-relaxed mb-3">
                 {description}
               </p>
               {(impactLabel || stemLabel) && (
                 <div className="bg-slate-700/50 rounded-lg p-3">
                   {impactLabel && impactContent && (
-                    <p className="text-slate-400 text-xs font-medium mb-1">
+                    <p className="text-slate-400 text-xs font-semibold mb-1">
                       {impactLabel}:
                     </p>
                   )}
                   {impactContent && (
-                    <p className="text-slate-200 text-xs leading-relaxed mb-2">
+                    <p className="text-slate-200 text-xs font-normal leading-relaxed mb-2">
                       {impactContent}
                     </p>
                   )}
                   {stemLabel && stemContent && (
                     <>
-                      <p className="text-slate-400 text-xs font-medium mb-1">
+                      <p className="text-slate-400 text-xs font-semibold mb-1">
                         {stemLabel}:
                       </p>
                       <p className="text-slate-200 text-xs leading-relaxed">
@@ -86,9 +86,9 @@ const ImpactCard: React.FC<ImpactCardProps> = ({
             <div
               className={`w-16 h-16 bg-gradient-to-r ${iconGradientFrom} ${iconGradientTo} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition duration-300`}
             >
-              <span className="text-2xl font-bold text-white">{icon}</span>
+              <span className="text-2xl text-white">{icon}</span>
             </div>
-            <h4 className="text-lg font-bold text-slate-100 mb-3 group-hover:text-primary-200 transition-colors">
+            <h4 className="text-lg font-semibold text-slate-100 mb-3 group-hover:text-primary-200 transition-colors">
               {title}
             </h4>
             <p className="text-slate-300 text-sm leading-relaxed mb-3 flex-grow">
@@ -108,7 +108,7 @@ const ImpactCard: React.FC<ImpactCardProps> = ({
                 )}
                 {stemLabel && stemContent && (
                   <>
-                    <p className="text-slate-400 text-xs font-medium mb-1">
+                    <p className="text-slate-400 text-xs font-semibold mb-1">
                       {stemLabel}:
                     </p>
                     <p className="text-slate-200 text-xs leading-relaxed">

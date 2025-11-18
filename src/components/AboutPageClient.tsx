@@ -21,7 +21,7 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
       <div className="relative h-[33%] overflow-hidden">
         <TitleSection
           title={aboutData.text.mainTitle}
-          titleClassName="font-lexend text-6xl md:text-8xl font-bold text-center"
+          titleClassName="font-lexend text-6xl md:text-8xl font-extrabold text-center"
           containerClassName="flex items-center justify-center py-20 md:py-32 px-8 md:px-12 h-full"
           isHero={true}
         />
@@ -38,11 +38,11 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
                   <div className="w-12 h-12 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center mr-4">
                     <span className="text-2xl">🎯</span>
                   </div>
-                  <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
+                  <h2 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
                     {aboutData.text.missionTitle}
                   </h2>
                 </div>
-                <p className="text-slate-200 leading-relaxed text-lg">
+                <p className="text-slate-200 leading-relaxed text-lg font-medium">
                   {aboutData.text.missionStatement}
                 </p>
               </div>
@@ -59,7 +59,7 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
                     {aboutData.text.descriptionTitle}
                   </h2>
                 </div>
-                <p className="text-slate-200 leading-relaxed text-lg">
+                <p className="text-slate-200 leading-relaxed text-lg font-medium">
                   {aboutData.text.missionDescription}
                 </p>
               </div>
@@ -95,11 +95,11 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
                       <div className="w-12 h-12 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center mr-4">
                         <span className="text-2xl">👨‍💻</span>
                       </div>
-                      <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
+                      <h2 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
                         {aboutData.text.founderTitle}
                       </h2>
                     </div>
-                    <p className="text-slate-200 leading-relaxed text-lg">
+                    <p className="text-slate-200 leading-relaxed text-lg font-medium">
                       {aboutData.text.founderDescription}
                     </p>
                   </div>
@@ -113,7 +113,7 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-[3.5rem] md:mb-16">
-              <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
+              <h3 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 {aboutData.text.impactTitle}
               </h3>
               <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
@@ -142,7 +142,7 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-[3.5rem] md:mb-16">
-              <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
+              <h3 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 Our Values
               </h3>
               <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
@@ -168,7 +168,7 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-[3.5rem] md:mb-16">
-              <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
+              <h3 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 Our Initiatives
               </h3>
               <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
@@ -209,10 +209,10 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
                     <div className="w-16 h-16 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <span className="text-2xl">📅</span>
                     </div>
-                    <h4 className="text-2xl font-bold text-slate-100 mb-2">
+                    <h4 className="text-2xl font-semibold text-slate-100 mb-2">
                       Founded
                     </h4>
-                    <p className="text-slate-300 text-lg">
+                    <p className="text-slate-300 text-lg font-normal">
                       {aboutData.stats.founded}
                     </p>
                   </div>
@@ -220,10 +220,10 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
                     <div className="w-16 h-16 bg-gradient-to-r from-secondary-500 to-primary-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <span className="text-2xl">💝</span>
                     </div>
-                    <h4 className="text-2xl font-bold text-slate-100 mb-2">
+                    <h4 className="text-2xl font-semibold text-slate-100 mb-2">
                       Profits Donated
                     </h4>
-                    <p className="text-slate-300 text-lg">
+                    <p className="text-slate-300 text-lg font-normal">
                       {aboutData.stats.profitsDonated}
                     </p>
                   </div>
@@ -231,10 +231,10 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
                     <div className="w-16 h-16 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <span className="text-2xl">🌍</span>
                     </div>
-                    <h4 className="text-2xl font-bold text-slate-100 mb-2">
+                    <h4 className="text-2xl font-semibold text-slate-100 mb-2">
                       Communities Served
                     </h4>
-                    <p className="text-slate-300 text-lg">
+                    <p className="text-slate-300 text-lg font-normal">
                       {aboutData.stats.communitiesServed}
                     </p>
                   </div>
@@ -242,10 +242,10 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
                     <div className="w-16 h-16 bg-gradient-to-r from-secondary-500 to-primary-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <span className="text-2xl">🎯</span>
                     </div>
-                    <h4 className="text-2xl font-bold text-slate-100 mb-2">
+                    <h4 className="text-2xl font-semibold text-slate-100 mb-2">
                       Mission Focus
                     </h4>
-                    <p className="text-slate-300 text-sm leading-relaxed">
+                    <p className="text-slate-300 text-sm font-light leading-relaxed">
                       {aboutData.stats.missionFocus}
                     </p>
                   </div>
@@ -259,7 +259,7 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-[3.5rem] md:mb-16">
-              <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
+              <h3 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 Gallery
               </h3>
               <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
@@ -280,7 +280,7 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
                   <div className="w-16 h-16 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mr-4">
                     <span className="text-3xl">🤝</span>
                   </div>
-                  <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
+                  <h2 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
                     {aboutData.text.howToSupportTitle}
                   </h2>
                 </div>

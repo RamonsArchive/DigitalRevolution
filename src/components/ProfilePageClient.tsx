@@ -97,7 +97,7 @@ const ProfilePageClient = ({
     <div className="min-h-screen flex flex-col bg-bg-primary gap-16 pb-20">
       <TitleSection
         title={profileData.text.mainTitle}
-        titleClassName="font-lexend text-6xl md:text-8xl font-bold text-center"
+        titleClassName="font-lexend text-6xl md:text-8xl font-extrabold text-center"
         containerClassName="flex items-center justify-center py-20 md:py-32 px-8 md:px-12 h-full"
       />
       <div className="flex flex-col gap-[4.5rem] md:gap-20 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
@@ -111,11 +111,11 @@ const ProfilePageClient = ({
                   <div className="w-16 h-16 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mr-4">
                     <span className="text-3xl">👤</span>
                   </div>
-                  <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
+                  <h2 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
                     Your Profile
                   </h2>
                 </div>
-                <p className="text-slate-200 leading-relaxed text-lg max-w-3xl mx-auto">
+                <p className="text-slate-200 leading-relaxed text-lg font-medium max-w-3xl mx-auto">
                   Manage your account settings, view your subscription details,
                   and track your support for our mission.
                 </p>
@@ -128,7 +128,7 @@ const ProfilePageClient = ({
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
-              <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
+              <h3 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 Your Subscriptions
               </h3>
               <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
@@ -141,7 +141,7 @@ const ProfilePageClient = ({
                   <div className="w-16 h-16 bg-gradient-to-r from-slate-500 to-slate-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <span className="text-2xl">📋</span>
                   </div>
-                  <h4 className="text-xl font-bold text-slate-100 mb-3">
+                  <h4 className="text-xl font-semibold text-slate-100 mb-3">
                     No Active Subscriptions
                   </h4>
                   <p className="text-slate-300 mb-6">

@@ -168,7 +168,7 @@ const DonatePageClient = ({
       <div className="relative h-[33%]">
         <TitleSection
           title={donateData.text.mainTitle}
-          titleClassName="font-lexend text-6xl md:text-8xl font-bold text-center"
+          titleClassName="font-lexend text-6xl md:text-8xl font-extrabold text-center"
           containerClassName="flex items-center justify-center py-20 md:py-32 px-8 md:px-12 h-full"
           isHero={true}
         />
@@ -191,7 +191,7 @@ const DonatePageClient = ({
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-[3.5rem] md:mb-16">
-              <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
+              <h3 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 {donateData.text.impactTitle}
               </h3>
               <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
@@ -214,7 +214,7 @@ const DonatePageClient = ({
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-[3.5rem] md:mb-16">
-              <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
+              <h3 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 {donateData.text.donationTitle}
               </h3>
               <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
@@ -241,7 +241,7 @@ const DonatePageClient = ({
               <div className="relative bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 border border-primary-500/30 shadow-2xl transition-all duration-300 group-hover:shadow-2xl group-hover:border-primary-400/50 overflow-hidden">
                 {/* Gradient overlay - matches card height exactly */}
                 <div className="absolute inset-0 bg-gradient-to-r from-primary-500/20 via-secondary-500/20 to-primary-500/20 rounded-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-1000 pointer-events-none blur-sm" />
-                <h4 className="text-2xl font-bold text-slate-100 mb-6 text-center">
+                <h4 className="text-2xl font-semibold text-slate-100 mb-6 text-center">
                   Choose Your Amount
                 </h4>
 
@@ -266,14 +266,14 @@ const DonatePageClient = ({
                 )}
                 {/* Contact Information */}
                 <div className="w-full max-w-2xl mx-auto mb-8">
-                  <h5 className="text-lg font-bold text-slate-100 mb-6 text-center">
+                  <h5 className="text-lg font-semibold text-slate-100 mb-6 text-center">
                     Contact Information
                   </h5>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label
                         htmlFor="name"
-                        className="block text-slate-200 font-semibold text-sm mb-2"
+                        className="block text-slate-200 font-medium text-sm mb-2"
                       >
                         Full Name <span className="text-red-500">*</span>
                       </label>
@@ -295,7 +295,7 @@ const DonatePageClient = ({
                     <div>
                       <label
                         htmlFor="email"
-                        className="block text-slate-200 font-semibold text-sm mb-2"
+                        className="block text-slate-200 font-medium text-sm mb-2"
                       >
                         Email Address <span className="text-red-500">*</span>
                       </label>
@@ -367,7 +367,7 @@ const DonatePageClient = ({
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-[3.5rem] md:mb-16">
-              <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
+              <h3 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 How Your Donation is Used
               </h3>
               <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
@@ -391,7 +391,7 @@ const DonatePageClient = ({
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-[3.5rem] md:mb-16">
-              <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
+              <h3 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 Other Ways to Help
               </h3>
               <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>

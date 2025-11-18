@@ -32,7 +32,7 @@ const FactCard: React.FC<FactCardProps> = ({
             </div>
           )}
           <div className="flex-1 flex flex-col">
-            <div className="text-slate-200 leading-relaxed text-lg flex-grow">
+            <div className="text-slate-200 leading-relaxed text-lg font-medium flex-grow">
               {fact}
             </div>
           </div>

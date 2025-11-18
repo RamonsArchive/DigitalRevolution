@@ -49,10 +49,10 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
           >
             <span className="text-2xl">{icon}</span>
           </div>
-          <h4 className="text-lg font-bold text-slate-100 mb-3 group-hover:text-primary-200 transition-colors">
+          <h4 className="text-lg font-semibold text-slate-100 mb-3 group-hover:text-primary-200 transition-colors">
             {title}
           </h4>
-          <div className="text-slate-300 text-sm leading-relaxed flex-grow">
+          <div className="text-slate-300 text-sm font-normal leading-relaxed flex-grow">
             {description}
           </div>
         </div>
