@@ -162,7 +162,7 @@ const DonatePageClient = ({
       <div className="relative h-[33%]">
         <TitleSection
           title={donateData.text.mainTitle}
-          titleClassName="font-courier-prime text-6xl md:text-8xl font-bold text-center"
+          titleClassName="font-lexend text-6xl md:text-8xl font-bold text-center"
           containerClassName="flex items-center justify-center py-20 md:py-32 h-full"
         />
       </div>

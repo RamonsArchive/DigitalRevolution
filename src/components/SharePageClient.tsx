@@ -62,7 +62,7 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
       <div className="relative h-[33%] overflow-hidden">
         <TitleSection
           title={shareData.text.mainTitle}
-          titleClassName="font-courier-prime text-6xl md:text-8xl font-bold text-center"
+          titleClassName="font-lexend text-6xl md:text-8xl font-bold text-center"
           containerClassName="flex items-center justify-center py-20 md:py-32 h-full"
         />
       </div>

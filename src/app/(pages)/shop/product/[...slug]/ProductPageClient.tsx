@@ -543,7 +543,7 @@ const ProductPageClient = ({
         <div className="flex flex-col gap-6 w-full lg:w-[40%]">
           {/* Title and Price */}
           <div className="space-y-2">
-            <h1 className="text-3xl lg:text-4xl font-bold text-slate-300 font-courier-prime">
+            <h1 className="text-3xl lg:text-4xl font-bold text-slate-300 font-lexend">
               {product?.sync_product.name}
             </h1>
             {currentVariant?.retail_price && (

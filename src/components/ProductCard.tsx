@@ -25,7 +25,7 @@ const ProductCard = ({ product }: { product: PrintfulProduct }) => {
 
         {/* Product Info */}
         <div className="relative flex flex-col p-6 bg-white/95 backdrop-blur-sm">
-          <h1 className="font-courier-prime text-xl font-bold text-gray-800 group-hover:text-primary-600 transition-colors duration-300 line-clamp-2">
+          <h1 className="font-lexend text-xl font-bold text-gray-800 group-hover:text-primary-600 transition-colors duration-300 line-clamp-2">
             {product.sync_product.name}
           </h1>
 

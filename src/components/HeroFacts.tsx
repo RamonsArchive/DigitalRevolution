@@ -60,7 +60,7 @@ const HeroFacts = ({ section2 }: HeroFactsProps) => {
       <h2 className="section-title">{section2.title}</h2>
       <div className="flex flex-col md:flex-row gap-10 md:gap-20 items-start">
         <div className="flex flex-col gap-8 w-full md:w-[65%]">
-          <ul className="font-courier-prime text-xl md:text-2xl text-slate-50 list-disc list-inside space-y-8 leading-relaxed">
+          <ul className="font-lexend text-xl md:text-2xl text-slate-50 list-disc list-inside space-y-8 leading-relaxed">
             {section2.description.map((item, index) => (
               <li
                 key={`description-${index}`}
@@ -73,7 +73,7 @@ const HeroFacts = ({ section2 }: HeroFactsProps) => {
         </div>
         <div className="flex flex-col gap-6 flex-1 w-full md:w-auto">
           <div className="source-card p-6 rounded-2xl bg-gradient-to-br from-blue-900/30 to-cyan-800/20 border border-blue-500/30 shadow-lg">
-            <h3 className="font-courier-prime font-bold text-3xl text-blue-100 mb-6 text-center">
+            <h3 className="font-lexend font-bold text-3xl text-blue-100 mb-6 text-center">
               Sources
             </h3>
             <ul className="flex flex-col gap-5">
@@ -95,7 +95,7 @@ const HeroFacts = ({ section2 }: HeroFactsProps) => {
             </ul>
           </div>
           <div className="sources-card flex w-full flex-col gap-6 p-6 rounded-2xl bg-gradient-to-br shadow-lg">
-            <h1 className="sub-title font-courier-prime text-2xl text-center animated-gradient-text font-bold">
+            <h1 className="sub-title font-lexend text-2xl text-center animated-gradient-text font-bold">
               Help address the digital divide
             </h1>
             <div className="flex flex-col gap-4 justify-start items-start w-full">

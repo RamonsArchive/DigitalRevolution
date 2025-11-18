@@ -97,7 +97,7 @@ const ProfilePageClient = ({
     <div className="min-h-screen flex flex-col bg-bg-primary gap-16 pb-20">
       <TitleSection
         title={profileData.text.mainTitle}
-        titleClassName="font-courier-prime text-6xl md:text-8xl font-bold text-center"
+        titleClassName="font-lexend text-6xl md:text-8xl font-bold text-center"
         containerClassName="flex items-center justify-center py-20 md:py-32 h-full"
       />
       <div className="flex flex-col gap-16 bg-gradient-to-b from-bg-primary via-primary-900 to-bg-primary h-full">

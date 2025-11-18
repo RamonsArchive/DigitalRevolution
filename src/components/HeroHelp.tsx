@@ -55,7 +55,7 @@ const HeroHelp = ({
     <div className="flex flex-col gap-16 md:gap-24 py-32 px-5 md:px-20 bg-gradient-to-br bg-primary-200 min-h-screen">
       {/* Main Title Section */}
       <div className="flex w-full justify-center">
-        <h1 className="title-section font-courier-prime text-6xl md:text-8xl font-bold text-center dark-gradient-text">
+        <h1 className="title-section font-lexend text-6xl md:text-8xl font-bold text-center dark-gradient-text">
           {title}
         </h1>
       </div>
@@ -76,7 +76,7 @@ const HeroHelp = ({
             </div>
 
             {/* Description */}
-            <h2 className="font-courier-prime text-xl md:text-2xl font-bold text-center text-slate-200 group-hover:text-white transition-colors duration-300">
+            <h2 className="font-lexend text-xl md:text-2xl font-bold text-center text-slate-200 group-hover:text-white transition-colors duration-300">
               {item.label}
             </h2>
 
@@ -89,7 +89,7 @@ const HeroHelp = ({
       {/* Action Buttons Section */}
       <div className="flex flex-col md:flex-row gap-8 justify-center items-center mt-8">
         <div className="flex flex-col gap-10 items-center">
-          <h3 className="sub-title-2 font-courier-prime text-2xl font-bold text-center dark-gradient-text">
+          <h3 className="sub-title-2 font-lexend text-2xl font-bold text-center dark-gradient-text">
             Ready to make a difference?
           </h3>
           <div className="flex flex-col md:flex-row gap-6 w-full">

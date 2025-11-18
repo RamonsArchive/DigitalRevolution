@@ -2,30 +2,10 @@ import type { Metadata } from "next";
 import LocalFont from "next/font/local";
 import "./globals.css";
 
-const localFont = LocalFont({
-  src: [
-    {
-      path: "../fonts/CourierPrime-Regular.ttf",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../fonts/CourierPrime-Italic.ttf",
-      weight: "400",
-      style: "italic",
-    },
-    {
-      path: "../fonts/CourierPrime-Bold.ttf",
-      weight: "700",
-      style: "normal",
-    },
-    {
-      path: "../fonts/CourierPrime-BoldItalic.ttf",
-      weight: "700",
-      style: "italic",
-    },
-  ],
-  variable: "--font-courier-prime",
+const lexend = LocalFont({
+  src: "../fonts/Lexend/Lexend-VariableFont_wght.woff2",
+  variable: "--font-lexend",
+  weight: "100 900", // This tells Next.js it supports all weights
   display: "swap",
   preload: true,
 });
@@ -378,7 +358,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
         <link rel="dns-prefetch" href="//fonts.gstatic.com" />
       </head>
-      <body className={`${localFont.variable} antialiased`}>{children}</body>
+      <body className={`${lexend.variable} antialiased`}>{children}</body>
     </html>
   );
 }
