@@ -1,10 +1,9 @@
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useShopFilters } from "@/contexts/ShopContext";
 
 const ShopTitleSection = () => {
-  const pathname = usePathname();
   const searchParams = useSearchParams();
   const [title, setTitle] = useState("");
   const { filteredProducts, allProducts } = useShopFilters();

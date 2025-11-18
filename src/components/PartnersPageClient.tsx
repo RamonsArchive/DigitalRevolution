@@ -5,8 +5,7 @@ import { PARTNERS_DATA } from "@/constants";
 import TitleSection from "./TitleSection";
 import ImageCarousel from "./ImageCarousel";
 import PartnersForm from "./PartnersForm";
-import Image from "next/image";
-import { FeatureCard, IconCard, InfoCard } from "@/components/cards";
+import { FeatureCard, IconCard } from "@/components/cards";
 
 const PartnersPageClient = ({
   partnersData,

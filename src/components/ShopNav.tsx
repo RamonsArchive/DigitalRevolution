@@ -37,9 +37,12 @@ const ShopNav = () => {
   const { cartItems } = useProduct();
 
   // Handle category click
-  const handleCategoryClick = (categoryValue: string) => {
-    toggleOptionSelected("category", categoryValue);
-  };
+  const handleCategoryClick = useCallback(
+    (categoryValue: string) => {
+      toggleOptionSelected("category", categoryValue);
+    },
+    [toggleOptionSelected]
+  );
 
   // Click outside effect for search
   useClickOutside({

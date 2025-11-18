@@ -1,8 +1,10 @@
 "use server";
 
-import { PrintfulProduct, ShopFilters } from './globalTypes';
+import { PrintfulProduct, ShopFilters } from "./globalTypes";
 
-export const extractFiltersFromProducts = async (products: PrintfulProduct[]): Promise<ShopFilters> => {
+export const extractFiltersFromProducts = async (
+  products: PrintfulProduct[]
+): Promise<ShopFilters> => {
   const colors = new Set<string>();
   const sizes = new Set<string>();
   const brands = new Set<string>();
@@ -14,14 +16,14 @@ export const extractFiltersFromProducts = async (products: PrintfulProduct[]): P
     // Extract brand from product name (before "Digital Revolution")
     const productName = product.sync_product.name;
     let brand = "Unknown";
-    
+
     if (productName.includes("Founder's")) {
       brand = "Founder's";
     } else if (productName.includes("Xen")) {
       brand = "Xen";
     } else {
       // Try to extract brand from the beginning of the name
-      const parts = productName.split(' ');
+      const parts = productName.split(" ");
       if (parts.length > 0) {
         brand = parts[0];
       }
@@ -30,29 +32,29 @@ export const extractFiltersFromProducts = async (products: PrintfulProduct[]): P
 
     // Extract product type from name (t-shirt, polo, hoodie, etc.)
     const lowerName = productName.toLowerCase();
-    if (lowerName.includes('t-shirt') || lowerName.includes('tee')) {
-      productTypes.add('T-Shirt');
-    } else if (lowerName.includes('polo')) {
-      productTypes.add('Polo Shirt');
-    } else if (lowerName.includes('hoodie')) {
-      productTypes.add('Hoodie');
-    } else if (lowerName.includes('sweatshirt')) {
-      productTypes.add('Sweatshirt');
-    } else if (lowerName.includes('tank')) {
-      productTypes.add('Tank Top');
-    } else if (lowerName.includes('long sleeve')) {
-      productTypes.add('Long Sleeve');
+    if (lowerName.includes("t-shirt") || lowerName.includes("tee")) {
+      productTypes.add("T-Shirt");
+    } else if (lowerName.includes("polo")) {
+      productTypes.add("Polo Shirt");
+    } else if (lowerName.includes("hoodie")) {
+      productTypes.add("Hoodie");
+    } else if (lowerName.includes("sweatshirt")) {
+      productTypes.add("Sweatshirt");
+    } else if (lowerName.includes("tank")) {
+      productTypes.add("Tank Top");
+    } else if (lowerName.includes("long sleeve")) {
+      productTypes.add("Long Sleeve");
     } else {
-      productTypes.add('Other');
+      productTypes.add("Other");
     }
 
     // Process variants for colors, sizes, and prices
     product.sync_variants.forEach((variant) => {
       // Only include active variants
-      if (variant.availability_status === 'active' && !variant.is_ignored) {
+      if (variant.availability_status === "active" && !variant.is_ignored) {
         colors.add(variant.color);
         sizes.add(variant.size);
-        
+
         const price = parseFloat(variant.retail_price);
         if (price < minPrice) minPrice = price;
         if (price > maxPrice) maxPrice = price;
@@ -61,7 +63,7 @@ export const extractFiltersFromProducts = async (products: PrintfulProduct[]): P
   });
 
   // Sort sizes in logical order
-  const sizeOrder = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL'];
+  const sizeOrder = ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL"];
   const sortedSizes = Array.from(sizes).sort((a, b) => {
     const aIndex = sizeOrder.indexOf(a);
     const bIndex = sizeOrder.indexOf(b);
@@ -78,18 +80,20 @@ export const extractFiltersFromProducts = async (products: PrintfulProduct[]): P
     productTypes: Array.from(productTypes).sort(),
     priceRange: [
       minPrice === Infinity ? 0 : Math.floor(minPrice),
-      maxPrice === -Infinity ? 100 : Math.ceil(maxPrice)
-    ]
-    
+      maxPrice === -Infinity ? 100 : Math.ceil(maxPrice),
+    ],
   };
 };
 
 // Helper function to get unique variants (for display)
 export const getUniqueProductVariants = async (products: PrintfulProduct[]) => {
-  return products.map(product => ({
-    ...product,
-    sync_variants: product.sync_variants.filter(
-      variant => variant.availability_status === 'active' && !variant.is_ignored
-    )
-  })).filter(product => product.sync_variants.length > 0);
+  return products
+    .map((product) => ({
+      ...product,
+      sync_variants: product.sync_variants.filter(
+        (variant) =>
+          variant.availability_status === "active" && !variant.is_ignored
+      ),
+    }))
+    .filter((product) => product.sync_variants.length > 0);
 };

@@ -2,7 +2,7 @@
 import React, { useRef } from "react";
 import { useActionState } from "react";
 import { ActionState } from "@/lib/globalTypes";
-import { animateTextScroll, parseServerActionResponse } from "@/lib/utils";
+import { parseServerActionResponse } from "@/lib/utils";
 import { verifyPartnersForm } from "@/lib/validation";
 import Form from "next/form";
 import { useState } from "react";
@@ -17,7 +17,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
-const PartnersForm = ({ formTitle }: { formTitle: string }) => {
+const PartnersForm = ({ formTitle: _formTitle }: { formTitle: string }) => {
   const accentDividerRef = useRef<HTMLDivElement>(null);
   const submitButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -337,7 +337,7 @@ const PartnersForm = ({ formTitle }: { formTitle: string }) => {
       });
     }
   };
-  const [state, formAction, isPending] = useActionState(handleFromSubmit, {
+  const [, formAction, isPending] = useActionState(handleFromSubmit, {
     status: "INITIAL",
     error: "",
     data: null,

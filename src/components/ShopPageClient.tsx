@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useShopFilters } from "@/contexts/ShopContext";
-import { getProductsAndFilters } from "@/lib/actions";
 import { PrintfulProduct } from "@/lib/globalTypes";
 import ProductCard from "@/components/ProductCard";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
@@ -11,8 +10,8 @@ import { Suspense } from "react";
 
 const ShopPageClient = () => {
   const { filteredProducts } = useShopFilters();
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [isLoading] = useState(true);
+  const [error] = useState<string | null>(null);
 
   if (isLoading) {
     return (

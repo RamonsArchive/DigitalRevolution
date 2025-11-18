@@ -14,19 +14,24 @@ const F = {
   date(d: Date | string | null | undefined) {
     if (!d) return "";
     const dt = typeof d === "string" ? new Date(d) : d;
-    return dt.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+    return dt.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
   },
   esc(s: string) {
-    return s
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   },
 };
 
 // Order confirmation email
-export async function sendOrderConfirmationEmail(order: Order, items: OrderItem[]) {
-  const fullName = `${order.customerFirstName} ${order.customerLastName ?? ""}`.trim();
+export async function sendOrderConfirmationEmail(
+  order: Order,
+  items: OrderItem[]
+) {
+  const fullName =
+    `${order.customerFirstName} ${order.customerLastName ?? ""}`.trim();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ship = (order.shippingAddress as any) || {};
 
@@ -91,12 +96,16 @@ export async function sendOrderConfirmationEmail(order: Order, items: OrderItem[
       <table>
         <thead><tr><th>Product</th><th>Qty</th><th>Total</th></tr></thead>
         <tbody>
-          ${items.map(item => `
+          ${items
+            .map(
+              (item) => `
             <tr class="row">
               <td class="prod">
                 <div class="prod-wrap">
                   ${
-                    item.images && Array.isArray(item.images) && item.images.length > 0
+                    item.images &&
+                    Array.isArray(item.images) &&
+                    item.images.length > 0
                       ? `<img class="thumb" src="${item.images[0] as string}" alt="${F.esc(item.productName)}"/>`
                       : `<div class="thumb thumb-empty">No Image</div>`
                   }
@@ -109,7 +118,9 @@ export async function sendOrderConfirmationEmail(order: Order, items: OrderItem[
               <td>${item.quantity}</td>
               <td>${F.money(item.totalPrice, order.currency)}</td>
             </tr>
-          `).join("")}
+          `
+            )
+            .join("")}
         </tbody>
       </table>
     </div>
@@ -167,9 +178,14 @@ export async function sendOrderConfirmationEmail(order: Order, items: OrderItem[
 }
 
 // Order shipped email
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function sendOrderShippedEmail(order: Order, items: OrderItem[], trackingData: any) {
-  const fullName = `${order.customerFirstName} ${order.customerLastName ?? ""}`.trim();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+export async function sendOrderShippedEmail(
+  order: Order,
+  items: OrderItem[],
+  _trackingData: any
+) {
+  const fullName =
+    `${order.customerFirstName} ${order.customerLastName ?? ""}`.trim();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ship = (order.shippingAddress as any) || {};
 
@@ -241,12 +257,16 @@ export async function sendOrderShippedEmail(order: Order, items: OrderItem[], tr
       <table>
         <thead><tr><th>Product</th><th>Qty</th><th>Total</th></tr></thead>
         <tbody>
-          ${items.map(item => `
+          ${items
+            .map(
+              (item) => `
             <tr class="row">
               <td class="prod">
                 <div class="prod-wrap">
                   ${
-                    item.images && Array.isArray(item.images) && item.images.length > 0
+                    item.images &&
+                    Array.isArray(item.images) &&
+                    item.images.length > 0
                       ? `<img class="thumb" src="${item.images[0] as string}" alt="${F.esc(item.productName)}"/>`
                       : `<div class="thumb thumb-empty">No Image</div>`
                   }
@@ -259,7 +279,9 @@ export async function sendOrderShippedEmail(order: Order, items: OrderItem[], tr
               <td>${item.quantity}</td>
               <td>${F.money(item.totalPrice, order.currency)}</td>
             </tr>
-          `).join("")}
+          `
+            )
+            .join("")}
         </tbody>
       </table>
     </div>
@@ -309,8 +331,14 @@ export async function sendOrderShippedEmail(order: Order, items: OrderItem[], tr
 }
 
 // Order updated email (optional - for status changes)
-export async function sendOrderUpdatedEmail(order: Order, items: OrderItem[], updateReason: string) {
-  const fullName = `${order.customerFirstName} ${order.customerLastName ?? ""}`.trim();
+export async function sendOrderUpdatedEmail(
+  order: Order,
+  items: OrderItem[],
+  updateReason: string
+) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _fullName =
+    `${order.customerFirstName} ${order.customerLastName ?? ""}`.trim();
 
   const html = `<!DOCTYPE html><html><head><meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>

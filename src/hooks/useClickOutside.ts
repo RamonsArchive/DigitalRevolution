@@ -2,7 +2,9 @@ import { useCallback, useEffect } from "react";
 
 interface UseClickOutsideOptions {
   insideRef: React.RefObject<HTMLElement | null>;
-  outsideRef: React.RefObject<HTMLElement | HTMLButtonElement | SVGSVGElement | null> | null;
+  outsideRef: React.RefObject<
+    HTMLElement | HTMLButtonElement | SVGSVGElement | null
+  > | null;
   currentState: boolean;
   onOutsideClick: () => void;
   onInsideClick: () => void;
@@ -17,25 +19,37 @@ export const useClickOutside = ({
   onInsideClick,
   enabled = true,
 }: UseClickOutsideOptions) => {
-  const handleClickOutside = useCallback((event: MouseEvent | TouchEvent) => {
-    if (!enabled) return;
-    
-    setTimeout(() => {
-      const target = event.target as Node;
-      const clickedInside = insideRef.current?.contains(target);
-      
-      // Check if clicked on outsideRef OR its children
-      const clickedOutside = outsideRef?.current?.contains(target) || outsideRef?.current === target;
-      
-      if(clickedOutside && !currentState) {
-        onInsideClick();
-      } else if (clickedOutside && currentState) {
-        onOutsideClick();
-      } else if (!clickedInside && !clickedOutside && currentState) {
-        onOutsideClick();
-      }
-    }, 0);
-  }, [enabled, onOutsideClick, onInsideClick, insideRef, outsideRef, currentState]);
+  const handleClickOutside = useCallback(
+    (event: MouseEvent | TouchEvent) => {
+      if (!enabled) return;
+
+      setTimeout(() => {
+        const target = event.target as Node;
+        const clickedInside = insideRef.current?.contains(target);
+
+        // Check if clicked on outsideRef OR its children
+        const clickedOutside =
+          outsideRef?.current?.contains(target) ||
+          outsideRef?.current === target;
+
+        if (clickedOutside && !currentState) {
+          onInsideClick();
+        } else if (clickedOutside && currentState) {
+          onOutsideClick();
+        } else if (!clickedInside && !clickedOutside && currentState) {
+          onOutsideClick();
+        }
+      }, 0);
+    },
+    [
+      enabled,
+      onOutsideClick,
+      onInsideClick,
+      insideRef,
+      outsideRef,
+      currentState,
+    ]
+  );
 
   useEffect(() => {
     if (!enabled) return;

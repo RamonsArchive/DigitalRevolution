@@ -1,8 +1,8 @@
 // lib/donation-emails.ts
 import "server-only";
 import resend from "@/lib/resend";
-import type { Donation, Subscription, SubscriptionPayment } from "../../prisma/generated/prisma";
-import Stripe from 'stripe';
+import type { Donation, Subscription } from "../../prisma/generated/prisma";
+import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
 
 const F = {
@@ -15,13 +15,14 @@ const F = {
   date(d: Date | string | null | undefined) {
     if (!d) return "";
     const dt = typeof d === "string" ? new Date(d) : d;
-    return dt.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+    return dt.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
   },
   esc(s: string) {
-    return s
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   },
 };
 
@@ -112,7 +113,11 @@ export async function sendDonationConfirmationEmail(donation: Donation) {
 }
 
 // 2. Monthly subscription confirmation email
-export async function sendSubscriptionConfirmationEmail(subscription: Subscription, userEmail: string, userName?: string) {
+export async function sendSubscriptionConfirmationEmail(
+  subscription: Subscription,
+  userEmail: string,
+  userName?: string
+) {
   const html = `<!DOCTYPE html><html><head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Monthly Subscription Confirmed</title>
@@ -179,15 +184,18 @@ export async function sendSubscriptionConfirmationEmail(subscription: Subscripti
 }
 
 // 3. Subscription payment receipt email (monthly)
-export async function sendSubscriptionPaymentEmail(invoice: Stripe.Invoice, subscriptionId: string) {
+export async function sendSubscriptionPaymentEmail(
+  invoice: Stripe.Invoice,
+  subscriptionId: string
+) {
   // Get subscription details from database
   const subscription = await prisma.subscription.findUnique({
     where: { stripeSubscriptionId: subscriptionId },
-    include: { user: true }
+    include: { user: true },
   });
 
   if (!subscription) {
-    throw new Error('Subscription not found for invoice');
+    throw new Error("Subscription not found for invoice");
   }
 
   const html = `<!DOCTYPE html><html><head><meta charset="utf-8"/>
@@ -256,7 +264,12 @@ export async function sendSubscriptionPaymentEmail(invoice: Stripe.Invoice, subs
 }
 
 // 4. Subscription cancelled email
-export async function sendSubscriptionCancelledEmail(subscription: Subscription, userEmail: string, userName?: string, cancelReason?: string) {
+export async function sendSubscriptionCancelledEmail(
+  subscription: Subscription,
+  userEmail: string,
+  userName?: string,
+  cancelReason?: string
+) {
   const html = `<!DOCTYPE html><html><head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Subscription Cancelled</title>
@@ -276,16 +289,17 @@ export async function sendSubscriptionCancelledEmail(subscription: Subscription,
         <div class="highlight">
           <strong>Final Amount: ${F.money(subscription.amount, subscription.currency)}</strong><br/>
           <span class="muted">Cancelled: ${F.date(subscription.canceledAt)}</span><br/>
-          ${subscription.cancelAtPeriodEnd ? `<span class="muted">Service continues until: ${F.date(subscription.currentPeriodEnd)}</span>` : ''}
+          ${subscription.cancelAtPeriodEnd ? `<span class="muted">Service continues until: ${F.date(subscription.currentPeriodEnd)}</span>` : ""}
         </div>
         <p>Dear ${F.esc(userName || "Supporter")},</p>
         <p>Your monthly subscription of <strong>${F.money(subscription.amount, subscription.currency)}</strong> has been cancelled as requested.</p>
-        ${subscription.cancelAtPeriodEnd ? 
-          `<p><strong>Important:</strong> You'll continue to have access until ${F.date(subscription.currentPeriodEnd)}, and no further payments will be charged.</p>` :
-          `<p>Your subscription has been cancelled immediately and no further payments will be charged.</p>`
+        ${
+          subscription.cancelAtPeriodEnd
+            ? `<p><strong>Important:</strong> You'll continue to have access until ${F.date(subscription.currentPeriodEnd)}, and no further payments will be charged.</p>`
+            : `<p>Your subscription has been cancelled immediately and no further payments will be charged.</p>`
         }
         <p>Thank you for supporting Digital Revolution during your time as a monthly donor. Your contributions made a real difference in bridging the digital divide.</p>
-        ${cancelReason ? `<p><em>Reason for cancellation: ${F.esc(cancelReason)}</em></p>` : ''}
+        ${cancelReason ? `<p><em>Reason for cancellation: ${F.esc(cancelReason)}</em></p>` : ""}
       </div>
 
       <div class="card impact">

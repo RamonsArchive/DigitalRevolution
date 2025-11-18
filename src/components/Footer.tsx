@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { FOOTER_LINKS, FOOTER_CONTACT, QUICK_LINKS } from "@/constants";
 import {
   Facebook,

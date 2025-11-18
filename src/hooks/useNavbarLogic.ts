@@ -25,7 +25,7 @@
 
 //   // Use custom hooks
 //   useScrollThrottle({ onScroll: handleScroll });
-  
+
 //   const { addRef, removeRef } = useClickOutside({
 //     onOutsideClick: handleOutsideClick,
 //     onInsideClick: handleInsideClick,

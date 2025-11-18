@@ -22,7 +22,7 @@ const ShopHomeClient = ({
   useEffect(() => {
     setAllProducts(initialProducts);
     setAvailableFilters(initialFilters);
-  }, [initialProducts, initialFilters]);
+  }, [initialProducts, initialFilters, setAllProducts, setAvailableFilters]);
   return (
     <div className="w-full min-h-screen pb-20">
       <div className="flex gap-5 px-3 md:px-10">

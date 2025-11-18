@@ -1,19 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import {
   Share2,
   Hash,
-  Users,
   Target,
   ExternalLink,
   Copy,
   Check,
-  Globe,
-  BookOpen,
-  Handshake,
   Facebook,
   Instagram,
   Linkedin,
@@ -26,7 +20,6 @@ import TitleSection from "./TitleSection";
 import {
   FeatureCard,
   IconCard,
-  InfoCard,
   ShareableContentCard,
 } from "@/components/cards";
 

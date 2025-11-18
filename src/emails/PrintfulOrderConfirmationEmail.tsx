@@ -1,9 +1,10 @@
 import React from "react";
 import { Order, OrderItem } from "../../prisma/generated/prisma";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const PrintfulOrderConfirmationEmail = ({
-  order,
-  items,
+  order: _order,
+  items: _items,
 }: {
   order: Order;
   items: OrderItem[];

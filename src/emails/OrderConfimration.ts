@@ -5,10 +5,10 @@ import type { Order, OrderItem } from "../../prisma/generated/prisma";
 
 // Optional overrides (brand name, from address, support URL, order page link)
 export type OrderEmailOptions = {
-  from?: string;               // e.g. "Digital Revolution <orders@yourdomain.com>"
-  brandName?: string;          // e.g. "Digital Revolution"
-  orderUrl?: string;           // e.g. `${AP:P_URL}/orders/${order.id}`
-  supportUrl?: string;         // e.g. `${APP_URL}/support`
+  from?: string; // e.g. "Digital Revolution <orders@yourdomain.com>"
+  brandName?: string; // e.g. "Digital Revolution"
+  orderUrl?: string; // e.g. `${AP:P_URL}/orders/${order.id}`
+  supportUrl?: string; // e.g. `${APP_URL}/support`
 };
 
 const F = {
@@ -21,13 +21,14 @@ const F = {
   date(d: Date | string | null | undefined) {
     if (!d) return "";
     const dt = typeof d === "string" ? new Date(d) : d;
-    return dt.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+    return dt.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
   },
   esc(s: string) {
-    return s
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   },
 };
 
@@ -53,14 +54,21 @@ function itemRow(i: OrderItem, currency: string) {
   `;
 }
 
-function emailHTML(order: Order, items: OrderItem[], opts: Required<OrderEmailOptions>) {
+function emailHTML(
+  order: Order,
+  items: OrderItem[],
+  opts: Required<OrderEmailOptions>
+) {
   const statusBadge =
-    order.trackingCode || order.trackingNumber ? `<span class="badge shipped">📦 Shipped</span>` : `<span class="badge processing">⏳ Processing</span>`;
+    order.trackingCode || order.trackingNumber
+      ? `<span class="badge shipped">📦 Shipped</span>`
+      : `<span class="badge processing">⏳ Processing</span>`;
 
   // pull shipping snapshot
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ship = (order.shippingAddress as any) || {};
-  const fullName = `${order.customerFirstName} ${order.customerLastName ?? ""}`.trim();
+  const fullName =
+    `${order.customerFirstName} ${order.customerLastName ?? ""}`.trim();
 
   return `<!DOCTYPE html><html><head><meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -144,7 +152,7 @@ function emailHTML(order: Order, items: OrderItem[], opts: Required<OrderEmailOp
       <table>
         <thead><tr><th>Product</th><th>Qty</th><th>Total</th></tr></thead>
         <tbody>
-          ${items.map(it => itemRow(it, order.currency)).join("")}
+          ${items.map((it) => itemRow(it, order.currency)).join("")}
         </tbody>
       </table>
     </div>

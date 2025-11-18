@@ -72,7 +72,7 @@ const ClientProfileIcon = () => {
       await signOut({ redirect: false });
       toast.success("SUCCESS", { description: "Logged out successfully" });
       setImageError(false);
-    } catch (error) {
+    } catch {
       toast.error("ERROR", { description: "Failed to sign out" });
     }
   }, []);

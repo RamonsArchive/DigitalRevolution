@@ -68,7 +68,7 @@ const CartPageClient = ({
       } else {
         toast.error("ERROR", { description: "Failed to update quantity" });
       }
-    } catch (error) {
+    } catch {
       // Error updating quantity
     } finally {
       setIsUpdating(null);
@@ -83,7 +83,7 @@ const CartPageClient = ({
       if (result.status === "SUCCESS") {
         router.refresh(); // Refresh to get updated data
       }
-    } catch (error) {
+    } catch {
       // Error removing item
     } finally {
       setIsUpdating(null);
@@ -107,7 +107,7 @@ const CartPageClient = ({
 
       router.push((result.data as { sessionUrl: string })?.sessionUrl || "/");
       //router.push(`/checkout?session_id=${result.data?.clientSecret}`);
-    } catch (error) {
+    } catch {
       router.refresh();
     }
   };
@@ -253,7 +253,7 @@ const CartPageClient = ({
                             Math.max(1, item.quantity - 1)
                           )
                         }
-                        className="w-10 h-10 bg-gray-700/80 hover:bg-gray-600/80 rounded-lg flex items-center justify-center transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg border border-gray-600/50"
+                        className="w-10 h-10 bg-gray-700/80 hover:bg-gray-600/80 rounded-lg flex items-center justify-center transition-all duration-200 shadow-lg border border-gray-600/50 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                         disabled={item.quantity <= 1 || isUpdating === item.id}
                       >
                         <Minus className="w-5 h-5 text-slate-200" />
@@ -271,7 +271,7 @@ const CartPageClient = ({
                         onClick={() =>
                           handleQuantityChange(item.id, item.quantity + 1)
                         }
-                        className="w-10 h-10 bg-gray-700/80 hover:bg-gray-600/80 rounded-lg flex items-center justify-center transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg border border-gray-600/50"
+                        className="w-10 h-10 bg-gray-700/80 hover:bg-gray-600/80 rounded-lg flex items-center justify-center transition-all duration-200 shadow-lg border border-gray-600/50 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                         disabled={isUpdating === item.id}
                       >
                         <Plus className="w-5 h-5 text-slate-200" />
@@ -281,7 +281,7 @@ const CartPageClient = ({
                     {/* Remove Button */}
                     <button
                       onClick={() => handleRemoveItem(item.id)}
-                      className="w-full text-red-300 hover:text-red-200 text-sm flex items-center justify-center space-x-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed bg-red-900/30 hover:bg-red-900/40 px-4 py-2 rounded-lg border border-red-800/50 font-semibold"
+                      className="w-full text-red-300 hover:text-red-200 text-sm flex items-center justify-center space-x-2 transition-all duration-200 bg-red-900/30 hover:bg-red-900/40 px-4 py-2 rounded-lg border border-red-800/50 font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                       disabled={isUpdating === item.id}
                     >
                       {isUpdating === item.id ? (
@@ -393,7 +393,7 @@ const CartPageClient = ({
                             Math.max(1, item.quantity - 1)
                           )
                         }
-                        className="w-12 h-12 bg-gray-700/80 hover:bg-gray-600/80 rounded-xl flex items-center justify-center transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl border border-gray-600/50"
+                        className="w-12 h-12 bg-gray-700/80 hover:bg-gray-600/80 rounded-xl flex items-center justify-center transition-all duration-200 shadow-lg hover:shadow-xl border border-gray-600/50 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                         disabled={item.quantity <= 1 || isUpdating === item.id}
                       >
                         <Minus className="w-6 h-6 text-slate-200" />
@@ -411,7 +411,7 @@ const CartPageClient = ({
                         onClick={() =>
                           handleQuantityChange(item.id, item.quantity + 1)
                         }
-                        className="w-12 h-12 bg-gray-700/80 hover:bg-gray-600/80 rounded-xl flex items-center justify-center transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl border border-gray-600/50"
+                        className="w-12 h-12 bg-gray-700/80 hover:bg-gray-600/80 rounded-xl flex items-center justify-center transition-all duration-200 shadow-lg hover:shadow-xl border border-gray-600/50 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                         disabled={isUpdating === item.id}
                       >
                         <Plus className="w-6 h-6 text-slate-200" />
@@ -421,7 +421,7 @@ const CartPageClient = ({
                     {/* Remove Button */}
                     <button
                       onClick={() => handleRemoveItem(item.id)}
-                      className="text-red-300 hover:text-red-200 text-base flex items-center justify-center space-x-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed bg-red-900/30 hover:bg-red-900/40 px-4 py-3 rounded-xl border border-red-800/50 shadow-lg hover:shadow-xl font-semibold"
+                      className="text-red-300 hover:text-red-200 text-base flex items-center justify-center space-x-2 transition-all duration-200 bg-red-900/30 hover:bg-red-900/40 px-4 py-3 rounded-xl border border-red-800/50 shadow-lg hover:shadow-xl font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                       disabled={isUpdating === item.id}
                     >
                       {isUpdating === item.id ? (

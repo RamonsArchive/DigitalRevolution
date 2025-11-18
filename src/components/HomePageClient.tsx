@@ -2,19 +2,11 @@
 
 import React from "react";
 import Link from "next/link";
-import {
-  Users,
-  Share2,
-  ShoppingBag,
-  DollarSign,
-  ExternalLink,
-  BookOpen,
-} from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import {
   PathwayCard,
   FactCard,
   ImpactCard,
-  FeatureCard,
   InfoCard,
   StatsMetricsCard,
 } from "@/components/cards";

@@ -38,10 +38,16 @@ const Navbar = () => {
   // Scroll throttling effect
   useScrollThrottle({ onScroll: handleScroll });
 
+  // Memoized close handler to prevent re-renders
+  const handleCloseMenu = useCallback(() => {
+    setOpenMenu(false);
+    setShouldRender(false);
+  }, []);
+
   useEffect(() => {
     // might need to clsoe menu here
     handleCloseMenu();
-  }, [pathname]);
+  }, [pathname, handleCloseMenu]);
 
   useEffect(() => {
     if (shouldRender) {
@@ -136,12 +142,6 @@ const Navbar = () => {
     []
   );
 
-  // Memoized close handler to prevent re-renders
-  const handleCloseMenu = useCallback(() => {
-    setOpenMenu(false);
-    setShouldRender(false);
-  }, [pathname]);
-
   const profileIcon = useMemo(() => <ProfileIcon />, []);
   // Menu icon components - separate for normal and scroll
   const NormalMenuIcon = useMemo(
@@ -192,7 +192,7 @@ const Navbar = () => {
         </div>
       </div>
     );
-  }, [openMenu, handleCloseMenu, navigationLinks]);
+  }, [openMenu, handleCloseMenu, mobileNavigationLinks]);
 
   // Create navbars WITHOUT ProfileIcon inside them
   const scrollNavbar = useMemo(() => {
@@ -237,7 +237,7 @@ const Navbar = () => {
         </div>
       </div>
     );
-  }, [isDropdown, logo, navigationLinks, NormalMenuIcon]);
+  }, [isDropdown, logo, navigationLinks, NormalMenuIcon, profileIcon]);
 
   return (
     <>

@@ -1,8 +1,11 @@
-import resend from '@/lib/resend'
+import resend from "@/lib/resend";
 
-const PartnersTicketEmail = async ({ formData }: { formData: Record<string, string> }) => {
-
-  const emailToUse = "rmcdeem.m@gmail.com"
+const PartnersTicketEmail = async ({
+  formData,
+}: {
+  formData: Record<string, string>;
+}) => {
+  const emailToUse = "rmcdeem.m@gmail.com";
 
   const emailHtml = `
     <!DOCTYPE html>
@@ -131,21 +134,20 @@ const PartnersTicketEmail = async ({ formData }: { formData: Record<string, stri
       </div>
     </body>
     </html>
-  `
+  `;
 
   const { error } = await resend.emails.send({
     from: `Digital Revolution <${process.env.RESEND_FROM}>`,
     to: emailToUse,
     subject: `New Partnership Inquiry from ${formData.firstName} ${formData.lastName} - ${formData.organization}`,
-    html: emailHtml
-  })
+    html: emailHtml,
+  });
 
   if (error) {
-    throw error
+    throw error;
   }
 
-  return { success: true }
+  return { success: true };
+};
 
-}
-
-export default PartnersTicketEmail
+export default PartnersTicketEmail;

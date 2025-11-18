@@ -669,7 +669,7 @@ export const validateCartForCheckout = async (
               isInStock: data.result?.variant?.in_stock || false,
             },
           });
-        } catch (error) {
+        } catch {
           return parseServerActionResponse({
             status: "ERROR",
             error: "",
@@ -1434,7 +1434,7 @@ export const cancelSubscription = async (
         updatedSubscription.user.name || undefined,
         reason
       );
-    } catch (emailError) {
+    } catch {
       // Don't fail the entire operation if email fails
     }
 

@@ -31,12 +31,6 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
     lg: "w-20 h-20",
   };
 
-  const iconInnerSizeClasses = {
-    sm: "w-6 h-6",
-    md: "w-8 h-8",
-    lg: "w-10 h-10",
-  };
-
   return (
     <div className={`group relative h-full flex flex-col ${className}`}>
       <div

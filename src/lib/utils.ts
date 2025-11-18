@@ -1,25 +1,35 @@
 import { gsap } from "gsap";
 import { SplitText } from "gsap/SplitText";
-import { AnimateCardScrollType, AnimateTextScrollType, AnimateTextType, PrintfulProduct } from "./globalTypes";
+import {
+  AnimateCardScrollType,
+  AnimateTextScrollType,
+  AnimateTextType,
+  PrintfulProduct,
+} from "./globalTypes";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 type DOMTarget = string | Element | null;
-
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
 export const parseServerActionResponse = <T>(response: T): T => {
   return JSON.parse(JSON.stringify(response));
-}
+};
 
 export const animateText = (props: AnimateTextType) => {
-  const {targets, type, duration, ease, delay, opacity, y, stagger} = props
+  const { targets, type, duration, ease, delay, opacity, y, stagger } = props;
 
   // Process all targets at once
-  const allElements = targets.map(target => {
-    const textSplit = new SplitText(target, {type});
-    return type === "chars" ? textSplit.chars : type === "words" ? textSplit.words : textSplit.lines;
-  }).flat();
+  const allElements = targets
+    .map((target) => {
+      const textSplit = new SplitText(target, { type });
+      return type === "chars"
+        ? textSplit.chars
+        : type === "words"
+          ? textSplit.words
+          : textSplit.lines;
+    })
+    .flat();
 
   gsap.from(allElements, {
     opacity: opacity,
@@ -31,44 +41,68 @@ export const animateText = (props: AnimateTextType) => {
   });
 };
 
-
 // Timeline version - better performance for complex animations
 export const animateTextTimeline = (props: AnimateTextType) => {
-  const {targets, type, duration, ease, delay, opacity, y, stagger} = props
+  const { targets, type, duration, ease, delay, opacity, y, stagger } = props;
 
   const tl = gsap.timeline();
 
-  targets.forEach((target, index) => {
-    const textSplit = new SplitText(target, {type});
-    const elements = type === "chars" ? textSplit.chars : type === "words" ? textSplit.words : textSplit.lines;
+  targets.forEach((target) => {
+    const textSplit = new SplitText(target, { type });
+    const elements =
+      type === "chars"
+        ? textSplit.chars
+        : type === "words"
+          ? textSplit.words
+          : textSplit.lines;
     // Animate to final state
-    tl.fromTo(elements, {
+    tl.fromTo(
+      elements,
+      {
         opacity: opacity,
         y: y,
-       
-    }, 
-     {
-      opacity: 1,
-      y: 0,
-      stagger: stagger || 0.1,
-      duration: duration,
-      delay: delay || 0,
-      ease: ease,
-    },); // Stagger between different targets
+      },
+      {
+        opacity: 1,
+        y: 0,
+        stagger: stagger || 0.1,
+        duration: duration,
+        delay: delay || 0,
+        ease: ease,
+      }
+    ); // Stagger between different targets
   });
 
   //return tl; // Return timeline for further control
 };
 
 export const animateTextScroll = (props: AnimateTextScrollType) => {
-  const {targets, shouldAnimateClass, animateClass, type, duration, ease, delay, opacity, y, stagger} = props
-  const {trigger, start, end, scrub} = props.scrollTrigger;
+  const {
+    targets,
+    shouldAnimateClass,
+    animateClass,
+    type,
+    duration,
+    ease,
+    delay,
+    opacity,
+    y,
+    stagger,
+  } = props;
+  const { start, end, scrub } = props.scrollTrigger;
 
   const tl = gsap.timeline();
 
-  targets.forEach((target, index) => {
-    const textSplit = new SplitText(target as unknown as HTMLElement | string, {type});
-    const elements = type === "chars" ? textSplit.chars : type === "words" ? textSplit.words : textSplit.lines;
+  targets.forEach((target) => {
+    const textSplit = new SplitText(target as unknown as HTMLElement | string, {
+      type,
+    });
+    const elements =
+      type === "chars"
+        ? textSplit.chars
+        : type === "words"
+          ? textSplit.words
+          : textSplit.lines;
 
     // Set initial state
     gsap.set(elements, {
@@ -79,8 +113,8 @@ export const animateTextScroll = (props: AnimateTextScrollType) => {
     // Apply gradient text class to split elements
     if (shouldAnimateClass) {
       elements.forEach((element) => {
-          element.classList.add(animateClass);
-        });
+        element.classList.add(animateClass);
+      });
     }
 
     // Animate to final state with ScrollTrigger
@@ -102,64 +136,71 @@ export const animateTextScroll = (props: AnimateTextScrollType) => {
   });
 
   return tl;
-}
-
+};
 
 export const animateCardsScroll = (props: AnimateCardScrollType) => {
-  const {targets, duration, ease, delay, opacity, y, stagger} = props
-  const {trigger, start, end, scrub} = props.scrollTrigger;
+  const { targets, duration, ease, delay, opacity, y, stagger } = props;
+  const { start, end, scrub } = props.scrollTrigger;
 
   const tl = gsap.timeline();
 
-  targets.forEach((target, index) => {
+  targets.forEach((target) => {
     const allElmenets = document.querySelectorAll(target);
-    tl.fromTo(allElmenets, {
-      opacity: opacity,
-      y: y,
-    }, {
-      opacity: 1,
-      y: 0,
-      stagger: stagger || 0.1,
-      duration: duration,
-      delay: delay || 0,
-      ease: ease,
-      scrollTrigger: {
-        trigger: target,
-        start: start,
-        end: end,
-        scrub: scrub,
-        markers: true,
+    tl.fromTo(
+      allElmenets,
+      {
+        opacity: opacity,
+        y: y,
       },
-    })
-  })
-}
-
+      {
+        opacity: 1,
+        y: 0,
+        stagger: stagger || 0.1,
+        duration: duration,
+        delay: delay || 0,
+        ease: ease,
+        scrollTrigger: {
+          trigger: target,
+          start: start,
+          end: end,
+          scrub: scrub,
+          markers: true,
+        },
+      }
+    );
+  });
+};
 
 export const extractGenderFromProduct = (product: PrintfulProduct): string => {
   // Get the base product name from any variant
   const baseProductName = product.sync_product.name || "";
   const gender = baseProductName.split("-").pop()?.trim().toLowerCase() || "";
-  
+
   // Map Printful's gender terms to your navigation categories
   const genderMap: Record<string, string> = {
-    'unisex': 'unisex',
-    'men': 'men',
-    'mens': 'men',
-    "men's": 'men',
-    'women': 'women',
-    'womens': 'women',
-    "women's": 'women',
-    'kids': 'kids',
-    'youth': 'kids',
-    'child': 'kids'
+    unisex: "unisex",
+    men: "men",
+    mens: "men",
+    "men's": "men",
+    women: "women",
+    womens: "women",
+    "women's": "women",
+    kids: "kids",
+    youth: "kids",
+    child: "kids",
   };
-  
-  return genderMap[gender] || 'unisex';
+
+  return genderMap[gender] || "unisex";
 };
 
-export const getProductBySlug = (slug: string, allProducts: PrintfulProduct[]) => {
+export const getProductBySlug = (
+  slug: string,
+  allProducts: PrintfulProduct[]
+) => {
   try {
-    return allProducts.find((product) => product.sync_product.external_id === slug);
+    return allProducts.find(
+      (product) => product.sync_product.external_id === slug
+    );
   } catch (error) {
     console.error(`Error getting product by slug ${slug}:`, error);
     throw new Error(`Error getting product by slug ${slug}: ${error}`);
@@ -175,7 +216,7 @@ export const aggregateProductImages = (product: any) => {
     color: string;
     size: string;
   }> = [];
-  
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   product.sync_variants.forEach((variant: any) => {
     // Get the preview image from files array (index 1 as mentioned)
@@ -191,16 +232,20 @@ export const aggregateProductImages = (product: any) => {
   });
 
   // Remove duplicates based on URL
-  const uniqueImages = images.filter((image, index, self) => 
-    index === self.findIndex(img => img.url === image.url)
+  const uniqueImages = images.filter(
+    (image, index, self) =>
+      index === self.findIndex((img) => img.url === image.url)
   );
 
   return uniqueImages;
 };
 
-
 // Phone number formatting
-export const updatePhoneNumber = (value: string, phoneNumber: string, setPhoneNumber: (value: string) => void) => {
+export const updatePhoneNumber = (
+  value: string,
+  phoneNumber: string,
+  setPhoneNumber: (value: string) => void
+) => {
   // If the user is backspacing and hit a dash, remove the digit before the dash
   const prevLength = phoneNumber.length;
   const newLength = value.length;
@@ -244,26 +289,26 @@ export const formToDataObject = (formData: FormData) => {
     formObject[key] = value.toString();
   }
   return formObject;
-}
+};
 
 export function formatDate(date: string | Date | null | undefined): string {
-  if (!date) return 'Not available';
-  
+  if (!date) return "Not available";
+
   try {
-    const dateObj = typeof date === 'string' ? new Date(date) : date;
-    
+    const dateObj = typeof date === "string" ? new Date(date) : date;
+
     // Check if date is valid
     if (isNaN(dateObj.getTime())) {
-      return 'Invalid date';
+      return "Invalid date";
     }
-    
-    return dateObj.toLocaleDateString('en-US', {
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric',
+
+    return dateObj.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
     });
   } catch (error) {
-    console.error('Date formatting error:', error);
-    return 'Invalid date';
+    console.error("Date formatting error:", error);
+    return "Invalid date";
   }
 }

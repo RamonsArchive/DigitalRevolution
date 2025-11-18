@@ -52,7 +52,7 @@ const TitleSection = ({
       className={`title ${
         isHero
           ? "bg-gradient-to-b from-bg-primary via-secondary-950/80 to-bg-primary"
-          : "bg-gradient-to-b from-bg-primary via-slate-900/30 to-bg-primary"
+          : "bg-gradient-to-b from-bg-primary via-slate-900/80 to-bg-primary"
       } ${containerClassName}`}
     >
       <h1 className={`text-white ${titleClassName}`}>{title}</h1>

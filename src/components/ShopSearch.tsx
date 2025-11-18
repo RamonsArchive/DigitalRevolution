@@ -6,7 +6,7 @@ import { useShopFilters } from "@/contexts/ShopContext";
 const ShopSearch = ({
   className,
   searchRefInner,
-  searchRefOuter,
+  searchRefOuter: _searchRefOuter, // eslint-disable-line @typescript-eslint/no-unused-vars
   openSearch,
   setOpenSearch,
 }: {

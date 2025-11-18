@@ -14,7 +14,7 @@ interface PathwayCardProps {
 
 const PathwayCard: React.FC<PathwayCardProps> = ({
   icon,
-  step,
+  step: _step, // eslint-disable-line @typescript-eslint/no-unused-vars
   title,
   description,
   gradientFrom = "from-secondary-500/10",

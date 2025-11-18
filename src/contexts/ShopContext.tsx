@@ -234,7 +234,7 @@ const ShopProvider = ({
       // Update URL without page refresh
       router.replace(`/shop?${current.toString()}`, { scroll: false });
     },
-    [searchParams, router, pathname, availableFilters]
+    [searchParams, router, availableFilters]
   );
 
   // Filter actions that update URL

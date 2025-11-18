@@ -31,30 +31,33 @@ export const getClientId = async () => {
     return `session:${userId}`;
   } else {
     const headersList = await headers();
-    const ip = headersList.get("x-forwarded-for") || headersList.get("x-real-ip");
+    const ip =
+      headersList.get("x-forwarded-for") || headersList.get("x-real-ip");
     const userAgent = headersList.get("user-agent");
     const acceptLanguage = headersList.get("accept-language");
-    return `ip:${crypto.createHash("sha256")
+    return `ip:${crypto
+      .createHash("sha256")
       .update(`${ip}-${userAgent}-${acceptLanguage}`)
       .digest("hex")}`;
-
   }
 };
 
 export const checkRateLimit = async (functionToRateLimit: string) => {
   const clientId = await getClientId();
   const prefix = process.env.PROJECT_PREFIX;
-  const { success } = await rateLimiter.limit(`${prefix}:${clientId}:${functionToRateLimit}`);
+  const { success } = await rateLimiter.limit(
+    `${prefix}:${clientId}:${functionToRateLimit}`
+  );
   if (!success) {
     return parseServerActionResponse({
       status: "ERROR",
       error: "Too many requests, please try again later",
       data: null,
-    })
+    });
   }
   return parseServerActionResponse({
     status: "SUCCESS",
     error: "",
     data: null,
   });
-}
+};

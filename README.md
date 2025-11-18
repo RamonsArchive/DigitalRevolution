@@ -309,6 +309,7 @@ GitHub Actions automatically runs quality checks on every push and pull request:
 3. **TypeScript** - Validates type safety
 
 The CI pipeline runs on:
+
 - Push to `main` or `develop` branches
 - Pull requests targeting `main` or `develop` branches
 

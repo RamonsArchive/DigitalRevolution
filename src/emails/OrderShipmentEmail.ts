@@ -5,24 +5,28 @@ import { PrintfulShipment } from "@/lib/globalTypes";
 const F = {
   esc(s: string | null | undefined) {
     if (!s) return "";
-    return s
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   },
   date(d: Date | string | null | undefined) {
     if (!d) return "";
     const dt = typeof d === "string" ? new Date(d) : d;
-    return dt.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
-  }
+    return dt.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  },
 };
 
-export const sendShippingNotificationEmail = async (order: Order, shipment: PrintfulShipment) => {
+export const sendShippingNotificationEmail = async (
+  order: Order,
+  shipment: PrintfulShipment
+) => {
   try {
     // Parse shipping address from JSON
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const shippingAddress = order.shippingAddress as any;
-    
+
     const emailHtml = `<!DOCTYPE html>
     <html>
     <head>
@@ -67,11 +71,15 @@ export const sendShippingNotificationEmail = async (order: Order, shipment: Prin
             ${shipment.estimated_delivery ? `<div><span class="k">Expected:</span> ${F.date(shipment.estimated_delivery)}</div>` : ""}
           </div>
 
-          ${shipment.tracking_url ? `
+          ${
+            shipment.tracking_url
+              ? `
           <div style="text-align: center; margin: 20px 0;">
             <a href="${shipment.tracking_url}" class="btn">Track Your Package</a>
           </div>
-          ` : ""}
+          `
+              : ""
+          }
         </div>
 
         <div class="card">
@@ -93,7 +101,7 @@ export const sendShippingNotificationEmail = async (order: Order, shipment: Prin
 
         <div class="card" style="text-align:center;">
           <p>Questions about your delivery?</p>
-          <a href="mailto:${process.env.SUPPORT_EMAIL || 'support@digitalrevolution.org'}" class="btn" style="background:#6c757d;">Contact Support</a>
+          <a href="mailto:${process.env.SUPPORT_EMAIL || "support@digitalrevolution.org"}" class="btn" style="background:#6c757d;">Contact Support</a>
           ${process.env.NEXT_PUBLIC_APP_URL ? `<a href="${process.env.NEXT_PUBLIC_APP_URL}/orders/${order.id}" class="btn" style="background:#28a745;">View Order</a>` : ""}
         </div>
 
@@ -107,21 +115,20 @@ export const sendShippingNotificationEmail = async (order: Order, shipment: Prin
 
     const { error } = await resend.emails.send({
       from: `Digital Revolution <${process.env.RESEND_FROM}>`,
-      to: order.customerEmail || 'rmcdeem.m@gmail.com',
+      to: order.customerEmail || "rmcdeem.m@gmail.com",
       subject: `📦 Your Digital Revolution order ${order.orderNumber} has shipped!`,
-      html: emailHtml
+      html: emailHtml,
     });
 
     if (error) {
-      console.error('Resend error:', error);
+      console.error("Resend error:", error);
       throw new Error(`Failed to send shipping email: ${error.message}`);
     }
 
-    console.log('✅ Shipping notification sent:', order.orderNumber);
+    console.log("✅ Shipping notification sent:", order.orderNumber);
     return { success: true };
-
   } catch (error) {
-    console.error('❌ Failed to send shipping email:', error);
+    console.error("❌ Failed to send shipping email:", error);
     throw error;
   }
 };
