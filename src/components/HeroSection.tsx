@@ -131,8 +131,8 @@ export default function HeroSection({
           preload="auto"
           controls={false}
         >
-          <source src="/Hero/heroVid3.mp4" type="video/mp4" />
-          <source src="/Hero/heroVid3.MOV" type="video/quicktime" />
+          <source src="/Hero/hero3.MOV" type="video/mp4" />
+          <source src="/Hero/hero1.MOV" type="video/quicktime" />
           Your browser does not support the video tag.
         </video>
         {/* Dark overlay for better contrast */}
