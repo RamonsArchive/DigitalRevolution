@@ -136,7 +136,7 @@ export default function HeroSection({
           Your browser does not support the video tag.
         </video>
         {/* Dark overlay for better contrast */}
-        <div className="absolute inset-0 bg-black/40 z-0"></div>
+        <div className="absolute inset-0 z-0"></div>
         <div
           ref={titleRef}
           className="hidden fixed inset-0 w-full items-center justify-center rounded-xl z-1"
