@@ -6,7 +6,6 @@ import ShopHomeClient from "@/components/ShopHomeClient";
 
 const ShopPage = async () => {
   const result = await getProductsAndFilters({ limit: 100, offset: 0 });
-  console.log("Result in shop", result);
 
   if (result.status === "ERROR") {
     return (

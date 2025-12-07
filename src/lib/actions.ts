@@ -65,7 +65,6 @@ export const getProductsAndFilters = async ({
 
     return await getCachedProductsAndFilters({ limit, offset });
   } catch (error) {
-    console.error("Error fetching prodcuts", error);
     return parseServerActionResponse({
       status: "ERROR",
       error: error,
