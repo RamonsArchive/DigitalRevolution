@@ -8,7 +8,7 @@ import { checkRateLimit } from "./rateLimiter";
 import { parseServerActionResponse } from "./utils";
 import { extractFiltersFromProducts } from "./filters";
 import { prisma } from "./prisma";
-import { revalidateTag, unstable_cache } from "next/cache";
+import { unstable_cache, updateTag } from "next/cache";
 import { CartItem, Cart, Address } from "../../prisma/generated/prisma";
 import { stripe } from "./stripe";
 import PartnersTicketEmail from "../emails/PartnersTicketEmail";
@@ -405,7 +405,7 @@ export const writeToCart = async (
     });
 
     const cacheKey = userId || guestUserId || "anonymous";
-    revalidateTag(`cart-${cacheKey}`);
+    updateTag(`cart-${cacheKey}`);
 
     return parseServerActionResponse({
       status: "SUCCESS",
@@ -483,7 +483,7 @@ export const updateCartItemQuantity = async (
     });
 
     const cacheKey = userId || guestUserId || "anonymous";
-    revalidateTag(`cart-${cacheKey}`);
+    updateTag(`cart-${cacheKey}`);
 
     return parseServerActionResponse({
       status: "SUCCESS",
@@ -547,7 +547,7 @@ export const removeCartItem = async (
     });
 
     const cacheKey = userId || guestUserId || "anonymous";
-    revalidateTag(`cart-${cacheKey}`);
+    updateTag(`cart-${cacheKey}`);
 
     return parseServerActionResponse({
       status: "SUCCESS",
