@@ -6,10 +6,11 @@ import ShopHomeClient from "@/components/ShopHomeClient";
 
 const ShopPage = async () => {
   const result = await getProductsAndFilters({ limit: 100, offset: 0 });
+  console.log("Result in shop", result);
 
   if (result.status === "ERROR") {
     return (
-      <div className="absolute inset-0 flex items-center justify-center text-center text-2xl font-bold">
+      <div className="flex items-center justify-center text-center text-2xl font-bold w-full h-full">
         Error loading products. Please try again later.
       </div>
     );
