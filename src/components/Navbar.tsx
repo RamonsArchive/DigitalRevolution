@@ -98,7 +98,11 @@ const Navbar = () => {
     () => (
       <div className="flex items-center w-full flex-col md:flex-row md:justify-end h-full">
         {NAV_LINKS.map((link) => (
-          <Link key={link.id} href={link.href} className="nav-link">
+          <Link
+            key={link.id}
+            href={link.href}
+            className={`nav-link ${link.id === "shop" ? "nav-link-shop" : ""}`}
+          >
             {link.label}
           </Link>
         ))}
@@ -114,7 +118,7 @@ const Navbar = () => {
           <Link
             key={link.id}
             href={link.href}
-            className="mobile-nav-link nav-link"
+            className={`mobile-nav-link nav-link ${link.id === "shop" ? "nav-link-shop" : ""}`}
           >
             {link.label}
           </Link>

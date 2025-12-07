@@ -368,6 +368,101 @@ body {
 @utility nav-link {
   @apply w-full text-center md:w-fit font-lexend text-white text-lg font-bold px-5 py-2 transition-all duration-300 ease-in-out hover:bg-primary-400 active:bg-primary-600;
 }
+
+/* Special styling for Shop link - blue underline accent with animation */
+.nav-link-shop {
+  position: relative;
+  text-shadow: 0 0 8px rgba(0, 212, 255, 0.3);
+  animation: shopLinkGlow 2s ease-in-out infinite;
+}
+
+.nav-link-shop::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-primary-600) 10%,
+    var(--color-primary-400) 30%,
+    var(--color-primary-500) 50%,
+    var(--color-primary-400) 70%,
+    var(--color-primary-600) 90%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  border-radius: 2px;
+  transition: all 0.3s ease-in-out;
+  box-shadow:
+    0 0 10px rgba(0, 212, 255, 0.5),
+    0 0 20px rgba(0, 212, 255, 0.3);
+  animation:
+    shopUnderlineShimmer 2.5s ease-in-out infinite,
+    shopUnderlinePulse 2s ease-in-out infinite;
+}
+
+.nav-link-shop:hover {
+  text-shadow:
+    0 0 12px rgba(0, 212, 255, 0.6),
+    0 0 20px rgba(0, 212, 255, 0.4);
+  transform: scale(1.05);
+}
+
+.nav-link-shop:hover::after {
+  width: 85%;
+  height: 4px;
+  box-shadow:
+    0 0 15px rgba(0, 212, 255, 0.7),
+    0 0 30px rgba(0, 212, 255, 0.5);
+  animation:
+    shopUnderlineShimmer 1.5s ease-in-out infinite,
+    shopUnderlinePulse 1.5s ease-in-out infinite;
+}
+
+/* Animated shimmer effect for underline */
+@keyframes shopUnderlineShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Pulsing glow effect for underline */
+@keyframes shopUnderlinePulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 10px rgba(0, 212, 255, 0.5),
+      0 0 20px rgba(0, 212, 255, 0.3);
+    opacity: 1;
+  }
+  50% {
+    box-shadow:
+      0 0 15px rgba(0, 212, 255, 0.7),
+      0 0 30px rgba(0, 212, 255, 0.5);
+    opacity: 0.9;
+  }
+}
+
+/* Subtle text glow animation */
+@keyframes shopLinkGlow {
+  0%,
+  100% {
+    text-shadow: 0 0 8px rgba(0, 212, 255, 0.3);
+  }
+  50% {
+    text-shadow:
+      0 0 12px rgba(0, 212, 255, 0.5),
+      0 0 20px rgba(0, 212, 255, 0.3);
+  }
+}
+
 @utility section-title {
   @apply font-lexend font-bold text-5xl md:text-7xl text-center drop-shadow-lg;
 }
