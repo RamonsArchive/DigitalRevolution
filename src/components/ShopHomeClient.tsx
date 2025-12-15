@@ -27,7 +27,7 @@ const ShopHomeClient = ({
     <div className="w-full min-h-screen pb-20">
       <div className="flex gap-5 px-3 md:px-10">
         {/* Fixed Filters Sidebar - Desktop Only */}
-        <div className="hidden md:block w-80 flex-shrink-0">
+        <div className="hidden md:block w-80 shrink-0">
           <div className="sticky top-40 max-h-[calc(100vh-12rem)] overflow-y-auto">
             <div className="flex flex-col gap-10">
               <h1 className="font-lexend text-2xl font-bold">Filters</h1>

@@ -64,7 +64,7 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-col gap-[4.5rem] md:gap-20 bg-linear-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
+      <div className="flex flex-col gap-18 md:gap-20 bg-linear-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
         {/* Mission Description */}
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-4xl mx-auto">
@@ -95,7 +95,7 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
         {/* Why Share Section */}
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-[3.5rem] md:mb-16">
+            <div className="text-center mb-14 md:mb-16">
               <h3 className="text-4xl md:text-5xl font-bold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 {shareData.text.whyShareTitle}
               </h3>
@@ -140,13 +140,13 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
                     <button
                       key={idx}
                       onClick={() => copyToClipboard(hashtag, `hashtag-${idx}`)}
-                      className="group/hashtag relative bg-slate-700/50 hover:bg-slate-600/50 border border-slate-600/50 hover:border-secondary-500/50 rounded-xl p-3 transition-all duration-300 hover:scale-105 min-w-0 flex-shrink-0"
+                      className="group/hashtag relative bg-slate-700/50 hover:bg-slate-600/50 border border-slate-600/50 hover:border-secondary-500/50 rounded-xl p-3 transition-all duration-300 hover:scale-105 min-w-0 shrink-0"
                     >
                       <div className="flex items-center gap-2 min-w-0">
                         <span className="text-slate-200 font-medium text-sm group-hover/hashtag:text-secondary-200 transition-colors whitespace-nowrap">
                           {hashtag}
                         </span>
-                        <div className="flex-shrink-0">
+                        <div className="shrink-0">
                           {copiedText === `hashtag-${idx}` ? (
                             <Check className="w-4 h-4 text-emerald-400" />
                           ) : (

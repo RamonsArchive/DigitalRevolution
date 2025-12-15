@@ -127,7 +127,7 @@ const ShopNav = () => {
     return (
       <div
         ref={menuRefInner}
-        className={`fixed flex top-0 left-0 right-0 h-dvh w-[80%] bg-linear-to-br from-secondary-800 via-primary-900 to-secondary-800 transition-all duration-300 ease-in-out overflow-y-hidden z-[999] ${
+        className={`fixed flex top-0 left-0 right-0 h-dvh w-[80%] bg-linear-to-br from-secondary-800 via-primary-900 to-secondary-800 transition-all duration-300 ease-in-out overflow-y-hidden z-999 ${
           openMenu ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-full"
         }`}
       >
