@@ -19,29 +19,51 @@ const PRINTFUL_BASE = "https://api.printful.com";
 // Cached version of products and filters fetch
 const getCachedProductsAndFilters = unstable_cache(
   async ({ limit = 100, offset = 0 }: { limit?: number; offset?: number }) => {
-    const syncProducts = await getSyncProducts({ limit, offset });
-    if (syncProducts.status === "ERROR") {
-      return syncProducts;
+    try {
+      const syncProducts = await getSyncProducts({ limit, offset });
+      if (syncProducts.status === "ERROR") {
+        console.error(
+          "[getCachedProductsAndFilters] getSyncProducts failed:",
+          syncProducts.error
+        );
+        return syncProducts;
+      }
+
+      // batch get the products and their variants
+      const allProducts = await getAllProductsBatch(syncProducts.data);
+      if (allProducts.status === "ERROR") {
+        console.error(
+          "[getCachedProductsAndFilters] getAllProductsBatch failed:",
+          allProducts.error
+        );
+        return allProducts;
+      }
+
+      const filters = await extractFiltersFromProducts(
+        allProducts.data as PrintfulProduct[]
+      );
+
+      return parseServerActionResponse({
+        status: "SUCCESS",
+        error: "",
+        data: {
+          allProducts: allProducts.data,
+          filters: filters,
+        },
+      });
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      console.error("[getCachedProductsAndFilters] Unexpected error:", {
+        message: errorMessage,
+        error: error,
+      });
+      return parseServerActionResponse({
+        status: "ERROR",
+        error: errorMessage,
+        data: null,
+      });
     }
-
-    // batch get the products and their variants
-    const allProducts = await getAllProductsBatch(syncProducts.data);
-    if (allProducts.status === "ERROR") {
-      return allProducts;
-    }
-
-    const filters = await extractFiltersFromProducts(
-      allProducts.data as PrintfulProduct[]
-    );
-
-    return parseServerActionResponse({
-      status: "SUCCESS",
-      error: "",
-      data: {
-        allProducts: allProducts.data,
-        filters: filters,
-      },
-    });
   },
   ["products-and-filters"], // Cache key
   {
@@ -58,18 +80,40 @@ export const getProductsAndFilters = async ({
   offset?: number;
 }) => {
   try {
+    // Validate environment variable
+    if (!process.env.DIGITAL_REVOLUTION_API_KEY) {
+      const errorMsg =
+        "DIGITAL_REVOLUTION_API_KEY environment variable is not set";
+      console.error("[getProductsAndFilters] Error:", errorMsg);
+      return parseServerActionResponse({
+        status: "ERROR",
+        error: errorMsg,
+        data: null,
+      });
+    }
+
     const isRateLimited = await checkRateLimit("getProductsAndFilters");
     if (isRateLimited.status === "ERROR") {
       return isRateLimited;
     }
 
     const result = await getCachedProductsAndFilters({ limit, offset });
-    console.log("getting cached products and filters", result);
+    console.log("[getProductsAndFilters] Success:", {
+      status: result.status,
+      productCount: result.data?.allProducts?.length || 0,
+    });
     return result;
   } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    const errorStack = error instanceof Error ? error.stack : undefined;
+    console.error("[getProductsAndFilters] Caught error:", {
+      message: errorMessage,
+      stack: errorStack,
+      error: error,
+    });
     return parseServerActionResponse({
       status: "ERROR",
-      error: error,
+      error: errorMessage,
       data: null,
     });
   }
@@ -82,8 +126,19 @@ const getSyncProducts = async ({
   limit?: number;
   offset?: number;
 }) => {
+  if (!process.env.DIGITAL_REVOLUTION_API_KEY) {
+    const errorMsg =
+      "DIGITAL_REVOLUTION_API_KEY environment variable is not set";
+    console.error("[getSyncProducts] Error:", errorMsg);
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: errorMsg,
+      data: null,
+    });
+  }
+
   const headers: Record<string, string> = {
-    Authorization: `Bearer ${process.env.DIGITAL_REVOLUTION_API_KEY!}`,
+    Authorization: `Bearer ${process.env.DIGITAL_REVOLUTION_API_KEY}`,
   };
   try {
     // get sync products high level info
@@ -94,9 +149,9 @@ const getSyncProducts = async ({
     });
     if (!res.ok) {
       const text = await res.text().catch(() => "");
-      throw new Error(
-        `Printful fetch failed: ${res.status} ${res.statusText} :: ${text}`
-      );
+      const errorMsg = `Printful fetch failed: ${res.status} ${res.statusText} :: ${text}`;
+      console.error("[getSyncProducts] Printful API error:", errorMsg);
+      throw new Error(errorMsg);
     }
     const productJson = await res.json();
     return parseServerActionResponse({
@@ -105,17 +160,33 @@ const getSyncProducts = async ({
       data: productJson,
     });
   } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error("[getSyncProducts] Caught error:", {
+      message: errorMessage,
+      error: error,
+    });
     return parseServerActionResponse({
       status: "ERROR",
-      error: error,
+      error: errorMessage,
       data: null,
     });
   }
 };
 
 export const getProductDetails = async (productId: number) => {
+  if (!process.env.DIGITAL_REVOLUTION_API_KEY) {
+    const errorMsg =
+      "DIGITAL_REVOLUTION_API_KEY environment variable is not set";
+    console.error("[getProductDetails] Error:", errorMsg);
+    return parseServerActionResponse({
+      status: "ERROR",
+      error: errorMsg,
+      data: null,
+    });
+  }
+
   const headers: Record<string, string> = {
-    Authorization: `Bearer ${process.env.DIGITAL_REVOLUTION_API_KEY!}`,
+    Authorization: `Bearer ${process.env.DIGITAL_REVOLUTION_API_KEY}`,
   };
 
   try {
@@ -126,9 +197,9 @@ export const getProductDetails = async (productId: number) => {
     });
 
     if (!res.ok) {
-      throw new Error(
-        `Failed to fetch product ${productId}: ${res.statusText}`
-      );
+      const errorMsg = `Failed to fetch product ${productId}: ${res.status} ${res.statusText}`;
+      console.error("[getProductDetails] API error:", errorMsg);
+      throw new Error(errorMsg);
     }
 
     const data = await res.json();
@@ -138,9 +209,14 @@ export const getProductDetails = async (productId: number) => {
       data: data.result,
     });
   } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error(`[getProductDetails] Error for product ${productId}:`, {
+      message: errorMessage,
+      error: error,
+    });
     return parseServerActionResponse({
       status: "ERROR",
-      error: error,
+      error: errorMessage,
       data: null,
     });
   }
@@ -151,7 +227,9 @@ const getAllProductsBatch = async (
 ) => {
   try {
     if (!productJson.result) {
-      throw new Error("No products found");
+      const errorMsg = "No products found in Printful response";
+      console.error("[getAllProductsBatch] Error:", errorMsg);
+      throw new Error(errorMsg);
     }
     const products = productJson.result;
     const batchSize = 5; // Process 5 products at a time to respect rate limits
@@ -168,18 +246,36 @@ const getAllProductsBatch = async (
         .map((result) => result.data);
       allProductsWithVariants.push(...successfulResults);
 
+      // Log failed products for debugging
+      const failedResults = batchResults.filter(
+        (result) => result.status === "ERROR"
+      );
+      if (failedResults.length > 0) {
+        console.warn(
+          `[getAllProductsBatch] ${failedResults.length} products failed to load in batch ${i / batchSize + 1}`
+        );
+      }
+
       // no delay for max speed
     }
 
+    console.log(
+      `[getAllProductsBatch] Successfully loaded ${allProductsWithVariants.length} products`
+    );
     return parseServerActionResponse({
       status: "SUCCESS",
       error: "",
       data: allProductsWithVariants,
     });
   } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error("[getAllProductsBatch] Caught error:", {
+      message: errorMessage,
+      error: error,
+    });
     return parseServerActionResponse({
       status: "ERROR",
-      error: error,
+      error: errorMessage,
       data: null,
     });
   }
