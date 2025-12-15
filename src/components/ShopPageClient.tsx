@@ -38,7 +38,7 @@ const ShopPageClient = () => {
             <p className="text-slate-400 mb-4">{error}</p>
             <button
               onClick={() => window.location.reload()}
-              className="px-6 py-2 bg-linear-to-r from-primary-500 to-secondary-500 text-white rounded-lg hover:from-primary-600 hover:to-secondary-600 transition-all duration-300"
+              className="px-6 py-2 rounded-lg bg-slate-900/80 border border-primary-500/40 text-primary-50 shadow-[0_10px_28px_rgba(0,212,255,0.2)] hover:shadow-[0_14px_36px_rgba(0,212,255,0.28)] transition-all duration-300 hover:scale-[1.02]"
             >
               Try Again
             </button>

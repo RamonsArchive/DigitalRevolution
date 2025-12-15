@@ -51,7 +51,7 @@ const TitleSection = ({
     <div
       className={`title ${
         isHero
-          ? "bg-linear-to-b from-bg-primary via-secondary-900/80 to-bg-primary"
+          ? "bg-linear-to-b from-bg-primary via-bg-dark/90 to-bg-primary"
           : "bg-linear-to-b from-bg-primary via-slate-900/80 to-bg-primary"
       } ${containerClassName}`}
     >

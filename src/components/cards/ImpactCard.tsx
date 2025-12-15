@@ -34,7 +34,7 @@ const ImpactCard: React.FC<ImpactCardProps> = ({
   return (
     <div className={`group relative h-full flex flex-col ${className}`}>
       <div
-        className={`relative bg-linear-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50 shadow-xl transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-primary-400/50 overflow-hidden flex flex-col h-full`}
+        className={`relative bg-slate-900/80 backdrop-blur-md rounded-2xl p-6 border border-slate-700/50 shadow-[0_20px_50px_rgba(0,0,0,0.35)] transition-all duration-300 group-hover:shadow-2xl group-hover:scale-[1.01] group-hover:border-primary-400/50 overflow-hidden flex flex-col h-full`}
       >
         {/* Gradient overlay - matches card height exactly */}
         <div
@@ -44,9 +44,9 @@ const ImpactCard: React.FC<ImpactCardProps> = ({
         {layout === "horizontal" ? (
           <div className="relative flex items-start space-x-4 flex-grow">
             <div
-              className={`w-12 h-12 bg-linear-to-r ${iconGradientFrom} ${iconGradientTo} rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition duration-300`}
+              className={`w-12 h-12 icon-chip rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition duration-300`}
             >
-              <span className="text-lg">{icon}</span>
+              <span className="text-lg text-primary-50">{icon}</span>
             </div>
             <div className="flex-1 flex flex-col">
               <h4 className="text-xl font-semibold text-slate-100 mb-3 group-hover:text-primary-200 transition-colors">
@@ -84,9 +84,9 @@ const ImpactCard: React.FC<ImpactCardProps> = ({
         ) : (
           <div className="relative text-center flex flex-col h-full">
             <div
-              className={`w-16 h-16 bg-linear-to-r ${iconGradientFrom} ${iconGradientTo} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition duration-300`}
+              className={`w-16 h-16 icon-chip rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition duration-300`}
             >
-              <span className="text-2xl text-white">{icon}</span>
+              <span className="text-2xl text-primary-50">{icon}</span>
             </div>
             <h4 className="text-lg font-semibold text-slate-100 mb-3 group-hover:text-primary-200 transition-colors">
               {title}

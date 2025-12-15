@@ -43,9 +43,7 @@ const DonationOptionCard: React.FC<DonationOptionCardProps> = ({
         <div className="relative text-center flex flex-col h-full">
           <div
             className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 transition duration-300 ${
-              isSelected
-                ? "bg-linear-to-r from-emerald-500 to-cyan-500 scale-110"
-                : "bg-linear-to-r from-primary-500 to-secondary-500 group-hover:scale-110"
+              isSelected ? "icon-chip icon-chip-emerald scale-105" : "icon-chip group-hover:scale-105"
             }`}
           >
             {icon || (

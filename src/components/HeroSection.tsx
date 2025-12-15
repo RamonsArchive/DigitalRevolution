@@ -51,8 +51,7 @@ export default function HeroSection({
   }, []);
 
   return (
-    <section className="relative flex h-[calc(100dvh-42px)] w-full overflow-hidden bg-bg-primary">
-      <div className="absolute inset-0 bg-[linear-gradient(#020617_0%,#020617_14%,transparent_22%),radial-gradient(circle_at_20%_20%,rgba(0,212,255,0.12),transparent_40%),radial-gradient(circle_at_80%_0%,rgba(139,92,246,0.12),transparent_35%)]" />
+    <section className="relative flex h-[calc(100dvh-42px)] w-full overflow-hidden bg-linear-to-b from-bg-primary via-bg-dark/80 to-bg-primary">
       <div className="relative z-10 mx-auto flex h-full w-full max-w-7xl flex-col gap-8 px-6 py-10 md:flex-row md:items-center lg:py-14">
         <div className="flex flex-1 flex-col gap-5 text-white md:pr-6">
           <div className="hero-fade-up text-xs font-semibold uppercase tracking-[0.3em] text-primary-200">
@@ -103,7 +102,7 @@ export default function HeroSection({
             </Link>
           </div>
 
-          <div className="hero-fade-up hero-fade-delay-5 max-w-2xl text-base leading-relaxed text-slate-200 md:text-lg">
+          <div className="hero-fade-up hero-fade-delay-5 max-w-2xl text-base leading-relaxed text-slate-200 md:text-lg hidden md:block">
             {description1}
           </div>
         </div>

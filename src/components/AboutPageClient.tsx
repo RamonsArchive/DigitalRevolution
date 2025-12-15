@@ -35,8 +35,8 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
               <div className="absolute -inset-1 bg-linear-to-r from-primary-500 to-secondary-500 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
               <div className="relative bg-linear-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-8 border border-primary-500/30 shadow-2xl">
                 <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-linear-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center mr-4">
-                    <span className="text-2xl">🎯</span>
+                  <div className="w-12 h-12 icon-chip rounded-xl flex items-center justify-center mr-4">
+                    <span className="text-2xl text-primary-50">🎯</span>
                   </div>
                   <h2 className="text-3xl md:text-4xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
                     {aboutData.text.missionTitle}
@@ -52,8 +52,8 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
               <div className="absolute -inset-1 bg-linear-to-r from-secondary-500 to-primary-500 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
               <div className="relative bg-linear-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-8 border border-secondary-500/30 shadow-2xl">
                 <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-linear-to-r from-secondary-500 to-primary-500 rounded-xl flex items-center justify-center mr-4">
-                    <span className="text-2xl">💡</span>
+                  <div className="w-12 h-12 icon-chip rounded-xl flex items-center justify-center mr-4">
+                    <span className="text-2xl text-primary-50">💡</span>
                   </div>
                   <h2 className="text-3xl md:text-4xl font-bold bg-linear-to-r from-secondary-200 to-primary-200 bg-clip-text text-transparent">
                     {aboutData.text.descriptionTitle}
@@ -92,8 +92,8 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center mb-6">
-                      <div className="w-12 h-12 bg-linear-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center mr-4">
-                        <span className="text-2xl">👨‍💻</span>
+                      <div className="w-12 h-12 icon-chip rounded-xl flex items-center justify-center mr-4">
+                        <span className="text-2xl text-primary-50">👨‍💻</span>
                       </div>
                       <h2 className="text-3xl md:text-4xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
                         {aboutData.text.founderTitle}
@@ -206,8 +206,8 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   <div className="text-center">
-                    <div className="w-16 h-16 bg-linear-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                      <span className="text-2xl">📅</span>
+                    <div className="w-16 h-16 icon-chip rounded-2xl flex items-center justify-center mx-auto mb-4">
+                      <span className="text-2xl text-primary-50">📅</span>
                     </div>
                     <h4 className="text-2xl font-semibold text-slate-100 mb-2">
                       Founded
@@ -217,8 +217,8 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
                     </p>
                   </div>
                   <div className="text-center">
-                    <div className="w-16 h-16 bg-linear-to-r from-secondary-500 to-primary-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                      <span className="text-2xl">💝</span>
+                    <div className="w-16 h-16 icon-chip rounded-2xl flex items-center justify-center mx-auto mb-4">
+                      <span className="text-2xl text-primary-50">💝</span>
                     </div>
                     <h4 className="text-2xl font-semibold text-slate-100 mb-2">
                       Profits Donated
@@ -228,8 +228,8 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
                     </p>
                   </div>
                   <div className="text-center">
-                    <div className="w-16 h-16 bg-linear-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                      <span className="text-2xl">🌍</span>
+                    <div className="w-16 h-16 icon-chip rounded-2xl flex items-center justify-center mx-auto mb-4">
+                      <span className="text-2xl text-primary-50">🌍</span>
                     </div>
                     <h4 className="text-2xl font-semibold text-slate-100 mb-2">
                       Communities Served
@@ -239,8 +239,8 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
                     </p>
                   </div>
                   <div className="text-center">
-                    <div className="w-16 h-16 bg-linear-to-r from-secondary-500 to-primary-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                      <span className="text-2xl">🎯</span>
+                    <div className="w-16 h-16 icon-chip rounded-2xl flex items-center justify-center mx-auto mb-4">
+                      <span className="text-2xl text-primary-50">🎯</span>
                     </div>
                     <h4 className="text-2xl font-semibold text-slate-100 mb-2">
                       Mission Focus
@@ -277,8 +277,8 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
               <div className="absolute -inset-1 bg-linear-to-r from-primary-500 via-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
               <div className="relative bg-linear-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-primary-500/30 shadow-2xl text-center">
                 <div className="flex items-center justify-center mb-6">
-                  <div className="w-16 h-16 bg-linear-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mr-4">
-                    <span className="text-3xl">🤝</span>
+                  <div className="w-16 h-16 icon-chip rounded-2xl flex items-center justify-center mr-4">
+                    <span className="text-3xl text-primary-50">🤝</span>
                   </div>
                   <h2 className="text-3xl md:text-4xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
                     {aboutData.text.howToSupportTitle}

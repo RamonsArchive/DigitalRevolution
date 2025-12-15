@@ -6,9 +6,9 @@ import Image from "next/image";
 const ProductCard = ({ product }: { product: PrintfulProduct }) => {
   return (
     <Link href={`/shop/product/${product.sync_product.external_id}`}>
-      <div className="group relative flex flex-col rounded-2xl overflow-hidden bg-white shadow-lg hover:shadow-2xl transition-all duration-500 ease-out hover:scale-105 hover:-translate-y-2">
-        {/* Animated gradient background */}
-        <div className="absolute inset-0 bg-linear-to-br from-primary-200 via-secondary-200 to-primary-300 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"></div>
+      <div className="group relative flex flex-col rounded-2xl overflow-hidden bg-slate-900/95 border border-slate-800/70 shadow-xl hover:shadow-2xl transition-all duration-500 ease-out hover:scale-105 hover:-translate-y-2">
+        {/* Subtle accent background */}
+        <div className="absolute inset-0 bg-linear-to-br from-primary-500/12 via-secondary-500/10 to-primary-500/12 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"></div>
 
         {/* Product Image Container */}
         <div className="relative w-full aspect-square overflow-hidden">
@@ -24,23 +24,23 @@ const ProductCard = ({ product }: { product: PrintfulProduct }) => {
         </div>
 
         {/* Product Info */}
-        <div className="relative flex flex-col p-6 bg-white/95 backdrop-blur-sm">
-          <h1 className="font-lexend text-xl font-bold text-gray-800 group-hover:text-primary-600 transition-colors duration-300 line-clamp-2">
+        <div className="relative flex flex-col p-6 bg-slate-950/80 backdrop-blur-sm">
+          <h1 className="font-lexend text-xl font-bold text-slate-100 group-hover:text-primary-200 transition-colors duration-300 line-clamp-2">
             {product.sync_product.name}
           </h1>
 
           {/* Price - if available */}
           {product.sync_variants?.[0]?.retail_price && (
             <div className="mt-2">
-              <span className="text-2xl font-bold text-primary-600">
+              <span className="text-2xl font-bold text-primary-300">
                 ${product.sync_variants[0].retail_price}
               </span>
             </div>
           )}
 
           {/* View Details indicator - Always visible on mobile, hover on desktop */}
-          <div className="mt-2 md:mt-3 flex items-center text-primary-500 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
-            <span className="text-sm font-medium">View Details</span>
+          <div className="mt-2 md:mt-3 flex items-center text-primary-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
+            <span className="text-sm font-medium">View details</span>
             <svg
               className="w-4 h-4 ml-1 transform md:group-hover:translate-x-1 transition-transform duration-300"
               fill="none"

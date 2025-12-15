@@ -130,8 +130,8 @@ const OrdersPageClient = ({ orders }: OrdersPageClientProps) => {
         <div className="absolute inset-0 bg-linear-to-b from-bg-primary via-primary-900 to-slate-900"></div>
         <div className="relative flex items-center justify-center py-16 md:py-24 h-full">
           <div className="text-center">
-            <div className="w-20 h-20 bg-linear-to-r from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Package className="w-10 h-10 text-white" />
+            <div className="w-20 h-20 icon-chip rounded-full flex items-center justify-center mx-auto mb-6">
+              <Package className="w-10 h-10 text-primary-50" />
             </div>
             <h1 className="text-4xl md:text-6xl font-bold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
               Your Orders
@@ -162,8 +162,8 @@ const OrdersPageClient = ({ orders }: OrdersPageClientProps) => {
                           {/* Order Info */}
                           <div className="flex-1">
                             <div className="flex items-center gap-4 mb-4">
-                              <div className="w-12 h-12 bg-linear-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center">
-                                <Package className="w-6 h-6 text-white" />
+                              <div className="w-12 h-12 icon-chip rounded-xl flex items-center justify-center">
+                                <Package className="w-6 h-6 text-primary-50" />
                               </div>
                               <div>
                                 <h3 className="text-xl font-bold text-slate-100">

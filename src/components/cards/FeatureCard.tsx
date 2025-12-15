@@ -45,9 +45,9 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
           className={`relative flex flex-col h-full ${centered ? "text-center" : ""}`}
         >
           <div
-            className={`${iconSizeClasses[iconSize]} bg-linear-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition duration-300`}
+            className={`${iconSizeClasses[iconSize]} icon-chip mx-auto mb-4 group-hover:scale-110 transition duration-300`}
           >
-            <span className="text-2xl">{icon}</span>
+            <span className="text-2xl text-primary-50">{icon}</span>
           </div>
           <h4 className="text-lg font-semibold text-slate-100 mb-3 group-hover:text-primary-200 transition-colors">
             {title}

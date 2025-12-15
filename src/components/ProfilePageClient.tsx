@@ -108,8 +108,8 @@ const ProfilePageClient = ({
               <div className="absolute -inset-1 bg-linear-to-r from-primary-500 via-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
               <div className="relative bg-linear-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-primary-500/30 shadow-2xl text-center">
                 <div className="flex items-center justify-center mb-6">
-                  <div className="w-16 h-16 bg-linear-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mr-4">
-                    <span className="text-3xl">👤</span>
+                  <div className="w-16 h-16 icon-chip rounded-2xl flex items-center justify-center mr-4">
+                    <span className="text-3xl text-primary-50">👤</span>
                   </div>
                   <h2 className="text-3xl md:text-4xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
                     Your Profile
@@ -165,8 +165,8 @@ const ProfilePageClient = ({
                         {/* Subscription Details */}
                         <div className="flex-1">
                           <div className="flex items-center gap-4 mb-4">
-                            <div className="w-12 h-12 bg-linear-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center">
-                              <span className="text-xl">🔄</span>
+                            <div className="w-12 h-12 icon-chip rounded-xl flex items-center justify-center">
+                              <span className="text-xl text-primary-50">🔄</span>
                             </div>
                             <div>
                               <h4 className="text-xl font-bold text-slate-100">
@@ -325,8 +325,8 @@ const ProfilePageClient = ({
               <div className="absolute -inset-1 bg-linear-to-r from-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
               <div className="relative bg-linear-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-secondary-500/30 shadow-2xl text-center">
                 <div className="flex items-center justify-center mb-6">
-                  <div className="w-16 h-16 bg-linear-to-r from-secondary-500 to-primary-500 rounded-2xl flex items-center justify-center mr-4">
-                    <span className="text-3xl">⚙️</span>
+                  <div className="w-16 h-16 icon-chip rounded-2xl flex items-center justify-center mr-4">
+                    <span className="text-3xl text-primary-50">⚙️</span>
                   </div>
                   <h2 className="text-3xl md:text-4xl font-bold bg-linear-to-r from-secondary-200 to-primary-200 bg-clip-text text-transparent">
                     Account Settings

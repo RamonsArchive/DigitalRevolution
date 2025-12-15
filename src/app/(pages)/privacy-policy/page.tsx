@@ -42,11 +42,11 @@ const PrivacyPolicyPage = () => {
       </div>
 
       {/* Content Section */}
-      <div className="flex flex-col gap-[4.5rem] md:gap-20 bg-linear-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
+      <div className="flex flex-col gap-18 md:gap-20 bg-linear-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-4xl mx-auto">
             {/* Introduction */}
-            <div className="mb-[3.5rem] md:mb-16">
+            <div className="mb-14 md:mb-16">
               <InfoCard
                 icon="🛡️"
                 title="Your Privacy Matters"
@@ -55,7 +55,7 @@ const PrivacyPolicyPage = () => {
             </div>
 
             {/* Privacy Sections */}
-            <div className="space-y-[2.25rem] md:space-y-10">
+            <div className="space-y-9 md:space-y-10">
               {PrivacyPolicy.map((policy) => (
                 <IconCard
                   key={policy.id}
@@ -67,7 +67,7 @@ const PrivacyPolicyPage = () => {
             </div>
 
             {/* Key Privacy Principles */}
-            <div className="mt-[4.5rem] md:mt-20 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="mt-18 md:mt-20 grid grid-cols-1 md:grid-cols-3 gap-6">
               <FeatureCard
                 icon="🔒"
                 title="Secure"
@@ -98,7 +98,7 @@ const PrivacyPolicyPage = () => {
             </div>
 
             {/* Contact Section */}
-            <div className="mt-[4.5rem] md:mt-20">
+            <div className="mt-18 md:mt-20">
               <InfoCard
                 icon="🛡️"
                 title="Questions About Your Privacy?"
@@ -110,7 +110,7 @@ const PrivacyPolicyPage = () => {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a
                     href="mailto:clutchdev.apps@gmail.com"
-                    className="px-6 py-3 bg-linear-to-r from-primary-500 to-secondary-500 text-white font-semibold rounded-xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                    className="px-6 py-3 rounded-xl font-semibold text-primary-50 bg-slate-900/80 border border-primary-500/40 shadow-[0_18px_40px_rgba(0,212,255,0.18)] hover:shadow-[0_22px_48px_rgba(0,212,255,0.26)] transition-all duration-300 hover:scale-[1.03]"
                   >
                     Contact Us
                   </a>

@@ -455,10 +455,8 @@ const ProductPageClient = ({
             href="/shop"
             className="flex items-center gap-3 text-slate-200 hover:text-white transition-all duration-300 font-medium"
           >
-            <div className="w-8 h-8 bg-linear-to-r from-primary-500 to-secondary-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <span className="text-white text-sm font-bold leading-none">
-                ←
-              </span>
+            <div className="w-8 h-8 icon-chip rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <span className="text-primary-50 text-sm font-bold leading-none">←</span>
             </div>
             <span className="text-base font-semibold">Back to Shop</span>
           </Link>
@@ -551,9 +549,9 @@ const ProductPageClient = ({
                 <div className="text-2xl font-bold text-primary-600">
                   ${currentVariant.retail_price}
                 </div>
-                <div className="relative flex items-center gap-2 rounded-md px-2 py-1 bg-linear-to-r from-red-500/90 via-orange-500/90 to-pink-500/90 shadow-md shadow-red-500/20 border border-red-400/20">
-                  <div className="absolute inset-0 bg-linear-to-r from-red-500 via-orange-500 to-pink-500 rounded-md blur-sm opacity-30 -z-10"></div>
-                  <span className="text-xs font-bold text-white drop-shadow">
+                <div className="relative flex items-center gap-2 rounded-md px-2 py-1 bg-slate-800/90 border border-primary-500/25 shadow-[0_12px_30px_rgba(0,212,255,0.12)]">
+                  <div className="absolute inset-0 rounded-md bg-[radial-gradient(circle_at_30%_30%,rgba(0,212,255,0.18),rgba(2,6,23,0.85))] opacity-90 pointer-events-none"></div>
+                  <span className="text-xs font-bold text-primary-50 drop-shadow relative">
                     🚚 Free Shipping
                   </span>
                 </div>

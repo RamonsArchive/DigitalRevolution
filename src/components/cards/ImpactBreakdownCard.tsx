@@ -28,8 +28,8 @@ const ImpactBreakdownCard: React.FC<ImpactBreakdownCardProps> = ({
         />
 
         <div className="relative text-center flex flex-col h-full">
-          <div className="w-16 h-16 bg-linear-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition duration-300">
-            <span className="text-2xl font-bold text-white">{amount}</span>
+          <div className="w-16 h-16 icon-chip rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition duration-300">
+            <span className="text-2xl font-bold text-primary-50">{amount}</span>
           </div>
           <h4 className="text-lg font-semibold text-slate-100 mb-3 group-hover:text-primary-200 transition-colors">
             {impact}

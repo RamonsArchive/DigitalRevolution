@@ -35,9 +35,9 @@ const PathwayCard: React.FC<PathwayCardProps> = ({
 
         <div className="relative text-center flex flex-col h-full">
           <div
-            className={`w-16 h-16 bg-linear-to-r ${iconGradientFrom} ${iconGradientTo} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition duration-300`}
+            className={`w-16 h-16 icon-chip rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition duration-300`}
           >
-            {icon && <span className="text-2xl">{icon}</span>}
+            {icon && <span className="text-2xl text-primary-50">{icon}</span>}
           </div>
           <h3 className="text-lg font-semibold text-slate-100 mb-3 group-hover:text-secondary-200 transition-colors">
             {title}

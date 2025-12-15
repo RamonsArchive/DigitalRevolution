@@ -35,8 +35,8 @@ const PartnersPageClient = ({
               <div className="absolute -inset-1 bg-linear-to-r from-primary-500 via-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
               <div className="relative bg-linear-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-primary-500/30 shadow-2xl text-center">
                 <div className="flex items-center justify-center mb-6">
-                  <div className="w-16 h-16 bg-linear-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mr-4">
-                    <span className="text-3xl">🤝</span>
+                  <div className="w-16 h-16 icon-chip rounded-2xl flex items-center justify-center mr-4">
+                    <span className="text-3xl text-primary-50">🤝</span>
                   </div>
                   <h2 className="text-3xl md:text-4xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
                     Partnership Overview
@@ -118,8 +118,8 @@ const PartnersPageClient = ({
               <div className="absolute -inset-1 bg-linear-to-r from-primary-500 via-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
               <div className="relative bg-linear-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-primary-500/30 shadow-2xl">
                 <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-linear-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center mr-4">
-                    <span className="text-2xl">📋</span>
+                  <div className="w-12 h-12 icon-chip rounded-xl flex items-center justify-center mr-4">
+                    <span className="text-2xl text-primary-50">📋</span>
                   </div>
                   <h2 className="text-3xl md:text-4xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
                     {partnersData.requirements.title}
@@ -131,8 +131,8 @@ const PartnersPageClient = ({
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {partnersData.requirements.criteria?.map((criterion, idx) => (
                     <div key={idx} className="flex items-start space-x-3">
-                      <div className="w-6 h-6 bg-linear-to-r from-primary-500 to-secondary-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                        <span className="text-white text-sm">✓</span>
+                      <div className="w-6 h-6 icon-chip rounded-full flex items-center justify-center shrink-0 mt-1">
+                        <span className="text-sm text-primary-50">✓</span>
                       </div>
                       <p className="text-slate-200 text-sm font-normal leading-relaxed">
                         {criterion}
@@ -172,8 +172,8 @@ const PartnersPageClient = ({
               <div className="relative bg-linear-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-primary-500/30 shadow-2xl">
                 <div className="text-center mb-8">
                   <div className="flex items-center justify-center mb-6">
-                    <div className="w-16 h-16 bg-linear-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mr-4">
-                      <span className="text-3xl">📝</span>
+                    <div className="w-16 h-16 icon-chip rounded-2xl flex items-center justify-center mr-4">
+                      <span className="text-3xl text-primary-50">📝</span>
                     </div>
                     <h2 className="text-3xl md:text-4xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
                       {partnersData.text.formTitle}
@@ -196,8 +196,8 @@ const PartnersPageClient = ({
               <div className="absolute -inset-1 bg-linear-to-r from-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
               <div className="relative bg-linear-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-secondary-500/30 shadow-2xl text-center">
                 <div className="flex items-center justify-center mb-6">
-                  <div className="w-16 h-16 bg-linear-to-r from-secondary-500 to-primary-500 rounded-2xl flex items-center justify-center mr-4">
-                    <span className="text-3xl">📞</span>
+                  <div className="w-16 h-16 icon-chip rounded-2xl flex items-center justify-center mr-4">
+                    <span className="text-3xl text-primary-50">📞</span>
                   </div>
                   <h2 className="text-3xl md:text-4xl font-extrabold bg-linear-to-r from-secondary-200 to-primary-200 bg-clip-text text-transparent">
                     Get In Touch

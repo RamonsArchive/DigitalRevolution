@@ -72,8 +72,8 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
               <div className="absolute -inset-1 bg-linear-to-r from-primary-500 to-secondary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
               <div className="relative bg-linear-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-primary-500/30 shadow-2xl text-center">
                 <div className="flex items-center justify-center gap-2 md:gap-5 mb-6">
-                  <div className="w-16 h-16 bg-linear-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center flex-shrink-0">
-                    <Share2 className="w-8 h-8 text-white" />
+                  <div className="w-16 h-16 icon-chip rounded-2xl flex items-center justify-center shrink-0">
+                    <Share2 className="w-8 h-8 text-primary-50" />
                   </div>
                   <h2 className="text-3xl md:text-4xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
                     {shareData.text.subTitle}
@@ -123,8 +123,8 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
               <div className="relative bg-linear-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-secondary-500/30 shadow-2xl">
                 <div className="text-center mb-8">
                   <div className="flex items-center justify-center gap-2 md:gap-5 mb-4">
-                    <div className="w-16 h-16 bg-linear-to-r from-secondary-500 to-primary-500 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Hash className="w-8 h-8 text-white" />
+                    <div className="w-16 h-16 icon-chip rounded-xl flex items-center justify-center shrink-0">
+                      <Hash className="w-8 h-8 text-primary-50" />
                     </div>
                     <h3 className="text-3xl md:text-4xl font-bold bg-linear-to-r from-secondary-200 to-primary-200 bg-clip-text text-transparent">
                       {shareData.text.hashtagsTitle}
@@ -165,7 +165,7 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
         {/* Shareable Content */}
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-[3.5rem] md:mb-16">
+            <div className="text-center mb-14 md:mb-16">
               <h3 className="text-4xl md:text-5xl font-bold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 Ready-to-Share Content
               </h3>
@@ -219,7 +219,7 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
                       className="group/link relative bg-slate-700/50 hover:bg-slate-600/50 border border-slate-600/50 hover:border-primary-500/50 rounded-xl p-4 transition-all duration-300 hover:scale-105"
                     >
                       <div className="text-center">
-                        <div className="w-12 h-12 bg-linear-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover/link:scale-110 transition duration-300">
+                        <div className="w-12 h-12 icon-chip rounded-xl flex items-center justify-center mx-auto mb-3 group-hover/link:scale-110 transition duration-300">
                           {getPlatformIcon(link.platform)}
                         </div>
                         <h4 className="text-slate-200 font-semibold mb-1 group-hover/link:text-primary-200 transition-colors">
@@ -238,7 +238,7 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
         {/* Sharing Tips */}
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-[3.5rem] md:mb-16">
+            <div className="text-center mb-14 md:mb-16">
               <h3 className="text-4xl md:text-5xl font-bold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 {shareData.text.sharingTipsTitle}
               </h3>
@@ -268,8 +268,8 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
               <div className="relative bg-linear-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-emerald-500/30 shadow-2xl">
                 <div className="text-center mb-8">
                   <div className="flex items-center justify-center gap-3 md:gap-5 mb-4">
-                    <div className="w-16 h-16 bg-linear-to-r from-emerald-500 to-cyan-500 rounded-2xl flex items-center justify-center flex-shrink-0">
-                      <Award className="w-8 h-8 text-white" />
+                    <div className="w-16 h-16 icon-chip rounded-2xl flex items-center justify-center shrink-0">
+                      <Award className="w-8 h-8 text-primary-50" />
                     </div>
                     <h3 className="text-3xl md:text-4xl font-bold bg-linear-to-r from-emerald-200 to-cyan-200 bg-clip-text text-transparent">
                       {shareData.featuredContent.title}
@@ -328,7 +328,7 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
         {/* Community Goals */}
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-[3.5rem] md:mb-16">
+            <div className="text-center mb-14 md:mb-16">
               <h3 className="text-4xl md:text-5xl font-bold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 Our Community Goals
               </h3>
@@ -358,8 +358,8 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
               <div className="absolute -inset-1 bg-linear-to-r from-primary-500 via-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
               <div className="relative bg-linear-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-primary-500/30 shadow-2xl text-center">
                 <div className="flex items-center justify-center mb-6">
-                  <div className="w-16 h-16 bg-linear-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mr-4">
-                    <TrendingUp className="w-8 h-8 text-white" />
+                  <div className="w-16 h-16 icon-chip rounded-2xl flex items-center justify-center mr-4">
+                    <TrendingUp className="w-8 h-8 text-primary-50" />
                   </div>
                   <h3 className="text-3xl md:text-4xl font-bold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
                     {shareData.impactStats.title}
@@ -368,8 +368,8 @@ const SharePageClient = ({ shareData }: { shareData: typeof SHARE_DATA }) => {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                   {shareData.impactStats.stats.map((stat, idx) => (
                     <div key={idx} className="text-center">
-                      <div className="w-16 h-16 bg-linear-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-3">
-                        <span className="text-2xl font-bold text-white">
+                      <div className="w-16 h-16 icon-chip rounded-2xl flex items-center justify-center mx-auto mb-3">
+                        <span className="text-2xl font-bold text-primary-50">
                           {stat.metric}
                         </span>
                       </div>

@@ -25,14 +25,14 @@ const FactCard: React.FC<FactCardProps> = ({
           className={`absolute inset-0 bg-linear-to-r ${gradientFrom} ${gradientTo} rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}
         />
 
-        <div className="relative flex items-start gap-4 flex-grow">
+        <div className="relative flex items-start gap-4 grow">
           {icon && (
-            <div className="w-12 h-12 bg-linear-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition duration-300">
-              <span className="text-2xl">{icon}</span>
+            <div className="w-12 h-12 icon-chip rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition duration-300">
+              <span className="text-2xl text-primary-50">{icon}</span>
             </div>
           )}
           <div className="flex-1 flex flex-col">
-            <div className="text-slate-200 leading-relaxed text-lg font-medium flex-grow">
+            <div className="text-slate-200 leading-relaxed text-sm md:text-base font-normal grow">
               {fact}
             </div>
           </div>

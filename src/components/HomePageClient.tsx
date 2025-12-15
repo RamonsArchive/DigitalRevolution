@@ -19,7 +19,7 @@ const HomePageClient = ({ homeData }: HomePageClientProps) => {
   return (
     <div className="min-h-screen bg-bg-primary">
       {/* Digital Divide Reality Section */}
-      <section className="px-6 md:px-12 py-22 md:py-24 bg-linear-to-b from-bg-primary via-slate-900 to-bg-primary">
+      <section className="px-6 md:px-12 py-22 md:py-24 bg-[linear-gradient(#020617_0%,#020617_14%,transparent_22%),radial-gradient(circle_at_20%_20%,rgba(0,212,255,0.10),transparent_40%),radial-gradient(circle_at_80%_0%,rgba(139,92,246,0.10),transparent_35%)]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-18 md:mb-20 overflow-visible">
             <h2 className="section-title text-4xl md:text-6xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-6 pb-3 overflow-visible">
@@ -80,7 +80,7 @@ const HomePageClient = ({ homeData }: HomePageClientProps) => {
       </section>
 
       {/* Impact Approach Section */}
-      <section className="px-6 md:px-12 py-22 md:py-24 bg-linear-to-b from-bg-primary via-slate-900/50 to-bg-primary">
+      <section className="px-6 md:px-12 py-22 md:py-24 bg-[linear-gradient(#020617_0%,#020617_14%,transparent_22%),radial-gradient(circle_at_20%_20%,rgba(0,212,255,0.08),transparent_40%),radial-gradient(circle_at_80%_0%,rgba(139,92,246,0.08),transparent_35%)]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-18 md:mb-20 overflow-visible">
             <h2 className="section-title text-4xl md:text-6xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-6 pb-3 overflow-visible">
@@ -112,7 +112,7 @@ const HomePageClient = ({ homeData }: HomePageClientProps) => {
       </section>
 
       {/* Pathway Section */}
-      <section className="px-6 md:px-12 py-22 md:py-24 bg-linear-to-b from-bg-primary via-slate-900 to-bg-primary">
+      <section className="px-6 md:px-12 py-22 md:py-24 bg-[linear-gradient(#020617_0%,#020617_14%,transparent_22%),radial-gradient(circle_at_20%_20%,rgba(0,212,255,0.10),transparent_40%),radial-gradient(circle_at_80%_0%,rgba(139,92,246,0.10),transparent_35%)]">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-18 md:mb-20 overflow-visible">
             <h2 className="section-title text-4xl md:text-6xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-6 pb-3 overflow-visible">
@@ -141,7 +141,7 @@ const HomePageClient = ({ homeData }: HomePageClientProps) => {
       </section>
 
       {/* Support Our Mission Section */}
-      <section className="px-6 md:px-12 py-22 md:py-24 bg-linear-to-b from-bg-primary via-slate-900/50 to-bg-primary">
+      <section className="px-6 md:px-12 py-22 md:py-24 bg-[linear-gradient(#020617_0%,#020617_14%,transparent_22%),radial-gradient(circle_at_20%_20%,rgba(0,212,255,0.08),transparent_40%),radial-gradient(circle_at_80%_0%,rgba(139,92,246,0.08),transparent_35%)]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-18 md:mb-20 overflow-visible">
             <h2 className="section-title text-4xl md:text-6xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-6 pb-3 overflow-visible">
@@ -181,7 +181,7 @@ const HomePageClient = ({ homeData }: HomePageClientProps) => {
       </section>
 
       {/* Stats Section */}
-      <section className="px-6 md:px-12 py-22 md:py-24 bg-linear-to-b from-bg-primary via-slate-900 to-bg-primary">
+      <section className="px-6 md:px-12 py-22 md:py-24 bg-[linear-gradient(#020617_0%,#020617_14%,transparent_22%),radial-gradient(circle_at_20%_20%,rgba(0,212,255,0.10),transparent_40%),radial-gradient(circle_at_80%_0%,rgba(139,92,246,0.10),transparent_35%)]">
         <div className="max-w-6xl mx-auto">
           <InfoCard
             icon="📈"

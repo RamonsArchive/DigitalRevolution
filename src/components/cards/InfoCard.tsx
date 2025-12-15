@@ -21,7 +21,7 @@ const InfoCard: React.FC<InfoCardProps> = ({
   gradientTo = "to-secondary-500",
   className = "",
   borderColor = "border-primary-500/30",
-  iconBgClassName = "bg-linear-to-r from-primary-500 to-secondary-500",
+  iconBgClassName = "icon-chip",
 }) => {
   return (
     <div className={`group relative ${className}`}>
@@ -38,7 +38,7 @@ const InfoCard: React.FC<InfoCardProps> = ({
             <div
               className={`w-16 h-16 ${iconBgClassName} rounded-2xl flex items-center justify-center mx-auto mb-6`}
             >
-              <span className="text-3xl">{icon}</span>
+              <span className="text-3xl text-primary-50">{icon}</span>
             </div>
             <h2 className="text-3xl md:text-4xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
               {title}
