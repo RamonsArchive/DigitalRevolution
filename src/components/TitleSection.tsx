@@ -51,8 +51,8 @@ const TitleSection = ({
     <div
       className={`title ${
         isHero
-          ? "bg-gradient-to-b from-bg-primary via-secondary-900/80 to-bg-primary"
-          : "bg-gradient-to-b from-bg-primary via-slate-900/80 to-bg-primary"
+          ? "bg-linear-to-b from-bg-primary via-secondary-900/80 to-bg-primary"
+          : "bg-linear-to-b from-bg-primary via-slate-900/80 to-bg-primary"
       } ${containerClassName}`}
     >
       <h1 className={`text-white font-extrabold ${titleClassName}`}>{title}</h1>
