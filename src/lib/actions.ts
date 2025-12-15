@@ -22,20 +22,12 @@ const getCachedProductsAndFilters = unstable_cache(
     try {
       const syncProducts = await getSyncProducts({ limit, offset });
       if (syncProducts.status === "ERROR") {
-        console.error(
-          "[getCachedProductsAndFilters] getSyncProducts failed:",
-          syncProducts.error
-        );
         return syncProducts;
       }
 
       // batch get the products and their variants
       const allProducts = await getAllProductsBatch(syncProducts.data);
       if (allProducts.status === "ERROR") {
-        console.error(
-          "[getCachedProductsAndFilters] getAllProductsBatch failed:",
-          allProducts.error
-        );
         return allProducts;
       }
 
@@ -54,10 +46,6 @@ const getCachedProductsAndFilters = unstable_cache(
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : String(error);
-      console.error("[getCachedProductsAndFilters] Unexpected error:", {
-        message: errorMessage,
-        error: error,
-      });
       return parseServerActionResponse({
         status: "ERROR",
         error: errorMessage,
@@ -84,7 +72,6 @@ export const getProductsAndFilters = async ({
     if (!process.env.DIGITAL_REVOLUTION_API_KEY) {
       const errorMsg =
         "DIGITAL_REVOLUTION_API_KEY environment variable is not set";
-      console.error("[getProductsAndFilters] Error:", errorMsg);
       return parseServerActionResponse({
         status: "ERROR",
         error: errorMsg,
@@ -98,19 +85,9 @@ export const getProductsAndFilters = async ({
     }
 
     const result = await getCachedProductsAndFilters({ limit, offset });
-    console.log("[getProductsAndFilters] Success:", {
-      status: result.status,
-      productCount: result.data?.allProducts?.length || 0,
-    });
     return result;
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
-    const errorStack = error instanceof Error ? error.stack : undefined;
-    console.error("[getProductsAndFilters] Caught error:", {
-      message: errorMessage,
-      stack: errorStack,
-      error: error,
-    });
     return parseServerActionResponse({
       status: "ERROR",
       error: errorMessage,
@@ -129,7 +106,6 @@ const getSyncProducts = async ({
   if (!process.env.DIGITAL_REVOLUTION_API_KEY) {
     const errorMsg =
       "DIGITAL_REVOLUTION_API_KEY environment variable is not set";
-    console.error("[getSyncProducts] Error:", errorMsg);
     return parseServerActionResponse({
       status: "ERROR",
       error: errorMsg,
@@ -150,7 +126,6 @@ const getSyncProducts = async ({
     if (!res.ok) {
       const text = await res.text().catch(() => "");
       const errorMsg = `Printful fetch failed: ${res.status} ${res.statusText} :: ${text}`;
-      console.error("[getSyncProducts] Printful API error:", errorMsg);
       throw new Error(errorMsg);
     }
     const productJson = await res.json();
@@ -177,7 +152,6 @@ export const getProductDetails = async (productId: number) => {
   if (!process.env.DIGITAL_REVOLUTION_API_KEY) {
     const errorMsg =
       "DIGITAL_REVOLUTION_API_KEY environment variable is not set";
-    console.error("[getProductDetails] Error:", errorMsg);
     return parseServerActionResponse({
       status: "ERROR",
       error: errorMsg,
@@ -198,7 +172,6 @@ export const getProductDetails = async (productId: number) => {
 
     if (!res.ok) {
       const errorMsg = `Failed to fetch product ${productId}: ${res.status} ${res.statusText}`;
-      console.error("[getProductDetails] API error:", errorMsg);
       throw new Error(errorMsg);
     }
 
@@ -210,10 +183,6 @@ export const getProductDetails = async (productId: number) => {
     });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
-    console.error(`[getProductDetails] Error for product ${productId}:`, {
-      message: errorMessage,
-      error: error,
-    });
     return parseServerActionResponse({
       status: "ERROR",
       error: errorMessage,
@@ -228,7 +197,6 @@ const getAllProductsBatch = async (
   try {
     if (!productJson.result) {
       const errorMsg = "No products found in Printful response";
-      console.error("[getAllProductsBatch] Error:", errorMsg);
       throw new Error(errorMsg);
     }
     const products = productJson.result;
@@ -246,22 +214,9 @@ const getAllProductsBatch = async (
         .map((result) => result.data);
       allProductsWithVariants.push(...successfulResults);
 
-      // Log failed products for debugging
-      const failedResults = batchResults.filter(
-        (result) => result.status === "ERROR"
-      );
-      if (failedResults.length > 0) {
-        console.warn(
-          `[getAllProductsBatch] ${failedResults.length} products failed to load in batch ${i / batchSize + 1}`
-        );
-      }
-
       // no delay for max speed
     }
 
-    console.log(
-      `[getAllProductsBatch] Successfully loaded ${allProductsWithVariants.length} products`
-    );
     return parseServerActionResponse({
       status: "SUCCESS",
       error: "",
@@ -269,10 +224,6 @@ const getAllProductsBatch = async (
     });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
-    console.error("[getAllProductsBatch] Caught error:", {
-      message: errorMessage,
-      error: error,
-    });
     return parseServerActionResponse({
       status: "ERROR",
       error: errorMessage,
