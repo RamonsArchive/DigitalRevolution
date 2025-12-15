@@ -63,7 +63,9 @@ export const getProductsAndFilters = async ({
       return isRateLimited;
     }
 
-    return await getCachedProductsAndFilters({ limit, offset });
+    const result = await getCachedProductsAndFilters({ limit, offset });
+    console.log("getting cached products and filters", result);
+    return result;
   } catch (error) {
     return parseServerActionResponse({
       status: "ERROR",
