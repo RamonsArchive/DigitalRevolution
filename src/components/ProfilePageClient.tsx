@@ -166,7 +166,9 @@ const ProfilePageClient = ({
                         <div className="flex-1">
                           <div className="flex items-center gap-4 mb-4">
                             <div className="w-12 h-12 icon-chip rounded-xl flex items-center justify-center">
-                              <span className="text-xl text-primary-50">🔄</span>
+                              <span className="text-xl text-primary-50">
+                                🔄
+                              </span>
                             </div>
                             <div>
                               <h4 className="text-xl font-bold text-slate-100">

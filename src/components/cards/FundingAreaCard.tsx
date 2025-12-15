@@ -37,7 +37,9 @@ const FundingAreaCard: React.FC<FundingAreaCardProps> = ({
           <div
             className={`w-12 h-12 icon-chip rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition duration-300`}
           >
-            <span className="text-lg font-bold text-primary-50">{percentage}</span>
+            <span className="text-lg font-bold text-primary-50">
+              {percentage}
+            </span>
           </div>
           <div className="flex-1 flex flex-col">
             <h4 className="text-lg font-semibold text-slate-100 mb-2 group-hover:text-secondary-200 transition-colors">

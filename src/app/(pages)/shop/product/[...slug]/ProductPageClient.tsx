@@ -456,7 +456,9 @@ const ProductPageClient = ({
             className="flex items-center gap-3 text-slate-200 hover:text-white transition-all duration-300 font-medium"
           >
             <div className="w-8 h-8 icon-chip rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <span className="text-primary-50 text-sm font-bold leading-none">←</span>
+              <span className="text-primary-50 text-sm font-bold leading-none">
+                ←
+              </span>
             </div>
             <span className="text-base font-semibold">Back to Shop</span>
           </Link>
