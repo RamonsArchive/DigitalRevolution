@@ -36,34 +36,24 @@ export const NAV_LINKS = [
 export const HOME_TEXT_SECTIONS = {
   section1: {
     id: "section-1",
-    title: <>Bridging the Digital Divide for Democratic Values</>,
+    title: <>Digital Revolution: Bridging the Digital Divide</>,
     subtitle: (
-      <>Creating pathways from digital exclusion to STEM opportunities</>
+      <>
+        Founded by Ramon to turn digital exclusion into STEM opportunities and
+        civic impact
+      </>
     ),
     description: (
       <>
-        Digital Revolution advocates for{" "}
-        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          underprivileged communities
+        Digital Revolution helps communities gain the{" "}
+        <span className="font-semibold text-primary-100">
+          connectivity, skills, and devices
         </span>{" "}
-        whose lack of{" "}
-        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          digital access and infrastructure
+        they need to thrive—so technology creates{" "}
+        <span className="font-semibold text-primary-100">
+          owners, not renters
         </span>{" "}
-        creates barriers to{" "}
-        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          STEM education
-        </span>
-        ,{" "}
-        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          technology careers
-        </span>
-        , and{" "}
-        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          democratic participation
-        </span>
-        . We believe technology should create owners, not renters of the digital
-        world.
+        of the digital world.
       </>
     ),
     mission:
@@ -76,62 +66,74 @@ export const HOME_TEXT_SECTIONS = {
     subtitle: <>These facts demonstrate the urgent need for action</>,
     description: [
       <React.Fragment key="fact-1">
-        Over{" "}
-        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          2.6 billion people
-        </span>{" "}
-        worldwide lack access to{" "}
-        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          reliable internet connectivity
+        <span className="block text-sm uppercase tracking-[0.2em] text-primary-300 mb-1">
+          Internet connectivity
         </span>
-        , cutting them off from online education platforms, coding bootcamps,
-        and remote STEM opportunities.
+        <span className="block text-base md:text-lg text-slate-200">
+          Over{" "}
+          <span className="font-semibold text-primary-100">
+            2.6 billion people
+          </span>{" "}
+          worldwide lack access to{" "}
+          <span className="font-semibold text-primary-100">
+            reliable internet connectivity
+          </span>
+          , cutting them off from online education platforms, coding bootcamps,
+          and remote STEM opportunities.
+        </span>
       </React.Fragment>,
       <React.Fragment key="fact-2">
-        The{" "}
-        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          internet penetration rate
-        </span>{" "}
-        in sub-Saharan Africa stands at just{" "}
-        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          39%
-        </span>{" "}
-        compared to nearly{" "}
-        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          93% in Europe
+        <span className="block text-sm uppercase tracking-[0.2em] text-primary-300 mb-1">
+          Global access gap
         </span>
-        , creating vast disparities in access to STEM education resources.
+        <span className="block text-base md:text-lg text-slate-200">
+          The internet penetration rate in{" "}
+          <span className="font-semibold text-primary-100">
+            sub-Saharan Africa is just 39%
+          </span>{" "}
+          compared to{" "}
+          <span className="font-semibold text-primary-100">
+            nearly 93% in Europe
+          </span>
+          , creating vast disparities in access to STEM education resources.
+        </span>
       </React.Fragment>,
       <React.Fragment key="fact-3">
-        The{" "}
-        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          digital divide
-        </span>{" "}
-        directly correlates with{" "}
-        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          reduced economic mobility
+        <span className="block text-sm uppercase tracking-[0.2em] text-primary-300 mb-1">
+          Economic mobility
         </span>
-        , fewer{" "}
-        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          technology career opportunities
+        <span className="block text-base md:text-lg text-slate-200">
+          The digital divide directly correlates with{" "}
+          <span className="font-semibold text-primary-100">
+            reduced economic mobility
+          </span>
+          , fewer{" "}
+          <span className="font-semibold text-primary-100">
+            technology career opportunities
+          </span>
+          , and lower student performance in STEM fields—especially{" "}
+          <span className="font-semibold text-primary-100">
+            exacerbating existing inequalities
+          </span>
+          .
         </span>
-        , and lower student performance in STEM fields, particularly{" "}
-        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          exacerbating existing inequalities
-        </span>{" "}
-        along racial and socioeconomic lines.
       </React.Fragment>,
       <React.Fragment key="fact-4">
-        Only{" "}
-        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          37% of students
-        </span>{" "}
-        in underserved communities have access to{" "}
-        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          high-speed internet at home
+        <span className="block text-sm uppercase tracking-[0.2em] text-primary-300 mb-1">
+          Home access
         </span>
-        , limiting their ability to participate in online STEM courses and
-        coding programs that could launch technology careers.
+        <span className="block text-base md:text-lg text-slate-200">
+          Only{" "}
+          <span className="font-semibold text-primary-100">
+            37% of students
+          </span>{" "}
+          in underserved communities have{" "}
+          <span className="font-semibold text-primary-100">
+            high-speed internet at home
+          </span>
+          , limiting their ability to participate in online STEM courses and
+          coding programs that could launch technology careers.
+        </span>
       </React.Fragment>,
     ],
     sources: [
@@ -285,7 +287,7 @@ export const HOME_TEXT_SECTIONS = {
         description: "Complete openness about funding and impact",
       },
       {
-        number: "📈",
+        number: "25+",
         label: "Communities Served",
         description: "Expanding reach to underserved populations",
       },
@@ -508,7 +510,7 @@ export const PARTNERS_DATA = {
     mainTitle: "Partners",
     subTitle: "Partner with us",
     appreciationTitle: "Our Appreciation",
-    formTitle: "Submit a Partnership Request",
+    formTitle: "Start a Partnership Conversation",
     typesTitle: "Partnership Types",
     benefitsTitle: "Partnership Benefits",
 
@@ -640,7 +642,7 @@ export const DONATE_DATA = {
     donationTitle: "Donation Options",
     transparencyTitle: "Transparency Commitment",
     transparencyDescription:
-      "We believe in complete transparency. 100% of donations go directly to digital equity and STEM education initiatives. 50% of proceeds from the shop go to STEM education initiatives, while the remaining 50% supports operational costs, program development, and sustainable growth of our mission.",
+      "100% of donations fuel digital equity and STEM education. Shop proceeds are split: 50% to programs and access kits; 50% to operations, curriculum, and sustainable growth.",
 
     donationOptions: [
       {

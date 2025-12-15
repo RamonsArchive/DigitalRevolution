@@ -395,23 +395,23 @@ const ProductPageClient = ({
   // Show loading state while fetching product
   if (isLoadingProduct) {
     return (
-      <div className="fixed inset-0 z-[999] flex items-center justify-center bg-slate-950/80 backdrop-blur-md">
+      <div className="fixed inset-0 z-999 flex items-center justify-center bg-slate-950/80 backdrop-blur-md">
         <div className="relative">
           {/* Animated gradient background */}
-          <div className="absolute -inset-8 bg-gradient-to-r from-primary-500/20 via-secondary-500/20 to-primary-500/20 rounded-3xl blur-2xl animate-pulse"></div>
+          <div className="absolute -inset-8 bg-linear-to-r from-primary-500/20 via-secondary-500/20 to-primary-500/20 rounded-3xl blur-2xl animate-pulse"></div>
 
           {/* Content card */}
           <div className="relative bg-slate-900/90 backdrop-blur-sm rounded-2xl p-12 border border-slate-700/50 shadow-2xl">
             <div className="text-center space-y-6">
               {/* Spinner with gradient */}
               <div className="relative w-20 h-20 mx-auto">
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 opacity-20 animate-ping"></div>
+                <div className="absolute inset-0 rounded-full bg-linear-to-r from-primary-500 to-secondary-500 opacity-20 animate-ping"></div>
                 <div className="relative w-20 h-20 rounded-full border-4 border-slate-800 border-t-primary-500 border-r-secondary-500 animate-spin"></div>
               </div>
 
               {/* Loading text with gradient */}
               <div className="space-y-2">
-                <h2 className="text-2xl font-bold bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent animate-pulse">
+                <h2 className="text-2xl font-bold bg-linear-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent animate-pulse">
                   Loading Product
                 </h2>
                 <p className="text-slate-400 text-sm">Just a moment...</p>
@@ -436,7 +436,7 @@ const ProductPageClient = ({
           </p>
           <Link
             href="/shop"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-lg hover:scale-105 transition-transform duration-300"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-primary-500 to-secondary-500 text-white rounded-lg hover:scale-105 transition-transform duration-300"
           >
             <span>←</span>
             <span>Back to Shop</span>
@@ -449,14 +449,14 @@ const ProductPageClient = ({
   return (
     <section className="flex flex-col p-5 md:p-10 gap-10 min-h-screen pb-20">
       <div className="group relative w-fit">
-        <div className="absolute -inset-1 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-300"></div>
-        <div className="relative bg-gradient-to-r from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-lg p-3 border border-slate-700/50 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+        <div className="absolute -inset-1 bg-linear-to-r from-primary-500/20 to-secondary-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-300"></div>
+        <div className="relative bg-linear-to-r from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-lg p-3 border border-slate-700/50 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
           <Link
             href="/shop"
             className="flex items-center gap-3 text-slate-200 hover:text-white transition-all duration-300 font-medium"
           >
-            <div className="w-8 h-8 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <span className="text-white text-sm font-bold leading-none">
+            <div className="w-8 h-8 icon-chip rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <span className="text-primary-50 text-sm font-bold leading-none">
                 ←
               </span>
             </div>
@@ -551,9 +551,9 @@ const ProductPageClient = ({
                 <div className="text-2xl font-bold text-primary-600">
                   ${currentVariant.retail_price}
                 </div>
-                <div className="relative flex items-center gap-2 rounded-md px-2 py-1 bg-gradient-to-r from-red-500/90 via-orange-500/90 to-pink-500/90 shadow-md shadow-red-500/20 border border-red-400/20">
-                  <div className="absolute inset-0 bg-gradient-to-r from-red-500 via-orange-500 to-pink-500 rounded-md blur-sm opacity-30 -z-10"></div>
-                  <span className="text-xs font-bold text-white drop-shadow">
+                <div className="relative flex items-center gap-2 rounded-md px-2 py-1 bg-slate-800/90 border border-primary-500/25 shadow-[0_12px_30px_rgba(0,212,255,0.12)]">
+                  <div className="absolute inset-0 rounded-md bg-[radial-gradient(circle_at_30%_30%,rgba(0,212,255,0.18),rgba(2,6,23,0.85))] opacity-90 pointer-events-none"></div>
+                  <span className="text-xs font-bold text-primary-50 drop-shadow relative">
                     🚚 Free Shipping
                   </span>
                 </div>
@@ -628,7 +628,7 @@ const ProductPageClient = ({
               >
                 -
               </button>
-              <span className="px-4 py-2 border-x border-gray-300 min-w-[3rem] text-center">
+              <span className="px-4 py-2 border-x border-gray-300 min-w-12 text-center">
                 {quantity}
               </span>
               <button
@@ -652,13 +652,13 @@ const ProductPageClient = ({
                   quantity
                 )
               }
-              className="flex-1 bg-gradient-to-r from-primary-500 to-secondary-500 text-white py-4 px-6 rounded-xl font-semibold text-lg hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer"
+              className="flex-1 bg-linear-to-r from-primary-500 to-secondary-500 text-white py-4 px-6 rounded-xl font-semibold text-lg hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer"
             >
               Add to Cart ({cartItems.length})
             </button>
             <button
               onClick={handleBuyNow}
-              className="flex-1 bg-gradient-to-r from-tertiary-500 to-tertiary-600 text-white py-4 px-6 rounded-xl font-semibold text-lg hover:from-tertiary-600 hover:to-tertiary-700 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer"
+              className="flex-1 bg-linear-to-r from-tertiary-500 to-tertiary-600 text-white py-4 px-6 rounded-xl font-semibold text-lg hover:from-tertiary-600 hover:to-tertiary-700 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer"
             >
               Buy Now
             </button>

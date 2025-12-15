@@ -100,18 +100,18 @@ const ProfilePageClient = ({
         titleClassName="font-lexend text-6xl md:text-8xl font-extrabold text-center"
         containerClassName="flex items-center justify-center py-20 md:py-32 px-8 md:px-12 h-full"
       />
-      <div className="flex flex-col gap-[4.5rem] md:gap-20 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
+      <div className="flex flex-col gap-[4.5rem] md:gap-20 bg-linear-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
         {/* Profile Overview */}
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-4xl mx-auto">
             <div className="group relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary-500 via-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
-              <div className="relative bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-primary-500/30 shadow-2xl text-center">
+              <div className="absolute -inset-1 bg-linear-to-r from-primary-500 via-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
+              <div className="relative bg-linear-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-primary-500/30 shadow-2xl text-center">
                 <div className="flex items-center justify-center mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mr-4">
-                    <span className="text-3xl">👤</span>
+                  <div className="w-16 h-16 icon-chip rounded-2xl flex items-center justify-center mr-4">
+                    <span className="text-3xl text-primary-50">👤</span>
                   </div>
-                  <h2 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
+                  <h2 className="text-3xl md:text-4xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
                     Your Profile
                   </h2>
                 </div>
@@ -128,17 +128,17 @@ const ProfilePageClient = ({
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
-              <h3 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
+              <h3 className="text-4xl md:text-5xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 Your Subscriptions
               </h3>
-              <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
+              <div className="w-24 h-1 bg-linear-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
             </div>
 
             {subscriptions.length === 0 ? (
               <div className="group relative">
-                <div className="absolute -inset-1 bg-gradient-to-r from-slate-500/20 to-slate-600/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                <div className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50 shadow-xl text-center">
-                  <div className="w-16 h-16 bg-gradient-to-r from-slate-500 to-slate-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <div className="absolute -inset-1 bg-linear-to-r from-slate-500/20 to-slate-600/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
+                <div className="relative bg-linear-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50 shadow-xl text-center">
+                  <div className="w-16 h-16 bg-linear-to-r from-slate-500 to-slate-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <span className="text-2xl">📋</span>
                   </div>
                   <h4 className="text-xl font-semibold text-slate-100 mb-3">
@@ -149,7 +149,7 @@ const ProfilePageClient = ({
                   </p>
                   <a
                     href="/donate"
-                    className="inline-block px-6 py-3 bg-gradient-to-r from-primary-500 to-secondary-500 text-white font-semibold rounded-xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105"
+                    className="inline-block px-6 py-3 bg-linear-to-r from-primary-500 to-secondary-500 text-white font-semibold rounded-xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105"
                   >
                     Start Supporting Our Mission
                   </a>
@@ -159,14 +159,16 @@ const ProfilePageClient = ({
               <div className="grid grid-cols-1 gap-6">
                 {subscriptions.map((subscription) => (
                   <div key={subscription.id} className="group relative">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                    <div className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50 shadow-xl group-hover:shadow-2xl transition-all duration-300">
+                    <div className="absolute -inset-1 bg-linear-to-r from-primary-500/20 to-secondary-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
+                    <div className="relative bg-linear-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50 shadow-xl group-hover:shadow-2xl transition-all duration-300">
                       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
                         {/* Subscription Details */}
                         <div className="flex-1">
                           <div className="flex items-center gap-4 mb-4">
-                            <div className="w-12 h-12 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center">
-                              <span className="text-xl">🔄</span>
+                            <div className="w-12 h-12 icon-chip rounded-xl flex items-center justify-center">
+                              <span className="text-xl text-primary-50">
+                                🔄
+                              </span>
                             </div>
                             <div>
                               <h4 className="text-xl font-bold text-slate-100">
@@ -222,7 +224,7 @@ const ProfilePageClient = ({
                                     : subscription.id
                                 )
                               }
-                              className="px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                              className="px-6 py-3 bg-linear-to-r from-red-500 to-red-600 text-white font-semibold rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
                             >
                               Cancel Subscription
                             </button>
@@ -241,8 +243,8 @@ const ProfilePageClient = ({
                       {showCancelForm === subscription.id && (
                         <div className="mt-6 pt-6 border-t border-slate-700/50">
                           <div className="group relative">
-                            <div className="absolute -inset-1 bg-gradient-to-r from-red-500/20 to-red-600/20 rounded-xl blur opacity-50"></div>
-                            <div className="relative bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-xl p-6 border border-red-500/30">
+                            <div className="absolute -inset-1 bg-linear-to-r from-red-500/20 to-red-600/20 rounded-xl blur opacity-50"></div>
+                            <div className="relative bg-linear-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-xl p-6 border border-red-500/30">
                               <h5 className="text-lg font-bold text-slate-100 mb-4 flex items-center">
                                 <span className="text-xl mr-2">⚠️</span>
                                 Cancel Subscription
@@ -283,7 +285,7 @@ const ProfilePageClient = ({
                                   disabled={
                                     cancellingSubscription === subscription.id
                                   }
-                                  className="px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                                  className="px-6 py-3 bg-linear-to-r from-red-500 to-red-600 text-white font-semibold rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                                 >
                                   {cancellingSubscription ===
                                   subscription.id ? (
@@ -322,13 +324,13 @@ const ProfilePageClient = ({
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-4xl mx-auto">
             <div className="group relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
-              <div className="relative bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-secondary-500/30 shadow-2xl text-center">
+              <div className="absolute -inset-1 bg-linear-to-r from-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
+              <div className="relative bg-linear-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-secondary-500/30 shadow-2xl text-center">
                 <div className="flex items-center justify-center mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-r from-secondary-500 to-primary-500 rounded-2xl flex items-center justify-center mr-4">
-                    <span className="text-3xl">⚙️</span>
+                  <div className="w-16 h-16 icon-chip rounded-2xl flex items-center justify-center mr-4">
+                    <span className="text-3xl text-primary-50">⚙️</span>
                   </div>
-                  <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-secondary-200 to-primary-200 bg-clip-text text-transparent">
+                  <h2 className="text-3xl md:text-4xl font-bold bg-linear-to-r from-secondary-200 to-primary-200 bg-clip-text text-transparent">
                     Account Settings
                   </h2>
                 </div>
@@ -336,10 +338,10 @@ const ProfilePageClient = ({
                   Manage your account preferences and personal information.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <button className="px-8 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 text-white font-bold rounded-xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+                  <button className="px-8 py-4 bg-linear-to-r from-primary-500 to-secondary-500 text-white font-bold rounded-xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
                     Edit Profile
                   </button>
-                  <button className="px-8 py-4 bg-gradient-to-r from-secondary-500 to-primary-500 text-white font-bold rounded-xl hover:from-secondary-600 hover:to-primary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+                  <button className="px-8 py-4 bg-linear-to-r from-secondary-500 to-primary-500 text-white font-bold rounded-xl hover:from-secondary-600 hover:to-primary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
                     Change Password
                   </button>
                 </div>

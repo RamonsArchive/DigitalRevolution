@@ -27,7 +27,7 @@ const ShopHomeClient = ({
     <div className="w-full min-h-screen pb-20">
       <div className="flex gap-5 px-3 md:px-10">
         {/* Fixed Filters Sidebar - Desktop Only */}
-        <div className="hidden md:block w-80 flex-shrink-0">
+        <div className="hidden md:block w-80 shrink-0">
           <div className="sticky top-40 max-h-[calc(100vh-12rem)] overflow-y-auto">
             <div className="flex flex-col gap-10">
               <h1 className="font-lexend text-2xl font-bold">Filters</h1>
@@ -41,10 +41,9 @@ const ShopHomeClient = ({
           <div className="flex flex-col gap-5 w-full">
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 items-center">
               <ShopTitleSection />
-              <div className="relative flex flex-row h-fit gap-5 rounded-lg p-2 md:p-3 bg-gradient-to-r from-red-500/90 via-orange-500/90 to-pink-500/90 shadow-lg shadow-red-500/30 backdrop-blur-sm border border-red-400/20">
-                <div className="absolute inset-0 bg-gradient-to-r from-red-500 via-orange-500 to-pink-500 rounded-lg blur-md opacity-40 -z-10 animate-pulse"></div>
-                <p className="font-lexend text-xs sm:text-sm font-bold text-white drop-shadow-lg">
-                  🚚 Free Shipping on all orders!
+              <div className="flex flex-row h-fit gap-3 rounded-lg px-3 py-2 bg-slate-900/80 border border-amber-400/70 shadow-[0_10px_28px_rgba(251,191,36,0.25)]">
+                <p className="font-lexend text-xs sm:text-sm font-semibold text-amber-200">
+                  🚚 Free shipping on all orders
                 </p>
               </div>
             </div>

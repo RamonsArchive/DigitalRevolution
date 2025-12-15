@@ -8,7 +8,6 @@ import React, {
 } from "react";
 import { SHOP_DATA } from "@/constants";
 import { Menu, X, ShoppingCart } from "lucide-react";
-import { useScrollThrottle } from "@/hooks/useScrollThrottle";
 import ShopSearch from "./ShopSearch";
 import Filters from "./Filters";
 import { useShopFilters } from "@/contexts/ShopContext";
@@ -23,9 +22,11 @@ const ShopNav = () => {
   const scrollMenuRef = useRef<HTMLButtonElement>(null);
   const searchRefInner = useRef<HTMLDivElement>(null);
   const searchRefOuter = useRef<HTMLDivElement>(null);
+  const lastScrollY = useRef(0);
+  const ticking = useRef(false);
+  const NAVBAR_HEIGHT = 42;
 
   // State
-  const [isDropdown, setIsDropdown] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [shouldMenuRender, setShouldMenuRender] = useState(false);
   const [showScrollNav, setShowScrollNav] = useState(false);
@@ -57,27 +58,36 @@ const ShopNav = () => {
     },
   });
 
-  // Scroll handling
-  const handleScroll = useCallback(() => {
-    const currentScrollY = window.scrollY;
-    const shouldShow = currentScrollY > 42;
-    setIsDropdown((prev) => (prev !== shouldShow ? shouldShow : prev));
-  }, []);
-
-  // Add delay effect for scroll nav
+  // Scroll listener to show floating shop nav on scroll down and hide on scroll up
   useEffect(() => {
-    if (isDropdown) {
-      const timer = setTimeout(() => {
-        setShowScrollNav(true);
-      }, 200);
-      return () => clearTimeout(timer);
-    } else {
-      setShowScrollNav(false);
-    }
-  }, [isDropdown]);
+    const updateShopNav = () => {
+      const currentScrollY = Math.max(0, window.scrollY || 0);
+      const pastNavbar = currentScrollY > NAVBAR_HEIGHT;
+      const goingDown = currentScrollY > lastScrollY.current;
 
-  // Scroll throttling effect
-  useScrollThrottle({ onScroll: handleScroll });
+      if (pastNavbar) {
+        setShowScrollNav(goingDown);
+      } else {
+        setShowScrollNav(false);
+      }
+
+      lastScrollY.current = currentScrollY;
+      ticking.current = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking.current) {
+        window.requestAnimationFrame(updateShopNav);
+        ticking.current = true;
+      }
+    };
+
+    lastScrollY.current = Math.max(0, window.scrollY || 0);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   // Menu click handlers
   const handleMenuClick = useCallback(() => {
@@ -117,7 +127,7 @@ const ShopNav = () => {
     return (
       <div
         ref={menuRefInner}
-        className={`fixed flex top-0 left-0 right-0 h-[100dvh] w-[80%] bg-gradient-to-br from-secondary-800 via-primary-900 to-secondary-800 transition-all duration-300 ease-in-out overflow-y-hidden z-[999] ${
+        className={`fixed flex top-0 left-0 right-0 h-dvh w-[80%] bg-linear-to-br from-secondary-800 via-primary-900 to-secondary-800 transition-all duration-300 ease-in-out overflow-y-hidden z-999 ${
           openMenu ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-full"
         }`}
       >
@@ -181,8 +191,8 @@ const ShopNav = () => {
                   onClick={() => handleCategoryClick(link.value)}
                   className={`shop-nav-link whitespace-nowrap px-4 py-2 rounded-full transition-colors ${
                     selectedCategory === link.value
-                      ? "bg-blue-500 text-white"
-                      : "bg-white/10 text-white/80 hover:bg-white/20"
+                      ? "bg-slate-900/90 text-primary-100 border border-primary-500/60 shadow-[0_0_0_1px_rgba(15,23,42,0.9),0_12px_30px_rgba(0,212,255,0.18)]"
+                      : "bg-slate-800/70 text-slate-100 border border-slate-600/60 hover:border-primary-500/50 hover:bg-slate-800/90"
                   }`}
                 >
                   {link.label}
@@ -200,8 +210,8 @@ const ShopNav = () => {
                       onClick={() => handleCategoryClick(link.value)}
                       className={`shop-nav-link whitespace-nowrap px-4 py-2 rounded-full transition-colors ${
                         selectedCategory === link.value
-                          ? "bg-blue-500 text-white"
-                          : "bg-white/10 text-white/80 hover:bg-white/20"
+                          ? "bg-slate-900/90 text-primary-100 border border-primary-500/60 shadow-[0_0_0_1px_rgba(15,23,42,0.9),0_12px_30px_rgba(0,212,255,0.18)]"
+                          : "bg-slate-800/70 text-slate-100 border border-slate-600/60 hover:border-primary-500/50 hover:bg-slate-800/90"
                       }`}
                     >
                       {link.label}
@@ -230,7 +240,7 @@ const ShopNav = () => {
       <button
         ref={normalMenuRef}
         onClick={handleMenuClick}
-        className="p-2 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl"
+        className="p-2 rounded-full text-primary-50 transition-all duration-300 ease-in-out hover:bg-slate-700/60 hover:scale-105"
       >
         <Menu className="w-5 h-5" />
       </button>
@@ -243,7 +253,7 @@ const ShopNav = () => {
       <button
         ref={scrollMenuRef}
         onClick={handleMenuClick}
-        className="p-2 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl"
+        className="p-2 rounded-full text-primary-50 transition-all duration-300 ease-in-out hover:bg-slate-700/60 hover:scale-105"
       >
         <Menu className="w-5 h-5" />
       </button>
@@ -257,7 +267,7 @@ const ShopNav = () => {
       <div className="flex items-center" ref={searchRefOuter}>
         <button
           onClick={() => setOpenSearch(!openSearch)}
-          className="flex w-full max-w-lg items-center cursor-pointer gap-2 px-4 py-2 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-lg hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl"
+          className="flex w-full max-w-lg items-center cursor-pointer gap-2 px-4 py-2 rounded-lg bg-slate-900/80 border border-primary-500/40 text-primary-50 shadow-[0_10px_30px_rgba(0,212,255,0.18)] hover:shadow-[0_14px_40px_rgba(0,212,255,0.26)] transition-all duration-300 ease-in-out hover:scale-[1.02]"
         >
           <svg
             className="w-4 h-4"
@@ -283,32 +293,26 @@ const ShopNav = () => {
     return (
       <Link
         href="/cart"
-        className="relative p-2 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl"
+        className="relative p-2 rounded-full text-primary-50 overflow-visible transition-all duration-300 ease-in-out hover:bg-slate-700/60 hover:scale-105"
       >
         <ShoppingCart className="w-5 h-5" />
-        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center z-10">
           {cartItems.length}
         </span>
       </Link>
     );
   }, [cartItems]);
 
-  // Normal shop nav
+  // Normal shop nav (scrolls with page)
   const normalShopNav = useMemo(() => {
     return (
-      <div
-        className={`flex items-center justify-between w-full h-[40px] px-10 py-3 transition-all z-1 duration-300 ease-in-out animated-gradient-bg ${
-          isDropdown
-            ? "opacity-0 -translate-y-full pointer-events-none"
-            : "opacity-100 translate-y-0"
-        }`}
-      >
+      <div className="flex items-center justify-between w-full h-[40px] px-10 py-3 transition-all z-1 duration-300 ease-in-out animated-gradient-bg">
         <div className="flex items-center cursor-pointer">{NormalMenuIcon}</div>
         {searchButton}
         {shopCart}
       </div>
     );
-  }, [isDropdown, NormalMenuIcon, searchButton, shopCart]);
+  }, [NormalMenuIcon, searchButton, shopCart]);
 
   // Scroll shop nav
   const scrollShopNav = useMemo(() => {
@@ -335,7 +339,7 @@ const ShopNav = () => {
 
       {/* Search overlay */}
       <ShopSearch
-        className="fixed top-0 left-0 right-0 overflow-y-hidden h-[80dvh] w-full z-[9999] transition-all duration-300 ease-out"
+        className="fixed top-0 left-0 right-0 overflow-y-hidden h-[80dvh] w-full z-9999 transition-all duration-300 ease-out"
         searchRefInner={searchRefInner}
         searchRefOuter={searchRefOuter}
         openSearch={openSearch}

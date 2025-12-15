@@ -30,19 +30,19 @@ const Footer = () => {
 
   return (
     <>
-      <footer className="bg-gradient-to-b from-bg-primary via-slate-900 to-bg-primary">
+      <footer className="bg-linear-to-b from-bg-primary via-slate-900 to-bg-primary">
         <div className="max-w-7xl mx-auto px-6 md:px-12 py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
             {/* Brand Section */}
             <div className="lg:col-span-1 space-y-6">
               <div className="group relative">
-                <div className="absolute -inset-1 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-500"></div>
-                <div className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-xl p-6 border border-slate-700/50">
+                <div className="absolute -inset-1 bg-[radial-gradient(circle_at_30%_30%,rgba(0,212,255,0.18),rgba(2,6,23,0.9))] rounded-2xl blur opacity-40 group-hover:opacity-60 transition duration-500"></div>
+                <div className="relative bg-linear-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-xl p-6 border border-slate-700/50">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center">
-                      <span className="text-lg">🌐</span>
+                    <div className="w-10 h-10 icon-chip rounded-lg flex items-center justify-center">
+                      <span className="text-lg text-primary-50">🌐</span>
                     </div>
-                    <h3 className="text-xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
+                    <h3 className="text-xl font-bold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
                       Digital Revolution
                     </h3>
                   </div>
@@ -123,8 +123,8 @@ const Footer = () => {
                       rel="noopener noreferrer"
                       className="group relative"
                     >
-                      <div className="absolute -inset-1 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 rounded-lg blur opacity-0 group-hover:opacity-100 transition duration-300"></div>
-                      <div className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-lg p-3 border border-slate-700/50 group-hover:border-primary-500/50 transition-all duration-300 group-hover:scale-105">
+                      <div className="absolute -inset-1 bg-linear-to-r from-primary-500/20 to-secondary-500/20 rounded-lg blur opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                      <div className="relative bg-linear-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-lg p-3 border border-slate-700/50 group-hover:border-primary-500/50 transition-all duration-300 group-hover:scale-105">
                         <div className="flex items-center gap-2">
                           <div className="text-primary-400 group-hover:text-primary-200 transition-colors">
                             {getSocialIcon(social.platform)}

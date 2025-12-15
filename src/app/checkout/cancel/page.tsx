@@ -27,7 +27,7 @@ const CancelPage = () => {
         <div className="space-y-4">
           <Link
             href="/shop"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 text-white font-semibold rounded-xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-2xl"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-linear-to-r from-primary-500 to-secondary-500 text-white font-semibold rounded-xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-2xl"
           >
             <ShoppingBag className="w-5 h-5" />
             Continue Shopping

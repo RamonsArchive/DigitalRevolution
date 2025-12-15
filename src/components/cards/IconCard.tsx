@@ -22,18 +22,18 @@ const IconCard: React.FC<IconCardProps> = ({
   return (
     <div className={`group relative h-full flex flex-col ${className}`}>
       <div
-        className={`relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50 shadow-xl transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-primary-400/50 overflow-hidden flex flex-col h-full`}
+        className={`relative bg-linear-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50 shadow-xl transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-primary-400/50 overflow-hidden flex flex-col h-full`}
       >
         {/* Gradient overlay using ::before - matches card height exactly */}
         <div
-          className={`absolute inset-0 bg-gradient-to-r ${gradientFrom} ${gradientTo} rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}
+          className={`absolute inset-0 bg-linear-to-r ${gradientFrom} ${gradientTo} rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}
         />
 
         <div className="relative flex items-start gap-6 flex-grow">
           <div
-            className={`w-12 h-12 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition duration-300 ${iconClassName}`}
+            className={`w-12 h-12 icon-chip rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition duration-300 ${iconClassName}`}
           >
-            <span className="text-lg">{icon}</span>
+            <span className="text-lg text-primary-50">{icon}</span>
           </div>
           <div className="flex-1 flex flex-col">
             <h3 className="text-2xl font-semibold text-slate-100 mb-4 group-hover:text-primary-200 transition-colors">

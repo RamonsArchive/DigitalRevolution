@@ -226,7 +226,7 @@ const SuccessPageClient = ({
             </p>
             <Link
               href="/shop"
-              className="bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-8 py-4 rounded-xl font-semibold hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-xl"
+              className="bg-linear-to-r from-primary-500 to-secondary-500 text-white px-8 py-4 rounded-xl font-semibold hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-xl"
             >
               Continue Shopping
             </Link>

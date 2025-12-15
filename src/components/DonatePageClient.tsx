@@ -174,7 +174,7 @@ const DonatePageClient = ({
         />
       </div>
       {/* Main Content */}
-      <div className="flex flex-col gap-[4.5rem] md:gap-20 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
+      <div className="flex flex-col gap-[4.5rem] md:gap-20 bg-linear-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
         {/* Donation Description */}
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-4xl mx-auto">
@@ -191,10 +191,10 @@ const DonatePageClient = ({
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-[3.5rem] md:mb-16">
-              <h3 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
+              <h3 className="text-4xl md:text-5xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 {donateData.text.impactTitle}
               </h3>
-              <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
+              <div className="w-24 h-1 bg-linear-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
               {donateData.impactBreakdown?.map((impact, idx) => (
@@ -214,10 +214,10 @@ const DonatePageClient = ({
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-[3.5rem] md:mb-16">
-              <h3 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
+              <h3 className="text-4xl md:text-5xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 {donateData.text.donationTitle}
               </h3>
-              <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
+              <div className="w-24 h-1 bg-linear-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
             </div>
 
             {/* Payment Method Selection */}
@@ -238,9 +238,9 @@ const DonatePageClient = ({
 
             {/* Amount Selection */}
             <div className="group relative">
-              <div className="relative bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 border border-primary-500/30 shadow-2xl transition-all duration-300 group-hover:shadow-2xl group-hover:border-primary-400/50 overflow-hidden">
+              <div className="relative bg-linear-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 border border-primary-500/30 shadow-2xl transition-all duration-300 group-hover:shadow-2xl group-hover:border-primary-400/50 overflow-hidden">
                 {/* Gradient overlay - matches card height exactly */}
-                <div className="absolute inset-0 bg-gradient-to-r from-primary-500/20 via-secondary-500/20 to-primary-500/20 rounded-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-1000 pointer-events-none blur-sm" />
+                <div className="absolute inset-0 bg-linear-to-r from-primary-500/20 via-secondary-500/20 to-primary-500/20 rounded-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-1000 pointer-events-none blur-sm" />
                 <h4 className="text-2xl font-semibold text-slate-100 mb-6 text-center">
                   Choose Your Amount
                 </h4>
@@ -254,7 +254,7 @@ const DonatePageClient = ({
                           onClick={() => handleSetAmount(parseInt(amount))}
                           className={`px-4 py-3 rounded-xl font-bold transition-all duration-200 ${
                             selectedAmount === amount
-                              ? "bg-gradient-to-r from-emerald-500 to-cyan-500 text-white scale-105"
+                              ? "bg-linear-to-r from-emerald-500 to-cyan-500 text-white scale-105"
                               : "bg-slate-700/50 text-slate-200 hover:bg-slate-600/50 hover:scale-105"
                           }`}
                         >
@@ -346,7 +346,7 @@ const DonatePageClient = ({
                   <button
                     onClick={handleDonation}
                     disabled={amount === 0 || !name.trim() || !email.trim()}
-                    className="px-12 py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-bold rounded-xl hover:from-emerald-600 hover:to-cyan-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                    className="px-12 py-4 bg-linear-to-r from-emerald-500 to-cyan-500 text-white font-bold rounded-xl hover:from-emerald-600 hover:to-cyan-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                   >
                     {paymentMethod === "one-time"
                       ? "Donate Now"
@@ -367,10 +367,10 @@ const DonatePageClient = ({
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-[3.5rem] md:mb-16">
-              <h3 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
+              <h3 className="text-4xl md:text-5xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 How Your Donation is Used
               </h3>
-              <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
+              <div className="w-24 h-1 bg-linear-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {donateData.fundingAreas?.map((area, idx) => (
@@ -391,10 +391,10 @@ const DonatePageClient = ({
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-[3.5rem] md:mb-16">
-              <h3 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
+              <h3 className="text-4xl md:text-5xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 Other Ways to Help
               </h3>
-              <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
+              <div className="w-24 h-1 bg-linear-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {donateData.otherWaysToHelp?.map((way, idx) => {
@@ -428,7 +428,7 @@ const DonatePageClient = ({
               borderColor="border-orange-500/30"
               gradientFrom="from-orange-500/10"
               gradientTo="to-pink-500/10"
-              iconBgClassName="bg-gradient-to-r from-orange-500 to-pink-500"
+              iconBgClassName="bg-linear-to-r from-orange-500 to-pink-500"
             >
               <div className="bg-slate-700/50 rounded-xl p-4 max-w-2xl mx-auto">
                 <p className="text-slate-300 text-sm italic">

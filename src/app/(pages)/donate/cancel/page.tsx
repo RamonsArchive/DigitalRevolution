@@ -7,8 +7,8 @@ const DonateCancelPage = () => {
     <div className="min-h-screen bg-bg-primary flex items-center justify-center">
       <div className="max-w-2xl mx-auto px-6 text-center">
         <div className="group relative">
-          <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-red-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
-          <div className="relative bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-orange-500/30 shadow-2xl">
+          <div className="absolute -inset-1 bg-linear-to-r from-orange-500 to-red-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
+          <div className="relative bg-linear-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-orange-500/30 shadow-2xl">
             <div className="w-20 h-20 bg-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
               <span className="text-4xl">⚠️</span>
             </div>
@@ -22,7 +22,7 @@ const DonateCancelPage = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/donate"
-                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold rounded-xl hover:from-orange-600 hover:to-red-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                className="inline-flex items-center px-8 py-4 bg-linear-to-r from-orange-500 to-red-500 text-white font-bold rounded-xl hover:from-orange-600 hover:to-red-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 <RefreshCw className="w-5 h-5 mr-2" />
                 Try Again

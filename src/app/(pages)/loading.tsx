@@ -6,7 +6,7 @@ const Loading = () => {
   return (
     <div className="fixed inset-0 bg-bg-primary flex items-center justify-center z-50">
       {/* Animated background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary-900 via-secondary-800 to-primary-900 opacity-20 animate-pulse"></div>
+      <div className="absolute inset-0 bg-linear-to-br from-primary-900 via-secondary-800 to-primary-900 opacity-20 animate-pulse"></div>
 
       {/* Main loading content */}
       <div className="relative z-10 flex flex-col items-center justify-center space-y-8">
@@ -44,7 +44,7 @@ const Loading = () => {
 
         {/* Progress bar */}
         <div className="w-64 h-1 bg-white/20 rounded-full overflow-hidden">
-          <div className="h-full bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full animate-pulse"></div>
+          <div className="h-full bg-linear-to-r from-primary-500 to-secondary-500 rounded-full animate-pulse"></div>
         </div>
 
         {/* Floating particles animation */}
