@@ -117,7 +117,7 @@ const ShopNav = () => {
     return (
       <div
         ref={menuRefInner}
-        className={`fixed flex top-0 left-0 right-0 h-[100dvh] w-[80%] bg-gradient-to-br from-secondary-800 via-primary-900 to-secondary-800 transition-all duration-300 ease-in-out overflow-y-hidden z-[999] ${
+        className={`fixed flex top-0 left-0 right-0 h-[100dvh] w-[80%] bg-linear-to-br from-secondary-800 via-primary-900 to-secondary-800 transition-all duration-300 ease-in-out overflow-y-hidden z-[999] ${
           openMenu ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-full"
         }`}
       >
@@ -230,7 +230,7 @@ const ShopNav = () => {
       <button
         ref={normalMenuRef}
         onClick={handleMenuClick}
-        className="p-2 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl"
+        className="p-2 rounded-full bg-linear-to-r from-primary-500 to-secondary-500 text-white hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl"
       >
         <Menu className="w-5 h-5" />
       </button>
@@ -243,7 +243,7 @@ const ShopNav = () => {
       <button
         ref={scrollMenuRef}
         onClick={handleMenuClick}
-        className="p-2 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl"
+        className="p-2 rounded-full bg-linear-to-r from-primary-500 to-secondary-500 text-white hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl"
       >
         <Menu className="w-5 h-5" />
       </button>
@@ -257,7 +257,7 @@ const ShopNav = () => {
       <div className="flex items-center" ref={searchRefOuter}>
         <button
           onClick={() => setOpenSearch(!openSearch)}
-          className="flex w-full max-w-lg items-center cursor-pointer gap-2 px-4 py-2 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-lg hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl"
+          className="flex w-full max-w-lg items-center cursor-pointer gap-2 px-4 py-2 bg-linear-to-r from-primary-500 to-secondary-500 text-white rounded-lg hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl"
         >
           <svg
             className="w-4 h-4"
@@ -283,7 +283,7 @@ const ShopNav = () => {
     return (
       <Link
         href="/cart"
-        className="relative p-2 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl"
+        className="relative p-2 rounded-full bg-linear-to-r from-primary-500 to-secondary-500 text-white hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl"
       >
         <ShoppingCart className="w-5 h-5" />
         <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">

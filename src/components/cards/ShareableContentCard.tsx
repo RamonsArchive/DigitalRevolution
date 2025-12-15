@@ -29,17 +29,17 @@ const ShareableContentCard: React.FC<ShareableContentCardProps> = ({
   return (
     <div className={`group relative ${className}`}>
       <div
-        className={`relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50 shadow-xl transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-primary-400/50 overflow-hidden`}
+        className={`relative bg-linear-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50 shadow-xl transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-primary-400/50 overflow-hidden`}
       >
         {/* Gradient overlay - matches card height exactly */}
         <div
-          className={`absolute inset-0 bg-gradient-to-r ${gradientFrom} ${gradientTo} rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}
+          className={`absolute inset-0 bg-linear-to-r ${gradientFrom} ${gradientTo} rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}
         />
 
         <div className="relative flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
           <div className="flex-1">
             <div className="flex items-center gap-3 mb-4">
-              <span className="px-3 py-1 bg-gradient-to-r from-primary-500 to-secondary-500 text-white text-sm font-semibold rounded-full">
+              <span className="px-3 py-1 bg-linear-to-r from-primary-500 to-secondary-500 text-white text-sm font-semibold rounded-full">
                 {type}
               </span>
             </div>
@@ -71,7 +71,7 @@ const ShareableContentCard: React.FC<ShareableContentCardProps> = ({
             </button>
             <button
               onClick={onCopyAll}
-              className="px-4 py-2 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 flex items-center gap-2"
+              className="px-4 py-2 bg-linear-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 flex items-center gap-2"
             >
               {isAllCopied ? (
                 <Check className="w-4 h-4" />

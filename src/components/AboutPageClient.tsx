@@ -28,17 +28,17 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
       </div>
 
       {/* Mission & Vision Cards */}
-      <div className="flex flex-col gap-[4.5rem] md:gap-20 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
+      <div className="flex flex-col gap-[4.5rem] md:gap-20 bg-linear-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-7xl mx-auto grid grid-cols-1 gap-8">
             <div className="group relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
-              <div className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-8 border border-primary-500/30 shadow-2xl">
+              <div className="absolute -inset-1 bg-linear-to-r from-primary-500 to-secondary-500 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+              <div className="relative bg-linear-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-8 border border-primary-500/30 shadow-2xl">
                 <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center mr-4">
+                  <div className="w-12 h-12 bg-linear-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center mr-4">
                     <span className="text-2xl">🎯</span>
                   </div>
-                  <h2 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
+                  <h2 className="text-3xl md:text-4xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
                     {aboutData.text.missionTitle}
                   </h2>
                 </div>
@@ -49,13 +49,13 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
             </div>
 
             <div className="group relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-secondary-500 to-primary-500 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
-              <div className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-8 border border-secondary-500/30 shadow-2xl">
+              <div className="absolute -inset-1 bg-linear-to-r from-secondary-500 to-primary-500 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+              <div className="relative bg-linear-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-8 border border-secondary-500/30 shadow-2xl">
                 <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-r from-secondary-500 to-primary-500 rounded-xl flex items-center justify-center mr-4">
+                  <div className="w-12 h-12 bg-linear-to-r from-secondary-500 to-primary-500 rounded-xl flex items-center justify-center mr-4">
                     <span className="text-2xl">💡</span>
                   </div>
-                  <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-secondary-200 to-primary-200 bg-clip-text text-transparent">
+                  <h2 className="text-3xl md:text-4xl font-bold bg-linear-to-r from-secondary-200 to-primary-200 bg-clip-text text-transparent">
                     {aboutData.text.descriptionTitle}
                   </h2>
                 </div>
@@ -68,15 +68,15 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
         </section>
 
         {/* Founder Section */}
-        <section className="px-6 md:px-12 py-12 md:py-16 bg-gradient-to-br">
+        <section className="px-6 md:px-12 py-12 md:py-16 bg-linear-to-br">
           <div className="max-w-6xl mx-auto">
             <div className="group relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary-500 via-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
-              <div className="relative bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-primary-500/30 shadow-2xl">
+              <div className="absolute -inset-1 bg-linear-to-r from-primary-500 via-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
+              <div className="relative bg-linear-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-primary-500/30 shadow-2xl">
                 <div className="flex flex-col lg:flex-row gap-8 items-center">
                   <div className="w-full lg:w-1/3">
                     <div className="relative group/image">
-                      <div className="absolute -inset-2 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl blur opacity-30 group-hover/image:opacity-50 transition duration-500"></div>
+                      <div className="absolute -inset-2 bg-linear-to-r from-primary-500 to-secondary-500 rounded-2xl blur opacity-30 group-hover/image:opacity-50 transition duration-500"></div>
                       <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden border-2 border-primary-500/50 shadow-2xl">
                         <Image
                           src={
@@ -92,10 +92,10 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center mb-6">
-                      <div className="w-12 h-12 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center mr-4">
+                      <div className="w-12 h-12 bg-linear-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center mr-4">
                         <span className="text-2xl">👨‍💻</span>
                       </div>
-                      <h2 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
+                      <h2 className="text-3xl md:text-4xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
                         {aboutData.text.founderTitle}
                       </h2>
                     </div>
@@ -113,10 +113,10 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-[3.5rem] md:mb-16">
-              <h3 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
+              <h3 className="text-4xl md:text-5xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 {aboutData.text.impactTitle}
               </h3>
-              <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
+              <div className="w-24 h-1 bg-linear-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {aboutData.impactAreas?.map((area, idx) => {
@@ -142,10 +142,10 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-[3.5rem] md:mb-16">
-              <h3 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
+              <h3 className="text-4xl md:text-5xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 Our Values
               </h3>
-              <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
+              <div className="w-24 h-1 bg-linear-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
               {aboutData.values?.map((v, idx) => {
@@ -168,10 +168,10 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-[3.5rem] md:mb-16">
-              <h3 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
+              <h3 className="text-4xl md:text-5xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 Our Initiatives
               </h3>
-              <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
+              <div className="w-24 h-1 bg-linear-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {aboutData.initiatives?.map((initiative, idx) => {
@@ -196,17 +196,17 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-6xl mx-auto">
             <div className="group relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary-500 via-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
-              <div className="relative bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-primary-500/30 shadow-2xl">
+              <div className="absolute -inset-1 bg-linear-to-r from-primary-500 via-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
+              <div className="relative bg-linear-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-primary-500/30 shadow-2xl">
                 <div className="text-center mb-8">
-                  <h3 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
+                  <h3 className="text-3xl md:text-4xl font-bold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                     Our Impact
                   </h3>
-                  <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
+                  <div className="w-24 h-1 bg-linear-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   <div className="text-center">
-                    <div className="w-16 h-16 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <div className="w-16 h-16 bg-linear-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <span className="text-2xl">📅</span>
                     </div>
                     <h4 className="text-2xl font-semibold text-slate-100 mb-2">
@@ -217,7 +217,7 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
                     </p>
                   </div>
                   <div className="text-center">
-                    <div className="w-16 h-16 bg-gradient-to-r from-secondary-500 to-primary-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <div className="w-16 h-16 bg-linear-to-r from-secondary-500 to-primary-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <span className="text-2xl">💝</span>
                     </div>
                     <h4 className="text-2xl font-semibold text-slate-100 mb-2">
@@ -228,7 +228,7 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
                     </p>
                   </div>
                   <div className="text-center">
-                    <div className="w-16 h-16 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <div className="w-16 h-16 bg-linear-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <span className="text-2xl">🌍</span>
                     </div>
                     <h4 className="text-2xl font-semibold text-slate-100 mb-2">
@@ -239,7 +239,7 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
                     </p>
                   </div>
                   <div className="text-center">
-                    <div className="w-16 h-16 bg-gradient-to-r from-secondary-500 to-primary-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <div className="w-16 h-16 bg-linear-to-r from-secondary-500 to-primary-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <span className="text-2xl">🎯</span>
                     </div>
                     <h4 className="text-2xl font-semibold text-slate-100 mb-2">
@@ -259,10 +259,10 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-[3.5rem] md:mb-16">
-              <h3 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
+              <h3 className="text-4xl md:text-5xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
                 Gallery
               </h3>
-              <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
+              <div className="w-24 h-1 bg-linear-to-r from-primary-500 to-secondary-500 mx-auto rounded-full"></div>
             </div>
             <div className="h-[400px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl border border-primary-500/30">
               <ImageCarousel images={images} />
@@ -274,13 +274,13 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-4xl mx-auto">
             <div className="group relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary-500 via-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
-              <div className="relative bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-primary-500/30 shadow-2xl text-center">
+              <div className="absolute -inset-1 bg-linear-to-r from-primary-500 via-secondary-500 to-primary-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
+              <div className="relative bg-linear-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-primary-500/30 shadow-2xl text-center">
                 <div className="flex items-center justify-center mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mr-4">
+                  <div className="w-16 h-16 bg-linear-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mr-4">
                     <span className="text-3xl">🤝</span>
                   </div>
-                  <h2 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
+                  <h2 className="text-3xl md:text-4xl font-extrabold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
                     {aboutData.text.howToSupportTitle}
                   </h2>
                 </div>
@@ -290,13 +290,13 @@ const AboutPageClient = ({ aboutData }: { aboutData: typeof ABOUT_DATA }) => {
                 <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
                   <Link
                     href="/shop"
-                    className="px-8 py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-bold rounded-xl hover:from-emerald-600 hover:to-cyan-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                    className="px-8 py-4 bg-linear-to-r from-emerald-500 to-cyan-500 text-white font-bold rounded-xl hover:from-emerald-600 hover:to-cyan-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
                   >
                     Shop Now
                   </Link>
                   <Link
                     href="/donate"
-                    className="px-8 py-4 bg-gradient-to-r from-orange-500 to-pink-500 text-white font-bold rounded-xl hover:from-orange-600 hover:to-pink-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                    className="px-8 py-4 bg-linear-to-r from-orange-500 to-pink-500 text-white font-bold rounded-xl hover:from-orange-600 hover:to-pink-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
                   >
                     Donate
                   </Link>

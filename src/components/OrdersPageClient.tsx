@@ -97,8 +97,8 @@ const OrdersPageClient = ({ orders }: OrdersPageClientProps) => {
       <div className="min-h-screen bg-bg-primary flex items-center justify-center">
         <div className="max-w-2xl mx-auto px-6 text-center">
           <div className="group relative">
-            <div className="absolute -inset-1 bg-gradient-to-r from-slate-500 to-slate-600 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
-            <div className="relative bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-slate-500/30 shadow-2xl">
+            <div className="absolute -inset-1 bg-linear-to-r from-slate-500 to-slate-600 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
+            <div className="relative bg-linear-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-slate-500/30 shadow-2xl">
               <div className="w-20 h-20 bg-slate-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
                 <ShoppingBag className="w-10 h-10 text-slate-400" />
               </div>
@@ -111,7 +111,7 @@ const OrdersPageClient = ({ orders }: OrdersPageClientProps) => {
               </p>
               <Link
                 href="/shop"
-                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 text-white font-bold rounded-xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                className="inline-flex items-center px-8 py-4 bg-linear-to-r from-primary-500 to-secondary-500 text-white font-bold rounded-xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 <ShoppingBag className="w-5 h-5 mr-2" />
                 Start Shopping
@@ -127,13 +127,13 @@ const OrdersPageClient = ({ orders }: OrdersPageClientProps) => {
     <div className="min-h-screen bg-bg-primary">
       {/* Hero Section */}
       <div className="relative h-[30%] overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-bg-primary via-primary-900 to-slate-900"></div>
+        <div className="absolute inset-0 bg-linear-to-b from-bg-primary via-primary-900 to-slate-900"></div>
         <div className="relative flex items-center justify-center py-16 md:py-24 h-full">
           <div className="text-center">
-            <div className="w-20 h-20 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="w-20 h-20 bg-linear-to-r from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-6">
               <Package className="w-10 h-10 text-white" />
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
+            <h1 className="text-4xl md:text-6xl font-bold bg-linear-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-4">
               Your Orders
             </h1>
             <p className="text-lg text-slate-300 max-w-2xl mx-auto">
@@ -144,7 +144,7 @@ const OrdersPageClient = ({ orders }: OrdersPageClientProps) => {
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-col gap-8 bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900 h-full pb-20">
+      <div className="flex flex-col gap-8 bg-linear-to-b from-slate-900 via-purple-900 to-slate-900 h-full pb-20">
         <section className="px-6 md:px-12 -mt-8">
           <div className="max-w-6xl mx-auto">
             <div className="space-y-6">
@@ -154,15 +154,15 @@ const OrdersPageClient = ({ orders }: OrdersPageClientProps) => {
 
                 return (
                   <div key={order.id} className="group relative">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 rounded-3xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                    <div className="relative bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl border border-slate-700/50 shadow-xl group-hover:shadow-2xl transition-all duration-300">
+                    <div className="absolute -inset-1 bg-linear-to-r from-primary-500/20 to-secondary-500/20 rounded-3xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
+                    <div className="relative bg-linear-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl border border-slate-700/50 shadow-xl group-hover:shadow-2xl transition-all duration-300">
                       {/* Order Header */}
                       <div className="p-6 md:p-8">
                         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
                           {/* Order Info */}
                           <div className="flex-1">
                             <div className="flex items-center gap-4 mb-4">
-                              <div className="w-12 h-12 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center">
+                              <div className="w-12 h-12 bg-linear-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center">
                                 <Package className="w-6 h-6 text-white" />
                               </div>
                               <div>
@@ -263,7 +263,7 @@ const OrdersPageClient = ({ orders }: OrdersPageClientProps) => {
                                 href={order.trackingUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="px-6 py-3 bg-gradient-to-r from-primary-500 to-secondary-500 text-white font-semibold rounded-xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl inline-flex items-center gap-2"
+                                className="px-6 py-3 bg-linear-to-r from-primary-500 to-secondary-500 text-white font-semibold rounded-xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl inline-flex items-center gap-2"
                               >
                                 <ExternalLink className="w-4 h-4" />
                                 Track Order

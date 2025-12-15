@@ -498,7 +498,7 @@ const PartnersForm = ({ formTitle: _formTitle }: { formTitle: string }) => {
           <button
             type="submit"
             ref={submitButtonRef}
-            className="w-full max-w-md px-8 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 text-white font-bold rounded-xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+            className="w-full max-w-md px-8 py-4 bg-linear-to-r from-primary-500 to-secondary-500 text-white font-bold rounded-xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
             disabled={isPending}
           >
             {isPending ? (

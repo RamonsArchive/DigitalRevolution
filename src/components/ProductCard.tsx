@@ -8,7 +8,7 @@ const ProductCard = ({ product }: { product: PrintfulProduct }) => {
     <Link href={`/shop/product/${product.sync_product.external_id}`}>
       <div className="group relative flex flex-col rounded-2xl overflow-hidden bg-white shadow-lg hover:shadow-2xl transition-all duration-500 ease-out hover:scale-105 hover:-translate-y-2">
         {/* Animated gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-200 via-secondary-200 to-primary-300 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"></div>
+        <div className="absolute inset-0 bg-linear-to-br from-primary-200 via-secondary-200 to-primary-300 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"></div>
 
         {/* Product Image Container */}
         <div className="relative w-full aspect-square overflow-hidden">
@@ -20,7 +20,7 @@ const ProductCard = ({ product }: { product: PrintfulProduct }) => {
             sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
           />
           {/* Gradient overlay on hover */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         </div>
 
         {/* Product Info */}

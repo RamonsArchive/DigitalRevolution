@@ -135,7 +135,7 @@ const CartPageClient = ({
           </div>
           <a
             href="/shop"
-            className="inline-block px-8 py-3 bg-gradient-to-r from-primary-500 to-secondary-500 text-white font-semibold rounded-lg hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105"
+            className="inline-block px-8 py-3 bg-linear-to-r from-primary-500 to-secondary-500 text-white font-semibold rounded-lg hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105"
           >
             Continue Shopping
           </a>
@@ -487,7 +487,7 @@ const CartPageClient = ({
               {/* Checkout Button */}
               <button
                 onClick={handleCheckout}
-                className="w-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white font-bold py-6 px-8 rounded-2xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-2xl hover:shadow-3xl text-xl cursor-pointer"
+                className="w-full bg-linear-to-r from-primary-500 to-secondary-500 text-white font-bold py-6 px-8 rounded-2xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-2xl hover:shadow-3xl text-xl cursor-pointer"
               >
                 Proceed to Checkout
               </button>

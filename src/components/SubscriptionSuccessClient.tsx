@@ -51,8 +51,8 @@ const SubscriptionSuccessClient = ({
       <div className="min-h-screen bg-bg-primary flex items-center justify-center">
         <div className="max-w-2xl mx-auto px-6 text-center">
           <div className="group relative">
-            <div className="absolute -inset-1 bg-gradient-to-r from-red-500 to-red-600 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
-            <div className="relative bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-red-500/30 shadow-2xl">
+            <div className="absolute -inset-1 bg-linear-to-r from-red-500 to-red-600 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
+            <div className="relative bg-linear-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-red-500/30 shadow-2xl">
               <div className="w-20 h-20 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
                 <span className="text-4xl">❌</span>
               </div>
@@ -65,7 +65,7 @@ const SubscriptionSuccessClient = ({
               </p>
               <Link
                 href="/donate"
-                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-red-500 to-red-600 text-white font-bold rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                className="inline-flex items-center px-8 py-4 bg-linear-to-r from-red-500 to-red-600 text-white font-bold rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 <ArrowLeft className="w-5 h-5 mr-2" />
                 Back to Donate
@@ -81,13 +81,13 @@ const SubscriptionSuccessClient = ({
     <div className="min-h-screen bg-bg-primary">
       {/* Hero Section */}
       <div className="relative h-[40%] overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-bg-primary via-primary-900 to-slate-900"></div>
+        <div className="absolute inset-0 bg-linear-to-b from-bg-primary via-primary-900 to-slate-900"></div>
         <div className="relative flex items-center justify-center py-20 md:py-32 h-full">
           <div className="text-center">
-            <div className="w-24 h-24 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-8 animate-pulse">
+            <div className="w-24 h-24 bg-linear-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-8 animate-pulse">
               <RefreshCw className="w-12 h-12 text-white" />
             </div>
-            <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent mb-4">
+            <h1 className="text-5xl md:text-7xl font-bold bg-linear-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent mb-4">
               Welcome to Our Community!
             </h1>
             <p className="text-xl text-slate-300 max-w-2xl mx-auto">
@@ -99,24 +99,24 @@ const SubscriptionSuccessClient = ({
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-col gap-16 bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900 h-full pb-20">
+      <div className="flex flex-col gap-16 bg-linear-to-b from-slate-900 via-purple-900 to-slate-900 h-full pb-20">
         {/* Subscription Details Card */}
         <section className="px-6 md:px-12 -mt-16">
           <div className="max-w-4xl mx-auto">
             <div className="group relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
-              <div className="relative bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-purple-500/30 shadow-2xl">
+              <div className="absolute -inset-1 bg-linear-to-r from-purple-500 to-pink-500 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+              <div className="relative bg-linear-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-purple-500/30 shadow-2xl">
                 <div className="text-center mb-8">
-                  <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent mb-4">
+                  <h2 className="text-3xl md:text-4xl font-bold bg-linear-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent mb-4">
                     Subscription Active
                   </h2>
-                  <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full"></div>
+                  <div className="w-24 h-1 bg-linear-to-r from-purple-500 to-pink-500 mx-auto rounded-full"></div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {/* Monthly Amount */}
                   <div className="text-center">
-                    <div className="w-20 h-20 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <div className="w-20 h-20 bg-linear-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <span className="text-3xl">💰</span>
                     </div>
                     <h3 className="text-2xl font-bold text-slate-100 mb-2">
@@ -132,7 +132,7 @@ const SubscriptionSuccessClient = ({
 
                   {/* Billing Interval */}
                   <div className="text-center">
-                    <div className="w-20 h-20 bg-gradient-to-r from-pink-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <div className="w-20 h-20 bg-linear-to-r from-pink-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <span className="text-3xl">🔄</span>
                     </div>
                     <h3 className="text-2xl font-bold text-slate-100 mb-2">
@@ -211,17 +211,17 @@ const SubscriptionSuccessClient = ({
         <section className="px-6 md:px-12">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
-              <h3 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent mb-4">
+              <h3 className="text-4xl md:text-5xl font-bold bg-linear-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent mb-4">
                 Monthly Supporter Benefits
               </h3>
-              <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full"></div>
+              <div className="w-24 h-1 bg-linear-to-r from-purple-500 to-pink-500 mx-auto rounded-full"></div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="group relative">
-                <div className="absolute -inset-1 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                <div className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50 shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-105">
+                <div className="absolute -inset-1 bg-linear-to-r from-purple-500/20 to-pink-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
+                <div className="relative bg-linear-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50 shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-105">
                   <div className="text-center">
-                    <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition duration-300">
+                    <div className="w-16 h-16 bg-linear-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition duration-300">
                       <Heart className="w-8 h-8 text-white" />
                     </div>
                     <h4 className="text-xl font-bold text-slate-100 mb-3 group-hover:text-purple-200 transition-colors">
@@ -236,10 +236,10 @@ const SubscriptionSuccessClient = ({
               </div>
 
               <div className="group relative">
-                <div className="absolute -inset-1 bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                <div className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50 shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-105">
+                <div className="absolute -inset-1 bg-linear-to-r from-pink-500/20 to-purple-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
+                <div className="relative bg-linear-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50 shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-105">
                   <div className="text-center">
-                    <div className="w-16 h-16 bg-gradient-to-r from-pink-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition duration-300">
+                    <div className="w-16 h-16 bg-linear-to-r from-pink-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition duration-300">
                       <Users className="w-8 h-8 text-white" />
                     </div>
                     <h4 className="text-xl font-bold text-slate-100 mb-3 group-hover:text-pink-200 transition-colors">
@@ -254,10 +254,10 @@ const SubscriptionSuccessClient = ({
               </div>
 
               <div className="group relative">
-                <div className="absolute -inset-1 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                <div className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50 shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-105">
+                <div className="absolute -inset-1 bg-linear-to-r from-purple-500/20 to-pink-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
+                <div className="relative bg-linear-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50 shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-105">
                   <div className="text-center">
-                    <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition duration-300">
+                    <div className="w-16 h-16 bg-linear-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition duration-300">
                       <Globe className="w-8 h-8 text-white" />
                     </div>
                     <h4 className="text-xl font-bold text-slate-100 mb-3 group-hover:text-purple-200 transition-colors">
@@ -278,13 +278,13 @@ const SubscriptionSuccessClient = ({
         <section className="px-6 md:px-12">
           <div className="max-w-4xl mx-auto">
             <div className="group relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
-              <div className="relative bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-purple-500/30 shadow-2xl text-center">
+              <div className="absolute -inset-1 bg-linear-to-r from-purple-500 via-pink-500 to-purple-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
+              <div className="relative bg-linear-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-purple-500/30 shadow-2xl text-center">
                 <div className="flex items-center justify-center mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mr-4">
+                  <div className="w-16 h-16 bg-linear-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mr-4">
                     <CreditCard className="w-8 h-8 text-white" />
                   </div>
-                  <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent">
+                  <h2 className="text-3xl md:text-4xl font-bold bg-linear-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent">
                     Manage Your Subscription
                   </h2>
                 </div>
@@ -296,7 +296,7 @@ const SubscriptionSuccessClient = ({
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link
                     href="/profile"
-                    className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-xl hover:from-purple-600 hover:to-pink-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                    className="px-8 py-4 bg-linear-to-r from-purple-500 to-pink-500 text-white font-bold rounded-xl hover:from-purple-600 hover:to-pink-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
                   >
                     Manage Subscription
                   </Link>

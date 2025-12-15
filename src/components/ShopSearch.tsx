@@ -42,7 +42,7 @@ const ShopSearch = ({
         style={{ zIndex: 9999 }}
       >
         {/* Beautiful Gradient Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-900 via-secondary-800 to-primary-900"></div>
+        <div className="absolute inset-0 bg-linear-to-br from-primary-900 via-secondary-800 to-primary-900"></div>
 
         {/* Backdrop to prevent clicks through */}
         <div className="absolute inset-0 bg-black/20 backdrop-blur-sm"></div>
@@ -89,7 +89,7 @@ const ShopSearch = ({
                 {/* Search Button */}
                 <button
                   type="submit"
-                  className="mt-4 bg-gradient-to-r from-tertiary-500 to-tertiary-600 text-white py-2 px-6 rounded-xl font-semibold text-sm hover:from-tertiary-600 hover:to-tertiary-700 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl"
+                  className="mt-4 bg-linear-to-r from-tertiary-500 to-tertiary-600 text-white py-2 px-6 rounded-xl font-semibold text-sm hover:from-tertiary-600 hover:to-tertiary-700 transition-all duration-300 ease-in-out hover:scale-105 shadow-lg hover:shadow-xl"
                 >
                   Search Products
                 </button>

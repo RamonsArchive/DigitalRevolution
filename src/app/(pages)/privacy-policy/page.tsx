@@ -42,7 +42,7 @@ const PrivacyPolicyPage = () => {
       </div>
 
       {/* Content Section */}
-      <div className="flex flex-col gap-[4.5rem] md:gap-20 bg-gradient-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
+      <div className="flex flex-col gap-[4.5rem] md:gap-20 bg-linear-to-b from-bg-primary via-slate-900/50 to-bg-primary h-full">
         <section className="px-6 md:px-12 py-10 md:py-12">
           <div className="max-w-4xl mx-auto">
             {/* Introduction */}
@@ -74,7 +74,7 @@ const PrivacyPolicyPage = () => {
                 description="Bank-level encryption for all data transmission and storage"
                 gradientFrom="from-blue-500/20"
                 gradientTo="to-cyan-500/20"
-                cardClassName="bg-gradient-to-br from-blue-900/30 to-cyan-900/30"
+                cardClassName="bg-linear-to-br from-blue-900/30 to-cyan-900/30"
                 borderColor="border-blue-500/30"
               />
               <FeatureCard
@@ -83,7 +83,7 @@ const PrivacyPolicyPage = () => {
                 description="Clear communication about what data we collect and why"
                 gradientFrom="from-green-500/20"
                 gradientTo="to-emerald-500/20"
-                cardClassName="bg-gradient-to-br from-green-900/30 to-emerald-900/30"
+                cardClassName="bg-linear-to-br from-green-900/30 to-emerald-900/30"
                 borderColor="border-green-500/30"
               />
               <FeatureCard
@@ -92,7 +92,7 @@ const PrivacyPolicyPage = () => {
                 description="Your data belongs to you - we never sell or misuse it"
                 gradientFrom="from-purple-500/20"
                 gradientTo="to-pink-500/20"
-                cardClassName="bg-gradient-to-br from-purple-900/30 to-pink-900/30"
+                cardClassName="bg-linear-to-br from-purple-900/30 to-pink-900/30"
                 borderColor="border-purple-500/30"
               />
             </div>
@@ -110,13 +110,13 @@ const PrivacyPolicyPage = () => {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a
                     href="mailto:clutchdev.apps@gmail.com"
-                    className="px-6 py-3 bg-gradient-to-r from-primary-500 to-secondary-500 text-white font-semibold rounded-xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                    className="px-6 py-3 bg-linear-to-r from-primary-500 to-secondary-500 text-white font-semibold rounded-xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
                   >
                     Contact Us
                   </a>
                   <Link
                     href="/"
-                    className="px-6 py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white font-semibold rounded-xl hover:from-slate-700 hover:to-slate-800 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                    className="px-6 py-3 bg-linear-to-r from-slate-600 to-slate-700 text-white font-semibold rounded-xl hover:from-slate-700 hover:to-slate-800 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
                   >
                     <ArrowLeft className="w-4 h-4" />
                     Return Home

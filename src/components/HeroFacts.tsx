@@ -56,7 +56,7 @@ const HeroFacts = ({ section2 }: HeroFactsProps) => {
     });
   }, []);
   return (
-    <div className="flex flex-col gap-10 md:gap-20 py-32 px-5 md:px-20 bg-gradient-to-br from-neutral-900 via-slate-800 to-neutral-900 w-full min-h-screen">
+    <div className="flex flex-col gap-10 md:gap-20 py-32 px-5 md:px-20 bg-linear-to-br from-neutral-900 via-slate-800 to-neutral-900 w-full min-h-screen">
       <h2 className="section-title">{section2.title}</h2>
       <div className="flex flex-col md:flex-row gap-10 md:gap-20 items-start">
         <div className="flex flex-col gap-8 w-full md:w-[65%]">
@@ -64,7 +64,7 @@ const HeroFacts = ({ section2 }: HeroFactsProps) => {
             {section2.description.map((item, index) => (
               <li
                 key={`description-${index}`}
-                className="fact-card pl-6 p-6 rounded-2xl bg-gradient-to-r from-slate-800/50 to-slate-700/30 border border-slate-600/30 shadow-lg hover:shadow-xl transition-all duration-300 hover:from-slate-700/60 hover:to-slate-600/40"
+                className="fact-card pl-6 p-6 rounded-2xl bg-linear-to-r from-slate-800/50 to-slate-700/30 border border-slate-600/30 shadow-lg hover:shadow-xl transition-all duration-300 hover:from-slate-700/60 hover:to-slate-600/40"
               >
                 {item}
               </li>
@@ -72,7 +72,7 @@ const HeroFacts = ({ section2 }: HeroFactsProps) => {
           </ul>
         </div>
         <div className="flex flex-col gap-6 flex-1 w-full md:w-auto">
-          <div className="source-card p-6 rounded-2xl bg-gradient-to-br from-blue-900/30 to-cyan-800/20 border border-blue-500/30 shadow-lg">
+          <div className="source-card p-6 rounded-2xl bg-linear-to-br from-blue-900/30 to-cyan-800/20 border border-blue-500/30 shadow-lg">
             <h3 className="font-lexend font-bold text-3xl text-blue-100 mb-6 text-center">
               Sources
             </h3>
@@ -94,7 +94,7 @@ const HeroFacts = ({ section2 }: HeroFactsProps) => {
               ))}
             </ul>
           </div>
-          <div className="sources-card flex w-full flex-col gap-6 p-6 rounded-2xl bg-gradient-to-br shadow-lg">
+          <div className="sources-card flex w-full flex-col gap-6 p-6 rounded-2xl bg-linear-to-br shadow-lg">
             <h1 className="sub-title font-lexend text-2xl text-center animated-gradient-text font-bold">
               Help address the digital divide
             </h1>

@@ -36,34 +36,24 @@ export const NAV_LINKS = [
 export const HOME_TEXT_SECTIONS = {
   section1: {
     id: "section-1",
-    title: <>Bridging the Digital Divide for Democratic Values</>,
+    title: <>Digital Revolution: Bridging the Digital Divide</>,
     subtitle: (
-      <>Creating pathways from digital exclusion to STEM opportunities</>
+      <>
+        Founded by Ramon to turn digital exclusion into STEM opportunities and
+        civic impact
+      </>
     ),
     description: (
       <>
-        Digital Revolution advocates for{" "}
+        Digital Revolution helps communities gain the{" "}
         <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          underprivileged communities
+          connectivity, skills, and devices
         </span>{" "}
-        whose lack of{" "}
+        they need to thrive—so technology creates{" "}
         <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          digital access and infrastructure
-        </span>{" "}
-        creates barriers to{" "}
-        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          STEM education
+          owners, not renters
         </span>
-        ,{" "}
-        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          technology careers
-        </span>
-        , and{" "}
-        <span className="underline decoration-secondary-500 decoration-2 underline-offset-4 text-secondary-500">
-          democratic participation
-        </span>
-        . We believe technology should create owners, not renters of the digital
-        world.
+        —and expands access to STEM, careers, and civic participation.
       </>
     ),
     mission:
