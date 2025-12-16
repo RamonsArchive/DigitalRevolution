@@ -60,7 +60,7 @@ export const metadata: Metadata = {
       "Join the Digital Revolution! We're expanding access to technology, STEM education, and digital literacy for underserved communities. Shop our mission-driven merchandise, donate to our cause, or partner with us.",
     images: [
       {
-        url: "https://digitalrevolution.foundation/Assets/Logos/advLogoDark-4.png",
+        url: "/Assets/Logos/advLogoDark-4.png",
         width: 1200,
         height: 1200,
         alt: "Digital Revolution Logo",
@@ -72,9 +72,7 @@ export const metadata: Metadata = {
     title: "Digital Revolution - Expanding Access to Technology for All",
     description:
       "Join the Digital Revolution! We're expanding access to technology, STEM education, and digital literacy for underserved communities.",
-    images: [
-      "https://digitalrevolution.foundation/Assets/Logos/advLogoDark-4.png",
-    ],
+    images: ["/Assets/Logos/advLogoDark-4.png"],
     creator: "@digitalrevolution",
   },
   robots: {
@@ -355,10 +353,22 @@ export default function RootLayout({
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Digital Revolution" />
         <meta property="article:author" content="Digital Revolution" />
+        <meta
+          property="og:image"
+          content="https://digitalrevolution.foundation/Assets/Logos/advLogoDark-4.png"
+        />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="1200" />
+        <meta property="og:image:alt" content="Digital Revolution Logo" />
+        <meta property="og:image:type" content="image/png" />
 
         {/* Twitter Card optimization */}
         <meta name="twitter:site" content="@digitalrevolution" />
         <meta name="twitter:creator" content="@digitalrevolution" />
+        <meta
+          name="twitter:image"
+          content="https://digitalrevolution.foundation/Assets/Logos/advLogoDark-4.png"
+        />
 
         {/* Performance hints */}
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
