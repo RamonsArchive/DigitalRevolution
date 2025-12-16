@@ -120,7 +120,7 @@ export default function HeroSection({
               preload="auto"
               controls={false}
             >
-              <source src="/Hero/hero1.mov" type="video/mp4" />
+              <source src="/Hero/hero1.MOV" type="video/mp4" />
               <source src="/Hero/hero1.MOV" type="video/quicktime" />
               Your browser does not support the video tag.
             </video>
