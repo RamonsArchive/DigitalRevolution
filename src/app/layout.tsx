@@ -60,7 +60,7 @@ export const metadata: Metadata = {
       "Join the Digital Revolution! We're expanding access to technology, STEM education, and digital literacy for underserved communities. Shop our mission-driven merchandise, donate to our cause, or partner with us.",
     images: [
       {
-        url: "/Assets/Logos/advLogoDark-4.png",
+        url: "https://digitalrevolution.foundation/Assets/Logos/advLogoDark-4.png",
         width: 1200,
         height: 1200,
         alt: "Digital Revolution Logo",
@@ -72,7 +72,9 @@ export const metadata: Metadata = {
     title: "Digital Revolution - Expanding Access to Technology for All",
     description:
       "Join the Digital Revolution! We're expanding access to technology, STEM education, and digital literacy for underserved communities.",
-    images: ["/Assets/Logos/advLogoDark-4.png"],
+    images: [
+      "https://digitalrevolution.foundation/Assets/Logos/advLogoDark-4.png",
+    ],
     creator: "@digitalrevolution",
   },
   robots: {
