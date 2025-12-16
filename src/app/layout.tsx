@@ -375,6 +375,14 @@ export default function RootLayout({
         {/* Performance hints */}
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
         <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+
+        {/* Preload hero video for faster loading */}
+        <link
+          rel="preload"
+          href="/Hero/hero1.mp4"
+          as="video"
+          type="video/mp4"
+        />
       </head>
       <body className={`${lexend.variable} antialiased`}>{children}</body>
     </html>
