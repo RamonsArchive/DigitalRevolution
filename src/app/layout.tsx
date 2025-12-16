@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     "inclusive technology",
   ],
   authors: [
-    { name: "Digital Revolution", url: "https://digitalrevolution.shop" },
+    { name: "Digital Revolution", url: "https://digitalrevolution.foundation" },
   ],
   creator: "Digital Revolution",
   publisher: "Digital Revolution",
@@ -46,24 +46,24 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL("https://digitalrevolution.shop"),
+  metadataBase: new URL("https://digitalrevolution.foundation"),
   alternates: {
     canonical: "/",
   },
   openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://digitalrevolution.foundation",
+    siteName: "Digital Revolution",
     title: "Digital Revolution - Expanding Access to Technology for All",
     description:
       "Join the Digital Revolution! We're expanding access to technology, STEM education, and digital literacy for underserved communities. Shop our mission-driven merchandise, donate to our cause, or partner with us.",
-    url: "https://digitalrevolution.shop",
-    siteName: "Digital Revolution",
-    locale: "en_US",
-    type: "website",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "https://digitalrevolution.foundation/Assets/Logos/advLogoDark-4.png",
         width: 1200,
-        height: 630,
-        alt: "Digital Revolution - Expanding Access to Technology for All",
+        height: 1200,
+        alt: "Digital Revolution Logo",
       },
     ],
   },
@@ -72,7 +72,9 @@ export const metadata: Metadata = {
     title: "Digital Revolution - Expanding Access to Technology for All",
     description:
       "Join the Digital Revolution! We're expanding access to technology, STEM education, and digital literacy for underserved communities.",
-    images: ["/og-image.jpg"],
+    images: [
+      "https://digitalrevolution.foundation/Assets/Logos/advLogoDark-4.png",
+    ],
     creator: "@digitalrevolution",
   },
   robots: {
@@ -115,6 +117,10 @@ export const metadata: Metadata = {
     "DC.language": "en",
     "DC.coverage": "Global",
     "DC.rights": "Copyright 2025 Digital Revolution",
+    clutchstudio: "https://clutchstudio.dev",
+    digitalrevolution: "https://digitalrevolution.foundation",
+    colorstack: "https://colorstackucsd.org",
+    goldeneagle: "https://goldeneagle.one",
   },
 };
 
