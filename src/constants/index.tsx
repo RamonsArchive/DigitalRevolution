@@ -1002,7 +1002,7 @@ export const FOOTER_LINKS = [
   },
   {
     label: "Instagram",
-    href: "https://www.instagram.com/ramon.mnm",
+    href: "https://www.instagram.com/digitalrevolution.foundation",
     handle: "Digital Revolution",
     platform: "instagram",
   },
