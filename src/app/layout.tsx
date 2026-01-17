@@ -121,6 +121,7 @@ export const metadata: Metadata = {
     digitalrevolution: "https://digitalrevolution.foundation",
     colorstack: "https://colorstackucsd.org",
     goldeneagle: "https://goldeneagle.one",
+    ascend: "https://ascend.rodeo",
   },
 };
 
