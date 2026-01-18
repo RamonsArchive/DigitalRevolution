@@ -198,6 +198,7 @@ export default function RootLayout({
       "https://linkedin.com/company/digitalrevolution",
       "https://twitter.com/digitalrevolution",
       "https://instagram.com/digitalrevolution",
+      "https://ascend.rodeo",
     ],
     contactPoint: {
       "@type": "ContactPoint",
